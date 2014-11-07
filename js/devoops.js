@@ -1211,6 +1211,7 @@ $(document).ready(function() {
 
 	$('.ajax-link').on("click", function(e) {
 		e.preventDefault();
+		if ($(this).attr('href') == '#') return;
 		if ($(this).hasClass('add-full')) {
 			$('#content').addClass('full-content');
 		} else {
