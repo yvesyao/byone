@@ -1145,6 +1145,24 @@ function AllTimePickers() {
 	$('#date_example').datepicker({});
 }
 
+/*-------------------------------------------
+	Function for table pages (property.html etc.)
+	---------------------------------------------*/
+//
+// Function for rightClick on table item
+//
+function tableRightClick() {
+	$('tr.right-click')[0].onMouseDown = function(e) {
+		var e = e || window.event;
+		if (e.button == '2') {
+			$(this).next('.right-click-menu').css({
+				top: e.position.y,
+				left: e.position.x
+			}).removeClass('hide');
+		};
+	}
+}
+
 /**
  * load property interactive actions
  */
