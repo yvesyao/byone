@@ -2,37 +2,8 @@
 //    Main script of DevOOPS v1.0 Bootstrap Theme
 //
 "use strict";
-/*-------------------------------------------
-	Dynamically load plugin scripts
-	---------------------------------------------*/
-//
 
-//
-// Dynamically load  OpenStreetMap Plugin
-// homepage: http://openlayers.org
-//
-function LoadOpenLayersScript(callback) {
-	if (!$.fn.OpenLayers) {
-		$.getScript('http://www.openlayers.org/api/OpenLayers.js', callback);
-	} else {
-		if (callback && typeof(callback) === "function") {
-			callback();
-		}
-	}
-}
-//
-// Dynamically load  Leaflet Plugin
-// homepage: http://leafletjs.com
-//
-function LoadLeafletScript(callback) {
-	if (!$.fn.L) {
-		$.getScript('plugins/leaflet/leaflet.js', callback);
-	} else {
-		if (callback && typeof(callback) === "function") {
-			callback();
-		}
-	}
-}
+
 //
 //  Dynamically load  jQuery Timepicker plugin
 //  homepage: http://trentrichardson.com/examples/timepicker/
@@ -94,13 +65,26 @@ function LoadDataTablesScripts(callback) {
 		}
 	}
 }
+
+
 //
-//  Dynamically load Widen FineUploader
-//  homepage: https://github.com/Widen/fine-uploader  v5.0.5 license - GPL3
+//  Dynamically load Flot plugin
+//  homepage: http://www.flotcharts.org  v0.8.2 license- MIT
 //
-function LoadFineUploader(callback) {
-	if (!$.fn.fineuploader) {
-		$.getScript('plugins/fineuploader/jquery.fineuploader-5.0.5.min.js', callback);
+function LoadFlotScripts(callback) {
+	function LoadFlotScript() {
+		$.getScript('plugins/flot/jquery.flot.js', LoadFlotResizeScript);
+	}
+
+	function LoadFlotResizeScript() {
+		$.getScript('plugins/flot/jquery.flot.resize.js', LoadFlotTimeScript);
+	}
+
+	function LoadFlotTimeScript() {
+		$.getScript('plugins/flot/jquery.flot.time.js', callback);
+	}
+	if (!$.fn.flot) {
+		LoadFlotScript();
 	} else {
 		if (callback && typeof(callback) === "function") {
 			callback();
@@ -108,80 +92,6 @@ function LoadFineUploader(callback) {
 	}
 }
 
-//
-//  Dynamically load xCharts plugin
-//  homepage: http://tenxer.github.io/xcharts/ v0.3.0 license - MIT
-//  Required D3 plugin http://d3js.org/ v3.4.11 license - MIT
-//
-function LoadXChartScript(callback) {
-	function LoadXChart() {
-		$.getScript('plugins/xcharts/xcharts.min.js', callback);
-	}
-
-	function LoadD3Script() {
-		if (!$.fn.d3) {
-			$.getScript('plugins/d3/d3.min.js', LoadXChart)
-		} else {
-			LoadXChart();
-		}
-	}
-	if (!$.fn.xcharts) {
-		LoadD3Script();
-	} else {
-		if (callback && typeof(callback) === "function") {
-			callback();
-		}
-	}
-}
-
-
-//
-//  Dynamically load Springy plugin
-//  homepage: http://getspringy.com/ 2.6.1 as is
-//
-function LoadSpringyScripts(callback) {
-	function LoadSpringyScript() {
-		$.getScript('plugins/springy/springy.js', LoadSpringyUIScript);
-	}
-
-	function LoadSpringyUIScript() {
-		$.getScript('plugins/springy/springyui.js', callback);
-	}
-	if (!$.fn.Springy) {
-		LoadSpringyScript();
-	} else {
-		if (callback && typeof(callback) === "function") {
-			callback();
-		}
-	}
-}
-
-//
-//  Dynamically load Fancybox 2 plugin
-//  homepage: http://fancyapps.com/fancybox/ v2.1.5 License - MIT
-//
-function LoadFancyboxScript(callback) {
-	if (!$.fn.fancybox) {
-		$.getScript('plugins/fancybox/jquery.fancybox.js', callback);
-	} else {
-		if (callback && typeof(callback) === "function") {
-			callback();
-		}
-	}
-}
-//
-//  Dynamically load jQuery-Knob plugin
-//  homepage: http://anthonyterrien.com/knob/  v1.2.5 License- MIT or GPL
-//
-function LoadKnobScripts(callback) {
-	if (!$.fn.knob) {
-		$.getScript('plugins/jQuery-Knob/jquery.knob.js', callback);
-	} else {
-		if (callback && typeof(callback) === "function") {
-			callback();
-		}
-	}
-}
 
 /*-------------------------------------------
 	Main scripts used by theme
@@ -246,375 +156,210 @@ jQuery.fn.swap = function(b) {
 };
 
 
-/*//
-// Create OpenLayers map with required options and return map as object
-//
-function drawMap(lon, lat, elem, layers) {
-	var LayersArray = [];
-	// Map initialization
-	var map = new OpenLayers.Map(elem);
-	// Add layers on map
-	map.addLayers(layers);
-	// WGS 1984 projection
-	var epsg4326 = new OpenLayers.Projection("EPSG:4326");
-	//The map projection (Spherical Mercator)
-	var projectTo = map.getProjectionObject();
-	// Max zoom = 17
-	var zoom = 10;
-	map.zoomToMaxExtent();
-	// Set longitude/latitude
-	var lonlat = new OpenLayers.LonLat(lon, lat);
-	map.setCenter(lonlat.transform(epsg4326, projectTo), zoom);
-	var layerGuest = new OpenLayers.Layer.Vector("You are here");
-	// Define markers as "features" of the vector layer:
-	var guestMarker = new OpenLayers.Feature.Vector(
-		new OpenLayers.Geometry.Point(lon, lat).transform(epsg4326, projectTo)
-	);
-	layerGuest.addFeatures(guestMarker);
-	LayersArray.push(layerGuest);
-	map.addLayers(LayersArray);
-	// If map layers > 1 then show checker
-	if (layers.length > 1) {
-		map.addControl(new OpenLayers.Control.LayerSwitcher({
-			'ascending': true
-		}));
-	}
-	// Link to current position
-	map.addControl(new OpenLayers.Control.Permalink());
-	// Show current mouse coords
-	map.addControl(new OpenLayers.Control.MousePosition({
-		displayProjection: epsg4326
-	}));
-	return map
-}*/
-//
-//  Function for create 2 dates in human-readable format (with leading zero)
-//
-function PrettyDates() {
-	var currDate = new Date();
-	var year = currDate.getFullYear();
-	var month = currDate.getMonth() + 1;
-	var startmonth = 1;
-	if (month > 3) {
-		startmonth = month - 2;
-	}
-	if (startmonth <= 9) {
-		startmonth = '0' + startmonth;
-	}
-	if (month <= 9) {
-		month = '0' + month;
-	}
-	var day = currDate.getDate();
-	if (day <= 9) {
-		day = '0' + day;
-	}
-	var startdate = year + '-' + startmonth + '-01';
-	var enddate = year + '-' + month + '-' + day;
-	return [startdate, enddate];
-}
 //
 //  Function set min-height of window (required for this theme)
 //
 function SetMinBlockHeight(elem) {
 	elem.css('min-height', window.innerHeight - 49)
 }
-//
-//  Helper for correct size of Messages page
-//
-function MessagesMenuWidth() {
-	var W = window.innerWidth;
-	var W_menu = $('#sidebar-left').outerWidth();
-	var w_messages = (W - W_menu) * 16.666666666666664 / 100;
-	$('#messages-menu').width(w_messages);
-}
-//
-// Function for change panels of Dashboard
-//
-/*function DashboardTabChecker() {
-	$('#content').on('click', 'a.tab-link', function(e) {
-		e.preventDefault();
-		$('div#Dashboard_tabs').find('div[id^=Dashboard]').each(function() {
-			$(this).css('visibility', 'hidden').css('position', 'absolute');
-		});
-		var attr = $(this).attr('id');
-		$('#' + 'Dashboard-' + attr).css('visibility', 'visible').css('position', 'relative');
-		$(this).closest('.nav').find('li').removeClass('active');
-		$(this).closest('li').addClass('active');
-	});
-}*/
-//
-// Helper for run TinyMCE editor with textarea's
-//
-function TinyMCEStart(elem, mode) {
-	var plugins = [];
-	if (mode == 'extreme') {
-		plugins = ["advlist anchor autolink autoresize autosave bbcode charmap code contextmenu directionality ",
-			"emoticons fullpage fullscreen hr image insertdatetime layer legacyoutput",
-			"link lists media nonbreaking noneditable pagebreak paste preview print save searchreplace",
-			"tabfocus table template textcolor visualblocks visualchars wordcount"
-		]
-	}
-	tinymce.init({
-		selector: elem,
-		theme: "modern",
-		plugins: plugins,
-		//content_css: "css/style.css",
-		toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
-		style_formats: [{
-			title: 'Header 2',
-			block: 'h2',
-			classes: 'page-header'
-		}, {
-			title: 'Header 3',
-			block: 'h3',
-			classes: 'page-header'
-		}, {
-			title: 'Header 4',
-			block: 'h4',
-			classes: 'page-header'
-		}, {
-			title: 'Header 5',
-			block: 'h5',
-			classes: 'page-header'
-		}, {
-			title: 'Header 6',
-			block: 'h6',
-			classes: 'page-header'
-		}, {
-			title: 'Bold text',
-			inline: 'b'
-		}, {
-			title: 'Red text',
-			inline: 'span',
-			styles: {
-				color: '#ff0000'
-			}
-		}, {
-			title: 'Red header',
-			block: 'h1',
-			styles: {
-				color: '#ff0000'
-			}
-		}, {
-			title: 'Example 1',
-			inline: 'span',
-			classes: 'example1'
-		}, {
-			title: 'Example 2',
-			inline: 'span',
-			classes: 'example2'
-		}, {
-			title: 'Table styles'
-		}, {
-			title: 'Table row 1',
-			selector: 'tr',
-			classes: 'tablerow1'
-		}]
-	});
-}
 
-//
-//  Helper for open ModalBox with requested header, content and bottom
-//
-//
-function OpenModalBox(header, inner, bottom) {
-	var modalbox = $('#modalbox');
-	modalbox.find('.modal-header-name span').html(header);
-	modalbox.find('.devoops-modal-inner').html(inner);
-	modalbox.find('.devoops-modal-bottom').html(bottom);
-	modalbox.fadeIn('fast');
-	$('body').addClass("body-expanded");
-}
-//
-//  Close modalbox
-//
-//
-function CloseModalBox() {
-	var modalbox = $('#modalbox');
-	modalbox.fadeOut('fast', function() {
-		modalbox.find('.modal-header-name span').children().remove();
-		modalbox.find('.devoops-modal-inner').children().remove();
-		modalbox.find('.devoops-modal-bottom').children().remove();
-		$('body').removeClass("body-expanded");
-	});
-}
-
-//
-//  Function convert values of inputs in table to JSON data
-//
-//
-function Table2Json(table) {
-	var result = {};
-	table.find("tr").each(function() {
-		var oneRow = [];
-		var varname = $(this).index();
-		$("td", this).each(function(index) {
-			if (index != 0) {
-				oneRow.push($("input", this).val());
-			}
-		});
-		result[varname] = oneRow;
-	});
-	var result_json = JSON.stringify(result);
-	OpenModalBox('Table to JSON values', result_json);
-}
 
 /*-------------------------------------------
-	Demo graphs for xCharts page (charts_xcharts.html)
+	Demo graphs for Flot Chart page (charts_flot.html)
 ---------------------------------------------*/
 //
-// Graph1 created in element with id = xchart-1
+// Graph1 created in element with id = box-one-content
 //
-function xGraph1() {
-	var tt = document.createElement('div'),
-		leftOffset = -(~~$('html').css('padding-left').replace('px', '') + ~~$('body').css('margin-left').replace('px', '')),
-		topOffset = -32;
-	tt.className = 'ex-tooltip';
-	document.body.appendChild(tt);
-	var data = {
-		"xScale": "time",
-		"yScale": "linear",
-		"main": [{
-			"className": ".xchart-class-1",
-			"data": [{
-				"x": "2014-10-05",
-				"y": 6
-			}, {
-				"x": "2014-10-06",
-				"y": 6
-			}, {
-				"x": "2014-10-07",
-				"y": 8
-			}, {
-				"x": "2014-10-08",
-				"y": 3
-			}, {
-				"x": "2014-10-09",
-				"y": 4
-			}, {
-				"x": "2014-10-10",
-				"y": 9
-			}, {
-				"x": "2014-10-11",
-				"y": 6
-			}, {
-				"x": "2014-10-12",
-				"y": 16
-			}, {
-				"x": "2014-10-13",
-				"y": 4
-			}, {
-				"x": "2014-10-14",
-				"y": 9
-			}, {
-				"x": "2014-10-15",
-				"y": 2
-			}]
-		}]
-	};
-	var opts = {
-		"dataFormatX": function(x) {
-			return d3.time.format('%Y-%m-%d').parse(x);
-		},
-		"tickFormatX": function(x) {
-			return d3.time.format('%A')(x);
-		},
-		"mouseover": function(d, i) {
-			var pos = $(this).offset();
-			$(tt).text(d3.time.format('%A')(d.x) + ': ' + d.y)
-				.css({
-					top: topOffset + pos.top,
-					left: pos.left + leftOffset
-				})
-				.show();
-		},
-		"mouseout": function(x) {
-			$(tt).hide();
+function FlotGraph1() {
+	// We use an inline data source in the example, usually data would
+	// be fetched from a server
+	var data = [],
+		totalPoints = 300;
+
+	function getRandomData() {
+		if (data.length > 0)
+			data = data.slice(1);
+		// Do a random walk
+		while (data.length < totalPoints) {
+			var prev = data.length > 0 ? data[data.length - 1] : 50,
+				y = prev + Math.random() * 10 - 5;
+			if (y < 0) {
+				y = 0;
+			} else if (y > 100) {
+				y = 100;
+			}
+			data.push(y);
 		}
-	};
-	var myChart = new xChart('line-dotted', data, '#xchart-1', opts);
+		// Zip the generated y values with the x values
+		var res = [];
+		for (var i = 0; i < data.length; ++i) {
+			var date = new Date("2014-11-10 15:" + i + ":00");
+			res.push([date.getTime(), data[i]]);
+		}
+		return res;
+	}
+	var updateInterval = 2000;
+	var plot = $.plot("#box-one-content", [getRandomData()], {
+		series: {
+			shadowSize: 0 // Drawing is faster without shadows
+		},
+		yaxis: {
+			min: 0,
+			max: 100
+		},
+		xaxis: {
+			mode: "time",
+			timeformat : "%H:%M",
+			tickSize: [5, "minute"],
+			axisLabel: "Date",
+			axisLabelUseCanvas: true,
+			axisLabelFontSizePixels: 12,
+			axisLabelFontFamily: 'Verdana, Arial',
+			axisLabelPadding: 10
+		}
+	});
+
+	function update() {
+		plot.setData([getRandomData()]);
+		// Since the axes don't change, we don't need to call plot.setupGrid()
+		plot.draw();
+		//setTimeout(update, updateInterval);
+	}
+	update();
 }
 //
-// Graph2 created in element with id = xchart-2
+// Graph2 created in element with id = box-two-content
 //
-function xGraph2() {
-	var data = {
-		"xScale": "ordinal",
-		"yScale": "linear",
-		"main": [{
-			"className": ".xchart-class-2",
-			"data": [{
-				"x": "Apple",
-				"y": 575
-			}, {
-				"x": "Facebook",
-				"y": 163
-			}, {
-				"x": "Microsoft",
-				"y": 303
-			}, {
-				"x": "Cisco",
-				"y": 121
-			}, {
-				"x": "Google",
-				"y": 393
-			}]
-		}]
-	};
-	var myChart = new xChart('bar', data, '#xchart-2');
+function FlotGraph2() {
+	var sin = [];
+	var cos = [];
+	var tan = [];
+	for (var i = 0; i < 14; i += 0.1) {
+		sin.push([i, Math.sin(i)]);
+		cos.push([i, Math.cos(i)]);
+		tan.push([i, Math.tan(i) / 4]);
+	}
+	var plot = $.plot("#box-two-content", [{
+		data: sin,
+		label: "sin(x) = -0.00"
+	}, {
+		data: cos,
+		label: "cos(x) = -0.00"
+	}, {
+		data: tan,
+		label: "tan(x)/4 = -0.00"
+	}], {
+		series: {
+			lines: {
+				show: true
+			}
+		},
+		crosshair: {
+			mode: "x"
+		},
+		grid: {
+			hoverable: true,
+			autoHighlight: false
+		},
+		yaxis: {
+			min: -5.2,
+			max: 5.2
+		}
+	});
+	var legends = $("#box-two-content .legendLabel");
+	legends.each(function() {
+		// fix the widths so they don't jump around
+		$(this).css('width', $(this).width());
+	});
+	var updateLegendTimeout = null;
+	var latestPosition = null;
+
+	function updateLegend() {
+		updateLegendTimeout = null;
+		var pos = latestPosition;
+		var axes = plot.getAxes();
+		if (pos.x < axes.xaxis.min || pos.x > axes.xaxis.max ||
+			pos.y < axes.yaxis.min || pos.y > axes.yaxis.max) {
+			return;
+		}
+		var i, j, dataset = plot.getData();
+		for (i = 0; i < dataset.length; ++i) {
+			var series = dataset[i];
+			// Find the nearest points, x-wise
+			for (j = 0; j < series.data.length; ++j) {
+				if (series.data[j][0] > pos.x) {
+					break;
+				}
+			}
+			// Now Interpolate
+			var y, p1 = series.data[j - 1],
+				p2 = series.data[j];
+			if (p1 == null) {
+				y = p2[1];
+			} else if (p2 == null) {
+				y = p1[1];
+			} else {
+				y = p1[1] + (p2[1] - p1[1]) * (pos.x - p1[0]) / (p2[0] - p1[0]);
+			}
+			legends.eq(i).text(series.label.replace(/=.*/, "= " + y.toFixed(2)));
+		}
+	}
+	$("#box-two-content").bind("plothover", function(event, pos, item) {
+		latestPosition = pos;
+		if (!updateLegendTimeout) {
+			updateLegendTimeout = setTimeout(updateLegend, 50);
+		}
+	});
 }
 //
-// Graph3 created in element with id = xchart-3
+// Graph4 created in element with id = box-four-content
 //
-function xGraph3() {
-	var data = {
-		"xScale": "time",
-		"yScale": "linear",
-		"type": "line",
-		"main": [{
-			"className": ".xchart-class-3",
-			"data": [{
-				"x": "2014-10-05",
-				"y": 1
-			}, {
-				"x": "2014-10-06",
-				"y": 6
-			}, {
-				"x": "2014-10-07",
-				"y": 13
-			}, {
-				"x": "2014-10-08",
-				"y": -3
-			}, {
-				"x": "2014-10-09",
-				"y": -4
-			}, {
-				"x": "2014-10-10",
-				"y": 9
-			}, {
-				"x": "2014-10-11",
-				"y": 6
-			}, {
-				"x": "2014-10-12",
-				"y": 7
-			}, {
-				"x": "2014-10-13",
-				"y": -2
-			}, {
-				"x": "2014-10-14",
-				"y": -7
-			}]
-		}]
-	};
-	var opts = {
-		"dataFormatX": function(x) {
-			return d3.time.format('%Y-%m-%d').parse(x);
-		},
-		"tickFormatX": function(x) {
-			return d3.time.format('%A')(x);
+function FlotGraph4() {
+	var d1 = [];
+	for (var i = 0; i < 14; i += 0.5) {
+		d1.push([i, Math.sin(i)]);
+	}
+	var d2 = [];
+	var d3 = [];
+	var d4 = [];
+	var d5 = [];
+	var d6 = [];
+	$.plot("#box-four-content", [{
+		data: d1,
+		lines: {
+			show: true,
+			fill: true
 		}
-	};
-	var myChart = new xChart('line', data, '#xchart-3', opts);
+	}, {
+		data: d2,
+		bars: {
+			show: true
+		}
+	}, {
+		data: d3,
+		points: {
+			show: true
+		}
+	}, {
+		data: d4,
+		lines: {
+			show: true
+		}
+	}, {
+		data: d5,
+		lines: {
+			show: true
+		},
+		points: {
+			show: true
+		}
+	}, {
+		data: d6,
+		lines: {
+			show: true,
+			steps: true
+		}
+	}]);
 }
 
 function xGraph4() {
@@ -627,30 +372,31 @@ function xGraph4() {
 		"type": "line", //bar, cumulative(增量), line, line-dotted
 		"main": [{
 			"className": ".xchart-class-4.l1",
-			"objName": "IBM_sniffer_202.181.176.85",
+			"label": "IBM_sniffer_202.181.176.85",
 			"data": []
 		}, {
 			"className": ".xchart-class-4.l2",
-			"objName": "sniffer_202.181.225.221_v2",
+			"label": "sniffer_202.181.225.221_v2",
 			"data": []
 		}, {
 			"className": ".xchart-class-4.l3",
-			"objName": "ipcad_mrtg_202.181.225.220_v2",
+			"label": "ipcad_mrtg_202.181.225.220_v2",
 			"data": []
 		}, {
 			"className": ".xchart-class-4.l4",
-			"objName": "websso_202.181.225.219",
+			"label": "websso_202.181.225.219",
 			"data": []
 		}, {
 			"className": ".xchart-class-4.l5",
-			"objName": "necportal_202.181.176.83_Pls dont remove",
+			"label": "necportal_202.181.176.83_Pls dont remove",
 			"data": []
 		}, {
 			"className": ".xchart-class-4.l6",
-			"objName": "CNLink_Web_server",
+			"label": "CNLink_Web_server",
 			"data": []
 		}]
 	};
+
 
 	function getRandomData(base, range, max, min) {
 		var _rel = base + Math.floor(Math.random() * range - range / 2);
@@ -670,7 +416,7 @@ function xGraph4() {
 			_val = getRandomData(_val, 10, 60, 0);
 			_data.push({
 				"y": _val,
-				"x": "2014-10-24 14:" + i + ":00"
+				"x": "2014-11-10 14:" + i + ":00"
 			});
 		}
 	}
@@ -743,158 +489,9 @@ function RedrawKnob(elem) {
 }
 
 
-
-//
-// Draw Springy graphs (Network map) on Dashboard page
-//
-function SpringyNetmap() {
-	var graph = new Springy.Graph();
-	var core1 = graph.newNode({
-		label: 'Network core 1 (Cisco 3750G-48PS)'
-	});
-	var core2 = graph.newNode({
-		label: 'Network core 2 (Cisco 3750G-48PS)'
-	});
-	var srv1 = graph.newNode({
-		label: 'Server switch 1 (Cisco 3750G-48TS)'
-	});
-	var srv2 = graph.newNode({
-		label: 'Server switch 2 (Cisco 3750G-48TS)'
-	});
-	var pabx1 = graph.newNode({
-		label: 'PABX switch 1 (Cisco 3750G-48TS)'
-	});
-	var pabx2 = graph.newNode({
-		label: 'PABX switch 2 (Cisco 3750G-48TS)'
-	});
-	var router1 = graph.newNode({
-		label: 'Router 1 (Cisco 3945E)'
-	});
-	var router2 = graph.newNode({
-		label: 'Router 2 (Cisco 3945E)'
-	});
-	graph.newEdge(core1, core2, {
-		color: '#00A0B0'
-	});
-	graph.newEdge(core2, core1, {
-		color: '#6A4A3C'
-	});
-	graph.newEdge(core1, srv1, {
-		color: '#CC333F'
-	});
-	graph.newEdge(core2, srv1, {
-		color: '#CC333F'
-	});
-	graph.newEdge(core1, srv2, {
-		color: '#EB6841'
-	});
-	graph.newEdge(core2, srv2, {
-		color: '#EB6841'
-	});
-	graph.newEdge(srv1, srv2, {
-		color: '#EDC951'
-	});
-	graph.newEdge(srv2, srv1, {
-		color: '#EDC951'
-	});
-	graph.newEdge(pabx1, core1, {
-		color: '#7DBE3C'
-	});
-	graph.newEdge(pabx1, core2, {
-		color: '#7DBE3C'
-	});
-	graph.newEdge(pabx2, core1, {
-		color: '#000000'
-	});
-	graph.newEdge(pabx2, core2, {
-		color: '#000000'
-	});
-	graph.newEdge(router1, core1, {
-		color: '#00A0B0'
-	});
-	graph.newEdge(router1, core2, {
-		color: '#00A0B0'
-	});
-	graph.newEdge(router2, core1, {
-		color: '#6A4A3C'
-	});
-	graph.newEdge(router2, core2, {
-		color: '#6A4A3C'
-	});
-	graph.newEdge(pabx1, pabx2, {
-		color: '#CC333F'
-	});
-	graph.newEdge(pabx2, pabx1, {
-		color: '#CC333F'
-	});
-	graph.newEdge(router1, router2, {
-		color: '#EB6841'
-	});
-	graph.newEdge(router2, router1, {
-		color: '#EB6841'
-	});
-	$('#springy-demo').springy({
-		graph: graph,
-		nodeSelected: function(node) {
-			console.log('Node selected: ' + JSON.stringify(node.data));
-		}
-	});
-}
-/*-------------------------------------------
-	Function for File upload page (form_file_uploader.html)
-	---------------------------------------------*/
-function FileUpload() {
-	$('#bootstrapped-fine-uploader').fineUploader({
-		template: 'qq-template-bootstrap',
-		classes: {
-			success: 'alert alert-success',
-			fail: 'alert alert-error'
-		},
-		thumbnails: {
-			placeholders: {
-				waitingPath: "assets/waiting-generic.png",
-				notAvailablePath: "assets/not_available-generic.png"
-			}
-		},
-		request: {
-			endpoint: 'server/handleUploads'
-		},
-		validation: {
-			allowedExtensions: ['jpeg', 'jpg', 'gif', 'png']
-		}
-	});
-}
-
-/*-------------------------------------------
-	Function for Flickr Gallery page (gallery_flickr.html)
-	---------------------------------------------*/
-//
-// Load data from Flicks, parse and create gallery
-//
-function displayFlickrImages(data) {
-	var res;
-	$.each(data.items, function(i, item) {
-		if (i > 11) {
-			return false;
-		}
-		res = "<a href=" + item.link + " title=" + item.title + " target=\"_blank\"><img alt=" + item.title + " src=" + item.media.m + " /></a>";
-		$('#box-one-content').append(res);
-	});
-	setTimeout(function() {
-		$("#box-one-content").justifiedGallery({
-			'usedSuffix': 'lt240',
-			'justifyLastRow': true,
-			'rowHeight': 150,
-			'fixedHeight': false,
-			'captions': true,
-			'margins': 1
-		});
-		$('#box-one-content').fadeIn('slow');
-	}, 100);
-}
 /*-------------------------------------------
 	Function for Form Layout page (form layouts.html)
-	---------------------------------------------*/
+---------------------------------------------*/
 //
 // Example form validator function
 //
@@ -1010,6 +607,8 @@ function DemoFormValidator() {
 		}
 	});
 }
+
+
 //
 // Function for Dynamically Change input size on Form Layout page
 //
@@ -1046,104 +645,8 @@ function FormLayoutExampleInputLength(selector) {
 		}
 	});
 }
-/*-------------------------------------------
-	Functions for Progressbar page (ui_progressbars.html)
-	---------------------------------------------*/
-//
-// Function for Knob clock
-//
-function RunClock() {
-	var second = $(".second");
-	var minute = $(".minute");
-	var hour = $(".hour");
-	var d = new Date();
-	var s = d.getSeconds();
-	var m = d.getMinutes();
-	var h = d.getHours();
-	if (h > 11) {
-		h = h - 12;
-	}
-	$('#knob-clock-value').html(h + ':' + m + ':' + s);
-	second.val(s).trigger("change");
-	minute.val(m).trigger("change");
-	hour.val(h).trigger("change");
-}
-//
-// Function for create test sliders on Progressbar page
-//
-function CreateAllSliders() {
-	$(".slider-default").slider();
-	var slider_range_min_amount = $(".slider-range-min-amount");
-	var slider_range_min = $(".slider-range-min");
-	var slider_range_max = $(".slider-range-max");
-	var slider_range_max_amount = $(".slider-range-max-amount");
-	var slider_range = $(".slider-range");
-	var slider_range_amount = $(".slider-range-amount");
-	slider_range_min.slider({
-		range: "min",
-		value: 37,
-		min: 1,
-		max: 700,
-		slide: function(event, ui) {
-			slider_range_min_amount.val("$" + ui.value);
-		}
-	});
-	slider_range_min_amount.val("$" + slider_range_min.slider("value"));
-	slider_range_max.slider({
-		range: "max",
-		min: 1,
-		max: 100,
-		value: 2,
-		slide: function(event, ui) {
-			slider_range_max_amount.val(ui.value);
-		}
-	});
-	slider_range_max_amount.val(slider_range_max.slider("value"));
-	slider_range.slider({
-		range: true,
-		min: 0,
-		max: 500,
-		values: [75, 300],
-		slide: function(event, ui) {
-			slider_range_amount.val("$" + ui.values[0] + " - $" + ui.values[1]);
-		}
-	});
-	slider_range_amount.val("$" + slider_range.slider("values", 0) +
-		" - $" + slider_range.slider("values", 1));
-	$("#equalizer > div.progress > div").each(function() {
-		// read initial values from markup and remove that
-		var value = parseInt($(this).text(), 10);
-		$(this).empty().slider({
-			value: value,
-			range: "min",
-			animate: true,
-			orientation: "vertical"
-		});
-	});
-}
-/*-------------------------------------------
-	Function for jQuery-UI page (ui_jquery-ui.html)
-	---------------------------------------------*/
-//
-// Function for make all Date-Time pickers on page
-//
-function AllTimePickers() {
-	$('#datetime_example').datetimepicker({});
-	$('#time_example').timepicker({
-		hourGrid: 4,
-		minuteGrid: 10,
-		timeFormat: 'hh:mm tt'
-	});
-	$('#date3_example').datepicker({
-		numberOfMonths: 3,
-		showButtonPanel: true
-	});
-	$('#date3-1_example').datepicker({
-		numberOfMonths: 3,
-		showButtonPanel: true
-	});
-	$('#date_example').datepicker({});
-}
+
+
 
 /*-------------------------------------------
 	Function for table pages (property.html etc.)
@@ -1152,33 +655,48 @@ function AllTimePickers() {
 // Function for rightClick on table item
 //
 function tableRightClick() {
-	$('tr.right-click')[0].onMouseDown = function(e) {
-		var e = e || window.event;
-		if (e.button == '2') {
-			$(this).next('.right-click-menu').css({
-				top: e.position.y,
-				left: e.position.x
-			}).removeClass('hide');
-		};
-	}
+	$('.right-click-menu').each(function(index, val) {
+		/* iterate through array or object */
+		$(this).data('originHtml', this.innerHTML);
+	});
+	$('body').mousedown(function(event) {
+		/* Act on the event */
+		$('.right-click-menu.open').removeClass('open');
+	});
+	$('[data-right-menu]').mouseup(function(event) {
+		/* Act on the event */
+		event.preventDefault();
+		var $targetMenu = $($(this).attr('data-right-menu'));
+		if (event.button == '2') {
+			$targetMenu.addClass('open').css({
+				top: event.pageY,
+				left: event.pageX
+			}).html($targetMenu.data('originHtml').replace("{1}", $(this).attr('data-id')));
+		} else {
+			$targetMenu.removeClass('open');
+		}
+	}).bind("contextmenu", function(e) { //不显示默认右键菜单
+		return false;
+	});
 }
 
 /**
  * load property interactive actions
  */
 function loadPropertyInfoFuc() {
-	$('.property-table tr').click(function(e){
+	$('.property-table tr').click(function(e) {
 		changeInfo();
 	})
 }
- 
+
 function docReady() {
 	$('a[href="#"]').click(function(e) {
 		e.preventDefault();
 	});
+	$('.right-click-menu').appendTo('body');
 	/*$('.height-limited[data-height]').each(function(index, val) {
 		 $(this).css("height", $(this).attr("data-height")+'px');
-	});*/
+		});*/
 }
 
 //////////////////////////////////////////////////////
@@ -1280,10 +798,7 @@ $(document).ready(function() {
 		$('#screensaver').addClass("show");
 		ScreenSaver();
 	});*/
-	$('body').on('click', 'a.close-link', function(e) {
-		e.preventDefault();
-		CloseModalBox();
-	});
+
 	$('#top-panel').on('click', 'a', function(e) {
 		if ($(this).hasClass('ajax-link')) {
 			e.preventDefault();
@@ -1295,15 +810,6 @@ $(document).ready(function() {
 			var url = $(this).attr('href');
 			window.location.hash = url;
 			LoadAjaxContent(url);
-		}
-	});
-	$('#search').on('keydown', function(e) {
-		if (e.keyCode == 13) {
-			e.preventDefault();
-			$('#content').removeClass('full-content');
-			ajax_url = 'ajax/page_search.html';
-			window.location.hash = ajax_url;
-			LoadAjaxContent(ajax_url);
 		}
 	});
 	/*$('#screen_unlock').on('mouseover', function(){

@@ -132,8 +132,8 @@ API.txt for details.
 		var props = ["Date", "Day", "FullYear", "Hours", "Milliseconds", "Minutes", "Month", "Seconds"];
 
 		for (var p = 0; p < props.length; p++) {
-			addProxyMethod(utc, "get" + props[p], d, "getUTC" + props[p]);
-			addProxyMethod(utc, "set" + props[p], d, "setUTC" + props[p]);
+			addProxyMethod(utc, "get" + props[p], d, "get" + props[p]);
+			addProxyMethod(utc, "set" + props[p], d, "set" + props[p]);
 		}
 
 		return utc;
