@@ -9,44 +9,44 @@
 //  homepage: http://trentrichardson.com/examples/timepicker/
 //
 function LoadTimePickerScript(callback) {
-	if (!$.fn.timepicker) {
-		$.getScript('plugins/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.js', callback);
-	} else {
-		if (callback && typeof(callback) === "function") {
-			callback();
+		if (!$.fn.timepicker) {
+			$.getScript('plugins/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.js', callback);
+		} else {
+			if (callback && typeof(callback) === "function") {
+				callback();
+			}
 		}
 	}
-}
-//
-//  Dynamically load Bootstrap Validator Plugin
-//  homepage: https://github.com/nghuuphuoc/bootstrapvalidator
-//
+	//
+	//  Dynamically load Bootstrap Validator Plugin
+	//  homepage: https://github.com/nghuuphuoc/bootstrapvalidator
+	//
 function LoadBootstrapValidatorScript(callback) {
-	if (!$.fn.bootstrapValidator) {
-		$.getScript('plugins/bootstrapvalidator/bootstrapValidator.min.js', callback);
-	} else {
-		if (callback && typeof(callback) === "function") {
-			callback();
+		if (!$.fn.bootstrapValidator) {
+			$.getScript('plugins/bootstrapvalidator/bootstrapValidator.min.js', callback);
+		} else {
+			if (callback && typeof(callback) === "function") {
+				callback();
+			}
 		}
 	}
-}
-//
-//  Dynamically load jQuery Select2 plugin
-//  homepage: https://github.com/ivaynberg/select2  v3.4.5  license - GPL2
-//
+	//
+	//  Dynamically load jQuery Select2 plugin
+	//  homepage: https://github.com/ivaynberg/select2  v3.4.5  license - GPL2
+	//
 function LoadSelect2Script(callback) {
-	if (!$.fn.select2) {
-		$.getScript('plugins/select2/select2.min.js', callback);
-	} else {
-		if (callback && typeof(callback) === "function") {
-			callback();
+		if (!$.fn.select2) {
+			$.getScript('plugins/select2/select2.min.js', callback);
+		} else {
+			if (callback && typeof(callback) === "function") {
+				callback();
+			}
 		}
 	}
-}
-//
-//  Dynamically load DataTables plugin
-//  homepage: http://datatables.net v1.9.4 license - GPL or BSD
-//
+	//
+	//  Dynamically load DataTables plugin
+	//  homepage: http://datatables.net v1.9.4 license - GPL or BSD
+	//
 function LoadDataTablesScripts(callback) {
 	function LoadDatatables() {
 		$.getScript('plugins/datatables/jquery.dataTables.js', function() {
@@ -83,6 +83,32 @@ function LoadFlotScripts(callback) {
 	function LoadFlotTimeScript() {
 		$.getScript('plugins/flot/jquery.flot.time.js', callback);
 	}
+
+	$.fn.UseTooltip = function(xCal, yCal) { //图表插件提示信息
+		$(this).data('previousPoint', null);
+		$(this).data('previousLabel', null);
+		$(this).bind("plothover", function(event, pos, item) {
+			var tooltipId = '#toolTip' + $(this).attr('id') || $(this).attr('class');
+			if (item) {
+				//console.log($(this).data('previousPoint'), item.dataIndex);
+				if (($(this).data('previousLabel') != item.series.label)||($(this).data('previousPoint') != item.dataIndex)) {
+					$(this).data('previousPoint', item.dataIndex);
+					$(this).data('previousLabel', item.series.label);
+					$(tooltipId).remove();
+					var color = item.series.color;
+					var label = item.series.label;
+					showTooltip(tooltipId.substr(1), pos.pageX,
+						pos.pageY,
+						color, (label ? '<h5><strong>' + label + '</strong><br></h5>' : '') +
+						"<strong>" + xCal(item) +
+						"<strong> -- " + yCal(item));
+				}
+			} else {
+				$(tooltipId).remove();
+				$(this).data('previousPoint', null);
+			}
+		});
+	};
 	if (!$.fn.flot) {
 		LoadFlotScript();
 	} else {
@@ -100,51 +126,51 @@ function LoadFlotScripts(callback) {
 //  Function for load content from url and put in $('.ajax-content') block
 //
 function LoadAjaxContent(url) {
-	$('.preloader').show();
-	$.ajax({
-		mimeType: 'text/html; charset=utf-8', // ! Need set mimeType only when run from local file
-		url: url,
-		type: 'GET',
-		success: function(data) {
-			$('#ajax-content').html(data);
-			$('.preloader').hide();
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			alert(errorThrown);
-		},
-		dataType: "html",
-		async: false
-	});
-	docReady();
-}
-//
-//  Function maked all .box selector is draggable, to disable for concrete element add class .no-drop
-//
-function WinMove() {
-	$("div.box").not('.no-drop')
-		.draggable({
-			revert: true,
-			zIndex: 2000,
-			cursor: "crosshair",
-			handle: '.box-name',
-			opacity: 0.8
-		})
-		.droppable({
-			tolerance: 'pointer',
-			drop: function(event, ui) {
-				var draggable = ui.draggable;
-				var droppable = $(this);
-				if (draggable.hasClass('box') && droppable.hasClass('box')) {
-					draggable = draggable.parent();
-					droppable = droppable.parent();
-				}
-				draggable.swap(droppable);
-			}
+		$('.preloader').show();
+		$.ajax({
+			mimeType: 'text/html; charset=utf-8', // ! Need set mimeType only when run from local file
+			url: url,
+			type: 'GET',
+			success: function(data) {
+				$('#ajax-content').html(data);
+				$('.preloader').hide();
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert(errorThrown);
+			},
+			dataType: "html",
+			async: false
 		});
-}
-//
-// Swap 2 elements on page. Used by WinMove function
-//
+		docReady();
+	}
+	//
+	//  Function maked all .box selector is draggable, to disable for concrete element add class .no-drop
+	//
+function WinMove() {
+		$("div.box").not('.no-drop')
+			.draggable({
+				revert: true,
+				zIndex: 2000,
+				cursor: "crosshair",
+				handle: '.box-name',
+				opacity: 0.8
+			})
+			.droppable({
+				tolerance: 'pointer',
+				drop: function(event, ui) {
+					var draggable = ui.draggable;
+					var droppable = $(this);
+					if (draggable.hasClass('box') && droppable.hasClass('box')) {
+						draggable = draggable.parent();
+						droppable = droppable.parent();
+					}
+					draggable.swap(droppable);
+				}
+			});
+	}
+	//
+	// Swap 2 elements on page. Used by WinMove function
+	//
 jQuery.fn.swap = function(b) {
 	b = jQuery(b)[0];
 	var a = this[0];
@@ -166,13 +192,12 @@ function SetMinBlockHeight(elem) {
 
 /*-------------------------------------------
 	Demo graphs for Flot Chart page (charts_flot.html)
----------------------------------------------*/
+	---------------------------------------------*/
 //
 // Graph1 created in element with id = box-one-content
 //
 function FlotGraph1() {
-	// We use an inline data source in the example, usually data would
-	// be fetched from a server
+
 	var data = [],
 		totalPoints = 300;
 
@@ -199,227 +224,289 @@ function FlotGraph1() {
 		return res;
 	}
 	var updateInterval = 2000;
-	var plot = $.plot("#box-one-content", [getRandomData()], {
-		series: {
-			shadowSize: 0 // Drawing is faster without shadows
-		},
-		yaxis: {
-			min: 0,
-			max: 100
-		},
-		xaxis: {
-			mode: "time",
-			timeformat : "%H:%M",
-			tickSize: [5, "minute"],
-			axisLabel: "Date",
-			axisLabelUseCanvas: true,
-			axisLabelFontSizePixels: 12,
-			axisLabelFontFamily: 'Verdana, Arial',
-			axisLabelPadding: 10
-		}
-	});
-
-	function update() {
-		plot.setData([getRandomData()]);
-		// Since the axes don't change, we don't need to call plot.setupGrid()
-		plot.draw();
-		//setTimeout(update, updateInterval);
-	}
-	update();
+	intervalChart(drawLineChart("#box-one-content", [getRandomData()]), getRandomData, updateInterval);
 }
+
 //
 // Graph2 created in element with id = box-two-content
 //
 function FlotGraph2() {
-	var sin = [];
-	var cos = [];
-	var tan = [];
-	for (var i = 0; i < 14; i += 0.1) {
-		sin.push([i, Math.sin(i)]);
-		cos.push([i, Math.cos(i)]);
-		tan.push([i, Math.tan(i) / 4]);
-	}
-	var plot = $.plot("#box-two-content", [{
-		data: sin,
-		label: "sin(x) = -0.00"
-	}, {
-		data: cos,
-		label: "cos(x) = -0.00"
-	}, {
-		data: tan,
-		label: "tan(x)/4 = -0.00"
-	}], {
-		series: {
-			lines: {
-				show: true
-			}
-		},
-		crosshair: {
-			mode: "x"
-		},
-		grid: {
-			hoverable: true,
-			autoHighlight: false
-		},
-		yaxis: {
-			min: -5.2,
-			max: 5.2
-		}
-	});
-	var legends = $("#box-two-content .legendLabel");
-	legends.each(function() {
-		// fix the widths so they don't jump around
-		$(this).css('width', $(this).width());
-	});
-	var updateLegendTimeout = null;
-	var latestPosition = null;
+	var rawData = [
+		[
+			[1582.3, 0], //Gold
+			[28.95, 1], //Silver
+			[1603, 2], //Platinum
+			[774, 3], //Palladium
+			[1245, 4], //Rhodium
+			[85, 5], //Ruthenium
+			[1025, 6] //Iridium
+		]
+	];
+	var ticks = [
+		[0, "Gold"],
+		[1, "Silver"],
+		[2, "Platinum"],
+		[3, "Palldium"],
+		[4, "Rhodium"],
+		[5, "Ruthenium"],
+		[6, "Iridium"]
+	];
+	drawHBarChart("#box-two-content", rawData, ticks);
+}
 
-	function updateLegend() {
-		updateLegendTimeout = null;
-		var pos = latestPosition;
-		var axes = plot.getAxes();
-		if (pos.x < axes.xaxis.min || pos.x > axes.xaxis.max ||
-			pos.y < axes.yaxis.min || pos.y > axes.yaxis.max) {
-			return;
-		}
-		var i, j, dataset = plot.getData();
-		for (i = 0; i < dataset.length; ++i) {
-			var series = dataset[i];
-			// Find the nearest points, x-wise
-			for (j = 0; j < series.data.length; ++j) {
-				if (series.data[j][0] > pos.x) {
-					break;
-				}
-			}
-			// Now Interpolate
-			var y, p1 = series.data[j - 1],
-				p2 = series.data[j];
-			if (p1 == null) {
-				y = p2[1];
-			} else if (p2 == null) {
-				y = p1[1];
-			} else {
-				y = p1[1] + (p2[1] - p1[1]) * (pos.x - p1[0]) / (p2[0] - p1[0]);
-			}
-			legends.eq(i).text(series.label.replace(/=.*/, "= " + y.toFixed(2)));
-		}
-	}
-	$("#box-two-content").bind("plothover", function(event, pos, item) {
-		latestPosition = pos;
-		if (!updateLegendTimeout) {
-			updateLegendTimeout = setTimeout(updateLegend, 50);
-		}
+
+//
+// Graph2 created in element with id = box-three-content
+//
+function FlotGraph3() {
+	var rawData = [
+		[
+			[0, 1582.3], //Gold
+			[1, 28.95], //Silver
+			[2, 1603], //Platinum
+			[3, 774], //Palladium
+			[4, 1245], //Rhodium
+			[5, 85], //Ruthenium
+			[6, 1025] //Iridium
+		]
+	];
+	var ticks = [
+		[0, "Gold"],
+		[1, "Silver"],
+		[2, "Platinum"],
+		[3, "Palldium"],
+		[4, "Rhodium"],
+		[5, "Ruthenium"],
+		[6, "Iridium"]
+	];
+	drawVBarChart("#box-three-content", rawData, ticks, {
+		theme: 'black'
 	});
 }
+
 //
 // Graph4 created in element with id = box-four-content
 //
 function FlotGraph4() {
-	var d1 = [];
-	for (var i = 0; i < 14; i += 0.5) {
-		d1.push([i, Math.sin(i)]);
-	}
-	var d2 = [];
-	var d3 = [];
-	var d4 = [];
-	var d5 = [];
-	var d6 = [];
-	$.plot("#box-four-content", [{
-		data: d1,
-		lines: {
-			show: true,
-			fill: true
-		}
-	}, {
-		data: d2,
-		bars: {
-			show: true
-		}
-	}, {
-		data: d3,
-		points: {
-			show: true
-		}
-	}, {
-		data: d4,
-		lines: {
-			show: true
-		}
-	}, {
-		data: d5,
-		lines: {
-			show: true
-		},
-		points: {
-			show: true
-		}
-	}, {
-		data: d6,
-		lines: {
-			show: true,
-			steps: true
-		}
-	}]);
-}
 
-function xGraph4() {
-	var tt = $('.ex-tooltip'),
-		leftOffset = -(~~$('html').css('padding-left').replace('px', '') + ~~$('body').css('margin-left').replace('px', '')),
-		topOffset = -32;
-	var data = {
-		"xScale": "time",
-		"yScale": "linear", //ordinal, linear, time, exponential
-		"type": "line", //bar, cumulative(增量), line, line-dotted
-		"main": [{
-			"className": ".xchart-class-4.l1",
-			"label": "IBM_sniffer_202.181.176.85",
-			"data": []
-		}, {
-			"className": ".xchart-class-4.l2",
-			"label": "sniffer_202.181.225.221_v2",
-			"data": []
-		}, {
-			"className": ".xchart-class-4.l3",
-			"label": "ipcad_mrtg_202.181.225.220_v2",
-			"data": []
-		}, {
-			"className": ".xchart-class-4.l4",
-			"label": "websso_202.181.225.219",
-			"data": []
-		}, {
-			"className": ".xchart-class-4.l5",
-			"label": "necportal_202.181.176.83_Pls dont remove",
-			"data": []
-		}, {
-			"className": ".xchart-class-4.l6",
-			"label": "CNLink_Web_server",
-			"data": []
-		}]
+	var _dataArr = [{
+		label: "IBM_sniffer_202.181.176.85",
+		data: []
+	}, {
+		label: "sniffer_202.181.225.221_v2",
+		data: []
+	}, {
+		label: "ipcad_mrtg_202.181.225.220_v2",
+		data: []
+	}, {
+		label: "websso_202.181.225.219",
+		data: []
+	}, {
+		label: "necportal_202.181.176.83_Pls dont remove",
+		data: []
+	}, {
+		label: "CNLink_Web_server",
+		data: []
+	}];
+	for (var index = 5; index >= 0; index--) {
+		var _val = (index + 1) * 10;
+		var _data = [];
+		for (var i = 0; i < 20; ++i) { //插入数据
+			_val = getRandomData(_val, 10, 60, 0);
+			_data.push([new Date("2014-11-10 15:" + i + ":00"), _val]);
+		}
+		_dataArr[index].data = _data;
 	};
 
+	drawLineChart("#box-four-content", _dataArr, {
+		legendContainer: '#graph4Legend'
+	});
 
+	/*test*/
 	function getRandomData(base, range, max, min) {
 		var _rel = base + Math.floor(Math.random() * range - range / 2);
 		_rel = _rel > max ? max * 3 - _rel * 2 : _rel;
 		return _rel < min ? min * 3 - _rel * 2 : _rel;
 	}
 
-	$('#xchart-4').next(".name-tags").remove();
-	for (var index = -1, _main = data.main[0]; _main = data.main[++index];) { //简化的数组遍历
-		var _data = _main.data;
-		var _val = (index + 1) * 10;
-		if (_main.objName) { //添加标签说明
-			$('#xchart-4').next(".name-tags").length || $('#xchart-4').after('<div class="name-tags row">');
-			$('#xchart-4').next(".name-tags").append('<div class="name-tag col-xs-12"><div class="color-block color' + index + '"></div><span class="objName">' + _main.objName + '</span></div>');
+}
+
+
+/***
+*flot图表绘图函数
+*params：
+	placeholder：jquery Object，DOM对象，或者jquery选择器内容 //flot图表的容器
+	dataArr: [
+		{ label:"IBM_sniffer_202.181.176.85" , data: [[x1, y1], [x2, y2], [x3, y3]]},
+		{ label:"sniffer_202.181.225.221_v2" , data: [[x1, y1], [x2, y2], [x3, y3]]},
+		{ label:"ipcad_mrtg_202.181.225.220_v2" , data: [[x1, y1], [x2, y2], [x3, y3]]}
+	] 	//绘图数据，label用于显示legend信息，可不写；
+		//折线图中, data中的x轴为time类型，需转化为毫秒（int型）
+		//饼图的data为一个整型
+	clientOptions: {//个性配置
+		theme: black,
+		legendContainer: legend的容器，用于折线图和饼图
+	}
+*return: plot对象
+***/
+
+function drawChart(placeholder, dataArr, options, clientOptions) {
+	options.grid = {
+		borderWidth: 2,
+		hoverable: true
+	};
+	if (clientOptions) {
+		if (clientOptions.theme && clientOptions.theme == 'black') {
+			options.grid.backgroundColor = {
+				colors: ["#171717", "#4F4F4F"]
+			}
 		};
-		for (var i = 0; i < 20; ++i) { //插入数据
-			_val = getRandomData(_val, 10, 60, 0);
-			_data.push({
-				"y": _val,
-				"x": "2014-11-10 14:" + i + ":00"
-			});
+		if (clientOptions.legendContainer) {
+			options.legend = {
+				show: true,
+				container: $(clientOptions.legendContainer)
+			}
+		};
+	}
+	return $.plot(placeholder, dataArr, options);
+}
+
+function drawLineChart(placeholder, dataArr, clientOptions) {
+	var options = {
+		series: {
+			shadowSize: 0,
+			lines: {
+				show: true
+			}
+		},
+		xaxis: {
+			mode: "time",
+			timezone: "browser",
+			timeformat: "%H:%M",
+			axisLabel: "Date",
+			axisLabelUseCanvas: true,
+			axisLabelFontSizePixels: 12,
+			axisLabelFontFamily: 'Verdana, Arial',
+			axisLabelPadding: 10
 		}
 	}
+	$(placeholder).UseTooltip(
+		function(item) {
+			var _date = new Date(item.datapoint[0]);
+			return _date.getHours() + ':' + _date.getMinutes();
+		},
+		function(item) {
+			return item.datapoint[1];
+		}
+	);
+	return drawChart(placeholder, dataArr, options, clientOptions);
+}
+
+/**********
+dataArr: [[1582.3, 0], [28.95, 1],[1603, 2];
+ticks: [[0, "Gold"], [1, "Silver"], [2, "Platinum"]];
+*/
+function cfgBarChart(ticks) {
+	var options = {
+		series: {
+			shadowSize: 0,
+			bars: {
+				align: "center",
+				show: true,
+				lineWidth: 1,
+				barWidth: 0.5
+			}
+		}
+	};
+	return options;
+}
+
+function drawVBarChart(placeholder, dataArr, ticks, clientOptions) {
+	var options = cfgBarChart(ticks);
+	options.xaxis = {
+		axisLabelUseCanvas: true,
+		axisLabelFontSizePixels: 12,
+		min: -1,
+		max: ticks.length,
+		axisLabelFontFamily: 'Verdana, Arial',
+		axisLabelPadding: 3,
+		tickColor: "#5E5E5E",
+		ticks: ticks
+	}
+	$(placeholder).UseTooltip(
+		function(item) {
+			return item.series.xaxis.ticks[item.datapoint[0]].label;
+		},
+		function(item) {
+			return item.datapoint[1];
+		}
+	);
+	return drawChart(placeholder, dataArr, options, clientOptions);
+}
+
+function drawHBarChart(placeholder, dataArr, ticks, clientOptions) {
+	var options = cfgBarChart(ticks);
+	options.series.bars.horizontal = true;
+	options.yaxis = {
+		axisLabelUseCanvas: true,
+		axisLabelFontSizePixels: 12,
+		min: -1,
+		max: ticks.length,
+		axisLabelFontFamily: 'Verdana, Arial',
+		axisLabelPadding: 3,
+		tickColor: "#5E5E5E",
+		ticks: ticks
+	};
+
+	$(placeholder).UseTooltip(
+		function(item) {
+			return item.series.yaxis.ticks[item.datapoint[1]].label;
+		},
+		function(item) {
+			return item.datapoint[0];
+		}
+	);
+	return drawChart(placeholder, dataArr, options, clientOptions);
+}
+
+
+function showTooltip(tooltipId, x, y, color, contents) {
+	$('<div id="' + tooltipId + '">' + contents + '</div>').css({
+		position: 'absolute',
+		display: 'none',
+		top: y - 10,
+		left: x + 10,
+		border: '2px solid ' + color,
+		padding: '3px',
+		'font-size': '9px',
+		'border-radius': '5px',
+		'background-color': '#fff',
+		'font-family': 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+		opacity: 0.9,
+		'z-index': 2001
+	}).appendTo("body").fadeIn(200);
+}
+
+
+/***
+*定时刷新图表
+*params:
+	plot: plot对象
+	dataFunc: 数据获取函数
+	interval: 刷新时间间隔(毫秒)
+	*/
+function intervalChart(plot, dataFunc, interval) {
+	plot.setData([dataFunc()]);
+	plot.setupGrid(); //刷新坐标值
+	plot.draw();
+	setTimeout(function() {
+		intervalChart(plot, dataFunc, interval);
+	}, interval);
+}
+
+
+
+/*$('#xchart-4').next(".name-tags").remove();
 
 	var myChart = new xChart('line', data, '#xchart-4', {
 		dataFormatX: function(x) {
@@ -431,18 +518,17 @@ function xGraph4() {
 		"mouseover": function(d, i) {
 			var pos = $(this).offset();
 			$(tt).html(d3.time.format('%Y-%m-%e %H:%M')(d.x) + ' - ' + '<strong>' + d.y + '</strong>')
-				.css({
-					top: topOffset + pos.top,
-					left: pos.left + leftOffset
-				})
-				.show();
+			.css({
+				top: topOffset + pos.top,
+				left: pos.left + leftOffset
+			})
+			.show();
 		},
 		"mouseout": function(x) {
 			$(tt).hide();
 		},
 		timing: 200
-	});
-}
+	});*/
 
 
 //
@@ -491,7 +577,7 @@ function RedrawKnob(elem) {
 
 /*-------------------------------------------
 	Function for Form Layout page (form layouts.html)
----------------------------------------------*/
+	---------------------------------------------*/
 //
 // Example form validator function
 //
