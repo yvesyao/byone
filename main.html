@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>BYone</title>
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="description" content="description">
 		<meta name="author" content="Yves Yao">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,8 +18,7 @@
 		<link rel="shortcut icon" href="img/favicon.gif">
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
-				<script src="http://cdn.bootcss.com/html5shiv/r29/html5.js"></script>
-				<script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+			<script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
 		<![endif]-->
 	</head>
 <body>
@@ -109,24 +109,17 @@
 		<div id="sidebar-left" class="col-xs-2 col-sm-2">
 			<ul class="nav main-menu">
 				<li>
-					<a href="ajax/dashboard.html" class="active ajax-link" title="仪表盘">
+					<a href="ajax/dashboard.html" class="active ajax-link" title="首页">
 						<i class="fa fa-dashboard"></i>
-						<span class="hidden-xs">仪表盘</span>
+						<span class="hidden-xs">首页</span>
 					</a>
 				</li>
 				
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" title="资产管理">
+				<li>
+					<a href="ajax/property.html" class="ajax-link" title="资产管理">
 						<i class="fa fa-desktop"></i>
-						 <span class="fa arrow hidden-xs"></span>
 						 <span class="hidden-xs">资产管理</span>
 					</a>
-					<ul class="dropdown-menu">
-						<li><a href="ajax/property.html" class="ajax-link">资产可视化浏览</a></li>
-						<li><a href="#" class="ajax-link">资产配置</a></li>
-						<li><a href="#" class="ajax-link">变更管理</a></li>
-						<li><a href="#" class="ajax-link">运维工具</a></li>
-					</ul>
 				</li>
 
 				<li class="dropdown">
@@ -136,10 +129,8 @@
 						 <span class="hidden-xs">网络管理</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="#" class="ajax-link">概览</a></li>
-						<li><a href="#" class="ajax-link">拓扑图</a></li>
-						<li><a href="#" class="ajax-link">IP地址薄</a></li>
-						<li><a href="#" class="ajax-link">管理工具</a></li>
+						<li><a href="#" class="ajax-link">网络拓扑</a></li>
+						<li><a href="#" class="ajax-link">MRTG图</a></li>
 					</ul>
 				</li>
 
@@ -150,12 +141,10 @@
 						 <span class="hidden-xs">云管理</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="#" class="ajax-link">概览</a></li>
-						<li><a href="#" class="ajax-link">虚拟化监测</a></li>
-						<li><a href="#" class="ajax-link">虚拟化服务监测</a></li>
+						<li><a href="#" class="ajax-link">虚拟化架构</a></li>
 					</ul>
 				</li>
-
+<!-- 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="业务服务管理">
 						<i class="fa fa-briefcase"></i>
@@ -168,7 +157,7 @@
 						<li><a href="#" class="ajax-link">业务可视化</a></li>
 						<li><a href="#" class="ajax-link">业务模拟仿真</a></li>
 					</ul>
-				</li>
+				</li> -->
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="安全管理">
@@ -177,24 +166,9 @@
 						 <span class="hidden-xs">安全管理</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="#" class="ajax-link">概览</a></li>
-						<li><a href="#" class="ajax-link">脆弱性管理</a></li>
-						<li><a href="#" class="ajax-link">风险评估</a></li>
-						<li><a href="#" class="ajax-link">安全分析</a></li>
-					</ul>
-				</li>
-
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" title="告警管理">
-						<i class="fa fa-warning"></i>
-						 <span class="fa arrow hidden-xs"></span>
-						 <span class="hidden-xs">告警管理</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="#" class="ajax-link">概览</a></li>
+						<li><a href="#" class="ajax-link">脆弱性扫描</a></li>
 						<li><a href="#" class="ajax-link">告警列表</a></li>
 						<li><a href="#" class="ajax-link">告警通知策略</a></li>
-						<li><a href="#" class="ajax-link">工单系统</a></li>
 					</ul>
 				</li>
 
@@ -202,11 +176,13 @@
 					<a href="#" class="dropdown-toggle" title="数据分析">
 						<i class="fa fa-bar-chart-o"></i>
 						 <span class="fa arrow hidden-xs"></span>
-						 <span class="hidden-xs">数据分析</span>
+						 <span class="hidden-xs">大数据分析</span>
 					</a>
 					<ul class="dropdown-menu">
+						<li><a href="#" class="ajax-link">优化分析</a></li>
+						<li><a href="#" class="ajax-link">故障分析</a></li>
 						<li><a href="#" class="ajax-link">全文检索</a></li>
-						<li><a href="#" class="ajax-link">历史搜索</a></li>
+						<li><a href="#" class="ajax-link">历史分析</a></li>
 					</ul>
 				</li>
 
@@ -217,8 +193,8 @@
 						 <span class="hidden-xs">报表</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="#" class="ajax-link">报表分类模板</a></li>
-						<li><a href="#" class="ajax-link">报表生成</a></li>
+						<li><a href="#" class="ajax-link">手动生成</a></li>
+						<li><a href="#" class="ajax-link">自动生成</a></li>
 					</ul>
 				</li>
 
@@ -229,9 +205,7 @@
 						 <span class="hidden-xs">知识库</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="#" class="ajax-link">漏洞库</a></li>
 						<li><a href="#" class="ajax-link">规则</a></li>
-						<li><a href="#" class="ajax-link">全文检索</a></li>
 					</ul>
 				</li>
 
@@ -246,6 +220,7 @@
 						<li><a href="#" class="ajax-link">平台状态</a></li>
 						<li><a href="#" class="ajax-link">采集器状态</a></li>
 						<li><a href="#" class="ajax-link">使用情况</a></li>
+						<li><a href="#" class="ajax-link">外部认证</a></li>
 						<li><a href="#" class="ajax-link">角色管理</a></li>
 						<li><a href="#" class="ajax-link">用户管理</a></li>
 						<li><a href="#" class="ajax-link">事件数据库</a></li>

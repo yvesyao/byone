@@ -73,15 +73,19 @@ function LoadDataTablesScripts(callback) {
 //
 function LoadFlotScripts(callback) {
 	function LoadFlotScript() {
-		$.getScript('plugins/flot/jquery.flot.js', LoadFlotResizeScript);
+		$.getScript('plugins/flot/jquery.flot.min.js', LoadFlotResizeScript);
 	}
 
 	function LoadFlotResizeScript() {
-		$.getScript('plugins/flot/jquery.flot.resize.js', LoadFlotTimeScript);
+		$.getScript('plugins/flot/jquery.flot.resize.min.js', LoadFlotTimeScript);
 	}
 
 	function LoadFlotTimeScript() {
-		$.getScript('plugins/flot/jquery.flot.time.js', callback);
+		$.getScript('plugins/flot/jquery.flot.time.min.js', LoadFlotPieScript);
+	}
+
+	function LoadFlotPieScript() {
+		$.getScript('plugins/flot/jquery.flot.pie.min.js', callback)
 	}
 
 	$.fn.UseTooltip = function(xCal, yCal) { //图表插件提示信息
@@ -91,7 +95,7 @@ function LoadFlotScripts(callback) {
 			var tooltipId = '#toolTip' + $(this).attr('id') || $(this).attr('class');
 			if (item) {
 				//console.log($(this).data('previousPoint'), item.dataIndex);
-				if (($(this).data('previousLabel') != item.series.label)||($(this).data('previousPoint') != item.dataIndex)) {
+				if (($(this).data('previousLabel') != item.series.label) || ($(this).data('previousPoint') != item.dataIndex)) {
 					$(this).data('previousPoint', item.dataIndex);
 					$(this).data('previousLabel', item.series.label);
 					$(tooltipId).remove();
@@ -101,7 +105,7 @@ function LoadFlotScripts(callback) {
 						pos.pageY,
 						color, (label ? '<h5><strong>' + label + '</strong><br></h5>' : '') +
 						"<strong>" + xCal(item) +
-						"<strong> -- " + yCal(item));
+						"<strong> —— " + yCal(item));
 				}
 			} else {
 				$(tooltipId).remove();
@@ -284,6 +288,29 @@ function FlotGraph3() {
 	});
 }
 
+function FlotPie() {
+	var _dataArr = [{
+		label: "Asia",
+		data: 4119630000
+	}, {
+		label: "Latin America",
+		data: 590950000
+	}, {
+		label: "Africa",
+		data: 1012960000
+	}, {
+		label: "Oceania",
+		data: 35100000
+	}, {
+		label: "Europe",
+		data: 727080000
+	}, {
+		label: "North America",
+		data: 344120000
+	}];
+	drawPieChart("#box-pie-content", _dataArr);
+}
+
 //
 // Graph4 created in element with id = box-four-content
 //
@@ -393,7 +420,7 @@ function drawLineChart(placeholder, dataArr, clientOptions) {
 	$(placeholder).UseTooltip(
 		function(item) {
 			var _date = new Date(item.datapoint[0]);
-			return _date.getHours() + ':' + _date.getMinutes();
+			return formatTime(_date.getHours()) + ':' + formatTime(_date.getMinutes());
 		},
 		function(item) {
 			return item.datapoint[1];
@@ -401,6 +428,11 @@ function drawLineChart(placeholder, dataArr, clientOptions) {
 	);
 	return drawChart(placeholder, dataArr, options, clientOptions);
 }
+
+function formatTime(time) {
+	return time >= 10 ? time : '0' + time;
+}
+
 
 /**********
 dataArr: [[1582.3, 0], [28.95, 1],[1603, 2];
@@ -469,22 +501,54 @@ function drawHBarChart(placeholder, dataArr, ticks, clientOptions) {
 	return drawChart(placeholder, dataArr, options, clientOptions);
 }
 
+function drawPieChart(placeholder, dataArr, clientOptions) {
+	var options = {
+		series: {
+			pie: {
+				show: true,
+				innerRadius: 0.5/*,
+				label: {﻿﻿﻿﻿﻿
+					show: true,
+					﻿﻿﻿﻿﻿formatter: function (label, series) {                
+                return '<div style="border:1px solid grey;font-size:8pt;text-align:center;padding:5px;color:white;">' +
+                label + ' : ' +
+                Math.round(series.percent) +
+                '%</div>';
+            },
+            background: {
+                opacity: 0.8,
+                color: '#000'
+            },
+					﻿ // formatter function
+					﻿﻿﻿﻿﻿radius: 1,
+					﻿ // radius at which to place the labels (based on full calculated radius if <=1, or hard pixel value)
+					﻿﻿﻿﻿﻿
+					﻿﻿﻿﻿﻿threshold: 0﻿ // percentage at which to hide the label (i.e. the slice is too narrow)	﻿﻿﻿﻿
+				}*/
+			}
+		}
+	};
+
+	$(placeholder).UseTooltip(
+		function(item) {
+			return item.series.label;
+		},
+		function(item) {
+			return Math.round(item.series.percent)+"%";
+
+		}
+	);
+	return drawChart(placeholder, dataArr, options, clientOptions);
+	//$.plot(placeholder, dataArr, options);
+}
+
 
 function showTooltip(tooltipId, x, y, color, contents) {
 	$('<div id="' + tooltipId + '">' + contents + '</div>').css({
-		position: 'absolute',
-		display: 'none',
 		top: y - 10,
 		left: x + 10,
-		border: '2px solid ' + color,
-		padding: '3px',
-		'font-size': '9px',
-		'border-radius': '5px',
-		'background-color': '#fff',
-		'font-family': 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-		opacity: 0.9,
-		'z-index': 2001
-	}).appendTo("body").fadeIn(200);
+		borderColor: color
+	}).addClass('flotToolTip').appendTo("body").fadeIn(200);
 }
 
 
@@ -802,7 +866,7 @@ $(document).ready(function() {
 	});
 	var ajax_url = location.hash.replace(/^#/, '');
 	if (ajax_url.length < 1) {
-		ajax_url = './ajax/dashboard.html';
+		ajax_url = 'ajax/dashboard.html';
 	}
 	LoadAjaxContent(ajax_url);
 
@@ -834,6 +898,7 @@ $(document).ready(function() {
 	$('.ajax-link').on("click", function(e) {
 		e.preventDefault();
 		if ($(this).attr('href') == '#') return;
+		$(this).addClass('active').closest('li').siblings('li').children('.ajax-link.active').removeClass('active');
 		if ($(this).hasClass('add-full')) {
 			$('#content').addClass('full-content');
 		} else {
