@@ -50,11 +50,7 @@ function LoadSelect2Script(callback) {
 function LoadDataTablesScripts(callback) {
 	function LoadDatatables() {
 		$.getScript('plugins/datatables/jquery.dataTables.js', function() {
-			$.getScript('plugins/datatables/ZeroClipboard.js', function() {
-				$.getScript('plugins/datatables/TableTools.js', function() {
-					$.getScript('plugins/datatables/dataTables.bootstrap.js', callback);
-				});
-			});
+			$.getScript('plugins/datatables/dataTables.bootstrap.js', callback);
 		});
 	}
 	if (!$.fn.dataTables) {
@@ -506,25 +502,26 @@ function drawPieChart(placeholder, dataArr, clientOptions) {
 		series: {
 			pie: {
 				show: true,
-				innerRadius: 0.5/*,
-				label: {﻿﻿﻿﻿﻿
-					show: true,
-					﻿﻿﻿﻿﻿formatter: function (label, series) {                
-                return '<div style="border:1px solid grey;font-size:8pt;text-align:center;padding:5px;color:white;">' +
-                label + ' : ' +
-                Math.round(series.percent) +
-                '%</div>';
-            },
-            background: {
-                opacity: 0.8,
-                color: '#000'
-            },
-					﻿ // formatter function
-					﻿﻿﻿﻿﻿radius: 1,
-					﻿ // radius at which to place the labels (based on full calculated radius if <=1, or hard pixel value)
-					﻿﻿﻿﻿﻿
-					﻿﻿﻿﻿﻿threshold: 0﻿ // percentage at which to hide the label (i.e. the slice is too narrow)	﻿﻿﻿﻿
-				}*/
+				innerRadius: 0.5
+					/*,
+									label: {﻿﻿﻿﻿﻿
+										show: true,
+										﻿﻿﻿﻿﻿formatter: function (label, series) {                
+					                return '<div style="border:1px solid grey;font-size:8pt;text-align:center;padding:5px;color:white;">' +
+					                label + ' : ' +
+					                Math.round(series.percent) +
+					                '%</div>';
+					            },
+					            background: {
+					                opacity: 0.8,
+					                color: '#000'
+					            },
+										﻿ // formatter function
+										﻿﻿﻿﻿﻿radius: 1,
+										﻿ // radius at which to place the labels (based on full calculated radius if <=1, or hard pixel value)
+										﻿﻿﻿﻿﻿
+										﻿﻿﻿﻿﻿threshold: 0﻿ // percentage at which to hide the label (i.e. the slice is too narrow)	﻿﻿﻿﻿
+									}*/
 			}
 		}
 	};
@@ -534,7 +531,7 @@ function drawPieChart(placeholder, dataArr, clientOptions) {
 			return item.series.label;
 		},
 		function(item) {
-			return Math.round(item.series.percent)+"%";
+			return Math.round(item.series.percent) + "%";
 
 		}
 	);
@@ -598,29 +595,83 @@ function intervalChart(plot, dataFunc, interval) {
 //
 // Function for table, located in element with id = datatable-3
 //
-function TestTable3() {
-	$('#datatable-3').dataTable({
-		"aaSorting": [
-			[0, "asc"]
-		],
+function dataTable(placeholder) {
+	var tableDbj = $(placeholder).dataTable({
 		"sDom": "T<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
 		"sPaginationType": "bootstrap",
 		"oLanguage": {
-			"sSearch": "",
-			"sLengthMenu": '_MENU_'
-		},
-		"oTableTools": {
-			"sSwfPath": "plugins/datatables/copy_csv_xls_pdf.swf",
-			"aButtons": [
-				"copy",
-				"print", {
-					"sExtends": "collection",
-					"sButtonText": 'Save <span class="caret" />',
-					"aButtons": ["csv", "xls", "pdf"]
-				}
-			]
+			"sLengthMenu": "每页显示 _MENU_ 条记录",
+			"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+			"sInfoEmpty": "没有数据",
+			"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+			"sZeroRecords": "没有检索到数据",
+			"sSearch": "搜索：",
+			"oPaginate": {
+				"sFirst": "首页",
+				"sPrevious": "前一页",
+				"sNext": "后一页",
+				"sLast": "尾页"
+			}
+
 		}
 	});
+}
+
+
+
+/*-------------------------------------------
+	Function for table pages (property.html etc.)
+	---------------------------------------------*/
+
+//
+// Function for click on table item
+//
+function propertyTableClick() {
+	$('#propertyTable tbody tr').click(function(event){
+		event.preventDefault();
+		/*scroll to target*/
+		var $infoDiv = $('#propertyInfo').not(':hidden');
+		if ($infoDiv.length <= 0) {return;};
+		$("body").scrollTop($infoDiv.offset().top);
+	});
+}
+
+//
+// Function for rightClick on table item
+//
+function tableRightClick() {
+	$('.right-click-menu').each(function(index, val) {
+		/* iterate through array or object */
+		$(this).data('originHtml', this.innerHTML);
+	});
+	$('body').mousedown(function(event) {
+		/* Act on the event */
+		$('.right-click-menu.open').removeClass('open');
+	});
+	$('[data-right-menu]').mouseup(function(event) {
+		/* Act on the event */
+		event.preventDefault();
+		var $targetMenu = $($(this).attr('data-right-menu'));
+		if (event.button == '2') {
+			$targetMenu.addClass('open').css({
+				top: event.pageY,
+				left: event.pageX
+			}).html($targetMenu.data('originHtml').replace("{1}", $(this).attr('data-id')));
+		} else {
+			$targetMenu.removeClass('open');
+		}
+	}).bind("contextmenu", function(e) { //不显示默认右键菜单
+		return false;
+	});
+}
+
+/**
+ * load property interactive actions
+ */
+function loadPropertyInfoFuc() {
+	$('.property-table tr').click(function(e) {
+		changeInfo();
+	})
 }
 
 //
@@ -796,48 +847,6 @@ function FormLayoutExampleInputLength(selector) {
 	});
 }
 
-
-
-/*-------------------------------------------
-	Function for table pages (property.html etc.)
-	---------------------------------------------*/
-//
-// Function for rightClick on table item
-//
-function tableRightClick() {
-	$('.right-click-menu').each(function(index, val) {
-		/* iterate through array or object */
-		$(this).data('originHtml', this.innerHTML);
-	});
-	$('body').mousedown(function(event) {
-		/* Act on the event */
-		$('.right-click-menu.open').removeClass('open');
-	});
-	$('[data-right-menu]').mouseup(function(event) {
-		/* Act on the event */
-		event.preventDefault();
-		var $targetMenu = $($(this).attr('data-right-menu'));
-		if (event.button == '2') {
-			$targetMenu.addClass('open').css({
-				top: event.pageY,
-				left: event.pageX
-			}).html($targetMenu.data('originHtml').replace("{1}", $(this).attr('data-id')));
-		} else {
-			$targetMenu.removeClass('open');
-		}
-	}).bind("contextmenu", function(e) { //不显示默认右键菜单
-		return false;
-	});
-}
-
-/**
- * load property interactive actions
- */
-function loadPropertyInfoFuc() {
-	$('.property-table tr').click(function(e) {
-		changeInfo();
-	})
-}
 
 function docReady() {
 	$('a[href="#"]').click(function(e) {

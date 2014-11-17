@@ -12,11 +12,10 @@
 	<!-- /#breadcrumb -->
 </div>
 <!-- /.row -->
-<div class="col-xs-12 hidden-xs hidden-sm">
+<div class="col-xs-12">
 	<div class="box">
 		<div class="box-header">
 			<div class="box-name">
-				
 				<span>资产信息</span>
 			</div>
 			<div class="box-icons">
@@ -33,7 +32,7 @@
 			<div class="no-move"></div>
 		</div>
 		<div class="box-content clearfix">
-			<table id="ticker-table" class="table table-condensed table-striped table-bordered table-hover property-table">
+			<table id="propertyTable" class="table table-condensed table-striped table-bordered table-block table-hover property-table">
 				<thead>
 					<tr>
 						<th>名称</th>
@@ -193,15 +192,7 @@
 
 				</tbody>
 			</table>
-			<div class="col-sm-6 col-xs-12 text-right pull-right">
-				<ul class="pagination">
-					<li class="prev disabled"><a href="#">← Previous</a></li>
-					<li class="active"><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li class="next"><a href="#">Next → </a></li>
-				</ul>
-			</div>
+			
 			<!-- /.col-sm-6 -->
 		</div>
 		<!-- /.box-content -->
@@ -234,7 +225,7 @@
 		</li>
 	</ul>
 </div>
-<div class="col-xs-12 hidden-xs hidden-sm">
+<div class="col-xs-12 hidden-xs hidden-sm" id="propertyInfo">
 
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" role="tablist">
@@ -413,8 +404,13 @@
 <!-- /.col-xs-12 -->
 
 <script type="text/javascript">
-
+function tableReady(){
+	dataTable('#propertyTable');
+	/*以下函数是否需要在datatables重绘之后重新执行？*/
+	propertyTableClick();
+}
 	$(document).ready(function() {
+		LoadDataTablesScripts(tableReady);
 		WinMove();
 		tableRightClick();
 	});

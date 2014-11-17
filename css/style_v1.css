@@ -27,20 +27,6 @@ h1, .h1, h2, .h2, h3, .h3 {
   fill: none !important;
 }
 
-/* property */
-.property-table tr:hover {
-  cursor: pointer;
-}
-.tab-pane {
-  padding: 1em 0;
-  min-height: 300px;
-}
-.tab-content {
-  border: 1px solid #ddd;
-  border-top: none;
-}
-
-
 
 #logo {
   position:relative;
