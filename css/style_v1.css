@@ -286,7 +286,7 @@ visibility: visible;
 }
 .panel-menu .dropdown-menu {
   position: absolute;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.7)!important;
   padding: 0;
   border: 0;
   right: 0;

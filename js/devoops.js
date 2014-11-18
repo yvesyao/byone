@@ -9,44 +9,64 @@
 //  homepage: http://trentrichardson.com/examples/timepicker/
 //
 function LoadTimePickerScript(callback) {
-		if (!$.fn.timepicker) {
-			$.getScript('plugins/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.js', callback);
-		} else {
-			if (callback && typeof(callback) === "function") {
-				callback();
-			}
+	if (!$.fn.timepicker) {
+		$.getScript('plugins/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.js', callback);
+	} else {
+		if (callback && typeof(callback) === "function") {
+			callback();
 		}
 	}
-	//
-	//  Dynamically load Bootstrap Validator Plugin
-	//  homepage: https://github.com/nghuuphuoc/bootstrapvalidator
-	//
+}
+
+
+//
+//  Dynamically load  jQuery Terminal plugin
+//  homepage: http://http://terminal.jcubic.pl/
+//
+function LoadTerminalScripts(callback) {
+	if (!$.fn.terminal) {
+		$.getScript('plugins/terminal/jquery.terminal-0.8.8.min.js', function() {
+			$.getScript('plugins/terminal/jquery.mousewheel-min.js', callback);
+		});
+	} else {
+		if (callback && typeof(callback) === "function") {
+			callback();
+		}
+	}
+}
+
+//
+//  Dynamically load Bootstrap Validator Plugin
+//  homepage: https://github.com/nghuuphuoc/bootstrapvalidator
+//
 function LoadBootstrapValidatorScript(callback) {
-		if (!$.fn.bootstrapValidator) {
-			$.getScript('plugins/bootstrapvalidator/bootstrapValidator.min.js', callback);
-		} else {
-			if (callback && typeof(callback) === "function") {
-				callback();
-			}
+	if (!$.fn.bootstrapValidator) {
+		$.getScript('plugins/bootstrapvalidator/bootstrapValidator.min.js', callback);
+	} else {
+		if (callback && typeof(callback) === "function") {
+			callback();
 		}
 	}
-	//
-	//  Dynamically load jQuery Select2 plugin
-	//  homepage: https://github.com/ivaynberg/select2  v3.4.5  license - GPL2
-	//
+}
+
+//
+//  Dynamically load jQuery Select2 plugin
+//  homepage: https://github.com/ivaynberg/select2  v3.4.5  license - GPL2
+//
 function LoadSelect2Script(callback) {
-		if (!$.fn.select2) {
-			$.getScript('plugins/select2/select2.min.js', callback);
-		} else {
-			if (callback && typeof(callback) === "function") {
-				callback();
-			}
+	if (!$.fn.select2) {
+		$.getScript('plugins/select2/select2.min.js', callback);
+	} else {
+		if (callback && typeof(callback) === "function") {
+			callback();
 		}
 	}
-	//
-	//  Dynamically load DataTables plugin
-	//  homepage: http://datatables.net v1.9.4 license - GPL or BSD
-	//
+}
+
+//
+//  Dynamically load DataTables plugin
+//  homepage: http://datatables.net v1.9.4 license - GPL or BSD
+//
 function LoadDataTablesScripts(callback) {
 	function LoadDatatables() {
 		$.getScript('plugins/datatables/jquery.dataTables.js', function() {
@@ -126,51 +146,53 @@ function LoadFlotScripts(callback) {
 //  Function for load content from url and put in $('.ajax-content') block
 //
 function LoadAjaxContent(url) {
-		$('.preloader').show();
-		$.ajax({
-			mimeType: 'text/html; charset=utf-8', // ! Need set mimeType only when run from local file
-			url: url,
-			type: 'GET',
-			success: function(data) {
-				$('#ajax-content').html(data);
-				$('.preloader').hide();
-			},
-			error: function(jqXHR, textStatus, errorThrown) {
-				alert(errorThrown);
-			},
-			dataType: "html",
-			async: false
-		});
-		docReady();
-	}
-	//
-	//  Function maked all .box selector is draggable, to disable for concrete element add class .no-drop
-	//
+	$('.preloader').show();
+	$.ajax({
+		mimeType: 'text/html; charset=utf-8', // ! Need set mimeType only when run from local file
+		url: url,
+		type: 'GET',
+		success: function(data) {
+			$('#ajax-content').html(data);
+			$('.preloader').hide();
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert(errorThrown);
+		},
+		dataType: "html",
+		async: false
+	});
+	docReady();
+}
+
+//
+//  Function maked all .box selector is draggable, to disable for concrete element add class .no-drop
+//
 function WinMove() {
-		$("div.box").not('.no-drop')
-			.draggable({
-				revert: true,
-				zIndex: 2000,
-				cursor: "crosshair",
-				handle: '.box-name',
-				opacity: 0.8
-			})
-			.droppable({
-				tolerance: 'pointer',
-				drop: function(event, ui) {
-					var draggable = ui.draggable;
-					var droppable = $(this);
-					if (draggable.hasClass('box') && droppable.hasClass('box')) {
-						draggable = draggable.parent();
-						droppable = droppable.parent();
-					}
-					draggable.swap(droppable);
+	$("div.box").not('.no-drop')
+		.draggable({
+			revert: true,
+			zIndex: 2000,
+			cursor: "crosshair",
+			handle: '.box-name',
+			opacity: 0.8
+		})
+		.droppable({
+			tolerance: 'pointer',
+			drop: function(event, ui) {
+				var draggable = ui.draggable;
+				var droppable = $(this);
+				if (draggable.hasClass('box') && droppable.hasClass('box')) {
+					draggable = draggable.parent();
+					droppable = droppable.parent();
 				}
-			});
-	}
-	//
-	// Swap 2 elements on page. Used by WinMove function
-	//
+				draggable.swap(droppable);
+			}
+		});
+}
+
+//
+// Swap 2 elements on page. Used by WinMove function
+//
 jQuery.fn.swap = function(b) {
 	b = jQuery(b)[0];
 	var a = this[0];
@@ -627,12 +649,18 @@ function dataTable(placeholder) {
 // Function for click on table item
 //
 function propertyTableClick() {
-	$('#propertyTable tbody tr').click(function(event){
-		event.preventDefault();
-		/*scroll to target*/
-		var $infoDiv = $('#propertyInfo').not(':hidden');
-		if ($infoDiv.length <= 0) {return;};
-		$("body").scrollTop($infoDiv.offset().top);
+	$('#propertyTable').on('draw.dt', function() {
+
+		$('#propertyTable tbody tr').click(function(event) {
+			event.preventDefault();
+			/*scroll to target*/
+			var $infoDiv = $('#propertyInfo').not(':hidden');
+			if ($infoDiv.length <= 0) {
+				return;
+			};
+			$("body").scrollTop($infoDiv.offset().top);
+			//changeInfo();
+		});
 	});
 }
 
@@ -640,15 +668,24 @@ function propertyTableClick() {
 // Function for rightClick on table item
 //
 function tableRightClick() {
-	$('.right-click-menu').each(function(index, val) {
+	$('body').mousedown(function(event) { //隐藏右键菜单
+		/* Act on the event */
+		hideContextMenus();
+	});
+	$('.right-click-menu').each(function(index, val) { //保存右键菜单原来的数据
 		/* iterate through array or object */
 		$(this).data('originHtml', this.innerHTML);
-	});
-	$('body').mousedown(function(event) {
+	}).mousedown(function(event) {//覆盖body的mousedown事件
 		/* Act on the event */
-		$('.right-click-menu.open').removeClass('open');
+		event.stopPropagation(); //阻止事件冒泡
+	}).mouseup(function(event) {//在右键菜单上点击后隐藏
+		/* Act on the event */
+		hideContextMenus();
+	}).click(function(event) {//阻止默认跳转
+		/* Act on the event */
+		event.preventDefault();
 	});
-	$('[data-right-menu]').mouseup(function(event) {
+	$('[data-right-menu]').mouseup(function(event) { //弹出右键菜单
 		/* Act on the event */
 		event.preventDefault();
 		var $targetMenu = $($(this).attr('data-right-menu'));
@@ -657,21 +694,38 @@ function tableRightClick() {
 				top: event.pageY,
 				left: event.pageX
 			}).html($targetMenu.data('originHtml').replace("{1}", $(this).attr('data-id')));
-		} else {
-			$targetMenu.removeClass('open');
 		}
 	}).bind("contextmenu", function(e) { //不显示默认右键菜单
 		return false;
 	});
+
+	function hideContextMenus() {
+		$('.right-click-menu.open').removeClass('open');
+	}
+
 }
 
-/**
- * load property interactive actions
- */
-function loadPropertyInfoFuc() {
-	$('.property-table tr').click(function(e) {
-		changeInfo();
-	})
+//
+// Function for ssh terminal tool
+//
+function showTerminal(name, id) {
+	$('#terminalModal').modal('show');
+	$('#terminalModal .modal-body').terminal(function(command, term) {
+        if (command !== '') {
+            try {
+                term.echo(command);
+            } catch(e) {
+                term.error(new String(e));
+            }
+        } else {
+           term.echo('');
+        }
+    }, {
+    	history: false,
+        greetings: 'Javascript Interpreter',
+        name: name,
+        height: 500
+    }).clear().set_prompt(name+'> ');
 }
 
 //
@@ -845,6 +899,16 @@ function FormLayoutExampleInputLength(selector) {
 			input.attr("placeholder", '.' + steps[ui.value]);
 		}
 	});
+}
+
+//
+//  Helper for correct size of Messages page
+//
+function MessagesMenuWidth() {
+	var W = window.innerWidth;
+	var W_menu = $('#sidebar-left').outerWidth();
+	var w_messages = (W - W_menu) * 16.666666666666664 / 100;
+	$('#messages-menu').width(w_messages);
 }
 
 

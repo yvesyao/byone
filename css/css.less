@@ -1,5 +1,25 @@
 @import url(prefixer.less);
 @import url(property.less);
+@import url(jquery.terminal.css);
+
+@bgColor: #436E90;
+/* overwrite bootstrap */
+#breadcrumb {
+	margin-bottom: 5px;
+}
+.col-sm-1,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-10,.col-sm-11,.col-sm-12 {
+	/* padding: 0 15px; */
+}
+.mt-20 {
+	margin-top: 20px;
+}
+
+/* modal */
+.modal-header {
+	padding: 5px 15px;
+}
+
+/* context menu */
 .right-click {
 	position: relative;
 }
@@ -7,9 +27,11 @@
 	position: absolute;
 	height: 0;
 	z-index: 2000;
-}
-.mt-20 {
-	margin-top: 20px;
+	a{
+		&:hover {
+			color: @bgColor!important; 
+		}
+	}
 }
 
 /* login */

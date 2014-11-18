@@ -206,11 +206,11 @@
 <div class="dropdown right-click-menu" id="propertyDropMenu">
 	<ul aria-labelledby="dropdownMenu" role="menu" class="dropdown-menu">
 		<li id="create_shortcut">
-			<a href="yunwei.html?properId={1}" tabindex="-1" onclick="yunwei({1})">运维工具1
+			<a href="#" onclick="showTerminal('SSH', '{1}')" tabindex="-1">SSH
 			</a>
 		</li>
 		<li id="rename">
-			<a href="#" tabindex="-1">运维工具2
+			<a href="#" onclick="showTerminal('telnet', '{1}')" tabindex="-1">telnet
 			</a>
 		</li>
 		<li id="del">
@@ -403,15 +403,38 @@
 </div>
 <!-- /.col-xs-12 -->
 
+
+<!-- terminals -->
+<!-- Modal -->
+<div class="modal fade" id="terminalModal" tabindex="-1" role="dialog" aria-labelledby="terminalModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h5 class="modal-title" id="terminalModalLabel">运维工具</h5>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
-function tableReady(){
+function tableReady() {
 	dataTable('#propertyTable');
 	/*以下函数是否需要在datatables重绘之后重新执行？*/
 	propertyTableClick();
 }
-	$(document).ready(function() {
-		LoadDataTablesScripts(tableReady);
-		WinMove();
-		tableRightClick();
-	});
+
+function terminalReady() {
+	//sshTerminal();
+}
+$(document).ready(function() {
+	LoadDataTablesScripts(tableReady);
+	LoadTerminalScripts(terminalReady);
+
+	WinMove();
+	tableRightClick();
+});
 </script>
