@@ -1,59 +1,57 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-	<head>
-		<meta charset="utf-8">
-		<title>BYone</title>
-    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="description" content="description">
-		<meta name="author" content="Yves Yao">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="plugins/bootstrap/bootstrap.css" rel="stylesheet">
-		<link href="plugins/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">
-		<link href="plugins/select2/select2.css" rel="stylesheet">
-		<link href="css/style_v1.css" rel="stylesheet">
-		<link href="css/css.css" rel="stylesheet">
-		<link rel="shortcut icon" href="img/favicon.gif">
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-			<script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
-		<![endif]-->
-	</head>
+<head>
+	<meta charset="utf-8">
+	<title>BYone</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="description">
+	<meta name="author" content="Yves Yao">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="plugins/bootstrap/bootstrap.css" rel="stylesheet">
+	<link href="plugins/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="plugins/select2/select2.css" rel="stylesheet">
+	<link href="css/style_v1.css" rel="stylesheet">
+	<link href="css/css.css" rel="stylesheet">
+	<link rel="shortcut icon" href="img/favicon.gif">
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]><script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script> <![endif]-->
+</head>
 <body>
-<!--Start Header-->
-<div id="modalbox">
-	<div class="devoops-modal">
-		<div class="devoops-modal-header">
-			<div class="modal-header-name">
-				<span>Basic table</span>
+	<!--Start Header-->
+	<div id="modalbox">
+		<div class="devoops-modal">
+			<div class="devoops-modal-header">
+				<div class="modal-header-name">
+					<span>Basic table</span>
+				</div>
+				<div class="box-icons">
+					<a class="close-link">
+						<i class="fa fa-times"></i>
+					</a>
+				</div>
 			</div>
-			<div class="box-icons">
-				<a class="close-link">
-					<i class="fa fa-times"></i>
-				</a>
+			<div class="devoops-modal-inner">
 			</div>
-		</div>
-		<div class="devoops-modal-inner">
-		</div>
-		<div class="devoops-modal-bottom">
+			<div class="devoops-modal-bottom">
+			</div>
 		</div>
 	</div>
-</div>
-<header class="navbar">
-	<div class="container-fluid expanded-panel">
-		<div class="row">
-			<div id="logo" class="col-xs-12 col-sm-2">
-				<a href="main.html"><img src="img/logo.gif" alt="logo"></a>
-			</div>
-			<div id="top-panel" class="col-xs-12 col-sm-10">
-				<div class="row">
-					<div class="col-xs-8 col-sm-4">
-						<div id="search">
-							<input type="text" placeholder="search"/>
-							<i class="fa fa-search"></i>
+	<header class="navbar">
+		<div class="container-fluid expanded-panel">
+			<div class="row">
+				<div id="logo" class="col-xs-12 col-sm-2">
+					<a href="main.html"><img src="img/logo.gif" alt="logo"></a>
+				</div>
+				<div id="top-panel" class="col-xs-12 col-sm-10">
+					<div class="row">
+						<div class="col-xs-8 col-sm-4">
+							<div id="search">
+								<input type="text" placeholder="search"/>
+								<i class="fa fa-search"></i>
+							</div>
 						</div>
-					</div>
-					<div class="col-xs-4 col-sm-8 top-panel-right">
-						<ul class="nav navbar-nav pull-right panel-menu">
+						<div class="col-xs-4 col-sm-8 top-panel-right">
+							<ul class="nav navbar-nav pull-right panel-menu">
 							<!-- <li class="hidden-xs">
 								<a href="main.html" class="modal-link">
 									<i class="fa fa-bell"></i>
@@ -115,18 +113,18 @@
 				<li>
 					<a href="ajax/property.html" class="ajax-link" title="资产管理">
 						<i class="fa fa-desktop"></i>
-						 <span class="hidden-xs">资产管理</span>
+						<span class="hidden-xs">资产管理</span>
 					</a>
 				</li>
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="网络管理">
 						<i class="fa fa-sitemap"></i><!-- .fa-hdd-o -->
-						 <span class="fa arrow hidden-xs"></span>
-						 <span class="hidden-xs">网络管理</span>
+						<span class="fa arrow hidden-xs"></span>
+						<span class="hidden-xs">网络管理</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="#" class="ajax-link">网络拓扑</a></li>
+						<li><a href="ajax/topology.html" class="ajax-link">网络拓扑</a></li>
 						<li><a href="#" class="ajax-link">MRTG图</a></li>
 					</ul>
 				</li>
@@ -134,8 +132,8 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="云管理">
 						<i class="fa fa-cloud"></i>
-						 <span class="fa arrow hidden-xs"></span>
-						 <span class="hidden-xs">云管理</span>
+						<span class="fa arrow hidden-xs"></span>
+						<span class="hidden-xs">云管理</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="#" class="ajax-link">虚拟化架构</a></li>
@@ -159,8 +157,8 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="安全管理">
 						<i class="fa fa-lock"></i>
-						 <span class="fa arrow hidden-xs"></span>
-						 <span class="hidden-xs">安全管理</span>
+						<span class="fa arrow hidden-xs"></span>
+						<span class="hidden-xs">安全管理</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="#" class="ajax-link">脆弱性扫描</a></li>
@@ -172,8 +170,8 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="数据分析">
 						<i class="fa fa-bar-chart-o"></i>
-						 <span class="fa arrow hidden-xs"></span>
-						 <span class="hidden-xs">大数据分析</span>
+						<span class="fa arrow hidden-xs"></span>
+						<span class="hidden-xs">大数据分析</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="#" class="ajax-link">优化分析</a></li>
@@ -186,8 +184,8 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="报表">
 						<i class="fa fa-table"></i>
-						 <span class="fa arrow hidden-xs"></span>
-						 <span class="hidden-xs">报表</span>
+						<span class="fa arrow hidden-xs"></span>
+						<span class="hidden-xs">报表</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="#" class="ajax-link">手动生成</a></li>
@@ -198,8 +196,8 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="知识库">
 						<i class="fa fa-code"></i>
-						 <span class="fa arrow hidden-xs"></span>
-						 <span class="hidden-xs">知识库</span>
+						<span class="fa arrow hidden-xs"></span>
+						<span class="hidden-xs">知识库</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="#" class="ajax-link">规则</a></li>
@@ -209,8 +207,8 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="系统">
 						<i class="fa fa-gears"></i>
-						 <span class="fa arrow hidden-xs"></span>
-						 <span class="hidden-xs">系统</span>
+						<span class="fa arrow hidden-xs"></span>
+						<span class="hidden-xs">系统</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="#" class="ajax-link">安装向导</a></li>

@@ -18,6 +18,19 @@ function LoadTimePickerScript(callback) {
 	}
 }
 
+//
+//  Dynamically load  JTopo Timepicker plugin
+//  homepage: http://www.jtopo.com/
+function LoadJTopoScripts(callback) {
+	if (typeof JTopo === 'undefined') {
+		$.getScript('plugins/jtopo/jtopo.js', callback); /*-0.4.8-min*/
+	} else {
+		if (callback && typeof(callback) === "function") {
+			callback();
+		}
+	}
+}
+
 
 //
 //  Dynamically load  jQuery Terminal plugin
@@ -211,6 +224,162 @@ function SetMinBlockHeight(elem) {
 	elem.css('min-height', window.innerHeight - 49)
 }
 
+
+
+/*-------------------------------------------
+	Topology page (Topology.html)
+	---------------------------------------------*/
+//
+// 页面工具栏
+function showJTopoToobar(placeholder, stage) {
+	var toobarDiv = $('<div class="jtopo_toolbar">').html('' + '<input type="radio" name="modeRadio" value="normal" checked id="r1"/>' + '<label for="r1"> 默认</label>' + '&nbsp;<input type="radio" name="modeRadio" value="select" id="r2"/><label for="r2"> 框选</label>' + '&nbsp;<input type="radio" name="modeRadio" value="drag" id="r3"/><label for="r3"> 平移</label>' + '&nbsp;<input type="radio" name="modeRadio" value="edit" id="r4"/><label for="r4"> 编辑</label>' + '&nbsp;&nbsp;' + '<input type="button" id="fullScreenButton" value="全屏显示"/>' + '<input type="button" id="zoomOutButton" value=" 放 大 " />' + '<input type="button" id="zoomInButton" value=" 缩 小 " />' + '&nbsp;&nbsp;<input type="text" id="findText" value="" onkeydown="findButton.click()">' + '<input type="button" id="findButton" value=" 查 询 ">' + '&nbsp;&nbsp;<input type="button" id="exportButton" value="导出PNG">');
+
+	$(placeholder).prepend(toobarDiv);
+
+	// 工具栏按钮处理
+	$("input[name='modeRadio']").click(function() {
+		stage.mode = $("input[name='modeRadio']:checked").val();
+	});
+	$('#zoomOutButton').click(function() {
+		stage.zoomOut();
+	});
+	$('#zoomInButton').click(function() {
+		stage.zoomIn();
+	});
+	$('#exportButton').click(function() {
+		stage.saveImageInfo();
+	});
+	$('#zoomCheckbox').click(function() {
+		if ($('#zoomCheckbox').attr('checked')) {
+			stage.wheelZoom = 0.85; // 设置鼠标缩放比例
+		} else {
+			stage.wheelZoom = null; // 取消鼠标缩放比例
+		}
+	});
+	$('#fullScreenButton').click(function() {
+		runPrefixMethod(stage.canvas, "RequestFullScreen")
+	});
+
+	// 查询
+	$('#findButton').click(function() {
+		var text = $('#findText').val().trim();
+		var nodes = stage.find('node[text="' + text + '"]');
+		if (nodes.length > 0) {
+			var node = nodes[0];
+			node.selected = true;
+			var location = node.getCenterLocation();
+			// 查询到的节点居中显示
+			stage.setCenter(location.x, location.y);
+
+			// 闪烁几下
+			nodeFlash(node, 6);
+		}
+
+		function nodeFlash(node, n) {
+			if (n == 0) {
+				node.selected = false;
+				return;
+			};
+			node.selected = !node.selected;
+			setTimeout(function() {
+				nodeFlash(node, n - 1);
+			}, 300);
+		}
+	});
+}
+
+var runPrefixMethod = function(element, method) {
+	var usablePrefixMethod;
+	["webkit", "moz", "ms", "o", ""].forEach(function(prefix) {
+		if (usablePrefixMethod) return;
+		if (prefix === "") {
+			// 无前缀，方法首字母小写
+			method = method.slice(0, 1).toLowerCase() + method.slice(1);
+		}
+		var typePrefixMethod = typeof element[prefix + method];
+		if (typePrefixMethod + "" !== "undefined") {
+			if (typePrefixMethod === "function") {
+				usablePrefixMethod = element[prefix + method]();
+			} else {
+				usablePrefixMethod = element[prefix + method];
+			}
+		}
+	});
+
+	return usablePrefixMethod;
+};
+//
+// 绘制拓扑图函数
+//
+function drawTopology(placeholder) {
+	$(placeholder).children().remove().end().append('<canvas></canvas>');
+	var $canvas = $(placeholder).children('canvas');
+
+
+/*	//从JSON数据配置舞台
+	function createStageFromJson(stageCfg, canvas, width, height) {
+		var stage = new JTopo.Stage(canvas);
+		for (var attr in stageCfg) 
+			"childs" != attr && (stage[attr] = stageCfg[attr]);
+		var scenes = stageCfg.scenes;
+		//遍历每一个场景
+		return scenes.forEach(function(scenceCfg) {
+			var scene = new JTopo.Scene(stage);
+			for (var attr in scenceCfg) {
+				"childs" != attr && (scene[attr] = a[attr]), "background" == attr && (scene.background = a[attr])
+			};
+			var childs = scenceCfg.childs;
+			var nodes = {}; //daiding
+			childs.forEach(function(nodeCfg) {
+					var node = null,
+						eleType = nodeCfg.eleType;
+					switch (eleType) {
+						case "node":
+							node = new JTopo.Node;
+							break;
+						case "circleNode":
+							node = new JTopo.CircleNode;
+					}
+					node.fontColor = scenceCfg.color || '0, 0, 0';
+					for (var e in nodeCfg) node[e] = nodeCfg[e];
+					scene.add(node)
+				})
+				// 树形布局
+			scene.doLayout(JTopo.layout.TreeLayout('down', 30, 107));
+		}), stage
+	}*/
+
+	var stage = new JTopo.createStageFromJson("{/
+		width: $(placeholder).width(),/
+		height: 550,/
+		childs: {/
+			'scene1': {/
+				childs: [{/
+					eleType: 'circleNode',/
+					fontColor: '67, 110, 144',/
+					text: 'node1'/
+				}, {/
+					eleType: 'node',/
+					fontColor: '67, 110, 144',/
+					text: 'node2'/
+				}, {/
+					eleType: 'node',/
+					fontColor: '67, 110, 144',/
+					text: 'node3'/
+				}, {/
+					eleType: 'node',/
+					fontColor: '67, 110, 144',/
+					text: 'node4'/
+				}, {/
+					eleType: 'node',/
+					fontColor: '67, 110, 144',/
+					text: 'node5'/
+				}]/
+			}/
+		}/
+	}", $canvas[0]); // 创建一个舞台对象
+	showJTopoToobar(placeholder, stage);
+}
 
 /*-------------------------------------------
 	Demo graphs for Flot Chart page (charts_flot.html)
@@ -675,13 +844,13 @@ function tableRightClick() {
 	$('.right-click-menu').each(function(index, val) { //保存右键菜单原来的数据
 		/* iterate through array or object */
 		$(this).data('originHtml', this.innerHTML);
-	}).mousedown(function(event) {//覆盖body的mousedown事件
+	}).mousedown(function(event) { //覆盖body的mousedown事件
 		/* Act on the event */
 		event.stopPropagation(); //阻止事件冒泡
-	}).mouseup(function(event) {//在右键菜单上点击后隐藏
+	}).mouseup(function(event) { //在右键菜单上点击后隐藏
 		/* Act on the event */
 		hideContextMenus();
-	}).click(function(event) {//阻止默认跳转
+	}).click(function(event) { //阻止默认跳转
 		/* Act on the event */
 		event.preventDefault();
 	});
@@ -711,21 +880,21 @@ function tableRightClick() {
 function showTerminal(name, id) {
 	$('#terminalModal').modal('show');
 	$('#terminalModal .modal-body').terminal(function(command, term) {
-        if (command !== '') {
-            try {
-                term.echo(command);
-            } catch(e) {
-                term.error(new String(e));
-            }
-        } else {
-           term.echo('');
-        }
-    }, {
-    	history: false,
-        greetings: 'Javascript Interpreter',
-        name: name,
-        height: 500
-    }).clear().set_prompt(name+'> ');
+		if (command !== '') {
+			try {
+				term.echo(command);
+			} catch (e) {
+				term.error(new String(e));
+			}
+		} else {
+			term.echo('');
+		}
+	}, {
+		history: false,
+		greetings: 'Javascript Interpreter',
+		name: name,
+		height: 500
+	}).clear().set_prompt(name + '> ');
 }
 
 //
