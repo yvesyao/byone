@@ -312,72 +312,79 @@ var runPrefixMethod = function(element, method) {
 // 绘制拓扑图函数
 //
 function drawTopology(placeholder) {
-	$(placeholder).children().remove().end().append('<canvas></canvas>');
-	var $canvas = $(placeholder).children('canvas');
+	var $placeholder = $(placeholder);
+	$placeholder.children().remove().end().append('<canvas></canvas>');
+	var $canvas = $placeholder.children('canvas');
+	$canvas.attr("width", $placeholder.width());
+	$canvas.attr("height", 550);
 
-
-/*	//从JSON数据配置舞台
-	function createStageFromJson(stageCfg, canvas, width, height) {
+	//从JSON数据配置舞台
+	function createStageFromJson(stageCfg, canvas) {
 		var stage = new JTopo.Stage(canvas);
-		for (var attr in stageCfg) 
+		for (var attr in stageCfg)
 			"childs" != attr && (stage[attr] = stageCfg[attr]);
-		var scenes = stageCfg.scenes;
+		var scenes = stageCfg.childs;
 		//遍历每一个场景
-		return scenes.forEach(function(scenceCfg) {
+		for (var i = 0, scenceCfg = scenes[0]; i < scenes.length; scenceCfg = scenes[++i]) {
 			var scene = new JTopo.Scene(stage);
 			for (var attr in scenceCfg) {
-				"childs" != attr && (scene[attr] = a[attr]), "background" == attr && (scene.background = a[attr])
+				"childs" != attr && (scene[attr] = scenceCfg[attr]);
 			};
 			var childs = scenceCfg.childs;
 			var nodes = {}; //daiding
-			childs.forEach(function(nodeCfg) {
-					var node = null,
-						eleType = nodeCfg.eleType;
-					switch (eleType) {
-						case "node":
-							node = new JTopo.Node;
-							break;
-						case "circleNode":
-							node = new JTopo.CircleNode;
+			for (var i = 0, nodeCfg = childs[0]; i < childs.length; nodeCfg = childs[++i]) {
+				var node = new JTopo.Node;
+				node.fontColor = scenceCfg.color || '0, 0, 0';
+				node.setLocation(stage.width * Math.random(), stage.height * Math.random());
+				for (var e in nodeCfg) {
+					if (e == "type") {
+						node.setImage('./img/topoNodes/' + nodeCfg[e] + '.png');
+						continue;
 					}
-					node.fontColor = scenceCfg.color || '0, 0, 0';
-					for (var e in nodeCfg) node[e] = nodeCfg[e];
-					scene.add(node)
-				})
-				// 树形布局
+					node[e] = nodeCfg[e];
+				}
+				scene.add(node);
+			}
+			// 树形布局
 			scene.doLayout(JTopo.layout.TreeLayout('down', 30, 107));
-		}), stage
-	}*/
+		};
+		return stage;
+	}
 
-	var stage = new JTopo.createStageFromJson("{/
-		width: $(placeholder).width(),/
-		height: 550,/
-		childs: {/
-			'scene1': {/
-				childs: [{/
-					eleType: 'circleNode',/
-					fontColor: '67, 110, 144',/
-					text: 'node1'/
-				}, {/
-					eleType: 'node',/
-					fontColor: '67, 110, 144',/
-					text: 'node2'/
-				}, {/
-					eleType: 'node',/
-					fontColor: '67, 110, 144',/
-					text: 'node3'/
-				}, {/
-					eleType: 'node',/
-					fontColor: '67, 110, 144',/
-					text: 'node4'/
-				}, {/
-					eleType: 'node',/
-					fontColor: '67, 110, 144',/
-					text: 'node5'/
-				}]/
-			}/
-		}/
-	}", $canvas[0]); // 创建一个舞台对象
+	var stage = createStageFromJson({
+		frames: -24, //只有鼠标
+		childs: [{
+			color: '67, 110, 144',
+			childs: [ {
+				text: 'windows',
+				type: 'windows',
+				x: 100,
+				y: 100
+			}, {
+				text: 'linux',
+				type: 'linux'
+
+			}, {
+				text: 'vmware',
+				type: 'vmware'
+			}, {
+				text: 'firewall',
+				type: 'firewall'
+			}, {
+				text: 'windows',
+				type: 'windows'
+			}, {
+				text: 'cloud',
+				type: 'cloud'
+			}, {
+				text: 'server',
+				type: 'server'
+			}, {
+				text: 'firewall',
+				type: 'firewall'
+			}]
+		}]
+	}, $canvas[0]); // 创建一个舞台对象
 	showJTopoToobar(placeholder, stage);
 }
 

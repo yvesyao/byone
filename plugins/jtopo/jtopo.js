@@ -70,26 +70,41 @@ function(window) {
 			open_hand: "url(./img/cur/openhand.cur) 8 8, default",
 			closed_hand: "url(./img/cur/closedhand.cur) 8 8, default"
 		},
-		createStageFromJson: function(jsonStr, canvas) {
-			eval("var jsonObj = " + jsonStr);
+		createStageFromJson: function(jsonObj, canvas) {
 			var stage = new JTopo.Stage(canvas);
-			for (var k in jsonObj)"childs" != k && (stage[k] = jsonObj[k]);
+			for (var k in jsonObj) "childs" != k && (stage[k] = jsonObj[k]);
 			var scenes = jsonObj.childs;
-			return scenes.forEach(function(a) {
-				var b = new JTopo.Scene(stage);
-				for (var c in a)"childs" != c && (b[c] = a[c]), "background" == c && (b.background = a[c]);
-				var d = a.childs;
-				d.forEach(function(a) {
-					var c = null,
-						d = a.elementType;
-					"node" == d ? c = new JTopo.Node : "CircleNode" == d && (c = new JTopo.CircleNode);
-					for (var e in a) c[e] = a[e];
-					b.add(c)
-				})
-			}), stage
+
+			for (var i in scenes) {
+				var sceneCfg = scenes[i];
+				var scene = new JTopo.Scene(stage);
+				for (var attr in sceneCfg) {
+					"childs" != attr && (scene[attr] = a[attr]), "background" == attr && (scene.background = a[attr])
+				};
+				var childs = sceneCfg.childs;
+				var nodes = {}; //daiding
+				childs.forEach(function(nodeCfg) {
+						var node = null,
+							eleType = nodeCfg.eleType;
+						switch (eleType) {
+							case "node":
+								node = new JTopo.Node;
+								break;
+							case "circleNode":
+								node = new JTopo.CircleNode;
+						}
+						node.fontColor = sceneCfg.color || '0, 0, 0';
+						for (var e in nodeCfg) node[e] = nodeCfg[e];
+						scene.add(node)
+					})
+					// 树形布局
+				scene.doLayout(JTopo.layout.TreeLayout('down', 30, 107));
+			};
+			return stage;
 		}
 	}, JTopo.Element = Element, window.JTopo = JTopo
-}(window), function(JTopo) {
+}(window),
+function(JTopo) {
 	function MessageBus(a) {
 		var b = this;
 		this.name = a, this.messageMap = {}, this.messageCount = 0, this.subscribe = function(a, c) {
@@ -100,36 +115,42 @@ function(window) {
 			null != c && (b.messageMap[a] = null, delete b.messageMap[a], b.messageCount--)
 		}, this.publish = function(a, c, d) {
 			var e = b.messageMap[a];
-			if (null != e) for (var f = 0; f < e.length; f++) d ? !
-			function(a, b) {
-				setTimeout(function() {
-					a(b)
-				}, 10)
-			}(e[f], c) : e[f](c)
+			if (null != e)
+				for (var f = 0; f < e.length; f++) d ? !
+					function(a, b) {
+						setTimeout(function() {
+							a(b)
+						}, 10)
+					}(e[f], c) : e[f](c)
 		}
 	}
+
 	function getDistance(a, b, c, d) {
 		var e, f;
 		return null == c && null == d ? (e = b.x - a.x, f = b.y - a.y) : (e = c - a, f = d - b), Math.sqrt(e * e + f * f)
 	}
+
 	function getElementsBound(a) {
 		for (var b = {
-			left: Number.MAX_VALUE,
-			right: Number.MIN_VALUE,
-			top: Number.MAX_VALUE,
-			bottom: Number.MIN_VALUE
-		}, c = 0; c < a.length; c++) {
+				left: Number.MAX_VALUE,
+				right: Number.MIN_VALUE,
+				top: Number.MAX_VALUE,
+				bottom: Number.MIN_VALUE
+			}, c = 0; c < a.length; c++) {
 			var d = a[c];
 			d instanceof JTopo.Link || (b.left > d.x && (b.left = d.x, b.leftNode = d), b.right < d.x + d.width && (b.right = d.x + d.width, b.rightNode = d), b.top > d.y && (b.top = d.y, b.topNode = d), b.bottom < d.y + d.height && (b.bottom = d.y + d.height, b.bottomNode = d))
 		}
 		return b.width = b.right - b.left, b.height = b.bottom - b.top, b
 	}
+
 	function mouseCoords(a) {
 		return a = cloneEvent(a), a.pageX || (a.pageX = a.clientX + document.body.scrollLeft - document.body.clientLeft, a.pageY = a.clientY + document.body.scrollTop - document.body.clientTop), a
 	}
+
 	function getEventPosition(a) {
 		return a = mouseCoords(a)
 	}
+
 	function rotatePoint(a, b, c, d, e) {
 		var f = c - a,
 			g = d - b,
@@ -140,6 +161,7 @@ function(window) {
 			y: b + Math.sin(i) * h
 		}
 	}
+
 	function rotatePoints(a, b, c) {
 		for (var d = [], e = 0; e < b.length; e++) {
 			var f = rotatePoint(a.x, a.y, b[e].x, b[e].y, c);
@@ -147,6 +169,7 @@ function(window) {
 		}
 		return d
 	}
+
 	function $foreach(a, b, c) {
 		function d(e) {
 			e != a.length && (b(a[e]), setTimeout(function() {
@@ -158,6 +181,7 @@ function(window) {
 			d(e)
 		}
 	}
+
 	function $for(a, b, c, d) {
 		function e(a) {
 			a != b && (c(b), setTimeout(function() {
@@ -169,16 +193,19 @@ function(window) {
 			e(f)
 		}
 	}
+
 	function cloneEvent(a) {
 		var b = {};
-		for (var c in a)"returnValue" != c && "keyLocation" != c && (b[c] = a[c]);
+		for (var c in a) "returnValue" != c && "keyLocation" != c && (b[c] = a[c]);
 		return b
 	}
+
 	function clone(a) {
 		var b = {};
 		for (var c in a) b[c] = a[c];
 		return b
 	}
+
 	function isPointInRect(a, b) {
 		var c = b.x,
 			d = b.y,
@@ -186,6 +213,7 @@ function(window) {
 			f = b.height;
 		return a.x > c && a.x < c + e && a.y > d && a.y < d + f
 	}
+
 	function isPointInLine(a, b, c) {
 		var d = JTopo.util.getDistance(b, c),
 			e = JTopo.util.getDistance(b, a),
@@ -193,6 +221,7 @@ function(window) {
 			g = Math.abs(e + f - d) <= .5;
 		return g
 	}
+
 	function removeFromArray(a, b) {
 		for (var c = 0; c < a.length; c++) {
 			var d = a[c];
@@ -203,10 +232,13 @@ function(window) {
 		}
 		return a
 	}
+
 	function randomColor() {
 		return Math.floor(255 * Math.random()) + "," + Math.floor(255 * Math.random()) + "," + Math.floor(255 * Math.random())
 	}
+
 	function isIntsect() {}
+
 	function getProperties(a, b) {
 		for (var c = "", d = 0; d < b.length; d++) {
 			d > 0 && (c += ",");
@@ -215,25 +247,31 @@ function(window) {
 		}
 		return c
 	}
+
 	function loadStageFromJson(json, canvas) {
 		var obj = eval(json),
 			stage = new JTopo.Stage(canvas);
-		for (var k in stageObj) if ("scenes" != k) stage[k] = obj[k];
-		else for (var scenes = obj.scenes, i = 0; i < scenes.length; i++) {
-			var sceneObj = scenes[i],
-				scene = new JTopo.Scene(stage);
-			for (var p in sceneObj) if ("elements" != p) scene[p] = sceneObj[p];
-			else for (var nodeMap = {}, elements = sceneObj.elements, m = 0; m < elements.length; m++) {
-				var elementObj = elements[m],
-					type = elementObj.elementType,
-					element;
-				"Node" == type && (element = new JTopo.Node);
-				for (var mk in elementObj) element[mk] = elementObj[mk];
-				nodeMap[element.text] = element, scene.add(element)
-			}
-		}
+		for (var k in stageObj)
+			if ("scenes" != k) stage[k] = obj[k];
+			else
+				for (var scenes = obj.scenes, i = 0; i < scenes.length; i++) {
+					var sceneObj = scenes[i],
+						scene = new JTopo.Scene(stage);
+					for (var p in sceneObj)
+						if ("elements" != p) scene[p] = sceneObj[p];
+						else
+							for (var nodeMap = {}, elements = sceneObj.elements, m = 0; m < elements.length; m++) {
+								var elementObj = elements[m],
+									type = elementObj.elementType,
+									element;
+								"Node" == type && (element = new JTopo.Node);
+								for (var mk in elementObj) element[mk] = elementObj[mk];
+								nodeMap[element.text] = element, scene.add(element)
+							}
+				}
 		return console.log(stage), stage
 	}
+
 	function toJson(a) {
 		var b = "backgroundColor,visible,mode,rotate,alpha,scaleX,scaleY,shadow,translateX,translateY,areaSelect,paintAll".split(","),
 			c = "text,elementType,x,y,width,height,visible,alpha,rotate,scaleX,scaleY,fillColor,shadow,transformAble,zIndex,dragable,selected,showSelected,font,fontColor,textPosition,textOffsetX,textOffsetY".split(","),
@@ -250,18 +288,21 @@ function(window) {
 		}
 		return d += "]", d += "}"
 	}
+
 	function changeColor(a, b, c, d, e) {
 		var f = canvas.width = b.width,
 			g = canvas.height = b.height;
 		a.clearRect(0, 0, canvas.width, canvas.height), a.drawImage(b, 0, 0);
-		for (var h = a.getImageData(0, 0, b.width, b.height), i = h.data, j = 0; f > j; j++) for (var k = 0; g > k; k++) {
-			var l = 4 * (j + k * f);
-			0 != i[l + 3] && (null != c && (i[l + 0] += c), null != d && (i[l + 1] += d), null != e && (i[l + 2] += e))
-		}
+		for (var h = a.getImageData(0, 0, b.width, b.height), i = h.data, j = 0; f > j; j++)
+			for (var k = 0; g > k; k++) {
+				var l = 4 * (j + k * f);
+				0 != i[l + 3] && (null != c && (i[l + 0] += c), null != d && (i[l + 1] += d), null != e && (i[l + 2] += e))
+			}
 		a.putImageData(h, 0, 0, 0, 0, b.width, b.height);
 		var m = canvas.toDataURL();
 		return alarmImageCache[b.src] = m, m
 	}
+
 	function genImageAlarm(a, b) {
 		null == b && (b = 255);
 		try {
@@ -271,6 +312,7 @@ function(window) {
 		} catch (d) {}
 		return null
 	}
+
 	function getOffsetPosition(a) {
 		if (!a) return {
 			left: 0,
@@ -286,13 +328,15 @@ function(window) {
 			i = g.clientLeft || f.clientLeft || 0,
 			b = d.top + (self.pageYOffset || g && g.scrollTop || f.scrollTop) - h,
 			c = d.left + (self.pageXOffset || g && g.scrollLeft || f.scrollLeft) - i;
-		else do b += a.offsetTop || 0, c += a.offsetLeft || 0, a = a.offsetParent;
-		while (a);
+		else
+			do b += a.offsetTop || 0, c += a.offsetLeft || 0, a = a.offsetParent;
+			while (a);
 		return {
 			left: c,
 			top: b
 		}
 	}
+
 	function lineF(a, b, c, d) {
 		function e(a) {
 			return a * f + g
@@ -301,6 +345,7 @@ function(window) {
 			g = b - a * f;
 		return e.k = f, e.b = g, e.x1 = a, e.x2 = c, e.y1 = b, e.y2 = d, e
 	}
+
 	function inRange(a, b, c) {
 		var d = Math.abs(b - c),
 			e = Math.abs(b - a),
@@ -308,9 +353,11 @@ function(window) {
 			g = Math.abs(d - (e + f));
 		return 1e-6 > g ? !0 : !1
 	}
+
 	function isPointInLineSeg(a, b, c) {
 		return inRange(a, c.x1, c.x2) && inRange(b, c.y1, c.y2)
 	}
+
 	function intersection(a, b) {
 		var c, d;
 		return a.k == b.k ? null : (1 / 0 == a.k || a.k == -1 / 0 ? (c = a.x1, d = b(a.x1)) : 1 / 0 == b.k || b.k == -1 / 0 ? (c = b.x1, d = a(b.x1)) : (c = (b.b - a.b) / (a.k - b.k), d = a(c)), 0 == isPointInLineSeg(c, d, a) ? null : 0 == isPointInLineSeg(c, d, b) ? null : {
@@ -318,30 +365,33 @@ function(window) {
 			y: d
 		})
 	}
+
 	function intersectionLineBound(a, b) {
 		var c = JTopo.util.lineF(b.left, b.top, b.left, b.bottom),
 			d = JTopo.util.intersection(a, c);
 		return null == d && (c = JTopo.util.lineF(b.left, b.top, b.right, b.top), d = JTopo.util.intersection(a, c), null == d && (c = JTopo.util.lineF(b.right, b.top, b.right, b.bottom), d = JTopo.util.intersection(a, c), null == d && (c = JTopo.util.lineF(b.left, b.bottom, b.right, b.bottom), d = JTopo.util.intersection(a, c)))), d
 	}
 	requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame ||
-	function(a) {
-		setTimeout(a, 1e3 / 24)
-	}, Array.prototype.del = function(a) {
-		if ("number" != typeof a) {
-			for (var b = 0; b < this.length; b++) if (this[b] === a) return this.slice(0, b).concat(this.slice(b + 1, this.length));
-			return this
-		}
-		return 0 > a ? this : this.slice(0, a).concat(this.slice(a + 1, this.length))
-	}, [].indexOf || (Array.prototype.indexOf = function(a) {
-		for (var b = 0; b < this.length; b++) if (this[b] === a) return b;
-		return -1
-	}), window.console || (window.console = {
-		log: function() {},
-		info: function() {},
-		debug: function() {},
-		warn: function() {},
-		error: function() {}
-	});
+		function(a) {
+			setTimeout(a, 1e3 / 24)
+		}, Array.prototype.del = function(a) {
+			if ("number" != typeof a) {
+				for (var b = 0; b < this.length; b++)
+					if (this[b] === a) return this.slice(0, b).concat(this.slice(b + 1, this.length));
+				return this
+			}
+			return 0 > a ? this : this.slice(0, a).concat(this.slice(a + 1, this.length))
+		}, [].indexOf || (Array.prototype.indexOf = function(a) {
+			for (var b = 0; b < this.length; b++)
+				if (this[b] === a) return b;
+			return -1
+		}), window.console || (window.console = {
+			log: function() {},
+			info: function() {},
+			debug: function() {},
+			warn: function() {},
+			error: function() {}
+		});
 	var canvas = document.createElement("canvas"),
 		graphics = canvas.getContext("2d"),
 		alarmImageCache = {};
@@ -371,7 +421,8 @@ function(window) {
 		intersection: intersection,
 		intersectionLineBound: intersectionLineBound
 	}, window.$for = $for, window.$foreach = $foreach
-}(JTopo), function(a) {
+}(JTopo),
+function(a) {
 	function b(a) {
 		return {
 			hgap: 16,
@@ -448,12 +499,14 @@ function(window) {
 			}
 		}
 	}
+
 	function c(c) {
 		function d(b) {
 			var c = a.util.getEventPosition(b),
 				d = a.util.getOffsetPosition(n.canvas);
 			return c.offsetLeft = c.pageX - d.left, c.offsetTop = c.pageY - d.top, c.x = c.offsetLeft, c.y = c.offsetTop, c.target = null, c
 		}
+
 		function e(a) {
 			document.onselectstart = function() {
 				return !1
@@ -461,6 +514,7 @@ function(window) {
 			var b = d(a);
 			n.dispatchEventToScenes("mouseover", b), n.dispatchEvent("mouseover", b)
 		}
+
 		function f(a) {
 			p = setTimeout(function() {
 				o = !0
@@ -470,31 +524,38 @@ function(window) {
 			var b = d(a);
 			n.dispatchEventToScenes("mouseout", b), n.dispatchEvent("mouseout", b), n.needRepaint = 0 == n.animate ? !1 : !0
 		}
+
 		function g(a) {
 			var b = d(a);
 			n.mouseDown = !0, n.mouseDownX = b.x, n.mouseDownY = b.y, n.dispatchEventToScenes("mousedown", b), n.dispatchEvent("mousedown", b)
 		}
+
 		function h(a) {
 			var b = d(a);
 			n.dispatchEventToScenes("mouseup", b), n.dispatchEvent("mouseup", b), n.mouseDown = !1, n.needRepaint = 0 == n.animate ? !1 : !0
 		}
+
 		function i(a) {
 			p && (window.clearTimeout(p), p = null), o = !1;
 			var b = d(a);
 			n.mouseDown ? 0 == a.button && (b.dx = b.x - n.mouseDownX, b.dy = b.y - n.mouseDownY, n.dispatchEventToScenes("mousedrag", b), n.dispatchEvent("mousedrag", b), 1 == n.eagleEye.visible && n.eagleEye.update()) : (n.dispatchEventToScenes("mousemove", b), n.dispatchEvent("mousemove", b))
 		}
+
 		function j(a) {
 			var b = d(a);
 			n.dispatchEventToScenes("click", b), n.dispatchEvent("click", b)
 		}
+
 		function k(a) {
 			var b = d(a);
 			n.dispatchEventToScenes("dbclick", b), n.dispatchEvent("dbclick", b)
 		}
+
 		function l(a) {
 			var b = d(a);
 			n.dispatchEventToScenes("mousewheel", b), n.dispatchEvent("mousewheel", b), null != n.wheelZoom && (a.preventDefault ? a.preventDefault() : (a = a || window.event, a.returnValue = !1), 1 == n.eagleEye.visible && n.eagleEye.update())
 		}
+
 		function m(b) {
 			a.util.isIE || !window.addEventListener ? (b.onmouseout = f, b.onmouseover = e, b.onmousedown = g, b.onmouseup = h, b.onmousemove = i, b.onclick = j, b.ondblclick = k, b.onmousewheel = l, b.touchstart = g, b.touchmove = i, b.touchend = h) : (b.addEventListener("mouseout", f), b.addEventListener("mouseover", e), b.addEventListener("mousedown", g), b.addEventListener("mouseup", h), b.addEventListener("mousemove", i), b.addEventListener("click", j), b.addEventListener("dblclick", k), a.util.isFirefox ? b.addEventListener("DOMMouseScroll", l) : b.addEventListener("mousewheel", l)), window.addEventListener && (window.addEventListener("keydown", function(b) {
 				n.dispatchEventToScenes("keydown", a.util.cloneEvent(b));
@@ -529,11 +590,13 @@ function(window) {
 				}
 			})
 		}, this.add = function(a) {
-			for (var b = 0; b < this.childs.length; b++) if (this.childs[b] === a) return;
+			for (var b = 0; b < this.childs.length; b++)
+				if (this.childs[b] === a) return;
 			a.addTo(this), this.childs.push(a)
 		}, this.remove = function(a) {
 			if (null == a) throw new Error("Stage.remove出错: 参数为null!");
-			for (var b = 0; b < this.childs.length; b++) if (this.childs[b] === a) return a.stage = null, this.childs = this.childs.del(b), this;
+			for (var b = 0; b < this.childs.length; b++)
+				if (this.childs[b] === a) return a.stage = null, this.childs = this.childs.del(b), this;
 			return this
 		}, this.clear = function() {
 			this.childs = []
@@ -553,97 +616,103 @@ function(window) {
 		var q = "click,dbclick,mousedown,mouseup,mouseover,mouseout,mousemove,mousedrag,mousewheel,touchstart,touchmove,touchend,keydown,keyup".split(","),
 			r = this;
 		q.forEach(function(a) {
-			r[a] = function(b) {
-				null != b ? this.addEventListener(a, b) : this.dispatchEvent(a)
-			}
-		}), this.saveImageInfo = function(a, b) {
-			var c = this.eagleEye.getImage(a, b),
-				d = window.open("about:blank");
-			return d.document.write("<img src='" + c + "' alt='from canvas'/>"), this
-		}, this.saveAsLocalImage = function(a, b) {
-			var c = this.eagleEye.getImage(a, b);
-			return c.replace("image/png", "image/octet-stream"), window.location.href = c, this
-		}, this.paint = function() {
-			null != this.canvas && (this.graphics.save(), this.graphics.clearRect(0, 0, this.width, this.height), this.childs.forEach(function(a) {
-				1 == a.visible && a.repaint(n.graphics)
-			}), 1 == this.eagleEye.visible && this.eagleEye.paint(this), this.graphics.restore())
-		}, this.repaint = function() {
-			0 != this.frames && (this.frames < 0 && 0 == this.needRepaint || (this.paint(), this.frames < 0 && (this.needRepaint = !1)))
-		}, this.zoom = function(a) {
-			this.childs.forEach(function(b) {
-				0 != b.visible && b.zoom(a)
-			})
-		}, this.zoomOut = function(a) {
-			this.childs.forEach(function(b) {
-				0 != b.visible && b.zoomOut(a)
-			})
-		}, this.zoomIn = function(a) {
-			this.childs.forEach(function(b) {
-				0 != b.visible && b.zoomIn(a)
-			})
-		}, this.centerAndZoom = function() {
-			this.childs.forEach(function(a) {
-				0 != a.visible && a.centerAndZoom()
-			})
-		}, this.setCenter = function(a, b) {
-			var c = this;
-			this.childs.forEach(function(d) {
-				var e = a - c.canvas.width / 2,
-					f = b - c.canvas.height / 2;
-				d.translateX = -e, d.translateY = -f
-			})
-		}, this.getBound = function() {
-			var a = {
-				left: Number.MAX_VALUE,
-				right: Number.MIN_VALUE,
-				top: Number.MAX_VALUE,
-				bottom: Number.MIN_VALUE
-			};
-			return this.childs.forEach(function(b) {
-				var c = b.getElementsBound();
-				c.left < a.left && (a.left = c.left, a.leftNode = c.leftNode), c.top < a.top && (a.top = c.top, a.topNode = c.topNode), c.right > a.right && (a.right = c.right, a.rightNode = c.rightNode), c.bottom > a.bottom && (a.bottom = c.bottom, a.bottomNode = c.bottomNode)
-			}), a.width = a.right - a.left, a.height = a.bottom - a.top, a
-		}, this.toJson = function() {
-			{
-				var b = this,
-					c = '{"version":"' + a.version + '",';
-				this.serializedProperties.length
-			}
-			return this.serializedProperties.forEach(function(a) {
-				var d = b[a];
-				"string" == typeof d && (d = '"' + d + '"'), c += '"' + a + '":' + d + ","
-			}), c += '"childs":[', this.childs.forEach(function(a) {
-				c += a.toJson()
-			}), c += "]", c += "}"
-		}, function() {
-			0 == n.frames ? setTimeout(arguments.callee, 100) : n.frames < 0 ? (n.repaint(), setTimeout(arguments.callee, 1e3 / -n.frames)) : (n.repaint(), setTimeout(arguments.callee, 1e3 / n.frames))
-		}(), setTimeout(function() {
-			n.mousewheel(function(a) {
-				var b = null == a.wheelDelta ? a.detail : a.wheelDelta;
-				null != this.wheelZoom && (b > 0 ? this.zoomIn(this.wheelZoom) : this.zoomOut(this.wheelZoom))
-			}), n.paint()
-		}, 300), setTimeout(function() {
-			n.paint()
-		}, 1e3), setTimeout(function() {
-			n.paint()
-		}, 3e3)
+				r[a] = function(b) {
+					null != b ? this.addEventListener(a, b) : this.dispatchEvent(a)
+				}
+			}), this.saveImageInfo = function(a, b) {
+				var c = this.eagleEye.getImage(a, b),
+					d = window.open("about:blank");
+				return d.document.write("<img src='" + c + "' alt='from canvas'/>"), this
+			}, this.saveAsLocalImage = function(a, b) {
+				var c = this.eagleEye.getImage(a, b);
+				return c.replace("image/png", "image/octet-stream"), window.location.href = c, this
+			}, this.paint = function() {
+				null != this.canvas && (this.graphics.save(), this.graphics.clearRect(0, 0, this.width, this.height), this.childs.forEach(function(a) {
+					1 == a.visible && a.repaint(n.graphics)
+				}), 1 == this.eagleEye.visible && this.eagleEye.paint(this), this.graphics.restore())
+			}, this.repaint = function() {
+				0 != this.frames && (this.frames < 0 && 0 == this.needRepaint || (this.paint(), this.frames < 0 && (this.needRepaint = !1)))
+			}, this.zoom = function(a) {
+				this.childs.forEach(function(b) {
+					0 != b.visible && b.zoom(a)
+				})
+			}, this.zoomOut = function(a) {
+				this.childs.forEach(function(b) {
+					0 != b.visible && b.zoomOut(a)
+				})
+			}, this.zoomIn = function(a) {
+				this.childs.forEach(function(b) {
+					0 != b.visible && b.zoomIn(a)
+				})
+			}, this.centerAndZoom = function() {
+				this.childs.forEach(function(a) {
+					0 != a.visible && a.centerAndZoom()
+				})
+			}, this.setCenter = function(a, b) {
+				var c = this;
+				this.childs.forEach(function(d) {
+					var e = a - c.canvas.width / 2,
+						f = b - c.canvas.height / 2;
+					d.translateX = -e, d.translateY = -f
+				})
+			}, this.getBound = function() {
+				var a = {
+					left: Number.MAX_VALUE,
+					right: Number.MIN_VALUE,
+					top: Number.MAX_VALUE,
+					bottom: Number.MIN_VALUE
+				};
+				return this.childs.forEach(function(b) {
+					var c = b.getElementsBound();
+					c.left < a.left && (a.left = c.left, a.leftNode = c.leftNode), c.top < a.top && (a.top = c.top, a.topNode = c.topNode), c.right > a.right && (a.right = c.right, a.rightNode = c.rightNode), c.bottom > a.bottom && (a.bottom = c.bottom, a.bottomNode = c.bottomNode)
+				}), a.width = a.right - a.left, a.height = a.bottom - a.top, a
+			}, this.toJson = function() {
+				{
+					var b = this,
+						c = '{"version":"' + a.version + '",';
+					this.serializedProperties.length
+				}
+				return this.serializedProperties.forEach(function(a) {
+					var d = b[a];
+					"string" == typeof d && (d = '"' + d + '"'), c += '"' + a + '":' + d + ","
+				}), c += '"childs":[', this.childs.forEach(function(a) {
+					c += a.toJson()
+				}), c += "]", c += "}"
+			},
+			function() {
+				0 == n.frames ? setTimeout(arguments.callee, 100) : n.frames < 0 ? (n.repaint(), setTimeout(arguments.callee, 1e3 / -n.frames)) : (n.repaint(), setTimeout(arguments.callee, 1e3 / n.frames))
+			}(), setTimeout(function() {
+				n.mousewheel(function(a) {
+					var b = null == a.wheelDelta ? a.detail : a.wheelDelta;
+					null != this.wheelZoom && (b > 0 ? this.zoomIn(this.wheelZoom) : this.zoomOut(this.wheelZoom))
+				}), n.paint()
+			}, 300), setTimeout(function() {
+				n.paint()
+			}, 1e3), setTimeout(function() {
+				n.paint()
+			}, 3e3)
 	}
 	c.prototype = {
 		get width() {
 			return this.canvas.width
-		}, get height() {
+		},
+		get height() {
 			return this.canvas.height
-		}, set cursor(a) {
+		},
+		set cursor(a) {
 			this.canvas.style.cursor = a
-		}, get cursor() {
+		},
+		get cursor() {
 			return this.canvas.style.cursor
-		}, set mode(a) {
+		},
+		set mode(a) {
 			this.childs.forEach(function(b) {
 				b.mode = a
 			})
 		}
 	}, a.Stage = c
-}(JTopo), function(a) {
+}(JTopo),
+function(a) {
 	function b(c) {
 		function d(a, b, c, d) {
 			return function(e) {
@@ -676,10 +745,11 @@ function(window) {
 		}, this.paintBackgroud = function(a) {
 			null != this.background ? a.drawImage(this.background, 0, 0, a.canvas.width, a.canvas.height) : (a.beginPath(), a.fillStyle = "rgba(" + this.backgroundColor + "," + this.alpha + ")", a.fillRect(0, 0, a.canvas.width, a.canvas.height), a.closePath())
 		}, this.getDisplayedElements = function() {
-			for (var a = [], b = 0; b < this.zIndexArray.length; b++) for (var c = this.zIndexArray[b], d = this.zIndexMap[c], e = 0; e < d.length; e++) {
-				var f = d[e];
-				this.isVisiable(f) && a.push(f)
-			}
+			for (var a = [], b = 0; b < this.zIndexArray.length; b++)
+				for (var c = this.zIndexArray[b], d = this.zIndexMap[c], e = 0; e < d.length; e++) {
+					var f = d[e];
+					this.isVisiable(f) && a.push(f)
+				}
 			return a
 		}, this.getDisplayedNodes = function() {
 			for (var b = [], c = 0; c < this.childs.length; c++) {
@@ -688,16 +758,17 @@ function(window) {
 			}
 			return b
 		}, this.paintChilds = function(b) {
-			for (var c = 0; c < this.zIndexArray.length; c++) for (var d = this.zIndexArray[c], e = this.zIndexMap[d], f = 0; f < e.length; f++) {
-				var g = e[f];
-				if (1 == this.paintAll || this.isVisiable(g)) {
-					if (b.save(), 1 == g.transformAble) {
-						var h = g.getCenterLocation();
-						b.translate(h.x, h.y), g.rotate && b.rotate(g.rotate), g.scaleX && g.scaleY ? b.scale(g.scaleX, g.scaleY) : g.scaleX ? b.scale(g.scaleX, 1) : g.scaleY && b.scale(1, g.scaleY)
+			for (var c = 0; c < this.zIndexArray.length; c++)
+				for (var d = this.zIndexArray[c], e = this.zIndexMap[d], f = 0; f < e.length; f++) {
+					var g = e[f];
+					if (1 == this.paintAll || this.isVisiable(g)) {
+						if (b.save(), 1 == g.transformAble) {
+							var h = g.getCenterLocation();
+							b.translate(h.x, h.y), g.rotate && b.rotate(g.rotate), g.scaleX && g.scaleY ? b.scale(g.scaleX, g.scaleY) : g.scaleX ? b.scale(g.scaleX, 1) : g.scaleY && b.scale(1, g.scaleY)
+						}
+						1 == g.shadow && (b.shadowBlur = g.shadowBlur, b.shadowColor = g.shadowColor, b.shadowOffsetX = g.shadowOffsetX, b.shadowOffsetY = g.shadowOffsetY), g instanceof a.InteractiveElement && (g.selected && 1 == g.showSelected && g.paintSelected(b), 1 == g.isMouseOver && g.paintMouseover(b)), g.paint(b), b.restore()
 					}
-					1 == g.shadow && (b.shadowBlur = g.shadowBlur, b.shadowColor = g.shadowColor, b.shadowOffsetX = g.shadowOffsetX, b.shadowOffsetY = g.shadowOffsetY), g instanceof a.InteractiveElement && (g.selected && 1 == g.showSelected && g.paintSelected(b), 1 == g.isMouseOver && g.paintMouseover(b)), g.paint(b), b.restore()
 				}
-			}
 		}, this.getOffsetTranslate = function(a) {
 			var b = this.stage.canvas.width,
 				c = this.stage.canvas.height;
@@ -733,10 +804,11 @@ function(window) {
 		}, this.clearOperations = function() {
 			return this.operations = [], this
 		}, this.getElementByXY = function(b, c) {
-			for (var d = null, e = this.zIndexArray.length - 1; e >= 0; e--) for (var f = this.zIndexArray[e], g = this.zIndexMap[f], h = g.length - 1; h >= 0; h--) {
-				var i = g[h];
-				if (i instanceof a.InteractiveElement && this.isVisiable(i) && i.isInBound(b, c)) return d = i
-			}
+			for (var d = null, e = this.zIndexArray.length - 1; e >= 0; e--)
+				for (var f = this.zIndexArray[e], g = this.zIndexMap[f], h = g.length - 1; h >= 0; h--) {
+					var i = g[h];
+					if (i instanceof a.InteractiveElement && this.isVisiable(i) && i.isInBound(b, c)) return d = i
+				}
 			return d
 		}, this.add = function(a) {
 			this.childs.push(a), null == this.zIndexMap[a.zIndex] && (this.zIndexMap[a.zIndex] = [], this.zIndexArray.push(a.zIndex), this.zIndexArray.sort(function(a, b) {
@@ -757,7 +829,8 @@ function(window) {
 			for (var b = 0; b < this.selectedElements.length; b++) this.selectedElements[b].unselectedHandler(a);
 			this.selectedElements = []
 		}, this.notInSelectedNodes = function(a) {
-			for (var b = 0; b < this.selectedElements.length; b++) if (a === this.selectedElements[b]) return !1;
+			for (var b = 0; b < this.selectedElements.length; b++)
+				if (a === this.selectedElements[b]) return !1;
 			return !0
 		}, this.removeFromSelected = function(a) {
 			for (var b = 0; b < this.selectedElements.length; b++) {
@@ -773,14 +846,15 @@ function(window) {
 			return null != c.dx && (c.dx /= this.scaleX, c.dy /= this.scaleY), null != this.currentElement && (c.target = this.currentElement), c.scene = this, c
 		}, this.selectElement = function(a) {
 			var b = e.getElementByXY(a.x, a.y);
-			if (null != b) if (a.target = b, b.mousedownHander(a), b.selectedHandler(a), e.notInSelectedNodes(b)) a.ctrlKey || e.cancleAllSelected(), e.addToSelected(b);
-			else {
-				1 == a.ctrlKey && (b.unselectedHandler(), this.removeFromSelected(b));
-				for (var c = 0; c < this.selectedElements.length; c++) {
-					var d = this.selectedElements[c];
-					d.selectedHandler(a)
-				}
-			} else a.ctrlKey || e.cancleAllSelected();
+			if (null != b)
+				if (a.target = b, b.mousedownHander(a), b.selectedHandler(a), e.notInSelectedNodes(b)) a.ctrlKey || e.cancleAllSelected(), e.addToSelected(b);
+				else {
+					1 == a.ctrlKey && (b.unselectedHandler(), this.removeFromSelected(b));
+					for (var c = 0; c < this.selectedElements.length; c++) {
+						var d = this.selectedElements[c];
+						d.selectedHandler(a)
+					}
+				} else a.ctrlKey || e.cancleAllSelected();
 			this.currentElement = b
 		}, this.mousedownHandler = function(b) {
 			var c = this.toSceneEvent(b);
@@ -795,13 +869,14 @@ function(window) {
 			var c = this.toSceneEvent(b);
 			null != this.currentElement && (c.target = e.currentElement, this.currentElement.mouseupHandler(c)), this.dispatchEvent("mouseup", c), this.mouseDown = !1
 		}, this.dragElements = function(b) {
-			if (null != this.currentElement && 1 == this.currentElement.dragable) for (var c = 0; c < this.selectedElements.length; c++) {
-				var d = this.selectedElements[c];
-				if (0 != d.dragable) {
-					var e = a.util.clone(b);
-					e.target = d, d.mousedragHandler(e)
+			if (null != this.currentElement && 1 == this.currentElement.dragable)
+				for (var c = 0; c < this.selectedElements.length; c++) {
+					var d = this.selectedElements[c];
+					if (0 != d.dragable) {
+						var e = a.util.clone(b);
+						e.target = d, d.mousedragHandler(e)
+					}
 				}
-			}
 		}, this.mousedragHandler = function(b) {
 			var c = this.toSceneEvent(b);
 			this.mode == a.SceneMode.normal ? null == this.currentElement || this.currentElement instanceof a.Link ? 1 == this.translate && (this.stage.cursor = a.MouseCursor.closed_hand, this.translateX = this.lastTranslateX + c.dx, this.translateY = this.lastTranslateY + c.dy) : this.dragElements(c) : this.mode == a.SceneMode.drag ? 1 == this.translate && (this.stage.cursor = a.MouseCursor.closed_hand, this.translateX = this.lastTranslateX + c.dx, this.translateY = this.lastTranslateY + c.dy) : this.mode == a.SceneMode.select ? null != this.currentElement ? 1 == this.currentElement.dragable && this.dragElements(c) : 1 == this.areaSelect && this.areaSelectHandle(c) : this.mode == a.SceneMode.edit && (null == this.currentElement || this.currentElement instanceof a.Link ? 1 == this.translate && (this.stage.cursor = a.MouseCursor.closed_hand, this.translateX = this.lastTranslateX + c.dx, this.translateY = this.lastTranslateY + c.dy) : this.dragElements(c)), this.dispatchEvent("mousedrag", c)
@@ -947,7 +1022,8 @@ function(window) {
 			}
 		}
 	}), a.Scene = b
-}(JTopo), function(a) {
+}(JTopo),
+function(a) {
 	function b() {
 		this.initialize = function() {
 			b.prototype.initialize.apply(this, arguments), this.elementType = "displayElement", this.x = 0, this.y = 0, this.width = 32, this.height = 32, this.visible = !0, this.alpha = 1, this.rotate = 0, this.scaleX = 1, this.scaleY = 1, this.strokeColor = "22,124,255", this.borderColor = "22,124,255", this.fillColor = "22,124,255", this.shadow = !1, this.shadowBlur = 5, this.shadowColor = "rgba(0,0,0,0.5)", this.shadowOffsetX = 3, this.shadowOffsetY = 6, this.transformAble = !1, this.zIndex = 0;
@@ -1031,6 +1107,7 @@ function(window) {
 			}), b
 		}
 	}
+
 	function c() {
 		this.initialize = function() {
 			c.prototype.initialize.apply(this, arguments), this.elementType = "interactiveElement", this.dragable = !1, this.selected = !1, this.showSelected = !0, this.selectedLocation = null, this.isMouseOver = !1;
@@ -1088,6 +1165,7 @@ function(window) {
 			}
 		})
 	}
+
 	function d() {
 		this.initialize = function() {
 			d.prototype.initialize.apply(this, arguments), this.editAble = !1, this.selectedPoint = null
@@ -1123,10 +1201,11 @@ function(window) {
 				a.restore()
 			}
 		}, this.isInBound = function(a, c) {
-			if (this.selectedPoint = null, 1 == this.editAble) for (var e = 0; e < b.length; e++) {
-				var f = this.getCtrlPosition(b[e]);
-				if (a > f.left && a < f.right && c > f.top && c < f.bottom) return this.selectedPoint = b[e], !0
-			}
+			if (this.selectedPoint = null, 1 == this.editAble)
+				for (var e = 0; e < b.length; e++) {
+					var f = this.getCtrlPosition(b[e]);
+					if (a > f.left && a < f.right && c > f.top && c < f.bottom) return this.selectedPoint = b[e], !0
+				}
 			return d.prototype.isInBound.apply(this, arguments)
 		}, this.mousedragHandler = function(a) {
 			if (null == this.selectedPoint) {
@@ -1192,7 +1271,8 @@ function(window) {
 			}
 		}
 	}), c.prototype = new b, d.prototype = new c, a.DisplayElement = b, a.InteractiveElement = c, a.EditableElement = d
-}(JTopo), function(a) {
+}(JTopo),
+function(a) {
 	function b(c) {
 		this.initialize = function(c) {
 			b.prototype.initialize.apply(this, arguments), this.elementType = "node", this.zIndex = a.zIndex_Node, this.text = c, this.font = "12px Consolas", this.fontColor = "255,255,255", this.borderWidth = 0, this.borderColor = "255,255,255", this.borderRadius = null, this.dragable = !0, this.textPosition = "Bottom_Center", this.textOffsetX = 0, this.textOffsetY = 0, this.transformAble = !0, this.inLinks = null, this.outLinks = null;
@@ -1281,27 +1361,33 @@ function(window) {
 			}), this.inLinks = null)
 		}
 	}
+
 	function c() {
 		c.prototype.initialize.apply(this, arguments)
 	}
+
 	function d(a) {
 		this.initialize(), this.text = a, this.elementType = "TextNode", this.paint = function(a) {
 			a.beginPath(), a.font = this.font, this.width = a.measureText(this.text).width, this.height = a.measureText("田").width, a.strokeStyle = "rgba(" + this.fontColor + ", " + this.alpha + ")", a.fillStyle = "rgba(" + this.fontColor + ", " + this.alpha + ")", a.fillText(this.text, -this.width / 2, this.height / 2), a.closePath(), this.paintBorder(a), this.paintCtrl(a), this.paintAlarmText(a)
 		}
 	}
+
 	function e(a, b, c) {
 		this.initialize(), this.text = a, this.href = b, this.target = c, this.elementType = "LinkNode", this.isVisited = !1, this.visitedColor = null, this.paint = function(a) {
 			a.beginPath(), a.font = this.font, this.width = a.measureText(this.text).width, this.height = a.measureText("田").width, this.isVisited && null != this.visitedColor ? (a.strokeStyle = "rgba(" + this.visitedColor + ", " + this.alpha + ")", a.fillStyle = "rgba(" + this.visitedColor + ", " + this.alpha + ")") : (a.strokeStyle = "rgba(" + this.fontColor + ", " + this.alpha + ")", a.fillStyle = "rgba(" + this.fontColor + ", " + this.alpha + ")"), a.fillText(this.text, -this.width / 2, this.height / 2), this.isMouseOver && (a.moveTo(-this.width / 2, this.height), a.lineTo(this.width / 2, this.height), a.stroke()), a.closePath(), this.paintBorder(a), this.paintCtrl(a), this.paintAlarmText(a)
 		}, this.mousemove(function() {
 			var a = document.getElementsByTagName("canvas");
-			if (a && a.length > 0) for (var b = 0; b < a.length; b++) a[b].style.cursor = "pointer"
+			if (a && a.length > 0)
+				for (var b = 0; b < a.length; b++) a[b].style.cursor = "pointer"
 		}), this.mouseout(function() {
 			var a = document.getElementsByTagName("canvas");
-			if (a && a.length > 0) for (var b = 0; b < a.length; b++) a[b].style.cursor = "default"
+			if (a && a.length > 0)
+				for (var b = 0; b < a.length; b++) a[b].style.cursor = "default"
 		}), this.click(function() {
 			"_blank" == this.target ? window.open(this.href) : location = this.href, this.isVisited = !0
 		})
 	}
+
 	function f(a) {
 		this.initialize(arguments), this._radius = 20, this.beginDegree = 0, this.endDegree = 2 * Math.PI, this.text = a, this.paint = function(a) {
 			a.save(), a.beginPath(), a.fillStyle = "rgba(" + this.fillColor + "," + this.alpha + ")", a.arc(0, 0, this.radius, this.beginDegree, this.endDegree, !0), a.fill(), a.closePath(), a.restore(), this.paintText(a), this.paintBorder(a), this.paintCtrl(a), this.paintAlarmText(a)
@@ -1309,6 +1395,7 @@ function(window) {
 			a.save(), a.beginPath(), a.strokeStyle = "rgba(168,202,255, 0.9)", a.fillStyle = "rgba(168,202,236,0.7)", a.arc(0, 0, this.radius + 3, this.beginDegree, this.endDegree, !0), a.fill(), a.stroke(), a.closePath(), a.restore()
 		}
 	}
+
 	function g(a, b, c) {
 		this.initialize(), this.frameImages = a || [], this.frameIndex = 0, this.isStop = !0;
 		var d = b || 1e3;
@@ -1326,6 +1413,7 @@ function(window) {
 			}
 		}
 	}
+
 	function h(a, b, c, d, e) {
 		this.initialize();
 		var f = this;
@@ -1352,6 +1440,7 @@ function(window) {
 			}
 		}
 	}
+
 	function i() {
 		var a = null;
 		return a = arguments.length <= 3 ? new g(arguments[0], arguments[1], arguments[2]) : new h(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]), a.stop = function() {
@@ -1390,31 +1479,38 @@ function(window) {
 			}
 		}
 	}), g.prototype = new c, h.prototype = new c, i.prototype = new c, a.Node = c, a.TextNode = d, a.LinkNode = e, a.CircleNode = f, a.AnimateNode = i
-}(JTopo), function(a) {
+}(JTopo),
+function(a) {
 	function b(a, b) {
 		var c = [];
 		if (null == a || null == b) return c;
-		if (a && b && a.outLinks && b.inLinks) for (var d = 0; d < a.outLinks.length; d++) for (var e = a.outLinks[d], f = 0; f < b.inLinks.length; f++) {
-			var g = b.inLinks[f];
-			e === g && c.push(g)
-		}
+		if (a && b && a.outLinks && b.inLinks)
+			for (var d = 0; d < a.outLinks.length; d++)
+				for (var e = a.outLinks[d], f = 0; f < b.inLinks.length; f++) {
+					var g = b.inLinks[f];
+					e === g && c.push(g)
+				}
 		return c
 	}
+
 	function c(a, c) {
 		var d = b(a, c),
 			e = b(c, a),
 			f = d.concat(e);
 		return f
 	}
+
 	function d(a) {
 		var b = c(a.nodeA, a.nodeZ);
 		return b = b.filter(function(b) {
 			return a !== b
 		})
 	}
+
 	function e(a, b) {
 		return c(a, b).length
 	}
+
 	function f(b, c, g) {
 		function h(b, c) {
 			var d = a.util.lineF(b.cx, b.cy, c.cx, c.cy),
@@ -1529,9 +1625,9 @@ function(window) {
 				n = h.y + e * Math.sin(i);
 			i -= Math.PI / 2;
 			var o = {
-				x: k + f * Math.cos(i),
-				y: l + f * Math.sin(i)
-			},
+					x: k + f * Math.cos(i),
+					y: l + f * Math.sin(i)
+				},
 				p = {
 					x: k + f * Math.cos(i - Math.PI),
 					y: l + f * Math.sin(i - Math.PI)
@@ -1576,9 +1672,9 @@ function(window) {
 				var h = this.path[g - 1],
 					i = this.path[g];
 				if (1 == a.util.isPointInLine({
-					x: b,
-					y: c
-				}, h, i)) {
+						x: b,
+						y: c
+					}, h, i)) {
 					f = !0;
 					break
 				}
@@ -1586,6 +1682,7 @@ function(window) {
 			return f
 		}
 	}
+
 	function g(a, b, c) {
 		this.initialize = function() {
 			g.prototype.initialize.apply(this, arguments), this.direction = "horizontal"
@@ -1640,6 +1737,7 @@ function(window) {
 			}
 		}
 	}
+
 	function h(a, b, c) {
 		this.initialize = function() {
 			h.prototype.initialize.apply(this, arguments), this.direction = "vertical", this.offsetGap = 44
@@ -1691,6 +1789,7 @@ function(window) {
 			})), d
 		}
 	}
+
 	function i(a, b, c) {
 		this.initialize = function() {
 			i.prototype.initialize.apply(this, arguments)
@@ -1712,17 +1811,19 @@ function(window) {
 		}
 	}
 	f.prototype = new a.InteractiveElement, g.prototype = new f, h.prototype = new f, i.prototype = new f, a.Link = f, a.FoldLink = g, a.FlexionalLink = h, a.CurveLink = i
-}(JTopo), function(a) {
+}(JTopo),
+function(a) {
 	function b(c) {
 		this.initialize = function(c) {
 			b.prototype.initialize.apply(this, null), this.elementType = "container", this.zIndex = a.zIndex_Container, this.width = 100, this.height = 100, this.childs = [], this.alpha = .5, this.dragable = !0, this.childDragble = !0, this.visible = !0, this.fillColor = "10,100,80", this.borderWidth = 0, this.borderColor = "255,255,255", this.borderRadius = null, this.font = "12px Consolas", this.fontColor = "255,255,255", this.text = c, this.textPosition = "Bottom_Center", this.textOffsetX = 0, this.textOffsetY = 0, this.layout = new a.layout.AutoBoundLayout
 		}, this.initialize(c), this.add = function(a) {
 			this.childs.push(a), a.dragable = this.childDragble
 		}, this.remove = function(a) {
-			for (var b = 0; b < this.childs.length; b++) if (this.childs[b] === a) {
-				a.parentContainer = null, this.childs = this.childs.del(b), a.lastParentContainer = this;
-				break
-			}
+			for (var b = 0; b < this.childs.length; b++)
+				if (this.childs[b] === a) {
+					a.parentContainer = null, this.childs = this.childs.del(b), a.lastParentContainer = this;
+					break
+				}
 		}, this.removeAll = function() {
 			this.childs = []
 		}, this.setLocation = function(a, b) {
@@ -1788,7 +1889,8 @@ function(window) {
 		}
 	}
 	b.prototype = new a.InteractiveElement, a.Container = b
-}(JTopo), function(a) {
+}(JTopo),
+function(a) {
 	function b(a) {
 		var b = 0,
 			c = 0;
@@ -1801,6 +1903,7 @@ function(window) {
 		};
 		return d
 	}
+
 	function c(c, d) {
 		null == d && (d = {}); {
 			var e = d.cx,
@@ -1860,26 +1963,33 @@ function(window) {
 			radiusB: s
 		}
 	}
+
 	function d(a, b) {
 		return function(c) {
 			var d = c.childs;
-			if (!(d.length <= 0)) for (var e = c.getBound(), f = d[0], g = (e.width - f.width) / b, h = (e.height - f.height) / a, i = (d.length, 0), j = 0; a > j; j++) for (var k = 0; b > k; k++) {
-				var l = d[i++],
-					m = e.left + g / 2 + k * g,
-					n = e.top + h / 2 + j * h;
-				if (l.setLocation(m, n), i >= d.length) return
-			}
+			if (!(d.length <= 0))
+				for (var e = c.getBound(), f = d[0], g = (e.width - f.width) / b, h = (e.height - f.height) / a, i = (d.length, 0), j = 0; a > j; j++)
+					for (var k = 0; b > k; k++) {
+						var l = d[i++],
+							m = e.left + g / 2 + k * g,
+							n = e.top + h / 2 + j * h;
+						if (l.setLocation(m, n), i >= d.length) return
+					}
 		}
 	}
+
 	function e(a, b) {
-		return null == a && (a = 0), null == b && (b = 0), function(c) {
-			var d = c.childs;
-			if (!(d.length <= 0)) for (var e = c.getBound(), f = e.left, g = e.top, h = 0; h < d.length; h++) {
-				var i = d[h];
-				f + i.width >= e.right && (f = e.left, g += b + i.height), i.setLocation(f, g), f += a + i.width
+		return null == a && (a = 0), null == b && (b = 0),
+			function(c) {
+				var d = c.childs;
+				if (!(d.length <= 0))
+					for (var e = c.getBound(), f = e.left, g = e.top, h = 0; h < d.length; h++) {
+						var i = d[h];
+						f + i.width >= e.right && (f = e.left, g += b + i.height), i.setLocation(f, g), f += a + i.width
+					}
 			}
-		}
 	}
+
 	function f() {
 		return function(a, b) {
 			if (b.length > 0) {
@@ -1891,19 +2001,23 @@ function(window) {
 			}
 		}
 	}
+
 	function g(b) {
 		var c = [],
 			d = b.filter(function(b) {
 				return b instanceof a.Link ? !0 : (c.push(b), !1)
 			});
 		return b = c.filter(function(a) {
-			for (var b = 0; b < d.length; b++) if (d[b].nodeZ === a) return !1;
+			for (var b = 0; b < d.length; b++)
+				if (d[b].nodeZ === a) return !1;
 			return !0
 		}), b = b.filter(function(a) {
-			for (var b = 0; b < d.length; b++) if (d[b].nodeA === a) return !0;
+			for (var b = 0; b < d.length; b++)
+				if (d[b].nodeA === a) return !0;
 			return !1
 		})
 	}
+
 	function h(a) {
 		var b = 0,
 			c = 0;
@@ -1914,10 +2028,12 @@ function(window) {
 			height: c / a.length
 		}
 	}
+
 	function i(a, b, c, d) {
 		b.x += c, b.y += d;
 		for (var e = q(a, b), f = 0; f < e.length; f++) i(a, e[f], c, d)
 	}
+
 	function j(a, b) {
 		function c(b, e) {
 			var f = q(a, b);
@@ -1927,6 +2043,7 @@ function(window) {
 		var d = [];
 		return c(b, 0), d
 	}
+
 	function k(b, c, d) {
 		return function(e) {
 			function f(f, g) {
@@ -1936,13 +2053,17 @@ function(window) {
 						p = h * d;
 					"down" == b || ("up" == b ? p = -p : "left" == b ? (o = -h * d, p = (m + 1) * (c + 10)) : "right" == b && (o = h * d, p = (m + 1) * (c + 10))), n.setLocation(o, p)
 				}
-				for (var q = h - 1; q >= 0; q--) for (var r = k["" + q].nodes, s = k["" + q].childs, m = 0; m < r.length; m++) {
-					var t = r[m],
-						u = s[m];
-					if ("down" == b ? t.y = q * d : "up" == b ? t.y = -q * d : "left" == b ? t.x = -q * d : "right" == b && (t.x = q * d), u.length > 0 ? "down" == b || "up" == b ? t.x = (u[0].x + u[u.length - 1].x) / 2 : ("left" == b || "right" == b) && (t.y = (u[0].y + u[u.length - 1].y) / 2) : m > 0 && ("down" == b || "up" == b ? t.x = r[m - 1].x + r[m - 1].width + c : ("left" == b || "right" == b) && (t.y = r[m - 1].y + r[m - 1].height + c)), m > 0) if ("down" == b || "up" == b) {
-						if (t.x < r[m - 1].x + r[m - 1].width) for (var v = r[m - 1].x + r[m - 1].width + c, w = Math.abs(v - t.x), x = m; x < r.length; x++) i(e.childs, r[x], w, 0)
-					} else if (("left" == b || "right" == b) && t.y < r[m - 1].y + r[m - 1].height) for (var y = r[m - 1].y + r[m - 1].height + c, z = Math.abs(y - t.y), x = m; x < r.length; x++) i(e.childs, r[x], 0, z)
-				}
+				for (var q = h - 1; q >= 0; q--)
+					for (var r = k["" + q].nodes, s = k["" + q].childs, m = 0; m < r.length; m++) {
+						var t = r[m],
+							u = s[m];
+						if ("down" == b ? t.y = q * d : "up" == b ? t.y = -q * d : "left" == b ? t.x = -q * d : "right" == b && (t.x = q * d), u.length > 0 ? "down" == b || "up" == b ? t.x = (u[0].x + u[u.length - 1].x) / 2 : ("left" == b || "right" == b) && (t.y = (u[0].y + u[u.length - 1].y) / 2) : m > 0 && ("down" == b || "up" == b ? t.x = r[m - 1].x + r[m - 1].width + c : ("left" == b || "right" == b) && (t.y = r[m - 1].y + r[m - 1].height + c)), m > 0)
+							if ("down" == b || "up" == b) {
+								if (t.x < r[m - 1].x + r[m - 1].width)
+									for (var v = r[m - 1].x + r[m - 1].width + c, w = Math.abs(v - t.x), x = m; x < r.length; x++) i(e.childs, r[x], w, 0)
+							} else if (("left" == b || "right" == b) && t.y < r[m - 1].y + r[m - 1].height)
+							for (var y = r[m - 1].y + r[m - 1].height + c, z = Math.abs(y - t.y), x = m; x < r.length; x++) i(e.childs, r[x], 0, z)
+					}
 			}
 			var g = null;
 			null == c && (g = h(e.childs), c = g.width, ("left" == b || "right" == b) && (c = g.width + 10)), null == d && (null == g && (g = h(e.childs)), d = 2 * g.height), null == b && (b = "down");
@@ -1959,6 +2080,7 @@ function(window) {
 			}
 		}
 	}
+
 	function l(b) {
 		return function(c) {
 			function d(a, c, e) {
@@ -1988,13 +2110,16 @@ function(window) {
 			}
 		}
 	}
+
 	function m(a, b, c, d, e, f) {
-		for (var g = [], h = 0; c > h; h++) for (var i = 0; d > i; i++) g.push({
-			x: a + i * e,
-			y: b + h * f
-		});
+		for (var g = [], h = 0; c > h; h++)
+			for (var i = 0; d > i; i++) g.push({
+				x: a + i * e,
+				y: b + h * f
+			});
 		return g
 	}
+
 	function n(a, b, c, d, e, f) {
 		var g = e ? e : 0,
 			h = f ? f : 2 * Math.PI,
@@ -2012,34 +2137,42 @@ function(window) {
 		}
 		return k
 	}
+
 	function o(a, b, c, d, e, f) {
 		var g = f || "bottom",
 			h = [];
-		if ("bottom" == g) for (var i = a - c / 2 * d + d / 2, j = 0; c >= j; j++) h.push({
-			x: i + j * d,
-			y: b + e
-		});
-		else if ("top" == g) for (var i = a - c / 2 * d + d / 2, j = 0; c >= j; j++) h.push({
-			x: i + j * d,
-			y: b - e
-		});
-		else if ("right" == g) for (var i = b - c / 2 * d + d / 2, j = 0; c >= j; j++) h.push({
-			x: a + e,
-			y: i + j * d
-		});
-		else if ("left" == g) for (var i = b - c / 2 * d + d / 2, j = 0; c >= j; j++) h.push({
-			x: a - e,
-			y: i + j * d
-		});
+		if ("bottom" == g)
+			for (var i = a - c / 2 * d + d / 2, j = 0; c >= j; j++) h.push({
+				x: i + j * d,
+				y: b + e
+			});
+		else if ("top" == g)
+			for (var i = a - c / 2 * d + d / 2, j = 0; c >= j; j++) h.push({
+				x: i + j * d,
+				y: b - e
+			});
+		else if ("right" == g)
+			for (var i = b - c / 2 * d + d / 2, j = 0; c >= j; j++) h.push({
+				x: a + e,
+				y: i + j * d
+			});
+		else if ("left" == g)
+			for (var i = b - c / 2 * d + d / 2, j = 0; c >= j; j++) h.push({
+				x: a - e,
+				y: i + j * d
+			});
 		return h
 	}
+
 	function m(a, b, c, d, e, f) {
-		for (var g = [], h = 0; c > h; h++) for (var i = 0; d > i; i++) g.push({
-			x: a + i * e,
-			y: b + h * f
-		});
+		for (var g = [], h = 0; c > h; h++)
+			for (var i = 0; d > i; i++) g.push({
+				x: a + i * e,
+				y: b + h * f
+			});
 		return g
 	}
+
 	function p(a, b) {
 		if (a.layout) {
 			var c = a.layout,
@@ -2060,22 +2193,27 @@ function(window) {
 			for (var j = 0; j < b.length; j++) b[j].setCenterLocation(e[j].x, e[j].y)
 		}
 	}
+
 	function q(b, c) {
 		for (var d = [], e = 0; e < b.length; e++) b[e] instanceof a.Link && b[e].nodeA === c && d.push(b[e].nodeZ);
 		return d
 	}
+
 	function r(a, b, c) {
 		var d = q(a.childs, b);
 		if (0 == d.length) return null;
-		if (p(b, d), 1 == c) for (var e = 0; e < d.length; e++) r(a, d[e], c);
+		if (p(b, d), 1 == c)
+			for (var e = 0; e < d.length; e++) r(a, d[e], c);
 		return null
 	}
+
 	function s(b, c) {
 		function d(a, b) {
 			var c = a.x - b.x,
 				d = a.y - b.y;
 			i += c * f, j += d * f, i *= g, j *= g, j += h, b.x += i, b.y += j
 		}
+
 		function e() {
 			if (!(++k > 150)) {
 				for (var a = 0; a < l.length; a++) l[a] != b && d(b, l[a], l);
@@ -2091,6 +2229,7 @@ function(window) {
 			l = c.getElementsByClass(a.Node);
 		e()
 	}
+
 	function t(a, b) {
 		function c(a, b, e) {
 			var f = q(a, b);
@@ -2115,7 +2254,8 @@ function(window) {
 		getNodesCenter: b,
 		circleLayoutNodes: c
 	}
-}(JTopo), function(a) {
+}(JTopo),
+function(a) {
 	function b() {
 		var b = new a.CircleNode;
 		return b.radius = 150, b.colors = ["#3666B0", "#2CA8E0", "#77D1F6"], b.datas = [.3, .3, .4], b.titles = ["A", "B", "C"], b.paint = function(a) {
@@ -2134,6 +2274,7 @@ function(window) {
 			}
 		}, b
 	}
+
 	function c() {
 		var b = new a.Node;
 		return b.showSelected = !1, b.width = 250, b.height = 180, b.colors = ["#3666B0", "#2CA8E0", "#77D1F6"], b.datas = [.3, .3, .4], b.titles = ["A", "B", "C"], b.paint = function(a) {
@@ -2154,7 +2295,8 @@ function(window) {
 		}, b
 	}
 	a.BarChartNode = c, a.PieChartNode = b
-}(JTopo), function(a) {
+}(JTopo),
+function(a) {
 	function b(b, c) {
 		var d, e = null;
 		return {
@@ -2172,6 +2314,7 @@ function(window) {
 			}
 		}
 	}
+
 	function c(a, c) {
 		c = c || {};
 		var d = c.gravity || .1,
@@ -2184,6 +2327,7 @@ function(window) {
 			}, h);
 		return i
 	}
+
 	function d(a, c, d, e, f) {
 		var g = 1e3 / 24,
 			h = {};
@@ -2205,15 +2349,17 @@ function(window) {
 			for (var d in c) h[d].isDone(d) || (a[d] += h[d].step, b = !1);
 			if (b) {
 				if (!e) return this.stop();
-				for (var d in c) if (f) {
-					var g = h[d].targetValue;
-					h[d].targetValue = h[d].oldValue, h[d].oldValue = g, h[d].step = -h[d].step
-				} else a[d] = h[d].oldValue
+				for (var d in c)
+					if (f) {
+						var g = h[d].targetValue;
+						h[d].targetValue = h[d].oldValue, h[d].oldValue = g, h[d].step = -h[d].step
+					} else a[d] = h[d].oldValue
 			}
 			return this
 		}, g);
 		return l
 	}
+
 	function e(a) {
 		null == a && (a = {});
 		var b = a.spring || .1,
@@ -2263,12 +2409,14 @@ function(window) {
 			}
 		}
 	}
+
 	function f(a, b) {
 		function c() {
 			return e = setInterval(function() {
 				return o ? void f.stop() : (a.rotate += g || .2, void(a.rotate > 2 * Math.PI && (a.rotate = 0)))
 			}, 100), f
 		}
+
 		function d() {
 			return window.clearInterval(e), f.onStop && f.onStop(a), f
 		}
@@ -2279,10 +2427,12 @@ function(window) {
 			return f.onStop = a, f
 		}, f
 	}
+
 	function g(a, b) {
 		function c() {
 			return window.clearInterval(g), h.onStop && h.onStop(a), h
 		}
+
 		function d() {
 			var d = b.dx || 0,
 				i = b.dy || 2;
@@ -2298,6 +2448,7 @@ function(window) {
 			return h.onStop = a, h
 		}, h
 	}
+
 	function h(b, c) {
 		function d(c, d, e, f, g) {
 			var h = new a.Node;
@@ -2305,6 +2456,7 @@ function(window) {
 				a.save(), a.arc(0, 0, e, f, g), a.clip(), a.beginPath(), null != this.image ? a.drawImage(this.image, -this.width / 2, -this.height / 2) : (a.fillStyle = "rgba(" + this.style.fillStyle + "," + this.alpha + ")", a.rect(-this.width / 2, -this.height / 2, this.width / 2, this.height / 2), a.fill()), a.closePath(), a.restore()
 			}, h
 		}
+
 		function e(c, e) {
 			var f = c,
 				g = c + Math.PI,
@@ -2320,9 +2472,11 @@ function(window) {
 				dx: -.2
 			}).run()
 		}
+
 		function f() {
 			return e(c.angle, h), i
 		}
+
 		function g() {
 			return i.onStop && i.onStop(b), i
 		}
@@ -2332,17 +2486,20 @@ function(window) {
 			return i.onStop = a, i
 		}, i.run = f, i.stop = g, i
 	}
+
 	function i(a, b) {
 		function c(a) {
 			a.visible = !0, a.rotate = Math.random();
 			var b = g.stage.canvas.width / 2;
 			a.x = b + Math.random() * (b - 100) - Math.random() * (b - 100), a.y = g.stage.canvas.height, a.vx = 5 * Math.random() - 5 * Math.random(), a.vy = -25
 		}
+
 		function d() {
 			return c(a), h = setInterval(function() {
 				return o ? void i.stop() : (a.vy += f, a.x += a.vx, a.y += a.vy, void((a.x < 0 || a.x > g.stage.canvas.width || a.y > g.stage.canvas.height) && (i.onStop && i.onStop(a), c(a))))
 			}, 50), i
 		}
+
 		function e() {
 			window.clearInterval(h)
 		}
@@ -2354,12 +2511,15 @@ function(window) {
 			return i.onStop = a, i
 		}, i.run = d, i.stop = e, i
 	}
+
 	function j() {
 		o = !0
 	}
+
 	function k() {
 		o = !1
 	}
+
 	function l(b, c) {
 		function d() {
 			return n = setInterval(function() {
@@ -2368,6 +2528,7 @@ function(window) {
 				b.setLocation(b.x, a), k += l
 			}, 100), m
 		}
+
 		function e() {
 			window.clearInterval(n)
 		}
@@ -2382,6 +2543,7 @@ function(window) {
 			n = null;
 		return m.run = d, m.stop = e, m
 	}
+
 	function m(a, b) {
 		function c() {
 			return h = setInterval(function() {
@@ -2393,6 +2555,7 @@ function(window) {
 				a.x += h, a.y += i, .01 > h && .1 > i && d()
 			}, 100), g
 		}
+
 		function d() {
 			window.clearInterval(h)
 		}
@@ -2404,12 +2567,14 @@ function(window) {
 			return g.onStop = a, g
 		}, g.run = c, g.stop = d, g
 	}
+
 	function n(a, b) {
 		function c() {
 			return j = setInterval(function() {
 				a.scaleX += f, a.scaleY += f, a.scaleX >= e && d()
 			}, 100), i
 		}
+
 		function d() {
 			i.onStop && i.onStop(a), a.scaleX = g, a.scaleY = h, window.clearInterval(j)
 		}
@@ -2426,7 +2591,8 @@ function(window) {
 	a.Animate = {}, a.Effect = {};
 	var o = !1;
 	a.Effect.spring = e, a.Effect.gravity = c, a.Animate.stepByStep = d, a.Animate.rotate = f, a.Animate.scale = n, a.Animate.move = m, a.Animate.cycle = l, a.Animate.repeatThrow = i, a.Animate.dividedTwoPiece = h, a.Animate.gravity = g, a.Animate.startAll = k, a.Animate.stopAll = j
-}(JTopo), function(a) {
+}(JTopo),
+function(a) {
 	function b(a, b) {
 		var c = [];
 		if (0 == a.length) return c;
@@ -2452,39 +2618,44 @@ function(window) {
 		}
 		return c
 	}
+
 	function c(a) {
 		if (a.find = function(a) {
-			return d.call(this, a)
-		}, e.forEach(function(b) {
-			a[b] = function(a) {
-				for (var c = 0; c < this.length; c++) this[c][b](a);
-				return this
-			}
-		}), a.length > 0) {
+				return d.call(this, a)
+			}, e.forEach(function(b) {
+				a[b] = function(a) {
+					for (var c = 0; c < this.length; c++) this[c][b](a);
+					return this
+				}
+			}), a.length > 0) {
 			var b = a[0];
 			for (var c in b) {
 				var f = b[c];
 				"function" == typeof f && !
-				function(b) {
-					a[c] = function() {
-						for (var c = [], d = 0; d < a.length; d++) c.push(b.apply(a[d], arguments));
-						return c
-					}
-				}(f)
+					function(b) {
+						a[c] = function() {
+							for (var c = [], d = 0; d < a.length; d++) c.push(b.apply(a[d], arguments));
+							return c
+						}
+					}(f)
 			}
 		}
 		return a.attr = function(a, b) {
-			if (null != a && null != b) for (var c = 0; c < this.length; c++) this[c][a] = b;
+			if (null != a && null != b)
+				for (var c = 0; c < this.length; c++) this[c][a] = b;
 			else {
 				if (null != a && "string" == typeof a) {
 					for (var d = [], c = 0; c < this.length; c++) d.push(this[c][a]);
 					return d
 				}
-				if (null != a) for (var c = 0; c < this.length; c++) for (var e in a) this[c][e] = a[e]
+				if (null != a)
+					for (var c = 0; c < this.length; c++)
+						for (var e in a) this[c][e] = a[e]
 			}
 			return this
 		}, a
 	}
+
 	function d(d) {
 		var e = [],
 			f = [];
@@ -2496,41 +2667,49 @@ function(window) {
 	}
 	var e = "click,mousedown,mouseup,mouseover,mouseout,mousedrag,keydown,keyup".split(",");
 	a.Stage.prototype.find = d, a.Scene.prototype.find = d
-}(JTopo), function(a) {
+}(JTopo),
+function(a) {
 	function b(a, b) {
 		this.x = a, this.y = b
 	}
+
 	function c(a) {
 		this.p = new b(0, 0), this.w = new b(1, 0), this.paint = a
 	}
+
 	function d(a, b, c) {
 		return function(d) {
 			for (var e = 0; b > e; e++) a(), c && d.turn(c), d.move(3)
 		}
 	}
+
 	function e(a, b) {
 		var c = 2 * Math.PI;
 		return function(d) {
 			for (var e = 0; b > e; e++) a(), d.turn(c / b)
 		}
 	}
+
 	function f(a, b, c) {
 		return function(d) {
 			for (var e = 0; b > e; e++) a(), d.resize(c)
 		}
 	}
+
 	function g(a) {
 		var b = 2 * Math.PI;
 		return function(c) {
 			for (var d = 0; a > d; d++) c.forward(1), c.turn(b / a)
 		}
 	}
+
 	function h(a) {
 		var b = 4 * Math.PI;
 		return function(c) {
 			for (var d = 0; a > d; d++) c.forward(1), c.turn(b / a)
 		}
 	}
+
 	function i(a, b, c, d) {
 		return function(e) {
 			for (var f = 0; b > f; f++) a(), e.forward(1), e.turn(c), e.resize(d)
