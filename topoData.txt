@@ -1,0 +1,931 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<chart>
+  <nodes>
+    <node id="10" pos="810,585">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>GZ-KXC-76A</name>
+      <ip>202.181.254.232</ip>
+    </node>
+    <node id="11" pos="201,-234">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>KXC_Monitor</name>
+      <ip>10.128.244.134</ip>
+    </node>
+    <node id="51" pos="298,57">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>Office-GZ</name>
+      <ip>10.128.1.254</ip>
+    </node>
+    <node id="60" pos="997,420">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>GZ-KXC-45B</name>
+      <ip>202.181.254.233</ip>
+    </node>
+    <node id="70" pos="85,-96">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>CNlink-GZ-PE-7206A</name>
+      <ip>202.181.254.158</ip>
+    </node>
+    <node id="71" pos="159,272">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>CNlink-GZ-PE-7206B</name>
+      <ip>202.181.254.146</ip>
+    </node>
+    <node id="91" pos="-13,306">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>GZ-KJY-3750A</name>
+      <ip>10.128.247.248</ip>
+    </node>
+    <node id="101" pos="-59,-78">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>GZ-KJY-3750B</name>
+      <ip>10.128.247.249</ip>
+    </node>
+    <node id="121" pos="340,235">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>Xianghong-GZ</name>
+      <ip>10.128.250.182</ip>
+    </node>
+    <node id="181" pos="980,60">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>Huibi_GZ</name>
+      <ip>10.128.250.54</ip>
+    </node>
+    <node id="291">
+      <type>VM</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>GZ-Web</name>
+      <ip>58.63.246.37</ip>
+    </node>
+    <node id="301" pos="25,-191">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>H3C</name>
+      <ip>10.133.64.10</ip>
+    </node>
+    <node id="311">
+      <type>VM</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>skyl</name>
+      <ip>10.133.64.2</ip>
+    </node>
+    <node id="321" pos="343,-194">
+      <type>Windows</type>
+      <status>Up</status>
+      <perfStatus>CRITICAL</perfStatus>
+      <name>WIN-GZ-38</name>
+      <ip>58.63.246.38</ip>
+    </node>
+    <node id="330" pos="347,484">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>CNLink-DGBL-7206A</name>
+      <ip>202.181.254.230</ip>
+    </node>
+    <node id="331" pos="365,382">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>CNLink-DGBL-7206B</name>
+      <ip>202.181.254.229</ip>
+    </node>
+    <node id="351">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>CNLink_DGBL_7206PA</name>
+      <ip>202.181.254.254</ip>
+    </node>
+    <node id="361" pos="518,489">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>CNLink-DGBL_7206PB</name>
+      <ip>202.181.254.253</ip>
+    </node>
+    <node id="371" pos="238,435">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>CNLink-DGBL_C3550</name>
+      <ip>202.181.254.228</ip>
+    </node>
+    <node id="420" pos="441,274">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>CNLink-DGDC-7206B</name>
+      <ip>202.181.254.251</ip>
+    </node>
+    <node id="421" pos="574,105">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>Xianghong-DG</name>
+      <ip>10.208.253.42</ip>
+    </node>
+    <node id="430" pos="633,267">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>CNLink-DGDC-7206A</name>
+      <ip>202.181.254.252</ip>
+    </node>
+    <node id="461" pos="1078,183">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>HuiBi_DG</name>
+      <ip>10.208.254.50</ip>
+    </node>
+    <node id="490" pos="1045,317">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>CNLink_WH_PE-A</name>
+      <ip>202.181.254.7</ip>
+    </node>
+    <node id="491" pos="620,-215">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>CNlink-WH-R2</name>
+      <ip>202.181.254.8</ip>
+    </node>
+    <node id="520" pos="38,427">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>GZ-JCX-3560</name>
+      <ip>59.42.245.97</ip>
+    </node>
+    <node id="531">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>DG-DC-3750A</name>
+      <ip>121.14.143.1</ip>
+    </node>
+    <node id="541" pos="619,-25">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>Xiangchen-TC</name>
+      <ip>10.192.59.237</ip>
+    </node>
+    <node id="601" pos="978,-59">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>Huibi-HK_IDC</name>
+      <ip>10.23.251.26</ip>
+    </node>
+    <node id="741">
+      <type>VM</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>localhost.localdomain</name>
+      <ip>58.63.246.35</ip>
+    </node>
+    <node id="751">
+      <type>VM</type>
+      <status>Up</status>
+      <perfStatus>WARNING</perfStatus>
+      <name>Sky-LGZ-ESXI.34</name>
+      <ip>58.63.246.34</ip>
+    </node>
+    <node id="770" pos="-155,146">
+      <type>Yun</type>
+      <name>GZ-super</name>
+      <ip/>
+    </node>
+    <node id="820" pos="785,353">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>WARNING</perfStatus>
+      <name>Cimtex-VN</name>
+      <ip>10.19.254.34</ip>
+    </node>
+    <node id="850" pos="718,-146">
+      <type>Router</type>
+      <status/>
+      <perfStatus/>
+      <name>HOST-202.181.254.150</name>
+      <ip>202.181.254.150</ip>
+    </node>
+    <node id="880">
+      <type>Unix</type>
+      <name>hq-collector</name>
+      <ip>10.133.64.6</ip>
+    </node>
+    <node id="890" pos="803,-46">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>GZ-NFJD-router</name>
+      <ip>10.133.251.200</ip>
+    </node>
+    <node id="900">
+      <type>Unix</type>
+      <status/>
+      <perfStatus/>
+      <name>byone-super</name>
+      <ip>58.63.246.36</ip>
+    </node>
+    <node id="940" pos="462,-153">
+      <type>Unix</type>
+      <status/>
+      <perfStatus/>
+      <name>sc-collector</name>
+      <ip>58.63.246.39</ip>
+    </node>
+    <node id="950">
+      <type>Unix</type>
+      <status/>
+      <perfStatus/>
+      <name>byone-worker</name>
+      <ip>10.133.64.5</ip>
+    </node>
+    <node id="960">
+      <type>VM</type>
+      <name>datatest</name>
+      <ip/>
+    </node>
+    <node id="970" pos="1250,-140">
+      <type>Router</type>
+      <status>Up</status>
+      <perfStatus>NORMAL</perfStatus>
+      <name>Fabricators-HK2_ERP</name>
+      <ip>10.23.250.94</ip>
+    </node>
+    <node id="1140">
+      <type>VM</type>
+      <status/>
+      <perfStatus/>
+      <name>HOST-37.46.114.239</name>
+      <ip>37.46.114.239</ip>
+    </node>
+    <node id="1170">
+      <type>VM</type>
+      <name>HOST-104.152.52.68</name>
+      <ip>104.152.52.68</ip>
+    </node>
+    <node id="1230">
+      <type>Router</type>
+      <status/>
+      <perfStatus/>
+      <name>HOST-202.181.254.159</name>
+      <ip>202.181.254.159</ip>
+    </node>
+  </nodes>
+  <lines>
+    <line id="1">
+      <name>GZ-KXC-76A至KXC_Monitor</name>
+      <nodeA>GZ-KXC-76A</nodeA>
+      <nodeB>KXC_Monitor</nodeB>
+    </line>
+    <line id="2">
+      <name>GZ-KXC-76A至KXC_Monitor</name>
+      <nodeA>GZ-KXC-76A</nodeA>
+      <nodeB>KXC_Monitor</nodeB>
+    </line>
+    <line id="3">
+      <name>GZ-KXC-76A至KXC_Monitor</name>
+      <nodeA>GZ-KXC-76A</nodeA>
+      <nodeB>KXC_Monitor</nodeB>
+    </line>
+    <line id="4">
+      <name>GZ-KXC-76A至KXC_Monitor</name>
+      <nodeA>GZ-KXC-76A</nodeA>
+      <nodeB>KXC_Monitor</nodeB>
+    </line>
+    <line id="5">
+      <name>GZ-KXC-76A至Office-GZ</name>
+      <nodeA>GZ-KXC-76A</nodeA>
+      <nodeB>Office-GZ</nodeB>
+    </line>
+    <line id="6">
+      <name>GZ-KXC-45B至GZ-KXC-76A</name>
+      <nodeA>GZ-KXC-45B</nodeA>
+      <nodeB>GZ-KXC-76A</nodeB>
+    </line>
+    <line id="7">
+      <name>CNlink-GZ-PE-7206A至CNlink-GZ-PE-7206B</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>CNlink-GZ-PE-7206B</nodeB>
+    </line>
+    <line id="8">
+      <name>CNlink-GZ-PE-7206B至Office-GZ</name>
+      <nodeA>CNlink-GZ-PE-7206B</nodeA>
+      <nodeB>Office-GZ</nodeB>
+    </line>
+    <line id="9">
+      <name>CNlink-GZ-PE-7206A至GZ-KJY-3750A</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>GZ-KJY-3750A</nodeB>
+    </line>
+    <line id="10">
+      <name>CNlink-GZ-PE-7206A至GZ-KJY-3750B</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>GZ-KJY-3750B</nodeB>
+    </line>
+    <line id="11">
+      <name>CNlink-GZ-PE-7206A至CNlink-GZ-PE-7206B</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>CNlink-GZ-PE-7206B</nodeB>
+    </line>
+    <line id="12">
+      <name>CNlink-GZ-PE-7206B至Xianghong-GZ</name>
+      <nodeA>CNlink-GZ-PE-7206B</nodeA>
+      <nodeB>Xianghong-GZ</nodeB>
+    </line>
+    <line id="13">
+      <name>CNlink-GZ-PE-7206B至Xianghong-GZ</name>
+      <nodeA>CNlink-GZ-PE-7206B</nodeA>
+      <nodeB>Xianghong-GZ</nodeB>
+    </line>
+    <line id="14">
+      <name>CNlink-GZ-PE-7206A至CNlink-GZ-PE-7206B</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>CNlink-GZ-PE-7206B</nodeB>
+    </line>
+    <line id="15">
+      <name>CNlink-GZ-PE-7206A至Xianghong-GZ</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>Xianghong-GZ</nodeB>
+    </line>
+    <line id="16">
+      <name>CNlink-GZ-PE-7206A至Xianghong-GZ</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>Xianghong-GZ</nodeB>
+    </line>
+    <line id="17">
+      <name>CNlink-GZ-PE-7206A至Office-GZ</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>Office-GZ</nodeB>
+    </line>
+    <line id="18">
+      <name>CNlink-GZ-PE-7206A至Huibi_GZ</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>Huibi_GZ</nodeB>
+    </line>
+    <line id="19">
+      <name>CNlink-GZ-PE-7206A至Office-GZ</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>Office-GZ</nodeB>
+    </line>
+    <line id="20">
+      <name>CNlink-GZ-PE-7206B至Huibi_GZ</name>
+      <nodeA>CNlink-GZ-PE-7206B</nodeA>
+      <nodeB>Huibi_GZ</nodeB>
+    </line>
+    <line id="21">
+      <name>CNlink-GZ-PE-7206A至Office-GZ</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>Office-GZ</nodeB>
+    </line>
+    <line id="22">
+      <name>GZ-KXC-45B至KXC_Monitor</name>
+      <nodeA>GZ-KXC-45B</nodeA>
+      <nodeB>KXC_Monitor</nodeB>
+    </line>
+    <line id="23">
+      <name>CNlink-GZ-PE-7206B至KXC_Monitor</name>
+      <nodeA>CNlink-GZ-PE-7206B</nodeA>
+      <nodeB>KXC_Monitor</nodeB>
+    </line>
+    <line id="24">
+      <name>CNlink-GZ-PE-7206B至Office-GZ</name>
+      <nodeA>CNlink-GZ-PE-7206B</nodeA>
+      <nodeB>Office-GZ</nodeB>
+    </line>
+    <line id="25">
+      <name>CNlink-GZ-PE-7206B至Xianghong-GZ</name>
+      <nodeA>CNlink-GZ-PE-7206B</nodeA>
+      <nodeB>Xianghong-GZ</nodeB>
+    </line>
+    <line id="26">
+      <name>CNlink-GZ-PE-7206A至KXC_Monitor</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>KXC_Monitor</nodeB>
+    </line>
+    <line id="27">
+      <name>CNlink-GZ-PE-7206A至KXC_Monitor</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>KXC_Monitor</nodeB>
+    </line>
+    <line id="28">
+      <name>GZ-KXC-45B至KXC_Monitor</name>
+      <nodeA>GZ-KXC-45B</nodeA>
+      <nodeB>KXC_Monitor</nodeB>
+    </line>
+    <line id="29">
+      <name>KXC_Monitor至GZ-Web</name>
+      <nodeA>KXC_Monitor</nodeA>
+      <nodeB>GZ-Web</nodeB>
+    </line>
+    <line id="30">
+      <name>KXC_Monitor至H3C</name>
+      <nodeA>KXC_Monitor</nodeA>
+      <nodeB>H3C</nodeB>
+    </line>
+    <line id="31">
+      <name>KXC_Monitor至skyl</name>
+      <nodeA>KXC_Monitor</nodeA>
+      <nodeB>skyl</nodeB>
+    </line>
+    <line id="32">
+      <name>KXC_Monitor至WIN-GZ-38</name>
+      <nodeA>KXC_Monitor</nodeA>
+      <nodeB>WIN-GZ-38</nodeB>
+    </line>
+    <line id="33">
+      <name>CNLink-DGBL-7206A至CNLink-DGBL-7206B</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink-DGBL-7206B</nodeB>
+    </line>
+    <line id="34">
+      <name>CNLink-DGBL-7206A至CNLink-DGBL-7206B</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink-DGBL-7206B</nodeB>
+    </line>
+    <line id="35">
+      <name>CNLink-DGBL-7206A至CNLink_DGBL_7206PA</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink_DGBL_7206PA</nodeB>
+    </line>
+    <line id="36">
+      <name>CNLink-DGBL-7206A至CNLink-DGBL_7206PB</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink-DGBL_7206PB</nodeB>
+    </line>
+    <line id="37">
+      <name>CNLink-DGBL-7206A至CNLink-DGBL_C3550</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink-DGBL_C3550</nodeB>
+    </line>
+    <line id="38">
+      <name>CNLink-DGBL-7206A至CNLink-DGBL-7206B</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink-DGBL-7206B</nodeB>
+    </line>
+    <line id="39">
+      <name>CNLink-DGBL-7206A至CNLink_DGBL_7206PA</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink_DGBL_7206PA</nodeB>
+    </line>
+    <line id="40">
+      <name>CNLink-DGBL-7206A至CNLink-DGBL_7206PB</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink-DGBL_7206PB</nodeB>
+    </line>
+    <line id="41">
+      <name>CNLink-DGBL-7206A至CNLink-DGBL-7206B</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink-DGBL-7206B</nodeB>
+    </line>
+    <line id="42">
+      <name>CNLink-DGDC-7206B至Xianghong-DG</name>
+      <nodeA>CNLink-DGDC-7206B</nodeA>
+      <nodeB>Xianghong-DG</nodeB>
+    </line>
+    <line id="43">
+      <name>CNLink-DGDC-7206A至Xianghong-DG</name>
+      <nodeA>CNLink-DGDC-7206A</nodeA>
+      <nodeB>Xianghong-DG</nodeB>
+    </line>
+    <line id="44">
+      <name>CNLink-DGDC-7206A至Xianghong-DG</name>
+      <nodeA>CNLink-DGDC-7206A</nodeA>
+      <nodeB>Xianghong-DG</nodeB>
+    </line>
+    <line id="45">
+      <name>CNLink-DGDC-7206B至CNlink-GZ-PE-7206A</name>
+      <nodeA>CNLink-DGDC-7206B</nodeA>
+      <nodeB>CNlink-GZ-PE-7206A</nodeB>
+    </line>
+    <line id="46">
+      <name>CNLink-DGDC-7206B至HuiBi_DG</name>
+      <nodeA>CNLink-DGDC-7206B</nodeA>
+      <nodeB>HuiBi_DG</nodeB>
+    </line>
+    <line id="47">
+      <name>CNLink-DGDC-7206A至HuiBi_DG</name>
+      <nodeA>CNLink-DGDC-7206A</nodeA>
+      <nodeB>HuiBi_DG</nodeB>
+    </line>
+    <line id="48">
+      <name>CNLink-DGDC-7206A至HuiBi_DG</name>
+      <nodeA>CNLink-DGDC-7206A</nodeA>
+      <nodeB>HuiBi_DG</nodeB>
+    </line>
+    <line id="49">
+      <name>CNLink_WH_PE-A至CNlink-WH-R2</name>
+      <nodeA>CNLink_WH_PE-A</nodeA>
+      <nodeB>CNlink-WH-R2</nodeB>
+    </line>
+    <line id="50">
+      <name>CNLink_WH_PE-A至CNlink-WH-R2</name>
+      <nodeA>CNLink_WH_PE-A</nodeA>
+      <nodeB>CNlink-WH-R2</nodeB>
+    </line>
+    <line id="51">
+      <name>CNLink_WH_PE-A至CNlink-WH-R2</name>
+      <nodeA>CNLink_WH_PE-A</nodeA>
+      <nodeB>CNlink-WH-R2</nodeB>
+    </line>
+    <line id="52">
+      <name>GZ-JCX-3560至GZ-KJY-3750A</name>
+      <nodeA>GZ-JCX-3560</nodeA>
+      <nodeB>GZ-KJY-3750A</nodeB>
+    </line>
+    <line id="53">
+      <name>CNLink-DGDC-7206B至DG-DC-3750A</name>
+      <nodeA>CNLink-DGDC-7206B</nodeA>
+      <nodeB>DG-DC-3750A</nodeB>
+    </line>
+    <line id="54">
+      <name>CNlink-GZ-PE-7206A至Xiangchen-TC</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>Xiangchen-TC</nodeB>
+    </line>
+    <line id="55">
+      <name>CNlink-GZ-PE-7206A至Xianghong-DG</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>Xianghong-DG</nodeB>
+    </line>
+    <line id="56">
+      <name>Office-GZ至Xiangchen-TC</name>
+      <nodeA>Office-GZ</nodeA>
+      <nodeB>Xiangchen-TC</nodeB>
+    </line>
+    <line id="57">
+      <name>Office-GZ至Xianghong-DG</name>
+      <nodeA>Office-GZ</nodeA>
+      <nodeB>Xianghong-DG</nodeB>
+    </line>
+    <line id="58">
+      <name>Office-GZ至Xianghong-GZ</name>
+      <nodeA>Office-GZ</nodeA>
+      <nodeB>Xianghong-GZ</nodeB>
+    </line>
+    <line id="59">
+      <name>GZ-KJY-3750A至Xiangchen-TC</name>
+      <nodeA>GZ-KJY-3750A</nodeA>
+      <nodeB>Xiangchen-TC</nodeB>
+    </line>
+    <line id="60">
+      <name>HuiBi_DG至Huibi-HK_IDC</name>
+      <nodeA>HuiBi_DG</nodeA>
+      <nodeB>Huibi-HK_IDC</nodeB>
+    </line>
+    <line id="61">
+      <name>GZ-KJY-3750A至GZ-KJY-3750B</name>
+      <nodeA>GZ-KJY-3750A</nodeA>
+      <nodeB>GZ-KJY-3750B</nodeB>
+    </line>
+    <line id="62">
+      <name>Huibi_GZ至Huibi-HK_IDC</name>
+      <nodeA>Huibi_GZ</nodeA>
+      <nodeB>Huibi-HK_IDC</nodeB>
+    </line>
+    <line id="63">
+      <name>CNLink-DGBL_7206PB至CNLink-DGDC-7206B</name>
+      <nodeA>CNLink-DGBL_7206PB</nodeA>
+      <nodeB>CNLink-DGDC-7206B</nodeB>
+    </line>
+    <line id="64">
+      <name>CNLink_DGBL_7206PA至CNLink-DGBL_7206PB</name>
+      <nodeA>CNLink_DGBL_7206PA</nodeA>
+      <nodeB>CNLink-DGBL_7206PB</nodeB>
+    </line>
+    <line id="65">
+      <name>CNLink_DGBL_7206PA至CNLink-DGDC-7206A</name>
+      <nodeA>CNLink_DGBL_7206PA</nodeA>
+      <nodeB>CNLink-DGDC-7206A</nodeB>
+    </line>
+    <line id="66">
+      <name>CNlink-GZ-PE-7206A至CNlink-GZ-PE-7206B</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>CNlink-GZ-PE-7206B</nodeB>
+    </line>
+    <line id="67">
+      <name>CNLink-DGDC-7206A至CNLink-DGDC-7206B</name>
+      <nodeA>CNLink-DGDC-7206A</nodeA>
+      <nodeB>CNLink-DGDC-7206B</nodeB>
+    </line>
+    <line id="68">
+      <name>CNLink-DGBL-7206B至CNLink-DGDC-7206B</name>
+      <nodeA>CNLink-DGBL-7206B</nodeA>
+      <nodeB>CNLink-DGDC-7206B</nodeB>
+    </line>
+    <line id="69">
+      <name>CNLink-DGBL-7206A至CNLink-DGBL-7206B</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink-DGBL-7206B</nodeB>
+    </line>
+    <line id="70">
+      <name>CNLink-DGBL-7206A至CNLink_DGBL_7206PA</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink_DGBL_7206PA</nodeB>
+    </line>
+    <line id="71">
+      <name>CNLink-DGBL-7206A至CNLink-DGBL_7206PB</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink-DGBL_7206PB</nodeB>
+    </line>
+    <line id="72">
+      <name>CNLink-DGBL-7206A至CNLink-DGBL_C3550</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink-DGBL_C3550</nodeB>
+    </line>
+    <line id="73">
+      <name>CNLink_WH_PE-A至CNlink-WH-R2</name>
+      <nodeA>CNLink_WH_PE-A</nodeA>
+      <nodeB>CNlink-WH-R2</nodeB>
+    </line>
+    <line id="74">
+      <name>KXC_Monitor至localhost.localdomain</name>
+      <nodeA>KXC_Monitor</nodeA>
+      <nodeB>localhost.localdomain</nodeB>
+    </line>
+    <line id="75">
+      <name>KXC_Monitor至Sky-LGZ-ESXI.34</name>
+      <nodeA>KXC_Monitor</nodeA>
+      <nodeB>Sky-LGZ-ESXI.34</nodeB>
+    </line>
+    <line id="76">
+      <name>GZ-Web至WIN-GZ-38</name>
+      <nodeA>GZ-Web</nodeA>
+      <nodeB>WIN-GZ-38</nodeB>
+    </line>
+    <line id="77">
+      <speed>0Kbps/0Kbps (tcp)</speed>
+      <lineColor>0x00CC00</lineColor>
+      <name>GZ-super至GZ-KJY-3750B</name>
+      <nodeA>GZ-super</nodeA>
+      <nodeB>GZ-KJY-3750B</nodeB>
+    </line>
+    <line id="78">
+      <speed>0Kbps/0Kbps (tcp)</speed>
+      <lineColor>0x00CC00</lineColor>
+      <name>GZ-super至GZ-KJY-3750A</name>
+      <nodeA>GZ-super</nodeA>
+      <nodeB>GZ-KJY-3750A</nodeB>
+    </line>
+    <line id="79">
+      <speed>0Kbps/0Kbps (tcp)</speed>
+      <lineColor>0x00CC00</lineColor>
+      <name>GZ-super至CNlink-GZ-PE-7206B</name>
+      <nodeA>GZ-super</nodeA>
+      <nodeB>CNlink-GZ-PE-7206B</nodeB>
+    </line>
+    <line id="80">
+      <speed>0Kbps/0Kbps (tcp)</speed>
+      <lineColor>0x00CC00</lineColor>
+      <name>GZ-super至CNlink-GZ-PE-7206A</name>
+      <nodeA>GZ-super</nodeA>
+      <nodeB>CNlink-GZ-PE-7206A</nodeB>
+    </line>
+    <line id="81">
+      <name>CNLink-DGBL-7206A至CNLink-DGBL-7206A</name>
+      <nodeA>CNLink-DGBL-7206A</nodeA>
+      <nodeB>CNLink-DGBL-7206A</nodeB>
+    </line>
+    <line id="82">
+      <name>Cimtex-VN至Cimtex-VN</name>
+      <nodeA>Cimtex-VN</nodeA>
+      <nodeB>Cimtex-VN</nodeB>
+    </line>
+    <line id="83">
+      <name>CNLink-DGDC-7206A至CNLink-DGDC-7206A</name>
+      <nodeA>CNLink-DGDC-7206A</nodeA>
+      <nodeB>CNLink-DGDC-7206A</nodeB>
+    </line>
+    <line id="84">
+      <name>WIN-GZ-38至WIN-GZ-38</name>
+      <nodeA>WIN-GZ-38</nodeA>
+      <nodeB>WIN-GZ-38</nodeB>
+    </line>
+    <line id="85">
+      <name>HOST-202.181.254.150至HOST-202.181.254.150</name>
+      <nodeA>HOST-202.181.254.150</nodeA>
+      <nodeB>HOST-202.181.254.150</nodeB>
+    </line>
+    <line id="86">
+      <name>CNLink-DGDC-7206B至CNLink-DGDC-7206B</name>
+      <nodeA>CNLink-DGDC-7206B</nodeA>
+      <nodeB>CNLink-DGDC-7206B</nodeB>
+    </line>
+    <line id="87">
+      <name>Xianghong-DG至Xianghong-DG</name>
+      <nodeA>Xianghong-DG</nodeA>
+      <nodeB>Xianghong-DG</nodeB>
+    </line>
+    <line id="88">
+      <name>hq-collector至hq-collector</name>
+      <nodeA>hq-collector</nodeA>
+      <nodeB>hq-collector</nodeB>
+    </line>
+    <line id="89">
+      <name>GZ-NFJD-router至GZ-NFJD-router</name>
+      <nodeA>GZ-NFJD-router</nodeA>
+      <nodeB>GZ-NFJD-router</nodeB>
+    </line>
+    <line id="90">
+      <name>byone-super至byone-super</name>
+      <nodeA>byone-super</nodeA>
+      <nodeB>byone-super</nodeB>
+    </line>
+    <line id="91">
+      <name>GZ-Web至GZ-Web</name>
+      <nodeA>GZ-Web</nodeA>
+      <nodeB>GZ-Web</nodeB>
+    </line>
+    <line id="92">
+      <name>CNLink-DGBL_7206PB至CNLink-DGBL_7206PB</name>
+      <nodeA>CNLink-DGBL_7206PB</nodeA>
+      <nodeB>CNLink-DGBL_7206PB</nodeB>
+    </line>
+    <line id="93">
+      <name>Huibi_GZ至Huibi_GZ</name>
+      <nodeA>Huibi_GZ</nodeA>
+      <nodeB>Huibi_GZ</nodeB>
+    </line>
+    <line id="94">
+      <name>sc-collector至sc-collector</name>
+      <nodeA>sc-collector</nodeA>
+      <nodeB>sc-collector</nodeB>
+    </line>
+    <line id="95">
+      <name>byone-worker至byone-worker</name>
+      <nodeA>byone-worker</nodeA>
+      <nodeB>byone-worker</nodeB>
+    </line>
+    <line id="96">
+      <name>datatest至datatest</name>
+      <nodeA>datatest</nodeA>
+      <nodeB>datatest</nodeB>
+    </line>
+    <line id="97">
+      <name>Fabricators-HK2_ERP至Fabricators-HK2_ERP</name>
+      <nodeA>Fabricators-HK2_ERP</nodeA>
+      <nodeB>Fabricators-HK2_ERP</nodeB>
+    </line>
+    <line id="98">
+      <name>HuiBi_DG至HuiBi_DG</name>
+      <nodeA>HuiBi_DG</nodeA>
+      <nodeB>HuiBi_DG</nodeB>
+    </line>
+    <line id="99">
+      <name>CNLink-DGBL_C3550至CNLink-DGBL_C3550</name>
+      <nodeA>CNLink-DGBL_C3550</nodeA>
+      <nodeB>CNLink-DGBL_C3550</nodeB>
+    </line>
+    <line id="100">
+      <name>Sky-LGZ-ESXI.34至Sky-LGZ-ESXI.34</name>
+      <nodeA>Sky-LGZ-ESXI.34</nodeA>
+      <nodeB>Sky-LGZ-ESXI.34</nodeB>
+    </line>
+    <line id="101">
+      <name>localhost.localdomain至localhost.localdomain</name>
+      <nodeA>localhost.localdomain</nodeA>
+      <nodeB>localhost.localdomain</nodeB>
+    </line>
+    <line id="102">
+      <name>GZ-KJY-3750A至GZ-KJY-3750A</name>
+      <nodeA>GZ-KJY-3750A</nodeA>
+      <nodeB>GZ-KJY-3750A</nodeB>
+    </line>
+    <line id="103">
+      <name>skyl至skyl</name>
+      <nodeA>skyl</nodeA>
+      <nodeB>skyl</nodeB>
+    </line>
+    <line id="104">
+      <name>CNLink-DGBL-7206B至CNLink-DGBL-7206B</name>
+      <nodeA>CNLink-DGBL-7206B</nodeA>
+      <nodeB>CNLink-DGBL-7206B</nodeB>
+    </line>
+    <line id="105">
+      <name>GZ-KJY-3750B至GZ-KJY-3750B</name>
+      <nodeA>GZ-KJY-3750B</nodeA>
+      <nodeB>GZ-KJY-3750B</nodeB>
+    </line>
+    <line id="106">
+      <name>GZ-KXC-45B至GZ-KXC-45B</name>
+      <nodeA>GZ-KXC-45B</nodeA>
+      <nodeB>GZ-KXC-45B</nodeB>
+    </line>
+    <line id="107">
+      <name>CNlink-GZ-PE-7206A至CNlink-GZ-PE-7206A</name>
+      <nodeA>CNlink-GZ-PE-7206A</nodeA>
+      <nodeB>CNlink-GZ-PE-7206A</nodeB>
+    </line>
+    <line id="108">
+      <name>GZ-KXC-76A至GZ-KXC-76A</name>
+      <nodeA>GZ-KXC-76A</nodeA>
+      <nodeB>GZ-KXC-76A</nodeB>
+    </line>
+    <line id="109">
+      <name>CNlink-GZ-PE-7206B至CNlink-GZ-PE-7206B</name>
+      <nodeA>CNlink-GZ-PE-7206B</nodeA>
+      <nodeB>CNlink-GZ-PE-7206B</nodeB>
+    </line>
+    <line id="110">
+      <name>DG-DC-3750A至DG-DC-3750A</name>
+      <nodeA>DG-DC-3750A</nodeA>
+      <nodeB>DG-DC-3750A</nodeB>
+    </line>
+    <line id="111">
+      <name>CNLink_DGBL_7206PA至CNLink_DGBL_7206PA</name>
+      <nodeA>CNLink_DGBL_7206PA</nodeA>
+      <nodeB>CNLink_DGBL_7206PA</nodeB>
+    </line>
+    <line id="112">
+      <name>Office-GZ至Office-GZ</name>
+      <nodeA>Office-GZ</nodeA>
+      <nodeB>Office-GZ</nodeB>
+    </line>
+    <line id="113">
+      <name>GZ-JCX-3560至GZ-JCX-3560</name>
+      <nodeA>GZ-JCX-3560</nodeA>
+      <nodeB>GZ-JCX-3560</nodeB>
+    </line>
+    <line id="114">
+      <name>HOST-37.46.114.239至HOST-37.46.114.239</name>
+      <nodeA>HOST-37.46.114.239</nodeA>
+      <nodeB>HOST-37.46.114.239</nodeB>
+    </line>
+    <line id="115">
+      <name>KXC_Monitor至KXC_Monitor</name>
+      <nodeA>KXC_Monitor</nodeA>
+      <nodeB>KXC_Monitor</nodeB>
+    </line>
+    <line id="116">
+      <name>Xianghong-GZ至Xianghong-GZ</name>
+      <nodeA>Xianghong-GZ</nodeA>
+      <nodeB>Xianghong-GZ</nodeB>
+    </line>
+    <line id="117">
+      <name>HOST-104.152.52.68至HOST-104.152.52.68</name>
+      <nodeA>HOST-104.152.52.68</nodeA>
+      <nodeB>HOST-104.152.52.68</nodeB>
+    </line>
+    <line id="118">
+      <name>H3C至H3C</name>
+      <nodeA>H3C</nodeA>
+      <nodeB>H3C</nodeB>
+    </line>
+    <line id="119">
+      <name>Xiangchen-TC至Xiangchen-TC</name>
+      <nodeA>Xiangchen-TC</nodeA>
+      <nodeB>Xiangchen-TC</nodeB>
+    </line>
+    <line id="120">
+      <name>CNLink_WH_PE-A至CNLink_WH_PE-A</name>
+      <nodeA>CNLink_WH_PE-A</nodeA>
+      <nodeB>CNLink_WH_PE-A</nodeB>
+    </line>
+    <line id="121">
+      <name>CNlink-WH-R2至CNlink-WH-R2</name>
+      <nodeA>CNlink-WH-R2</nodeA>
+      <nodeB>CNlink-WH-R2</nodeB>
+    </line>
+    <line id="122">
+      <name>Huibi-HK_IDC至Huibi-HK_IDC</name>
+      <nodeA>Huibi-HK_IDC</nodeA>
+      <nodeB>Huibi-HK_IDC</nodeB>
+    </line>
+    <line id="123">
+      <name>HOST-202.181.254.159至HOST-202.181.254.159</name>
+      <nodeA>HOST-202.181.254.159</nodeA>
+      <nodeB>HOST-202.181.254.159</nodeB>
+    </line>
+  </lines>
+</chart>

@@ -23,7 +23,7 @@ function LoadTimePickerScript(callback) {
 //  homepage: http://www.jtopo.com/
 function LoadJTopoScripts(callback) {
 	if (typeof JTopo === 'undefined') {
-		$.getScript('plugins/jtopo/jtopo.js', callback); /*-0.4.8-min*/
+		$.getScript('plugins/jtopo/jtopo-0.4.8-min.js', callback); /*-0.4.8-min*/
 	} else {
 		if (callback && typeof(callback) === "function") {
 			callback();
@@ -158,23 +158,17 @@ function LoadFlotScripts(callback) {
 //
 //  Function for load content from url and put in $('.ajax-content') block
 //
-function LoadAjaxContent(url) {
+function LoadAjaxContent(url, force) {
+	if (!force && location.hash.replace(/^#/, '') === url) return;
 	$('.preloader').show();
-	$.ajax({
-		mimeType: 'text/html; charset=utf-8', // ! Need set mimeType only when run from local file
-		url: url,
-		type: 'GET',
-		success: function(data) {
-			$('#ajax-content').html(data);
+	if (!(!-[1, ] && (!window.XMLHttpRequest || document.documentMode <= 8))) //非ie8及以下
+	{
+		window.location.hash = '#' + url;
+	} else
+		$('#ajax-content').load(url, function() {
 			$('.preloader').hide();
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			alert(errorThrown);
-		},
-		dataType: "html",
-		async: false
-	});
-	docReady();
+			docReady();
+		});
 }
 
 //
@@ -232,20 +226,16 @@ function SetMinBlockHeight(elem) {
 //
 // 页面工具栏
 function showJTopoToobar(placeholder, stage) {
-	var toobarDiv = $('<div class="jtopo_toolbar">').html('' + '<input type="radio" name="modeRadio" value="normal" checked id="r1"/>' + '<label for="r1"> 默认</label>' + '&nbsp;<input type="radio" name="modeRadio" value="select" id="r2"/><label for="r2"> 框选</label>' + '&nbsp;<input type="radio" name="modeRadio" value="drag" id="r3"/><label for="r3"> 平移</label>' + '&nbsp;<input type="radio" name="modeRadio" value="edit" id="r4"/><label for="r4"> 编辑</label>' + '&nbsp;&nbsp;' + '<input type="button" id="fullScreenButton" value="全屏显示"/>' + '<input type="button" id="zoomOutButton" value=" 放 大 " />' + '<input type="button" id="zoomInButton" value=" 缩 小 " />' + '&nbsp;&nbsp;<input type="text" id="findText" value="" onkeydown="findButton.click()">' + '<input type="button" id="findButton" value=" 查 询 ">' + '&nbsp;&nbsp;<input type="button" id="exportButton" value="导出PNG">');
+	var toobarDiv = $('<div class="jtopo_toolbar">').html(
+		' <input type="button" id="fullScreenButton" value="全屏显示"/>' + 
+		' <input type="checkbox" id="zoomCheckbox"> 鼠标缩放' + 
+		' <input type="text" id="findText" value="">' + 
+		' <input type="button" id="findButton" value=" 查 询 ">' + 
+		' <input type="button" id="exportButton" value="导出PNG">');
 
 	$(placeholder).prepend(toobarDiv);
 
 	// 工具栏按钮处理
-	$("input[name='modeRadio']").click(function() {
-		stage.mode = $("input[name='modeRadio']:checked").val();
-	});
-	$('#zoomOutButton').click(function() {
-		stage.zoomOut();
-	});
-	$('#zoomInButton').click(function() {
-		stage.zoomIn();
-	});
 	$('#exportButton').click(function() {
 		stage.saveImageInfo();
 	});
@@ -260,19 +250,22 @@ function showJTopoToobar(placeholder, stage) {
 		runPrefixMethod(stage.canvas, "RequestFullScreen")
 	});
 
+	$("#findText").keyup(searchNode);
 	// 查询
-	$('#findButton').click(function() {
+	$('#findButton').click(searchNode);
+	function searchNode() {
 		var text = $('#findText').val().trim();
 		var nodes = stage.find('node[text="' + text + '"]');
 		if (nodes.length > 0) {
-			var node = nodes[0];
-			node.selected = true;
-			var location = node.getCenterLocation();
-			// 查询到的节点居中显示
-			stage.setCenter(location.x, location.y);
-
-			// 闪烁几下
-			nodeFlash(node, 6);
+			for (var i = nodes.length - 1; i >= 0; i--) {
+				var node = nodes[0];
+				node.selected = true;
+				/*var location = node.getCenterLocation();
+				// 查询到的节点居中显示
+				stage.setCenter(location.x, location.y);
+				// 闪烁几下*/
+				nodeFlash(node, 6);
+			};
 		}
 
 		function nodeFlash(node, n) {
@@ -285,7 +278,7 @@ function showJTopoToobar(placeholder, stage) {
 				nodeFlash(node, n - 1);
 			}, 300);
 		}
-	});
+	}
 }
 
 var runPrefixMethod = function(element, method) {
@@ -352,10 +345,10 @@ function drawTopology(placeholder) {
 	}
 
 	var stage = createStageFromJson({
-		frames: -24, //只有鼠标
+		//frames: -24, //只有鼠标和键盘操作时才刷新画布
 		childs: [{
 			color: '67, 110, 144',
-			childs: [ {
+			childs: [{
 				text: 'windows',
 				type: 'windows',
 				x: 100,
@@ -385,6 +378,7 @@ function drawTopology(placeholder) {
 			}]
 		}]
 	}, $canvas[0]); // 创建一个舞台对象
+	stage.wheelZoom = 0.85; // 设置鼠标缩放比例
 	showJTopoToobar(placeholder, stage);
 }
 
@@ -1088,10 +1082,30 @@ function MessagesMenuWidth() {
 }
 
 
-function docReady() {
+function docReady(selfUrl) {
 	$('a[href="#"]').click(function(e) {
 		e.preventDefault();
 	});
+	/*展开当前菜单栏*/
+    /**
+     * bug: 不同癌症子菜单的url可能一样，最先定位到的是.template
+     * 解决办法：1、不同癌症的同种子菜单的url不同
+     *           2、设置标识符，例如在父li节点加上id="prostate"
+     */
+    if (selfUrl) {
+      var $links = $('#sidebar-left ul a');
+      for (var i = 0; i < $links.length; ++i) {
+        var $link = $($links[i]);
+        if ($link.attr('href') == selfUrl) {
+          var $_parentLi = $link.closest('li.dropdown');
+          if ($_parentLi.hasClass('active')) break;
+          $links.removeClass('active');
+          $link.addClass('active');
+          $_parentLi.children('a.dropdown-toggle').click();
+          break;
+        }
+      };
+    }
 	$('.right-click-menu').appendTo('body');
 	/*$('.height-limited[data-height]').each(function(index, val) {
 		 $(this).css("height", $(this).attr("data-height")+'px');
@@ -1113,11 +1127,39 @@ $(document).ready(function() {
 		$('div#main').toggleClass('sidebar-show');
 		setTimeout(MessagesMenuWidth, 250);
 	});
+
+
+	//子页面跳转
+	window.onhashchange = function() { // Note: We are using statechange instead of popstate
+		//var State = History.getState(); // Note: We are using History.getState() instead of event.state
+		var targetUrl = location.hash.replace(/^#/, "");
+		$.ajax({
+			mimeType: 'text/html; charset=utf-8', // ! Need set mimeType only when run from local file
+			url: targetUrl,
+			type: 'GET',
+			success: function(data) {
+				$('#ajax-content').html(data);
+				$('.preloader').hide();
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert(errorThrown);
+			},
+			dataType: "html",
+			async: false
+		});
+		docReady();
+	}
+
+	//初始跳转
 	var ajax_url = location.hash.replace(/^#/, '');
 	if (ajax_url.length < 1) {
 		ajax_url = 'ajax/dashboard.html';
 	}
-	LoadAjaxContent(ajax_url);
+	$('.preloader').show();
+	$('#ajax-content').load(ajax_url, function() {
+		$('.preloader').hide();
+		docReady(ajax_url);
+	});
 
 	/*get IE version*/
 	var ie = (function() {
@@ -1212,21 +1254,5 @@ $(document).ready(function() {
 			LoadAjaxContent(url);
 		}
 	});
-	/*$('#screen_unlock').on('mouseover', function(){
-		var header = 'Enter current username and password';
-		var form = $('<div class="form-group"><label class="control-label">Username</label><input type="text" class="form-control" name="username" /></div>'+
-					'<div class="form-group"><label class="control-label">Password</label><input type="password" class="form-control" name="password" /></div>');
-		var button = $('<div class="text-center"><a href="index.html" class="btn btn-primary">Unlock</a></div>');
-		OpenModalBox(header, form, button);
-	});*/
-	/*$('.about').on('click', function(){
-		$('#about').toggleClass('about-h');
-	})
-	$('#about').on('mouseleave', function(){
-		$('#about').removeClass('about-h');
-	})*/
-
-	docReady();
-
 
 });
