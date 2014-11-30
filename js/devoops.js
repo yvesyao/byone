@@ -227,10 +227,10 @@ function SetMinBlockHeight(elem) {
 // 页面工具栏
 function showJTopoToobar(placeholder, stage) {
 	var toobarDiv = $('<div class="jtopo_toolbar">').html(
-		' <input type="button" id="fullScreenButton" value="全屏显示"/>' + 
-		' <input type="checkbox" id="zoomCheckbox"> 鼠标缩放' + 
-		' <input type="text" id="findText" value="">' + 
-		' <input type="button" id="findButton" value=" 查 询 ">' + 
+		' <input type="button" id="fullScreenButton" value="全屏显示"/>' +
+		' <input type="checkbox" id="zoomCheckbox"> 鼠标缩放' +
+		' <input type="text" id="findText" value="">' +
+		' <input type="button" id="findButton" value=" 查 询 ">' +
 		' <input type="button" id="exportButton" value="导出PNG">');
 
 	$(placeholder).prepend(toobarDiv);
@@ -253,6 +253,7 @@ function showJTopoToobar(placeholder, stage) {
 	$("#findText").keyup(searchNode);
 	// 查询
 	$('#findButton').click(searchNode);
+
 	function searchNode() {
 		var text = $('#findText').val().trim();
 		var nodes = stage.find('node[text="' + text + '"]');
@@ -315,19 +316,20 @@ function drawTopology(placeholder) {
 	function createStageFromJson(stageCfg, canvas) {
 		var stage = new JTopo.Stage(canvas);
 		for (var attr in stageCfg)
-			"childs" != attr && (stage[attr] = stageCfg[attr]);
-		var scenes = stageCfg.childs;
+			"scenes" != attr && (stage[attr] = stageCfg[attr]);
+		var scenes = stageCfg.scenes;
 		//遍历每一个场景
 		for (var i = 0, scenceCfg = scenes[0]; i < scenes.length; scenceCfg = scenes[++i]) {
 			var scene = new JTopo.Scene(stage);
 			for (var attr in scenceCfg) {
-				"childs" != attr && (scene[attr] = scenceCfg[attr]);
+				"nodes" != attr && "links" != attr && (scene[attr] = scenceCfg[attr]);
 			};
-			var childs = scenceCfg.childs;
-			var nodes = {}; //daiding
-			for (var i = 0, nodeCfg = childs[0]; i < childs.length; nodeCfg = childs[++i]) {
+			//加载节点(Nodes)
+			var nodes = scenceCfg.nodes;
+			var nodesContainer = {}; //所有节点的容器
+			for (var i = 0, nodeCfg = nodes[0]; i < nodes.length; nodeCfg = nodes[++i]) {
 				var node = new JTopo.Node;
-				node.fontColor = scenceCfg.color || '0, 0, 0';
+				node.fontColor = scenceCfg.nodeFontColor || scenceCfg.fontColor || '67, 110, 144';
 				node.setLocation(stage.width * Math.random(), stage.height * Math.random());
 				for (var e in nodeCfg) {
 					if (e == "type") {
@@ -336,49 +338,127 @@ function drawTopology(placeholder) {
 					}
 					node[e] = nodeCfg[e];
 				}
+				nodesContainer[node.text] = node;
 				scene.add(node);
 			}
+			//加载连接(Links)
+			var links = scenceCfg.links;
+			for (var i = 0, linkCfg = links[0]; i < links.length; linkCfg = links[++i]) {
+				var link = new JTopo.Link(nodesContainer[linkCfg.nodeA], nodesContainer[linkCfg.nodeZ], linkCfg.text);
+				link.textOffsetY = 3; // 文本偏移量（向下3个像素）
+				link.strokeColor = scenceCfg.strokeColor || '0,200,255';
+				link.fontColor = scenceCfg.linkFontColor || scenceCfg.fontColor || '67, 110, 144';
+				scene.add(link);
+			}
+			/**
+			 * 还未做：
+			 *  节点有位置时，不自动布局
+			 */
+			
+			/**
+			 *
+			 *
+			 * test!到时候的位置一定是都固定的！可提供自动布局。
+			 */
 			// 树形布局
-			scene.doLayout(JTopo.layout.TreeLayout('down', 30, 107));
+			scene.doLayout(JTopo.layout.TreeLayout('down', 80, 150));
 		};
 		return stage;
 	}
 
 	var stage = createStageFromJson({
 		//frames: -24, //只有鼠标和键盘操作时才刷新画布
-		childs: [{
-			color: '67, 110, 144',
-			childs: [{
-				text: 'windows',
+		scenes: [{
+			fontColor: '67, 110, 144', //名称颜色，默认为：67, 110, 144
+			nodeFontColor: '0, 0, 0',//节点名称颜色，覆盖总配置，默认为：67, 110, 144
+			linkFontColor: '0, 0, 0',//连线名称颜色，覆盖总配置，默认为：67, 110, 144
+			strokeColor: '150, 150, 150',//连线颜色，默认为：0,200,255
+			nodes: [{
+				text: 'windows-1',
 				type: 'windows',
 				x: 100,
 				y: 100
 			}, {
-				text: 'linux',
-				type: 'linux'
+				text: 'linux-1',
+				type: 'linux',
+				x: 200,
+				y: 200
 
 			}, {
-				text: 'vmware',
-				type: 'vmware'
+				text: 'vmware-1',
+				type: 'vmware',
+				x: 300,
+				y: 300
 			}, {
-				text: 'firewall',
-				type: 'firewall'
+				text: 'router-1',
+				type: 'router',
+				x: 400,
+				y: 400
 			}, {
-				text: 'windows',
-				type: 'windows'
+				text: 'dataCenter-1',
+				type: 'dataCenter',
+				x: 500,
+				y: 500
 			}, {
-				text: 'cloud',
-				type: 'cloud'
+				text: 'cloud-1',
+				type: 'cloud',
+				x: 600,
+				y: 400
 			}, {
-				text: 'server',
-				type: 'server'
+				text: 'server-1',
+				type: 'server',
+				x: 700,
+				y: 300
 			}, {
-				text: 'firewall',
-				type: 'firewall'
+				text: 'firewall-1',
+				type: 'firewall',
+				x: 800,
+				y: 200
+			}],
+			links: [{
+				id: "1",
+				text: "link1",
+				nodeA: "cloud-1",
+				nodeZ: "router-1"
+			}, {
+				id: "2",
+				text: "link2",
+				nodeA: "cloud-1",
+				nodeZ: "server-1"
+			}, {
+				id: "3",
+				text: "link3",
+				nodeA: "cloud-1",
+				nodeZ: "dataCenter-1"
+			}, {
+				id: "4",
+				text: "link4",
+				nodeA: "router-1",
+				nodeZ: "firewall-1"
+			}, {
+				id: "5",
+				text: "link5",
+				nodeA: "router-1",
+				nodeZ: "windows-1"
+			}, {
+				id: "6",
+				text: "link6",
+				nodeA: "server-1",
+				nodeZ: "linux-1"
+			}, {
+				id: "7",
+				text: "link7",
+				nodeA: "server-1",
+				nodeZ: "vmware-1"
+			}, {
+				id: "8",
+				text: "link8",
+				nodeA: "dataCenter-1",
+				nodeZ: "vmware-1"
 			}]
 		}]
 	}, $canvas[0]); // 创建一个舞台对象
-	stage.wheelZoom = 0.85; // 设置鼠标缩放比例
+	//stage.wheelZoom = 0.85; // 设置鼠标缩放比例
 	showJTopoToobar(placeholder, stage);
 }
 
@@ -1087,25 +1167,25 @@ function docReady(selfUrl) {
 		e.preventDefault();
 	});
 	/*展开当前菜单栏*/
-    /**
-     * bug: 不同癌症子菜单的url可能一样，最先定位到的是.template
-     * 解决办法：1、不同癌症的同种子菜单的url不同
-     *           2、设置标识符，例如在父li节点加上id="prostate"
-     */
-    if (selfUrl) {
-      var $links = $('#sidebar-left ul a');
-      for (var i = 0; i < $links.length; ++i) {
-        var $link = $($links[i]);
-        if ($link.attr('href') == selfUrl) {
-          var $_parentLi = $link.closest('li.dropdown');
-          if ($_parentLi.hasClass('active')) break;
-          $links.removeClass('active');
-          $link.addClass('active');
-          $_parentLi.children('a.dropdown-toggle').click();
-          break;
-        }
-      };
-    }
+	/**
+	 * bug: 不同癌症子菜单的url可能一样，最先定位到的是.template
+	 * 解决办法：1、不同癌症的同种子菜单的url不同
+	 *           2、设置标识符，例如在父li节点加上id="prostate"
+	 */
+	if (selfUrl) {
+		var $links = $('#sidebar-left ul a');
+		for (var i = 0; i < $links.length; ++i) {
+			var $link = $($links[i]);
+			if ($link.attr('href') == selfUrl) {
+				var $_parentLi = $link.closest('li.dropdown');
+				if ($_parentLi.hasClass('active')) break;
+				$links.removeClass('active');
+				$link.addClass('active');
+				$_parentLi.children('a.dropdown-toggle').click();
+				break;
+			}
+		};
+	}
 	$('.right-click-menu').appendTo('body');
 	/*$('.height-limited[data-height]').each(function(index, val) {
 		 $(this).css("height", $(this).attr("data-height")+'px');
