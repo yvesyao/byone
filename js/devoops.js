@@ -240,7 +240,7 @@ function showJTopoToobar(placeholder, stage) {
 		stage.saveImageInfo();
 	});
 	$('#zoomCheckbox').click(function() {
-		if ($('#zoomCheckbox').attr('checked')) {
+		if ($('#zoomCheckbox').is(':checked')) {
 			stage.wheelZoom = 0.85; // 设置鼠标缩放比例
 		} else {
 			stage.wheelZoom = null; // 取消鼠标缩放比例
@@ -898,20 +898,22 @@ function dataTable(placeholder) {
 //
 // Function for click on table item
 //
-function propertyTableClick() {
-	$('#propertyTable').on('draw.dt', function() {
-
-		$('#propertyTable tbody tr').click(function(event) {
+function tableTrClick(placeholder, callback) {
+	var $placeholder = $(placeholder);
+	/*$placeholder.on('draw.dt', function() {*/
+		$placeholder.find('tbody tr').click(function(event) {
 			event.preventDefault();
+			$(this).addClass('active').siblings('tr').removeClass('active');
+			callback($(this).attr('data-id'));
 			/*scroll to target*/
-			var $infoDiv = $('#propertyInfo').not(':hidden');
+			/*var $infoDiv = $('#propertyInfo').not(':hidden');
 			if ($infoDiv.length <= 0) {
 				return;
-			};
-			$("body").scrollTop($infoDiv.offset().top);
+			};*/
+			//$("body").scrollTop($infoDiv.offset().top);
 			//changeInfo();
 		});
-	});
+	/*});*/
 }
 
 //
