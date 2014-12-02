@@ -684,6 +684,7 @@ function(a) {
 			}(), setTimeout(function() {
 				n.mousewheel(function(a) {
 					var b = null == a.wheelDelta ? a.detail : a.wheelDelta;
+					alert('hehe');
 					null != this.wheelZoom && (b > 0 ? this.zoomIn(this.wheelZoom) : this.zoomOut(this.wheelZoom))
 				}), n.paint()
 			}, 300), setTimeout(function() {

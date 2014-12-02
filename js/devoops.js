@@ -240,7 +240,7 @@ function showJTopoToobar(placeholder, stage) {
 		stage.saveImageInfo();
 	});
 	$('#zoomCheckbox').click(function() {
-		if ($('#zoomCheckbox').attr('checked')) {
+		if ($('#zoomCheckbox').prop('checked')) {
 			stage.wheelZoom = 0.85; // 设置鼠标缩放比例
 		} else {
 			stage.wheelZoom = null; // 取消鼠标缩放比例
@@ -336,6 +336,13 @@ function drawTopology(placeholder) {
 						node.setImage('./img/topoNodes/' + nodeCfg[e] + '.png');
 						continue;
 					}
+					if (e == "alarm"){
+						node.alarmColor="203, 88, 69";//默认"255,0,0"
+						node.alarmAlpha="1";//默认0.5
+						/**
+						 * //#1297,告警信息的字体颜色与节点一致
+						 */
+					}
 					node[e] = nodeCfg[e];
 				}
 				nodesContainer[node.text] = node;
@@ -363,58 +370,76 @@ function drawTopology(placeholder) {
 			// 树形布局
 			scene.doLayout(JTopo.layout.TreeLayout('down', 80, 150));
 		};
+		showJTopoToobar(placeholder, stage);
 		return stage;
 	}
 
 	var stage = createStageFromJson({
 		//frames: -24, //只有鼠标和键盘操作时才刷新画布
 		scenes: [{
-			fontColor: '67, 110, 144', //名称颜色，默认为：67, 110, 144
-			nodeFontColor: '0, 0, 0',//节点名称颜色，覆盖总配置，默认为：67, 110, 144
-			linkFontColor: '0, 0, 0',//连线名称颜色，覆盖总配置，默认为：67, 110, 144
+			fontColor: '67, 110, 144', //可选，名称颜色，默认为：67, 110, 144
+			nodeFontColor: '200, 0, 0',//可选，节点名称颜色，覆盖总配置
+			linkFontColor: '0, 0, 0',//可选，连线名称颜色，覆盖总配置
 			strokeColor: '150, 150, 150',//连线颜色，默认为：0,200,255
+			/**
+			 * 节点配置
+			 * @type {Array}
+			 * @params
+			 * [id]: 节点id，没有图形意义
+			 * text: 节点名
+			 * type: windows, linux, vmware, idc, server, router, firewall, cloud
+			 * [alarm]: 告警值
+			 * [x]: 横坐标
+			 * [y]: 纵坐标
+			 */
 			nodes: [{
+				id: '1',
 				text: 'windows-1',
 				type: 'windows',
+				alarm: 2,
 				x: 100,
 				y: 100
 			}, {
+				id: '2',
+				fontColor: '67, 110, 144',//可选，覆盖以上
 				text: 'linux-1',
 				type: 'linux',
-				x: 200,
-				y: 200
+				alarm: '1'
 
 			}, {
 				text: 'vmware-1',
-				type: 'vmware',
-				x: 300,
-				y: 300
+				type: 'vmware'
 			}, {
 				text: 'router-1',
-				type: 'router',
-				x: 400,
-				y: 400
+				type: 'router'
 			}, {
-				text: 'dataCenter-1',
-				type: 'dataCenter',
-				x: 500,
-				y: 500
+				text: 'idc-1',
+				type: 'idc'
 			}, {
 				text: 'cloud-1',
-				type: 'cloud',
-				x: 600,
-				y: 400
+				type: 'cloud'
 			}, {
 				text: 'server-1',
-				type: 'server',
-				x: 700,
-				y: 300
+				type: 'server'
 			}, {
 				text: 'firewall-1',
-				type: 'firewall',
-				x: 800,
-				y: 200
+				type: 'firewall'
 			}],
+
+			/**
+			 * 疑问
+			 * 连线起点终点，由text标识还是由id标识
+			 */
+			
+			/**
+			 * [连线配置]
+			 * @type {Array}
+			 * @params
+			 * [id]: 连线id，没有图形意义
+			 * [text]: 连线名
+			 * nodeA: 起点名
+			 * nodeZ: 终点名
+			 */
 			links: [{
 				id: "1",
 				text: "link1",
@@ -429,37 +454,31 @@ function drawTopology(placeholder) {
 				id: "3",
 				text: "link3",
 				nodeA: "cloud-1",
-				nodeZ: "dataCenter-1"
+				nodeZ: "idc-1"
 			}, {
 				id: "4",
-				text: "link4",
 				nodeA: "router-1",
 				nodeZ: "firewall-1"
 			}, {
 				id: "5",
-				text: "link5",
 				nodeA: "router-1",
 				nodeZ: "windows-1"
 			}, {
 				id: "6",
-				text: "link6",
 				nodeA: "server-1",
 				nodeZ: "linux-1"
 			}, {
 				id: "7",
-				text: "link7",
 				nodeA: "server-1",
 				nodeZ: "vmware-1"
 			}, {
 				id: "8",
-				text: "link8",
-				nodeA: "dataCenter-1",
+				nodeA: "idc-1",
 				nodeZ: "vmware-1"
 			}]
 		}]
 	}, $canvas[0]); // 创建一个舞台对象
 	//stage.wheelZoom = 0.85; // 设置鼠标缩放比例
-	showJTopoToobar(placeholder, stage);
 }
 
 /*-------------------------------------------
