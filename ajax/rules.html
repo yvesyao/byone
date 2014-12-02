@@ -5,7 +5,8 @@
 		</a>
 		<ol class="breadcrumb pull-left">
 			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
-			<li><a href="#">资产管理</a></li>
+			<li><a href="#">知识库</a></li>
+			<li><a href="#">规则</a></li>
 		</ol>
 	</div>
 	<!-- /#breadcrumb -->
@@ -31,7 +32,7 @@
 			<div class="no-move"></div>
 		</div>
 		<div class="box-content clearfix">
-			<table id="propertyTable" class="table table-condensed table-striped table-bordered table-block table-hover property-table">
+			<table id="ruleTable" class="table table-condensed table-striped table-bordered table-block table-hover property-table">
 				<thead>
 					<tr>
 						<th>名称</th>
@@ -406,11 +407,7 @@
 <!-- terminals -->
 <!-- Modal -->
 <div class="modal fade" id="terminalModal" tabindex="-1" role="dialog" aria-labelledby="terminalModalLabel" aria-hidden="true">
-<<<<<<< .merge_file_a07724
   <div class="modal-dialog">
-=======
-  <div class="modal-dialog modal-lg">
->>>>>>> .merge_file_a08480
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -425,15 +422,11 @@
 
 <script type="text/javascript">
 function tableReady() {
-	dataTable('#propertyTable');
+	dataTable('#ruleTable');
 	/*以下函数是否需要在datatables重绘之后重新执行？*/
-<<<<<<< .merge_file_a07724
-	propertyTableClick();
-=======
-	tableTrClick('#propertyTable', function(propertyId){
+	tableTrClick('#ruleTable', function(propertyId){
 		alert(propertyId+' clicked');
 	});
->>>>>>> .merge_file_a08480
 }
 
 function terminalReady() {
