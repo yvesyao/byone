@@ -641,7 +641,7 @@ ul.DTTT_dropdown.dropdown-menu > li:hover > a {
 }
 #breadcrumb {
   padding: 0;
-  line-height: 40px;
+  line-height: 25px;
   background: #436E90;
   margin-bottom: 30px;
 }

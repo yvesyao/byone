@@ -82,7 +82,7 @@ function LoadSelect2Script(callback) {
 //
 function LoadDataTablesScripts(callback) {
 	function LoadDatatables() {
-		$.getScript('plugins/datatables/jquery.dataTables.js', function() {
+		$.getScript('plugins/datatables/jquery.dataTables.min.js', function() {
 			$.getScript('plugins/datatables/dataTables.bootstrap.js', callback);
 		});
 	}
@@ -889,8 +889,12 @@ function intervalChart(plot, dataFunc, interval) {
 //
 function dataTable(placeholder) {
 	var tableDbj = $(placeholder).dataTable({
-		"sDom": "T<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+		"sDom": "T<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>rt<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>",
 		"sPaginationType": "bootstrap",
+		"pageLength": 15,
+		"scrollY": "300px",
+  		"scrollCollapse": true,
+		//"lengthChange": false,
 		"oLanguage": {
 			"sLengthMenu": "每页显示 _MENU_ 条记录",
 			"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
@@ -900,8 +904,8 @@ function dataTable(placeholder) {
 			"sSearch": "搜索：",
 			"oPaginate": {
 				"sFirst": "首页",
-				"sPrevious": "前一页",
-				"sNext": "后一页",
+				"sPrevious": "<<",
+				"sNext": ">>",
 				"sLast": "尾页"
 			}
 
@@ -910,7 +914,20 @@ function dataTable(placeholder) {
 }
 
 
+/*-------------------------------------------
+	Function for rule page (rule.html)
+	---------------------------------------------*/
+function ruleCheck(callback) {
+	/*$('#ruleTable').on('draw.dt', function() {*/
+		$('#ruleTable').find('input.rule-state-check').click(function(event) {
+			callback($(this).closest('tr').attr('data-id'), $(this).is(':checked'));
+		});
+	/*});*/
+}
 
+//
+// Function for click on table item
+//
 /*-------------------------------------------
 	Function for table pages (property.html etc.)
 	---------------------------------------------*/
@@ -922,7 +939,7 @@ function tableTrClick(placeholder, callback) {
 	var $placeholder = $(placeholder);
 	/*$placeholder.on('draw.dt', function() {*/
 		$placeholder.find('tbody tr').click(function(event) {
-			event.preventDefault();
+			//event.preventDefault();
 			$(this).addClass('active').siblings('tr').removeClass('active');
 			callback($(this).attr('data-id'));
 			/*scroll to target*/
@@ -935,6 +952,8 @@ function tableTrClick(placeholder, callback) {
 		});
 	/*});*/
 }
+
+
 
 //
 // Function for rightClick on table item
