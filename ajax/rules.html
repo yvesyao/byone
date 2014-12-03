@@ -12,16 +12,17 @@
 	<!-- /#breadcrumb -->
 </div>
 <!-- /.row -->
-<div class="col-xs-12">
-	<div class="box">
-		<div class="box-header">
-			<div class="box-name">
-				<span>资产信息</span>
-			</div>
-			<div class="box-icons">
-				<a class="collapse-link">
-					<i class="fa fa-chevron-up"></i>
-				</a>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<span>资产信息</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
 				<!-- <a class="expand-link">
 					<i class="fa fa-expand"></i>
 				</a> -->
@@ -137,237 +138,221 @@
 
 <div class="dropdown right-click-menu" id="ruleDropMenu">
 	<ul aria-labelledby="dropdownMenu" role="menu" class="dropdown-menu">
-		<li id="create_shortcut">
-			<a href="#" onclick="showTerminal('SSH', '{1}')" tabindex="-1">SSH
+		<li id="add">
+			<a href="#" onclick="addRule()" tabindex="-1">新建
 			</a>
 		</li>
-		<li id="rename">
-			<a href="#" onclick="showTerminal('telnet', '{1}')" tabindex="-1">telnet
+		<li id="edit">
+			<a href="#" onclick="window.location.hash=ajax/modRule.html?id={1}" tabindex="-1">编辑
+			</a>
+		</li>
+		<li id="copy">
+			<a href="#" onclick="copyRule('{1}')" tabindex="-1">复制
 			</a>
 		</li>
 		<li id="del">
-			<a href="#" tabindex="-1">运维工具3
-			</a>
-		</li>
-		<li id="s3" class="divider"><!-- 分割线 -->
-		</li>
-		<li id="properties">
-			<a href="#" tabindex="-1">运维工具4
+			<a href="#" tabindex="delRule('{1}')">删除
 			</a>
 		</li>
 	</ul>
 </div>
-<div class="col-xs-12 hidden-xs hidden-sm" id="ruleInfo">
+<div class="col-xs-12 hidden-xs" id="ruleInfo">
 
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" role="tablist">
-		<li class="active"><a href="#tab-zonglan" role="tab" data-toggle="tab">总览</a></li>
-		<li><a href="#tab-jkzt" role="tab" data-toggle="tab">健康状态</a></li>
-		<li><a href="#tab-lxxx" role="tab" data-toggle="tab">联系信息</a></li>
-		<li><a href="#tab-wk" role="tab" data-toggle="tab">网卡</a></li>
-		<li><a href="#tab-sw" role="tab" data-toggle="tab">软件</a></li>
-		<li><a href="#tab-hw" role="tab" data-toggle="tab">硬件</a></li>
-		<li><a href="#tab-conf" role="tab" data-toggle="tab">配置</a></li>
-		<li><a href="#tab-relation" role="tab" data-toggle="tab">关系</a></li>
-		
+		<li class="active"><a href="#tab-zonglan" role="tab">概述</a></li>
 	</ul>
 
 	<!-- Tab panes -->
 	<div class="tab-content clearfix">
 		<div class="tab-pane active" id="tab-zonglan">
-			<div class="col-xs-12 col-sm-6">
-				<div class="box">
-					<div class="box-header">
-						<div class="box-name">统计</div>
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="col-xs-12">
+						<label class="control-label col-sm-2 col-md-1">名称:</label>
+						<div class="col-xs-10 col-sm-10 col-md-11">Account Locked: Server_12/27/2013</div>
 					</div>
-					<div class="box-content clearfix">
-						<div class="row">
-							<label class="control-label col-sm-3">创建时间</label>
-							<div class="col-sm-9">04:26:33 PM 2014-10-9 Thu via VM SDK, PING</div>
+				</div>
+				<!-- /.row -->
+				<div class="row">
+					<div class="col-xs-6 col-md-3">
+						<label class="control-label col-xs-5">状态:</label>
+						<div class="pull-left">激活的</div>
+					</div>
+					<div class="col-xs-6 col-md-3">
+						<label class="control-label col-xs-5">类型:</label>
+						<div class="pull-left">高级</div>
+					</div>
+					<div class="col-xs-6 col-md-3">
+						<label class="control-label col-xs-5 col-md-7">通知频率:</label>
+						<div class="pull-left">1 day</div>
+					</div>
+					<div class="col-xs-6 col-md-3">
+						<label class="control-label col-xs-5 col-md-7">告警种类:</label>
+						<div class="pull-left">Server</div>
+					</div>
+				</div>
+				<!-- /.row -->
+				<div class="row">
+					<div class="col-xs-12">
+						<label class="control-label col-sm-2 col-md-1">描述:</label>
+						<div class="col-xs-10 col-sm-10 col-md-11">Detects account lockout caused by excessive logon failures</div>
+					</div>
+					<div class="col-xs-12">
+						<label class="control-label col-sm-2 col-md-1">条件:</label>
+						<div class="col-xs-10 col-sm-10 col-md-11">
+							<table>
+								<tr>
+									<td class="green-label">PATTERN</td>
+									<td>
+										<span class="purple-pattern">backdoorfound</span>
+									</td>
+								</tr>
+								<tr>
+									<td class="green-label">OCCURS</td>
+									<td> in any 300 second time window</td>
+								</tr>
+							</table>
 						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">最后修改</label>
-							<div class="col-sm-9">05:28:33 PM 2014-10-9 Thu via VM SDK, PING</div>
+					</div>
+					<div class="col-xs-12">
+						<label class="control-label col-sm-2 col-md-1">告警:</label>
+						<div class="col-xs-10 col-sm-10 col-md-11">
+							<table>
+								<tr>
+									<td class="green-label">GENERATE</td> 
+									<td>Severity  9  <span class="level">(HIGH)</span>  Incident:  <strong>Backdoor_Attack_detected_by_NIPS</strong>   Display Name: <strong>Backdoor Attack detected by NIPS</strong></td>
+								</tr>
+								<tr>
+									<td class="green-label">WITH</td>
+									<td>源IP  =  <span class="purple-pattern">backdoorfound</span>.源IP, 目标IP  =  <span class="purple-pattern">backdoorfound</span>.目标IP</td>
+								</tr>
+							</table>
 						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">#接口</label>
-							<div class="col-sm-9"><a href="#">2</a></div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">#处理器</label>
-							<div class="col-sm-9"><a href="#">2</a></div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">#系统服务</label>
-							<div class="col-sm-9"><a href="#">0</a></div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">#组件</label>
-							<div class="col-sm-9"><a href="#">0</a></div>
-						</div>
+					</div>
+				</div>
+				<!-- /.row -->
 
+				<div class="row">
+					<div class="col-xs-12">
+						<label class="control-label col-xs-12">模式定义:</label>
+						<div class="col-xs-12">
+							<div><span class="purple-pattern"><i>backdoorfound</i></span></div>
+							<table>
+								<tr>
+									<td class="green-label">If</td>
+									<td>(源设备IP  <span class="pattern-keyword">IN</span>  Devices: Network IPS <strong>OR</strong> (源设备IP  <span class="pattern-keyword">IN</span>  Applications: Network IPS App <strong>AND</strong> 事件类型 <span class="pattern-keyword">CONTAINS</span> Snort-)) <strong>AND</strong> 事件类型 <span class="pattern-keyword">IN</span> EventTypes: Backdoor</td>
+								</tr>
+								<tr>
+									<td class="green-label">WHERE</td>
+									<td>源IP = <span class="purple-pattern">backdoorfound</span>.源IP, 目标IP  =  <span class="purple-pattern">backdoorfound</span>.目标IP</td>
+								</tr>
+								<tr>
+									<td class="green-label">GROUP BY</td>
+									<td>源IP, 目标IP</td>
+								</tr>
+							</table>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="col-xs-12 col-sm-6">
-				<div class="box">
-					<div class="box-header">
-						<div class="box-name">健康状态总览</div>
-					</div>
-					<div class="box-content clearfix">
-						<div class="row">
-							<label class="control-label col-sm-3">可用性</label>
-							<div class="col-sm-9">Up</div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">性能健康状态</label>
-							<div class="col-sm-9">Normal</div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">CPU均值</label>
-							<div class="col-sm-9">69%</div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">内存均值</label>
-							<div class="col-sm-9">89%</div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">告警级别</label>
-							<div class="col-sm-9">1</div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">告警特性</label>
-							<div class="col-sm-9">A:0 P:1 S:0</div>
+					<div class="col-xs-12">
+						<label class="control-label col-xs-12">触发事件属性:</label>
+						<div class="col-xs-12">
+							事件接收时间, 事件类型, 源IP, 目标IP, IP协议, 源TCP/UDP端口, 目标TCP/UDP端口, 源设备IP, 原始事件日志
 						</div>
 					</div>
 				</div>
-			</div>
-			
-			<div class="col-xs-12 col-sm-6">
-				<div class="box">
-					<div class="box-header">
-						<div class="box-name">综合</div>
-					</div>
-					<div class="box-content clearfix">
-						<div class="row">
-							<label class="control-label col-sm-3">名称</label>
-							<div class="col-sm-9">12-HKNA01010001-HYR05.cloud.cnlink.net</div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">连接IP</label>
-							<div class="col-sm-9">202.181.225.205</div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">类型</label>
-							<div class="col-sm-9">VMware ESX Server</div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">版本</label>
-							<div class="col-sm-9">4.1.0</div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">样式</label>
-							<div class="col-sm-9">PowerEdge R710</div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">部门</label>
-							<div class="col-sm-9"></div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">位置</label>
-							<div class="col-sm-9"></div>
-						</div>
+				<!-- /.row -->
 
-					</div>
-				</div>
 			</div>
 
-			<div class="col-xs-12 col-sm-6">
-				<div class="box">
-					<div class="box-header">
-						<div class="box-name">位置</div>
-					</div>
-					<div class="box-content clearfix">
+		</div>
 
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-12 col-sm-6">
-				<div class="box">
-					<div class="box-header">
-						<div class="box-name">维护计划和状态(未计划)</div>
-					</div>
-					<div class="box-content clearfix">
+	</div>
+	<!-- /.col-xs-12 -->
+</div>
 
-					</div>
+<div class="overlay-frm hide" id="addRuleFrm">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="pull-right">
+					<a href="#" class="">保存</a><a href="#" class="btn-cancel pr-half">取消</a>
 				</div>
+				<div class="box-name">
+					<span>添加新规则</span>
+				</div>
+				<div class="no-move"></div>
 			</div>
-			<div class="col-xs-12 col-sm-6">
-				<div class="box">
-					<div class="box-header">
-						<div class="box-name">所属分组 3 groups</div>
-					</div>
-					<div class="box-content clearfix">
-						<div class="row">
-							<label class="control-label col-sm-3">Group#1</label>
-							<div class="col-sm-9">/服务器/Virtual Infrastructure/虚拟架构</div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">Group#2</label>
-							<div class="col-sm-9">/服务器/Virtual Infrastructure/虚拟架构</div>
-						</div>
-						<div class="row">
-							<label class="control-label col-sm-3">Group#3</label>
-							<div class="col-sm-9">网段/Net:202.181.225.192/27</div>
+			<!-- /.box-header -->
+			<div class="box-content">
+				<form action="#" class="form-horizontal">
+					<div class="form-group">
+						<label for="ruleName" class="control-label col-sm-3">规则名称：</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="ruleName" placeholder="输入规则名称">
 						</div>
 					</div>
-				</div>
+				</form>
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+</div>
+<!-- /#addRuleFrm -->
+
+</div>
+<!-- /.row -->
+
+
+
+<!-- addRules -->
+<!-- Modal -->
+<div class="modal fade" id="addRuleModal" tabindex="-1" role="dialog" aria-labelledby="addRuleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h5 class="modal-title" id="addRuleModalLabel">运维工具</h5>
+			</div>
+			<div class="modal-body">
+
 			</div>
 		</div>
-		<div class="tab-pane" id="tab-jkzt"><h1>健康状态</h1></div>
-		<div class="tab-pane" id="tab-lxxx"><h1>联系信息</h1></div>
-		<div class="tab-pane" id="tab-wk"><h1>网卡</h1></div>
-		<div class="tab-pane" id="tab-sw"><h1>软件</h1></div>
-		<div class="tab-pane" id="tab-hw"><h1>硬件</h1></div>
-		<div class="tab-pane" id="tab-conf"><h1>配置</h1></div>
-		<div class="tab-pane" id="tab-relation"><h1>关系</h1></div>
 	</div>
-</div>
-<!-- /.col-xs-12 -->
-
-
-<!-- terminals -->
-<!-- Modal -->
-<div class="modal fade" id="terminalModal" tabindex="-1" role="dialog" aria-labelledby="terminalModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h5 class="modal-title" id="terminalModalLabel">运维工具</h5>
-      </div>
-      <div class="modal-body">
-        
-      </div>
-    </div>
-  </div>
 </div>
 
 <script type="text/javascript">
-function tableReady() {
-	dataTable('#ruleTable');
-	/*以下函数是否需要在datatables重绘之后重新执行？*/
-	tableTrClick('#ruleTable', function(ruleId){
-		alert(ruleId+' clicked');
-	});
-}
+	function tableReady() {
+		dataTable('#ruleTable');
+		/*以下函数是否需要在datatables重绘之后重新执行？*/
+		tableTrClick('#ruleTable', function(ruleId){
+			alert(ruleId+' clicked');
+		});
+	}
 
-$(document).ready(function() {
-	LoadDataTablesScripts(tableReady);
+	function addRule() {
+		showOverlayFrm('#addRuleFrm');
+	}
+	function showOverlayFrm(handle) {
+		$(handle).removeClass('hide').show();
+		$(handle).find('.btn-cancel').click(function(event) {
+			/* Act on the event */
+			$(this).find(form).each(function(index, el) {
+				$(this)[0].reset();
+			});
+			$(this).hide();
+		});
+	}
 
-	WinMove();
-	tableRightClick();
-	ruleCheck(function(id, isChecked){
-		alert(id + ': ' + isChecked);
+	$(document).ready(function() {
+		LoadDataTablesScripts(tableReady);
+
+		WinMove();
+		tableRightClick();
+		ruleCheck(function(id, isChecked){
+			alert(id + ': ' + isChecked);
+		});
 	});
-});
 </script>

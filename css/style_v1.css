@@ -770,27 +770,6 @@ ul.DTTT_dropdown.dropdown-menu > li:hover > a {
 .well pre code {
   white-space: normal;
 }
-.btn {
-  border: 1px solid transparent;
-  border-bottom: 3px solid transparent;
-  text-decoration: none;
-  cursor: pointer;
-  font-family: "Lucida Grande","Lucida Sans","Lucida Sans Unicode","Segoe UI",Verdana,sans-serif;
-  display: inline-block;
-  vertical-align: top;
-  position: relative;
-  font-size: 12px;
-  font-weight: bold;
-  text-align: center;
-  line-height: 24px;
-  margin: 0 0 10px 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  outline: none !important;
-}
 .btn-label-left span {
   position: relative;
   left: -10px;

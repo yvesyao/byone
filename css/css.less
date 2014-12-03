@@ -19,6 +19,12 @@
 .mt-20 {
 	margin-top: 20px;
 }
+.pl-half {
+	padding-left: 0.5em;
+	&.dropdown-menu {
+		padding-left: 0.5em!important;
+	}
+}
 .pagination {
 	margin: 5px 0 0 0;
 	>li {
@@ -26,6 +32,9 @@
 			color: #555;
 		}
 	}
+}
+.row {
+	position: relative;
 }
 
 
@@ -39,8 +48,6 @@
 	background: #24890d;
 	color: #fff;
 }
-
-
 
 
 
@@ -109,4 +116,36 @@
 
 .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
 	background-color: #f5f5f5;
+}
+
+/* rule */
+.green-label {
+	color: #050;
+	text-align: right;
+	vertical-align: top;
+	width: 80px;
+	padding-right: 5px;
+	margin-right: 0.5em;
+	font-weight: bold;
+	text-transform: Uppercase;
+}
+.purple-pattern {
+	color: purple;
+}
+.pattern-keyword {
+	text-transform: Uppercase;
+	font-weight: bold;
+	color: blue;
+}
+
+.overlay-frm {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+	background-color: #fff;
+	z-index: 2000;
 }

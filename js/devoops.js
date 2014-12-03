@@ -979,12 +979,13 @@ function tableRightClick() {
 	$('[data-right-menu]').mouseup(function(event) { //弹出右键菜单
 		/* Act on the event */
 		event.preventDefault();
+		$(this).addClass('active').siblings('tr').removeClass('active');
 		var $targetMenu = $($(this).attr('data-right-menu'));
 		if (event.button == '2') {
 			$targetMenu.addClass('open').css({
 				top: event.pageY,
 				left: event.pageX
-			}).html($targetMenu.data('originHtml').replace("{1}", $(this).attr('data-id')));
+			}).html($targetMenu.data('originHtml').replace(/\{1\}/g, $(this).attr('data-id')));
 		}
 	}).bind("contextmenu", function(e) { //不显示默认右键菜单
 		return false;
