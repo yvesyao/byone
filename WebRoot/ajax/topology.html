@@ -41,28 +41,126 @@
 <!-- /.col-xs-12 -->
 
 
+<div class="dropdown right-click-menu" id="topoDropMenu">
+	<ul aria-labelledby="dropdownMenu" role="menu" class="dropdown-menu">
+		<li id="nodeInfo">
+			<a href="#" onclick="showNodeInfo('{1}')" tabindex="-1">节点信息
+			</a>
+		</li>
+		<li class="divider"><!-- 分割线 -->
+		</li>
+		<li id="SSH">
+			<a href="#" onclick="showTerminal('SSH', '{1}')" tabindex="-1">SSH
+			</a>
+		</li>
+		<li id="telnet">
+			<a href="#" onclick="showTerminal('telnet', '{1}')" tabindex="-1">telnet
+			</a>
+		</li>
 
-<!-- terminals -->
+	</ul>
+</div>
+
 <!-- Modal -->
-<div class="modal fade" id="alarmModal" tabindex="-1" role="dialog" aria-labelledby="alarmModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+<div class="modal fade" id="nodeModal" tabindex="-1" role="dialog" aria-labelledby="nodeModalLabel" aria-hidden="true">
+	<div class="modal-dialog  modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-				<h5 class="modal-title" id="alarmModalLabel">告警信息</h5>
+				<h5 class="modal-title" id="nodeModalLabel">设备信息</h5>
 			</div>
 			<div class="modal-body">
-
+				<div class="row">
+					<div class="col-sm-5">
+						<div class="row">
+							<label class="control-label col-xs-4">Name</label>
+							<div class="col-xs-8">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">IP</label>
+							<div class="col-xs-8">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">Type</label>
+							<div class="col-xs-8">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">Version</label>
+							<div class="col-xs-8">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">Updated</label>
+							<div class="col-xs-8">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">Method</label>
+							<div class="col-xs-8">info</div>
+						</div>
+					</div>
+					<!-- /.col-sm-6 -->
+					<div class="col-sm-7">
+						<div class="row">
+							<label class="control-label col-xs-5">Availability Health</label>
+							<div class="col-xs-7">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-5">Performance Health</label>
+							<div class="col-xs-7">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-5">Avg CPU Util</label>
+							<div class="col-xs-7">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-5">Avg MEM Util</label>
+							<div class="col-xs-7">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-5">Incidents by Severity</label>
+							<div class="col-xs-7">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-5">Incidents by Feature</label>
+							<div class="col-xs-7">info</div>
+						</div>
+					</div>
+					<!-- /.col-sm-6 -->
+				</div>
+				<!-- /.row -->
 			</div>
+			<!-- /.modal-body -->
 		</div>
 	</div>
 </div>
 
+<!-- terminals -->
+<!-- Modal -->
+<div class="modal fade" id="terminalModal" tabindex="-1" role="dialog" aria-labelledby="terminalModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h5 class="modal-title" id="terminalModalLabel">运维工具</h5>
+			</div>
+			<div class="modal-body">
+
+			</div>
+			<!-- /.modal-body -->
+		</div>
+	</div>
+</div>
+<!-- /#terminalModal -->
+
 <script type="text/javascript">
 	function topoReady() {
-		drawTopology('#topoContainer');
+		drawTopology('#topoContainer', topoDropMenu);
+	}
+	function showNodeInfo(nodeId) {
+		//get node infos
+		$('#nodeModal').modal('show').find('#nodeModalLabel').text('node ' + nodeId);
 	}
 	$(document).ready(function() {
 		LoadJTopoScripts(topoReady);
+		LoadTerminalScripts();
 	});
 </script>

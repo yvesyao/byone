@@ -220,68 +220,6 @@ function SetMinBlockHeight(elem) {
 
 
 
-/*-------------------------------------------
-	Topology page (Topology.html)
-	---------------------------------------------*/
-//
-// 页面工具栏
-function showJTopoToobar(placeholder, stage) {
-	var toobarDiv = $('<div class="jtopo_toolbar">').html(
-		' <input type="button" id="fullScreenButton" value="全屏显示"/>' +
-		' <input type="checkbox" id="zoomCheckbox"> 鼠标缩放' +
-		' <input type="text" id="findText" value="">' +
-		' <input type="button" id="findButton" value=" 查 询 ">' +
-		' <input type="button" id="exportButton" value="导出PNG">');
-
-	$(placeholder).prepend(toobarDiv);
-
-	// 工具栏按钮处理
-	$('#exportButton').click(function() {
-		stage.saveImageInfo();
-	});
-	$('#zoomCheckbox').click(function() {
-
-		if ($('#zoomCheckbox').is(':checked')) {
-			stage.wheelZoom = 0.85; // 设置鼠标缩放比例
-		} else {
-			stage.wheelZoom = null; // 取消鼠标缩放比例
-		}
-	});
-	$('#fullScreenButton').click(function() {
-		runPrefixMethod(stage.canvas, "RequestFullScreen")
-	});
-
-	$("#findText").keyup(searchNode);
-	// 查询
-	$('#findButton').click(searchNode);
-
-	function searchNode() {
-		var text = $('#findText').val().trim();
-		var nodes = stage.find('node[text="' + text + '"]');
-		if (nodes.length > 0) {
-			for (var i = nodes.length - 1; i >= 0; i--) {
-				var node = nodes[0];
-				node.selected = true;
-				/*var location = node.getCenterLocation();
-				// 查询到的节点居中显示
-				stage.setCenter(location.x, location.y);
-				// 闪烁几下*/
-				nodeFlash(node, 6);
-			};
-		}
-
-		function nodeFlash(node, n) {
-			if (n == 0) {
-				node.selected = false;
-				return;
-			};
-			node.selected = !node.selected;
-			setTimeout(function() {
-				nodeFlash(node, n - 1);
-			}, 300);
-		}
-	}
-}
 
 var runPrefixMethod = function(element, method) {
 	var usablePrefixMethod;
@@ -306,7 +244,7 @@ var runPrefixMethod = function(element, method) {
 //
 // 绘制拓扑图函数
 //
-function drawTopology(placeholder) {
+function drawTopology(placeholder, contextMenu) {
 	var $placeholder = $(placeholder);
 	$placeholder.children().remove().end().append('<canvas></canvas>');
 	var $canvas = $placeholder.children('canvas');
@@ -347,6 +285,17 @@ function drawTopology(placeholder) {
 					node[e] = nodeCfg[e];
 				}
 				nodesContainer[node.text] = node;
+
+				node.mouseup(function(event){
+					var $targetMenu = $(contextMenu);
+					if (event.button == '2') {
+						$targetMenu.addClass('open').css({
+							top: event.pageY,
+							left: event.pageX
+						}).html($targetMenu[0].originHtml.replace(/\{1\}/g, this.id));
+					}
+	                //showNodeInfo(this.id);
+	            });
 				scene.add(node);
 			}
 			//加载连接(Links)
@@ -369,7 +318,7 @@ function drawTopology(placeholder) {
 			 * test!到时候的位置一定是都固定的！可提供自动布局。
 			 */
 			// 树形布局
-			scene.doLayout(JTopo.layout.TreeLayout('down', 80, 150));
+			//scene.doLayout(JTopo.layout.TreeLayout('down', 80, 150));
 		};
 		showJTopoToobar(placeholder, stage);
 		return stage;
@@ -379,18 +328,18 @@ function drawTopology(placeholder) {
 		//frames: -24, //只有鼠标和键盘操作时才刷新画布
 		scenes: [{
 			fontColor: '67, 110, 144', //可选，名称颜色，默认为：67, 110, 144
-			nodeFontColor: '200, 0, 0',//可选，节点名称颜色，覆盖总配置
-			linkFontColor: '0, 0, 0',//可选，连线名称颜色，覆盖总配置
+			//nodeFontColor: '200, 0, 0',//可选，节点名称颜色，覆盖总配置
+			//linkFontColor: '0, 0, 0',//可选，连线名称颜色，覆盖总配置
 			strokeColor: '150, 150, 150',//连线颜色，默认为：0,200,255
 			/**
 			 * 节点配置
 			 * @type {Array}
 			 * @params
 			 * [id]: 节点id，没有图形意义
-			 * text: 节点名
 			 * type: windows, linux, vmware, idc, server, router, firewall, cloud
 			 * [alarm]: 告警值
 			 * [x]: 横坐标
+			 * text: 节点名
 			 * [y]: 纵坐标
 			 */
 			nodes: [{
@@ -408,21 +357,27 @@ function drawTopology(placeholder) {
 				alarm: '1'
 
 			}, {
+				id: '3',
 				text: 'vmware-1',
 				type: 'vmware'
 			}, {
+				id: '4',
 				text: 'router-1',
 				type: 'router'
 			}, {
+				id: '5',
 				text: 'idc-1',
 				type: 'idc'
 			}, {
+				id: '6',
 				text: 'cloud-1',
 				type: 'cloud'
 			}, {
+				id: '7',
 				text: 'server-1',
 				type: 'server'
 			}, {
+				id: '8',
 				text: 'firewall-1',
 				type: 'firewall'
 			}],
@@ -480,6 +435,85 @@ function drawTopology(placeholder) {
 		}]
 	}, $canvas[0]); // 创建一个舞台对象
 	//stage.wheelZoom = 0.85; // 设置鼠标缩放比例
+
+	contextMenuEnv();
+/*-------------------------------------------
+	Topology page (Topology.html)
+	---------------------------------------------*/
+//
+// 页面工具栏
+function showJTopoToobar(placeholder, stage) {
+	var toobarDiv = $('<div class="jtopo_toolbar">').html(
+		' <input type="button" id="fullScreenButton" value="全屏显示"/>' +
+		' <input type="checkbox" id="zoomCheckbox"> 鼠标缩放' +
+		' <input type="text" id="findText" value="">' +
+		' <input type="button" id="findButton" value=" 查 询 ">' +
+		' <input type="button" id="topoToJson" value=" 保 存 ">' +
+		' <input type="button" id="exportButton" value="导出PNG">');
+
+	$(placeholder).prepend(toobarDiv);
+
+	// 工具栏按钮处理
+	$('#exportButton').click(function() {
+		stage.saveImageInfo();
+	});
+	$('#topoToJson').click(function(){
+		//console.log(stage.toJson());
+		var nodes = stage.find('node');
+		var result = [];
+		for (var i = nodes.length - 1; i >= 0; i--) {
+			var node = nodes[i];
+			result.push({
+				id: node.id,
+				x: node.x,
+				y: node.y
+			})
+		};
+
+		console.log(result);
+	});
+	$('#zoomCheckbox').click(function() {
+		if ($('#zoomCheckbox').is(':checked')) {
+			stage.wheelZoom = 0.85; // 设置鼠标缩放比例
+		} else {
+			stage.wheelZoom = null; // 取消鼠标缩放比例
+		}
+	});
+	$('#fullScreenButton').click(function() {
+		runPrefixMethod(stage.canvas, "RequestFullScreen")
+	});
+
+	$("#findText").keyup(searchNode);
+	// 查询
+	$('#findButton').click(searchNode);
+
+	function searchNode() {
+		var text = $('#findText').val().trim();
+		var nodes = stage.find('node[text="' + text + '"]');
+		if (nodes.length > 0) {
+			for (var i = nodes.length - 1; i >= 0; i--) {
+				var node = nodes[0];
+				node.selected = true;
+				/*var location = node.getCenterLocation();
+				// 查询到的节点居中显示
+				stage.setCenter(location.x, location.y);
+				// 闪烁几下*/
+				nodeFlash(node, 6);
+			};
+		}
+
+		function nodeFlash(node, n) {
+			if (n == 0) {
+				node.selected = false;
+				return;
+			};
+			node.selected = !node.selected;
+			setTimeout(function() {
+				nodeFlash(node, n - 1);
+			}, 300);
+		}
+	}
+}
 }
 
 /*-------------------------------------------
@@ -958,14 +992,31 @@ function tableTrClick(placeholder, callback) {
 //
 // Function for rightClick on table item
 //
-function tableRightClick() {
+function tableContextMenu() {
+	$('[data-right-menu]').mouseup(function(event) { //弹出右键菜单
+		/* Act on the event */
+		event.preventDefault();
+		$(this).addClass('active').siblings('tr').removeClass('active');
+		var $targetMenu = $($(this).attr('data-right-menu'));
+		if (event.button == '2') {
+			$targetMenu.addClass('open').css({
+				top: event.pageY,
+				left: event.pageX
+			}).html($targetMenu[0].originHtml.replace(/\{1\}/g, $(this).attr('data-id')));
+		}
+	}).bind("contextmenu", function(e) { //不显示默认右键菜单
+		return false;
+	});
+	contextMenuEnv();
+}
+function contextMenuEnv() {
 	$('body').mousedown(function(event) { //隐藏右键菜单
 		/* Act on the event */
 		hideContextMenus();
 	});
 	$('.right-click-menu').each(function(index, val) { //保存右键菜单原来的数据
 		/* iterate through array or object */
-		$(this).data('originHtml', this.innerHTML);
+		this.originHtml = this.innerHTML;
 	}).mousedown(function(event) { //覆盖body的mousedown事件
 		/* Act on the event */
 		event.stopPropagation(); //阻止事件冒泡
@@ -976,25 +1027,9 @@ function tableRightClick() {
 		/* Act on the event */
 		event.preventDefault();
 	});
-	$('[data-right-menu]').mouseup(function(event) { //弹出右键菜单
-		/* Act on the event */
-		event.preventDefault();
-		$(this).addClass('active').siblings('tr').removeClass('active');
-		var $targetMenu = $($(this).attr('data-right-menu'));
-		if (event.button == '2') {
-			$targetMenu.addClass('open').css({
-				top: event.pageY,
-				left: event.pageX
-			}).html($targetMenu.data('originHtml').replace(/\{1\}/g, $(this).attr('data-id')));
-		}
-	}).bind("contextmenu", function(e) { //不显示默认右键菜单
-		return false;
-	});
-
 	function hideContextMenus() {
 		$('.right-click-menu.open').removeClass('open');
 	}
-
 }
 
 //

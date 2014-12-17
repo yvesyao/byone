@@ -348,9 +348,8 @@
 
 	$(document).ready(function() {
 		LoadDataTablesScripts(tableReady);
-
 		WinMove();
-		tableRightClick();
+		contextMenu();
 		ruleCheck(function(id, isChecked){
 			alert(id + ': ' + isChecked);
 		});
