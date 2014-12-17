@@ -14,7 +14,7 @@ import by.soft.spring.service.UserService;
 
 @Controller
 public class UserControl {
-	
+	//hahaha
 	@Autowired
 	private UserService userService;
 	
