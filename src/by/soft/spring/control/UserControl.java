@@ -14,6 +14,7 @@ import by.soft.spring.service.UserService;
 
 @Controller
 public class UserControl {
+	//alert
 	@Autowired
 	private UserService userService;
 	
