@@ -139,19 +139,19 @@
 <div class="dropdown right-click-menu" id="ruleDropMenu">
 	<ul aria-labelledby="dropdownMenu" role="menu" class="dropdown-menu">
 		<li id="add">
-			<a href="#" onclick="addRule()" tabindex="-1">新建
+			<a href="#" onclick="addRule()" tabindex="-1"><span class="glyphicon glyphicon-plus"></span> 新建
 			</a>
 		</li>
 		<li id="edit">
-			<a href="#" onclick="window.location.hash=ajax/modRule.html?id={1}" tabindex="-1">编辑
+			<a href="#" onclick="modRule('{1}')" tabindex="-1"><span class="glyphicon glyphicon-edit"></span> 编辑
 			</a>
 		</li>
 		<li id="copy">
-			<a href="#" onclick="copyRule('{1}')" tabindex="-1">复制
+			<a href="#" onclick="copyRule('{1}')" tabindex="-1"><span class="glyphicon glyphicon-share"></span> 复制
 			</a>
 		</li>
 		<li id="del">
-			<a href="#" tabindex="delRule('{1}')">删除
+			<a href="#" tabindex="delRule('{1}')"><span class="glyphicon glyphicon-trash"></span> 删除
 			</a>
 		</li>
 	</ul>
@@ -236,7 +236,7 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<label class="control-label col-xs-12">模式定义:</label>
-						<div class="col-xs-12">
+						<div class="col-xs-12 pattern">
 							<div><span class="purple-pattern"><i>backdoorfound</i></span></div>
 							<table>
 								<tr>
@@ -253,6 +253,7 @@
 								</tr>
 							</table>
 						</div>
+						<!-- /.pattern -->
 					</div>
 					<div class="col-xs-12">
 						<label class="control-label col-xs-12">触发事件属性:</label>
@@ -276,7 +277,7 @@
 		<div class="box">
 			<div class="box-header">
 				<div class="pull-right">
-					<a href="#" class="">保存</a><a href="#" class="btn-cancel pr-half">取消</a>
+					<a href="#" class="mr">保存</a><a href="#" class="btn-cancel mr">取消</a>
 				</div>
 				<div class="box-name">
 					<span>添加新规则</span>
@@ -287,11 +288,34 @@
 			<div class="box-content">
 				<form action="#" class="form-horizontal">
 					<div class="form-group">
-						<label for="ruleName" class="control-label col-sm-3">规则名称：</label>
+						<label for="ruleName" class="control-label col-sm-3 col-lg-2">规则名称：</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="ruleName" placeholder="输入规则名称">
 						</div>
 					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ruleDesc" class="control-label col-sm-3 col-lg-2">描述：</label>
+						<div class="col-sm-8">
+							<textarea type="text" class="form-control" id="ruleDesc"></textarea>
+						</div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label class="control-label col-sm-3 col-lg-2">状态：</label>
+						<div class="col-sm-8 checkbox">
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-default"> <input
+									name="vo.patientGender" type="radio" value="未激活" checked>未激活</label>
+									<label class="btn btn-default"> <input name="vo.patientGender"
+									type="radio" value="激活的">激活的 </label>
+							</div>
+						</div>
+						<!-- /.btn-group -->
+				
+						</div>
+					</div>
+					<!-- /.form-group -->
 				</form>
 			</div>
 			<!-- /.box-content -->
@@ -324,6 +348,16 @@
 </div>
 
 <script type="text/javascript">
+	$(document).ready(function() {
+		LoadDataTablesScripts(tableReady);
+		WinMove();
+		tableContextMenu();
+		ruleCheck(function(id, isChecked){
+			alert(id + ': ' + isChecked);
+		});
+
+	});
+
 	function tableReady() {
 		dataTable('#ruleTable');
 		/*以下函数是否需要在datatables重绘之后重新执行？*/
@@ -332,26 +366,24 @@
 		});
 	}
 
+	/*新增规则*/
 	function addRule() {
 		showOverlayFrm('#addRuleFrm');
 	}
+	function modRule(id) {
+
+	}
 	function showOverlayFrm(handle) {
-		$(handle).removeClass('hide').show();
-		$(handle).find('.btn-cancel').click(function(event) {
+		var $handle = $(handle);
+		$handle.removeClass('hide').show();
+		$handle.find('.btn-cancel').click(function(event) {
 			/* Act on the event */
-			$(this).find(form).each(function(index, el) {
+			if (!window.confirm("确定要取消编辑吗？")) {return false;};
+			$handle.find('form').each(function(index, el) {
 				$(this)[0].reset();
 			});
-			$(this).hide();
+			$handle.hide();
 		});
 	}
 
-	$(document).ready(function() {
-		LoadDataTablesScripts(tableReady);
-		WinMove();
-		contextMenu();
-		ruleCheck(function(id, isChecked){
-			alert(id + ': ' + isChecked);
-		});
-	});
 </script>
