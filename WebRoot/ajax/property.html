@@ -430,9 +430,15 @@ function tableReady() {
 function terminalReady() {
 	//sshTerminal();
 }
+
+function sparkLineReady() {
+
+}
+
 $(document).ready(function() {
 	LoadDataTablesScripts(tableReady);
 	LoadTerminalScripts(terminalReady);
+	LoadSparkLineScript(sparkLineReady);
 	WinMove();
 	tableContextMenu();
 });

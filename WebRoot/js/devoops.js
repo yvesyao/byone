@@ -151,6 +151,21 @@ function LoadFlotScripts(callback) {
 	}
 }
 
+//
+//  Dynamically load Sparkline plugin
+//  homepage: http://omnipotent.net/jquery.sparkline v2.1.2  License - BSD
+//
+function LoadSparkLineScript(callback){
+	if(!$.fn.sparkline){
+		$.getScript('plugins/sparkline/jquery.sparkline.min.js', callback);
+	}
+	else {
+		if (callback && typeof(callback) === "function") {
+			callback();
+		}
+	}
+}
+
 
 /*-------------------------------------------
 	Main scripts used by theme
@@ -865,6 +880,37 @@ function drawPieChart(placeholder, dataArr, clientOptions) {
 	//$.plot(placeholder, dataArr, options);
 }
 
+
+//
+// Helper for draw Sparkline plots on property page
+//
+function drawSparkLine(dataArr) {
+	{ label:"ipcad_mrtg_202.181.225.220_v2" , data: [[x1, y1], [x2, y2], [x3, y3]]}
+}
+
+//
+// Helper for draw Sparkline plots on property page
+//
+function SparkLineDrawLineGraph(placeholder, arr, color){
+	var stacked_color = color || '#5A8DB6';
+	$(placeholder).sparkline(arr, {defaultPixelsPerValue: 10, minSpotColor: null, maxSpotColor: null, spotColor: null,
+			fillColor: false, lineWidth: 2, lineColor: stacked_color});
+}
+
+function SparkLineDrawBarGraph(placeholder, arr, color){
+	var stacked_color = color || '#6AA6D6';
+	$(placeholder).sparkline(arr, { type: 'bar', barWidth: 7, highlightColor: '#000', barSpacing: 2, height: 30, stackedBarColor: stacked_color});
+}
+
+function SparkLineDrawPieGraph(placeholder, arr, color){
+	var stacked_color = color || '#6AA6D6';
+	$(placeholder).sparkline(arr, { sliceColors: ['red', 'yellow', 'green'], type: 'pie', height: 30});
+}
+
+$(this).sparkline( arr ,
+			{defaultPixelsPerValue: 10, minSpotColor: null, maxSpotColor: null, spotColor: null,
+			fillColor: false, lineWidth: 2, lineColor: '#5A8DB6'});
+		});
 
 function showTooltip(tooltipId, x, y, color, contents) {
 	$('<div id="' + tooltipId + '">' + contents + '</div>').css({
