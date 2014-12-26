@@ -3,7 +3,7 @@
     <wb-module deploy-name="BYone">
         <wb-resource deploy-path="/" source-path="/WebRoot"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="/loginSpring"/>
+        <property name="context-root" value="/BYone"/>
         <property name="java-output-path" value="/BYone/WebRoot/WEB-INF/classes"/>
     </wb-module>
 </project-modules>
