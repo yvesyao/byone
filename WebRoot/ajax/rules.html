@@ -353,7 +353,7 @@
 		WinMove();
 		tableContextMenu();
 		ruleCheck(function(id, isChecked){
-			alert(id + ': ' + isChecked);
+			console.log(id + ': ' + isChecked);
 		});
 
 	});
@@ -362,7 +362,7 @@
 		dataTable('#ruleTable');
 		/*以下函数是否需要在datatables重绘之后重新执行？*/
 		tableTrClick('#ruleTable', function(ruleId){
-			alert(ruleId+' clicked');
+			console.log(ruleId+' clicked');
 		});
 	}
 
@@ -372,18 +372,6 @@
 	}
 	function modRule(id) {
 
-	}
-	function showOverlayFrm(handle) {
-		var $handle = $(handle);
-		$handle.removeClass('hide').show();
-		$handle.find('.btn-cancel').click(function(event) {
-			/* Act on the event */
-			if (!window.confirm("确定要取消编辑吗？")) {return false;};
-			$handle.find('form').each(function(index, el) {
-				$(this)[0].reset();
-			});
-			$handle.hide();
-		});
 	}
 
 </script>

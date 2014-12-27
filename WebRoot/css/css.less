@@ -1,10 +1,11 @@
 @import url(prefixer.less);
 @import url(property.less);
 @import url(jquery.terminal.css);
-@import url(../plugins/select2/select2.css);
+@import url(../plugins/jquery-ui/jquery-ui.min.css);
 @import url(../plugins/font-awesome-4.1.0/css/font-awesome.min.css);
-@import url(../plugins/select2/select2.css);
-@import url(../plugins/bootstrap/bootstrap.css);
+/* @import url(../plugins/select2/select2.css); */
+@import url(../plugins/bootstrap/bootstrap.min.css);
+//@import url(../plugins/Datepicker-for-Bootstrap/datepicker.css);
 @import url(style_v1.css);
 
 @bgColor: #436E90;
@@ -16,6 +17,15 @@
 .col-sm-1,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-10,.col-sm-11,.col-sm-12 {
 	/* padding: 0 15px; */
 }
+@fontSize: 13px;
+@fontSizeMd: 16px;
+.form-control, .dropdown-menu {
+	font-size: @fontSize;
+}
+legend {
+	font-size: @fontSizeMd;
+}
+
 .mt-20 {
 	margin-top: 20px;
 }
@@ -154,9 +164,9 @@
 }
 
 /* property useage */
-@highColor:red;
-@midColor:yellow;
-@lowColor:green;
+@highColor:#CF110E;
+@midColor:#D59221;
+@lowColor:#408C2D;
 .level-high {
 	&, & a {
 		color: @highColor;
@@ -170,5 +180,25 @@
 .level-low {
 	&, & a {
 		color: @lowColor;
+	}
+}
+
+
+@useablityColor:#af5e9c;
+@performanceColor:#f86b4f;
+@securityColor:#00529c;
+.useability {
+	&, & a {
+		color: @useablityColor;
+	}
+}
+.performance {
+	&, & a {
+		color: @performanceColor;
+	}
+}
+.security {
+	&, & a {
+		color: @securityColor;
 	}
 }

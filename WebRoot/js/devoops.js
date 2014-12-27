@@ -18,6 +18,7 @@ function LoadTimePickerScript(callback) {
 	}
 }
 
+
 //
 //  Dynamically load  JTopo Timepicker plugin
 //  homepage: http://www.jtopo.com/
@@ -885,23 +886,20 @@ function drawPieChart(placeholder, dataArr, clientOptions) {
 // Helper for draw Sparkline plots on property page
 //
 function SparkLineDrawLineGraph(placeholder, arr, color){
-	var _stackedColor = color || '#5A8DB6';
 	var _formatedArr = [];
 	for (var i = 0; i < arr.length; i++) {
 		_formatedArr.push(arr[i][1]);
 	};
 	$(placeholder).sparkline(_formatedArr, {defaultPixelsPerValue: 10, minSpotColor: null, maxSpotColor: null, spotColor: null,
-			fillColor: false, lineWidth: 2, lineColor: _stackedColor});
+			fillColor: false, lineWidth: 2, lineColor: color || '#6AA6D6'});
 }
 
 /*function SparkLineDrawBarGraph(placeholder, arr, color){
-	var _stackedColor = color || '#6AA6D6';
-	$(placeholder).sparkline(arr, { type: 'bar', barWidth: 7, highlightColor: '#000', barSpacing: 2, height: 30, stackedBarColor: _stackedColor});
+	$(placeholder).sparkline(arr, { type: 'bar', barWidth: 7, highlightColor: '#000', barSpacing: 2, height: 30, stackedBarColor: color || '#6AA6D6'});
 }*/
 
-function SparkLineDrawPieGraph(placeholder, arr, color){
-	var _stackedColor = color || '#6AA6D6';
-	$(placeholder).sparkline(arr, { sliceColors: ['red', 'yellow', 'green'], type: 'pie', offset: -90, height: 30});
+function SparkLineDrawPieGraph(placeholder, arr, sliceColors, height, color){//['#af5e9c', '#f86b4f', '#00529c']
+	$(placeholder).sparkline(arr, { sliceColors: sliceColors || ['#CF110E', '#D59221', '#408C2D'], type: 'pie', offset: -90, height: height || 25});
 }
 
 function showTooltip(tooltipId, x, y, color, contents) {
@@ -1004,6 +1002,22 @@ function ruleCheck(callback) {
 	Function for table pages (property.html etc.)
 	---------------------------------------------*/
 
+/**
+ * 显示覆盖层
+ * @param  {[String/JQuery Object]} handle [覆盖层选择器]
+ */
+function showOverlayFrm(handle) {
+	var $handle = $(handle);
+	$handle.removeClass('hide').show();
+	$handle.find('.btn-cancel').one("click", function(event) {
+		/* Act on the event */
+		if (!window.confirm("确定要取消编辑吗？")) {return false;};
+		$handle.find('form').each(function(index, el) {
+			$(this)[0].reset();
+		});
+		$handle.hide();
+	});
+}
 //
 // Function for click on table item
 //
@@ -1375,16 +1389,24 @@ $(document).ready(function() {
 	var $menu = $('.main-menu');
 
 	$menu.find("li").has("ul").children("a").on("click", function(e) {
-		e.preventDefault();
 		$(this).parent("li").toggleClass("active")
 			.children("ul").slideToggle('fast')
 			.end().siblings('li').removeClass('active').children('ul').slideUp('fast');
 	});
 
-	$('.ajax-link').on("click", function(e) {
+	/**
+	 * 绑定main.html中的ajax跳转
+	 */
+	$('.ajax-link').on("click", ajaxJump);
+	/**
+	 * 动态绑定子页面中的ajax跳转
+	 */
+	$('#ajax-content').delegate('.ajax-link', 'click', ajaxJump);
+
+	function ajaxJump(e) {
 		e.preventDefault();
 		if ($(this).attr('href') == '#') return;
-		$(this).addClass('active').closest('li').siblings('li').children('.ajax-link.active').removeClass('active');
+		$(this).addClass('active').closest('.nav').find('.ajax-link.active').not(this).removeClass('active');
 		if ($(this).hasClass('add-full')) {
 			$('#content').addClass('full-content');
 		} else {
@@ -1393,7 +1415,7 @@ $(document).ready(function() {
 		var url = $(this).attr('href');
 		window.location.hash = url;
 		LoadAjaxContent(url);
-	});
+	}
 
 	var height = window.innerHeight - 49;
 	$('#main').css('min-height', height)

@@ -2,7 +2,7 @@
 body {
   color:#525252;
   background:#436E90;
-  font: 14px/1.5 tahoma, arial, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', 宋体, sans-serif;
+  font: 13px/1.5 tahoma, arial, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', 宋体, sans-serif;
 }
 .body-expanded, .modal-open {
   overflow-y:hidden;
@@ -522,7 +522,7 @@ table.no-border-bottom tr:last-child td {
   border: 1px solid #bbb;
 }
 .table > thead > tr > th {
-  border-bottom: 2px solid #bbb;
+  border-bottom: none;
 }
 .dataTables_wrapper {
   overflow: hidden;
@@ -1353,8 +1353,8 @@ top: 0px;
 .input-group .form-control {
   margin:0;
 }
-#ui-datepicker-div {
-  background: rgba(0, 0, 0, 0.7) !important;
+/* #ui-datepicker-div {
+ background: rgba(0, 0, 0, 0.7) !important;
   border:0;
 }
 #ui-datepicker-div .ui-widget-header {
@@ -1401,7 +1401,7 @@ top: 0px;
 .ui-datepicker .ui-datepicker-next {
   right: 2px !important;
   cursor: pointer;
-}
+} */
 .ui-icon-circle-triangle-w {
   background: url(../img/ui-left.png) 0 0 no-repeat !important;
 }
@@ -1413,7 +1413,8 @@ top: 0px;
 }
 .ui-icon-circle-arrow-e {
   background: url(../img/ui-accordion-right.png) 0 0 no-repeat !important;
-}
+} 
+/* 
 #ui-datepicker-div .ui-slider-horizontal {
   background: rgba(0, 0, 0, 0.5);
   height: 4px;
@@ -1421,14 +1422,36 @@ top: 0px;
 }
 #ui-datepicker-div .ui-slider-horizontal .ui-slider-handle {
   background: #D8D8D8 !important;
-  border: 1px solid #f8f8f8;
+  border: 1px solid #555;
   height: 8px;
   width: 8px;
   top:-2px;
   margin-left: -4px;
   outline: none;
   cursor: pointer;
+}*/
+
+#ui-datepicker-div .ui-widget-header {
+  background-color: #bbb;
+  border: 1px solid #aaa;
 }
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 45%; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+.ui-timepicker-rtl dl dt{ float: right; clear: right; }
+.ui-timepicker-rtl dl dd { margin: 0 45% 10px 10px; }
+
+
+
+
+
 .ui-spinner-input {
   margin:0;
 }
