@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="by.mybatis.dao.UserMapper">  
+<select id="checkUser" parameterType="by.domain.UserVo" resultType="by.domain.UserVo">  
+    SELECT *  from user, org where user.orgid = org.id and user.username = #{userName} and user.passwd = #{password} and org.orgname = #{orgName}  
+</select>  
+ 
+</mapper>
