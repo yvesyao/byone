@@ -957,7 +957,7 @@ function intervalChart(plot, dataFunc, interval) {
 //
 // Function for table, located in element with id = datatable-3
 //
-function dataTable(placeholder, opiton) {
+function dataTable(placeholder, option) {
 	var tableOpt = {
 		"sDom": "T<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>rt<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>",
 		"sPaginationType": "bootstrap",
@@ -981,8 +981,10 @@ function dataTable(placeholder, opiton) {
 
 		}
 	};
-	option || ($.extend(true, tableOpt, option));
-	var tableDbj = $(placeholder).dataTable();
+	if(option) {
+		tableOpt = $.extend(true, tableOpt, option);
+	}
+	var tableDbj = $(placeholder).dataTable(tableOpt);
 }
 
 
