@@ -6,7 +6,32 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">  
     <import  
-        resource="service.xml" />  
-    <import  
-        resource="dao.xml" />  
+        resource="service.xml" /> 
+        
+   	<!-- 实例化 BYone包下所有标有Resource注解的类 除了标有Controller的注解的类 -->
+	<context:component-scan base-package="by">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!-- spring连接数据库 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="url" value="jdbc:mysql://localhost:3306/byone?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123"></property>
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+	</bean>      
+         
+	<!-- dao层映射以及dao层注入dataSource -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" value="classpath*:by/mybatis/mapper/*.xml" />
+    </bean> 
+ 
+    <!-- 自动查找类路径下的映射进行创建   扫描包路径下的接口以实例化-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    	<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="by.mybatis.dao" />
+    </bean>
+    
+    
 </beans> 
