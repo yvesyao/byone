@@ -570,7 +570,35 @@
 
 <script type="text/javascript">
 	function tableReady() {
-		dataTable('#propertyTable');
+		dataTable('#propertyTable', {
+			"processing": true,
+        	"serverSide": true,
+			"ajax": 'queryAllDevice.do',
+	        "order": [
+	        	[1, 'asc']
+	        ],
+	        "columns": [{
+	            "class": "username",
+	            "data": "username"
+	        }, {
+	            "class": "password",
+	            "data": "password"
+	        }, {
+	            "class": "name",
+	            "data": "name"
+	        }, {
+	            "class": "isAdmin",
+	            "data": "isAdmin"
+	        }, {
+	            "class": "action",
+	            "orderable": false,
+	            "defaultContent": "<button class='btn btn-default btn-xs modal-btn user-edit''>\
+	            <span class='glyphicon glyphicon-pencil'></span> 编辑</button> \
+	            <button class='btn btn-danger btn-xs user-remove'>\
+	            <span class='glyphicon glyphicon-trash'></span> 删除\
+	            </button>"
+	        }
+		});
 		/*以下函数是否需要在datatables重绘之后重新执行？*/
 		tableTrClick('#propertyTable', function(propertyId){
 			console.log(propertyId+' clicked');

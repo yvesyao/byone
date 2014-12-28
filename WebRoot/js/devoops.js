@@ -981,7 +981,7 @@ function dataTable(placeholder, opiton) {
 
 		}
 	};
-	//option || ($.extend(true, ))
+	option || ($.extend(true, tableOpt, option));
 	var tableDbj = $(placeholder).dataTable();
 }
 
