@@ -7,13 +7,18 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd  
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context.xsd">  
+        
+    <!-- 自动扫描的包名 --> 
     <context:component-scan  
-        base-package="by.controller" />  
+        base-package="by" />  
+           
     <bean  
         id="urlMapping"  
         class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />  
     <bean  
-        class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />  
+        class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" /> 
+        
+         
 	<!-- SpringMVC中的视图层的配置 -->
 		<bean id="viewResolver"
 	   class="org.springframework.web.servlet.view.InternalResourceViewResolver"
@@ -29,4 +34,17 @@
 	    <value>.html</value>
 	   </property>
 	</bean>
+	
+		<!-- 总错误处理 文件路径和后缀已经在viewResolver中指定。如/error/error表示/error/error.jsp-->
+<!-- 	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView">  
+		 	<value>/error/error</value>
+		</property>
+		<property name="defaultStatusCode">  
+		 	<value>500</value>
+		</property>	
+	<property name="warnLogCategory">  
+		 	<value>org.springframework.web.servlet.handler.SimpleMappingExceptionResolver</value>
+		</property>	
+	</bean>  -->
 </beans>  

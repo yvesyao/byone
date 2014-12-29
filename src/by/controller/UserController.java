@@ -20,12 +20,14 @@ public class UserController {
 	private UserService userService;
 	
 	//用户登录验证
-	@RequestMapping(value="login")
-	public void loginCheck(@ModelAttribute UserVo vo){	
+	@RequestMapping(value="/login")
+	public String loginCheck(@ModelAttribute UserVo vo){
+		System.out.println("login");
         boolean flag = false;
 		if(vo.getDomain().equals("local"))    
         	flag = userService.checkLogin(vo);
 	    System.out.println(flag);
+	    return "main";
 	}
 	
 }
