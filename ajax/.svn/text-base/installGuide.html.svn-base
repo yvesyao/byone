@@ -1,0 +1,446 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">系统</a></li>
+			<li><a href="#">安装向导</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+<div class="row">
+	
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>步骤1：组织</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<!-- <a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="mb-half clearfix">
+					<div id="orgActions" class="pull-left">
+						<a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#orgModal">添加</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" disabled>编辑</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" disabled>删除</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" disabled>复制</a>
+					</div>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="orgSearch" placeholder="输入查询条件">
+					</div>
+				</div>
+				<table id="orgTable" class="table table-condensed table-striped table-bordered table-block table-hover byoneTable" action-handle="#orgActions">
+					<thead>
+						<tr>
+							<th>名称</th>
+							<th>协议</th>
+							<th>设备类型</th>
+							<th>描述</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>步骤2：输入凭据</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<!-- <a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="mb-half clearfix">
+					<div id="proofActions" class="pull-left">
+						<a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#proofModal">添加</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" disabled>编辑</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" disabled>删除</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" disabled>复制</a>
+					</div>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="proofSearch" placeholder="输入查询条件">
+					</div>
+				</div>
+				<table id="proofTable" class="table table-condensed table-striped table-bordered table-block table-hover byoneTable" action-handle="#proofActions">
+					<thead>
+						<tr>
+							<th>名称</th>
+							<th>协议</th>
+							<th>设备类型</th>
+							<th>描述</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>步骤3：输入关联凭据的IP段</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<!-- <a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="mb-half clearfix">
+					<div id="proofIPActions" class="pull-left">
+						<a href="#" class="btn btn-xs btn-default" data-toggle="modal" data-target="#proofIPModal">添加</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" disabled>编辑</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" disabled>删除</a>
+						<div class="btn-group">
+							<a href="#" class="btn btn-xs btn-default dropdown-toggle rely-on-table" data-toggle="dropdown">测试连接 <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">连接测试</a></li>
+								<li><a href="#">不适用ping进行连接测试</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Separated link</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="proofIPSearch" placeholder="输入查询条件">
+					</div>
+				</div>
+				<table id="proofIPTable" class="table table-condensed table-striped table-bordered table-block table-hover byoneTable" action-handle="#proofIPActions">
+					<thead>
+						<tr>
+							<th width="30%">名称/IP/IP段</th>
+							<th>凭据名</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>步骤4：探测</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<!-- <a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="mb-half clearfix">
+					<div id="detectIPActions" class="pull-left">
+						<a href="#" class="btn btn-xs btn-default">添加</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" disabled>编辑</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" disabled>删除</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" disabled>探测</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" disabled>任务计划</a>
+					</div>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="detectIPSearch" placeholder="输入查询条件">
+					</div>
+				</div>
+				<table id="detectIPTable" class="table table-condensed table-striped table-bordered table-block table-hover byoneTable" action-handle="#detectIPActions">
+					<thead>
+						<tr>
+							<th>名称</th>
+							<th>类型</th>
+							<th>根IP</th>
+							<th>包含的段</th>
+							<th>不包含段</th>
+							<th>最新探测时间</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+</div>
+<!-- /.row -->
+
+<div class="modal fade" id="orgModal" tabindex="-1" role="dialog" aria-labelledby="orgModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h5 class="modal-title" id="orgModalLabel">组织定义</h5>
+			</div>
+			<div class="modal-body">
+				<form action="#" class="form-horizontal">
+					<div class="form-group">
+						<label for="ORG_orgAbbrName" class="control-label col-xs-3">组织</label>
+						<div class="col-xs-8"><input type="text" id="ORG_orgAbbrName" class="form-control" required></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ORG_orgName" class="control-label col-xs-3">全名</label>
+						<div class="col-xs-8"><input type="text" id="ORG_orgName" class="form-control"></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ORG_username" class="control-label col-xs-3">管理员用户名</label>
+						<div class="col-xs-8"><input type="text" id="ORG_username" class="form-control"></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ORG_password" class="control-label col-xs-3">管理员密码</label>
+						<div class="col-xs-8"><input type="password" id="ORG_password" class="form-control"></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ORG_cfmpwd" class="control-label col-xs-3">确认密码</label>
+						<div class="col-xs-8"><input type="password" id="ORG_cfmpwd" class="form-control"></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ORG_Email" class="control-label col-xs-3">管理员Email</label>
+						<div class="col-xs-8"><input type="text" id="ORG_Email" class="form-control"></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ORG_containedIP" class="control-label col-xs-3">包含IP/IP段</label>
+						<div class="col-xs-8"><input type="text" id="ORG_containedIP" class="form-control"></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ORG_notContainedIP" class="control-label col-xs-3">不包含IP/IP段</label>
+						<div class="col-xs-8"><input type="text" id="ORG_notContainedIP" class="form-control"></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ORG_notContainedIP" class="control-label col-sm-3">采集器</label>
+						<div class="col-sm-8">
+							<div id="collectorActions" class="mb-half">
+								<a href="#" class="btn btn-default ml-half">新建</a>
+								<a href="#" class="btn btn-default ml-half rely-on-table" data-func="func({1})" disabled>编辑</a>
+								<a href="#" class="btn btn-default ml-half rely-on-table" data-func="func({1})" disabled>删除</a>
+							</div>
+							<table id="collectorTable" class="table table-bordered table-striped table-hover mb-none" action-handle="#collectorActions">
+								<thead>
+									<tr>
+										<th>采集器名称</th>
+										<th>默认EPS</th>
+										<th>有效开始时间</th>
+										<th>有效结束时间</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-id="<div></div>">
+										<td>attr1</td>
+										<td>attr2</td>
+										<td>attr3</td>
+										<td>attr4</td>
+									</tr>
+									<tr data-id="<div></div>">
+										<td>attr1</td>
+										<td>attr2</td>
+										<td>attr3</td>
+										<td>attr4</td>
+									</tr>
+									<tr data-id="<div></div>">
+										<td>attr1</td>
+										<td>attr2</td>
+										<td>attr3</td>
+										<td>attr4</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ORG_maxDevice" class="control-label col-xs-3">最多设备</label>
+						<div class="col-xs-8"><input type="number" id="ORG_maxDevice" class="form-control"></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ORG_tele" class="control-label col-xs-3">电话</label>
+						<div class="col-xs-8"><input type="text" id="ORG_tele" class="form-control"></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ORG_address" class="control-label col-xs-3">地址</label>
+						<div class="col-xs-8">
+							<textarea name="" class="form-control" id="ORG_address" cols="30" rows="2"></textarea>
+						</div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ORG_description" class="control-label col-xs-3">描述</label>
+						<div class="col-xs-8">
+							<textarea name="" class="form-control" id="ORG_description" cols="30" rows="5"></textarea>
+						</div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						
+					</div>
+					<!-- /.form-group -->
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /#orgModal -->
+
+<div class="modal fade" id="proofModal" tabindex="-1" role="dialog" aria-labelledby="proofModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h5 class="modal-title" id="proofModalLabel">连接方法定义</h5>
+			</div>
+			<div class="modal-body">
+				<form action="#" class="form-horizontal">
+					<div class="form-group">
+						<label for="proofName" class="control-label col-xs-3">名称</label>
+						<div class="col-xs-8"><input type="text" id="proofName" class="form-control"></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="deviceType" class="control-label col-xs-3">设备类型</label>
+						<div class="col-xs-8">
+							<select id="deviceType" class="form-control">
+								<option value="">0001</option>
+								<option value="">0002</option>
+								<option value="">0003</option>
+							</select>
+						</div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="connProtoco" class="control-label col-xs-3">连接协议</label>
+						<div class="col-xs-8">
+							<select id="connProtoco" class="form-control">
+								<option value="">0001</option>
+								<option value="">0002</option>
+								<option value="">0003</option>
+							</select>
+						</div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="username" class="control-label col-xs-3">用户名</label>
+						<div class="col-xs-8"><input type="text" id="username" class="form-control"></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="password" class="control-label col-xs-3">密码</label>
+						<div class="col-xs-8"><input type="password" id="password" class="form-control"></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="cfmpwd" class="control-label col-xs-3">确认密码</label>
+						<div class="col-xs-8"><input type="password" id="cfmpwd" class="form-control"></div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="description" class="control-label col-xs-3">描述</label>
+						<div class="col-xs-8">
+							<textarea name="" class="form-control" id="description" cols="30" rows="10"></textarea>
+						</div>
+					</div>
+					<!-- /.form-group -->
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /#proofModal -->
+<script type="text/javascript">
+/*	function byoneTableReady() {
+		$('#proofTable').byoneTable({
+			ajax: "queryAllProofs.do",
+			"sort": ["ruleName", 'asc'],
+			dataId: "id",
+			"searchHandle": "#proofSearch",
+			"columns": [{
+				"class": "proofStatus",
+				"data": "proofStatus",
+				"sortable": false,
+				"defaultContent": '<input type="checkbox" class="proof-state-check" {1}>' //checked | null
+			}, {
+				"class": "proofName",
+				"data": "proofName"
+			}, {
+				"class": "source",
+				"data": "source"
+			}, {
+				"class": "description",
+				"sortable": false,
+				"data": "description"
+			}]
+		});
+		tableTrClick('#proofTable', function(proofId) {
+			console.log(proofId + ' clicked');
+		});
+		tableTrClick('#collectorTable', function(collectorId) {
+			console.log(collectorId + 'clicked');
+		});
+	}
+	window.$ && $(function() {
+		LoadByoneTableScripts(byoneTableReady);
+	});
+*/
+tableTrClick('#collectorTable', function(collectorId) {
+	console.log(collectorId + 'clicked');
+});
+</script>

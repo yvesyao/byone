@@ -1,0 +1,239 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">云管理</a></li>
+			<li><a href="#">虚拟化架构</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>VMware集群</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="mb-half row">
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="clusterSearch" placeholder="输入查询条件">
+					</div>
+				</div>
+				<table id="clusterTable" class="table tr-click table-condensed table-striped table-bordered table-block table-hover byoneTable">
+					<thead>
+						<tr>
+							<th>集群名称</th>
+							<th>数据中心</th>
+							<th>CPU单个频率MHZ</th>
+							<th>CPU总频率MHZ</th>
+							<th>CPU使用情况</th>
+							<th>总内存(MB)</th>
+							<th>内存使用率</th>
+							<th>读磁盘速率(KBps)</th>
+							<th>写磁盘速率(KBps)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-id="cluster-1">
+							<td>[ESXes not belonging to a cluster]</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>集群中的ESX主机-<span class="name">[ESXes not belonging to a cluster]</span></span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="mb-half row">
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="deviceSearch" placeholder="输入查询条件">
+					</div>
+				</div>
+				<table id="deviceTable" class="table tr-click table-condensed table-striped table-bordered table-block table-hover byoneTable">
+					<thead>
+						<tr>
+							<th>设备IP</th>
+							<th>设备名称</th>
+							<th>设备类型</th>
+							<th>组织</th>
+							<th>连接状态</th>
+							<th>开启状态</th>
+							<th>VM数量</th>
+							<th>开启的VM数量</th>
+							<th>性能状态</th>
+							<th>CPU使用情况</th>
+							<th>内存使用率</th>
+							<th>交换读(KBps)</th>
+							<th>交换写(KBps)</th>
+							<th>磁盘读等待时间</th>
+							<th>磁盘写等待时间</th>
+							<th>输入接口使用情况</th>
+							<th>输出接口使用情况</th>
+							<th>事件速率(/秒)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-id="device-1">
+							<td>202.181.225.205</td>
+							<td>12-HKNA0</td>
+							<td>VMware</td>
+							<td>cnlink-hk</td>
+							<td><span class="label label-success">connected</span></td>
+							<td><span class="label label-success">power on</span></td>
+							<td>20</td>
+							<td>14</td>
+							<td><span class="label label-warning">warning</span></td>
+							<td>75%</td>
+							<td>88%</td>
+							<td>0 KBps</td>
+							<td>0 KBps</td>
+							<td>27.7ms</td>
+							<td>0</td>
+							<td>12.55</td>
+							<td>.03</td>
+							<td>1.32</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>ESX中的VM-<span class="name">202.181.225.205</span></span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="mb-half row">
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="vmSearch" placeholder="输入查询条件">
+					</div>
+				</div>
+				<table id="vmTable" class="table tr-click table-condensed table-striped table-bordered table-block table-hover byoneTable">
+					<thead>
+						<tr>
+							<th>设备IP</th>
+							<th>设备名称</th>
+							<th>设备类型</th>
+							<th>组织</th>
+							<th>VM名称</th>
+							<th>VM供电状态</th>
+							<th>性能状态</th>
+							<th>物理CPU使用情况</th>
+							<th>VM CPU可用%</th>
+							<th>VM CPU限制%</th>
+							<th>物理内存使用情况</th>
+							<th>交换读(KBps)</th>
+							<th>交换写(KBps)</th>
+							<th>读磁盘速率(KBps)</th>
+							<th>写磁盘速率(KBps)</th>
+							<th>磁盘读率(/秒)</th>
+							<th>磁盘写率(/秒)</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+</div>
+<!-- /.row -->
+
+
+<script type="text/javascript">
+/*	function byoneTableReady() {
+		$('#proofTable').byoneTable({
+			ajax: "queryAllProofs.do",
+			"sort": ["ruleName", 'asc'],
+			dataId: "id",
+			"searchHandle": "#proofSearch",
+			"columns": [{
+				"class": "proofStatus",
+				"data": "proofStatus",
+				"sortable": false,
+				"defaultContent": '<input type="checkbox" class="proof-state-check" {1}>' //checked | null
+			}, {
+				"class": "proofName",
+				"data": "proofName"
+			}, {
+				"class": "source",
+				"data": "source"
+			}, {
+				"class": "description",
+				"sortable": false,
+				"data": "description"
+			}]
+		});
+		tableTrClick('#proofTable', function(proofId) {
+			console.log(proofId + ' clicked');
+		});
+		tableTrClick('#collectorTable', function(collectorId) {
+			console.log(collectorId + 'clicked');
+		});
+	}
+	window.$ && $(function() {
+		LoadByoneTableScripts(byoneTableReady);
+	});
+*/
+tableTrClick('#clusterTable', function(id) {
+	console.log(id + 'clicked');
+});
+tableTrClick('#deviceTable', function(id) {
+	console.log(id + 'clicked');
+});
+</script>

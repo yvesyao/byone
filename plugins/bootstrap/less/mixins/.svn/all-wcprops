@@ -1,0 +1,179 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/BYone/!svn/ver/5/BYone/WebRoot/plugins/bootstrap/less/mixins
+END
+background-variant.less
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/background-variant.less
+END
+grid.less
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/grid.less
+END
+vendor-prefixes.less
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/BYone/!svn/ver/5/BYone/WebRoot/plugins/bootstrap/less/mixins/vendor-prefixes.less
+END
+gradients.less
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/gradients.less
+END
+text-overflow.less
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/text-overflow.less
+END
+size.less
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/size.less
+END
+buttons.less
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/buttons.less
+END
+tab-focus.less
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/tab-focus.less
+END
+labels.less
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/labels.less
+END
+text-emphasis.less
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/text-emphasis.less
+END
+image.less
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/image.less
+END
+table-row.less
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/table-row.less
+END
+pagination.less
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/pagination.less
+END
+nav-vertical-align.less
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/nav-vertical-align.less
+END
+hide-text.less
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/hide-text.less
+END
+grid-framework.less
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/BYone/!svn/ver/5/BYone/WebRoot/plugins/bootstrap/less/mixins/grid-framework.less
+END
+alerts.less
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/alerts.less
+END
+reset-filter.less
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/reset-filter.less
+END
+center-block.less
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/center-block.less
+END
+resize.less
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/resize.less
+END
+border-radius.less
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/border-radius.less
+END
+progress-bar.less
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/progress-bar.less
+END
+list-group.less
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/list-group.less
+END
+panels.less
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/panels.less
+END
+forms.less
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/forms.less
+END
+nav-divider.less
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/nav-divider.less
+END
+responsive-visibility.less
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/responsive-visibility.less
+END
+opacity.less
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/opacity.less
+END
+clearfix.less
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/BYone/!svn/ver/2/BYone/WebRoot/plugins/bootstrap/less/mixins/clearfix.less
+END

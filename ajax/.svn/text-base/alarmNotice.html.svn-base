@@ -1,0 +1,179 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">安全管理</a></li>
+			<li><a href="#">告警通知策略</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>告警通知策略：</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<!-- <a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="col-xs-12 mb" id="noticeActions">
+					<a href="#" class="btn btn-primary" onclick="addNotice()">添加
+					</a>
+					<a href="#" class="btn btn-primary rely-on-table" disabled data-func="modNotice('{1}')">修改
+					</a>
+					<a href="#" class="btn btn-primary rely-on-table" disabled data-func="delNotice('{1}')">删除
+					</a>
+				</div>
+				<table id="noticeTable" class="table table-condensed table-striped table-bordered table-block table-hover byoneTable" action-handle="#noticeActions">
+					<thead>
+						<tr>
+							<th>策略</th>
+							<th>可用</th>
+							<th>安全级别</th>
+							<th>规则</th>
+							<th>时间段</th>
+							<th>受影响的项</th>
+							<th>操作</th>
+							<th>备注</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>18809406</td>
+							<td><span class="label label-success glyphicon glyphicon-ok"> </span></td>
+							<td>HIGH</td>
+							<td>[GROUP:PH_SYS_RULE_OverallAvailability]</td>
+							<td>any</td>
+							<td>any</td>
+							<td>Email</td>
+							<td>sccs@cn-link.net Et:188330250</td>
+						</tr>
+						<tr>
+							<td>18809411</td>
+							<td><span class="label label-success glyphicon glyphicon-ok"> </span></td>
+							<td>any</td>
+							<td>any</td>
+							<td>any</td>
+							<td>any</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>18809412</td>
+							<td><span class="label label-success glyphicon glyphicon-ok"> </span></td>
+							<td>any</td>
+							<td>any</td>
+							<td>any</td>
+							<td>any</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>18809413</td>
+							<td><span class="label label-success glyphicon glyphicon-ok"> </span></td>
+							<td>any</td>
+							<td>any</td>
+							<td>any</td>
+							<td>any</td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+</div>
+<!-- /.row -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="noticeModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h5 class="modal-title" id="noticeModalLabel">通知策略</h5>
+			</div>
+			<div class="modal-body">
+				<form action="#" class="form-horizontal">
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4">可用：</label>
+						<div class="col-xs-7"><input type="checkbox" name="useable"></div>
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4">严重级别：</label>
+						<div class="col-xs-7">
+							<label class="checkbox-inline">
+								<input type="checkbox" name="dangerLevel" id="inlineCheckbox1" value="low"> 低
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" name="dangerLevel" id="inlineCheckbox2" value="mid"> 中
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" name="dangerLevel" id="inlineCheckbox3" value="high"> 高
+							</label>
+
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4">规则：</label>
+						<div class="col-xs-7">
+							<input type="text" class="form-control" value="Any">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4">时间段：</label>
+						<div class="col-xs-7">
+							<input type="text" class="form-control" value="Any">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4">受影响的项：</label>
+						<div class="col-xs-7">
+							<input type="text" class="form-control" value="Any">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4">动作：</label>
+						<div class="col-xs-7">
+							<input type="text" class="form-control" value="邮件列表">
+						</div>
+					</div>
+					<div class="form-group">
+						<a href="#" class="pull-right btn btn-primary mr" data-dismiss="modal">取 消</a>
+						<a href="#" class="pull-right btn btn-primary mr">保 存</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /.modal -->
+
+<script type="text/javascript">
+	function addNotice() {
+		$('#noticeModal').modal('show');
+	}
+	tableTrClick('#noticeTable', function(id) {
+		console.log(id + 'clicked');
+	});
+</script>

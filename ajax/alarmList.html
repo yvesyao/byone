@@ -1,0 +1,171 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">安全管理</a></li>
+			<li><a href="#">告警列表</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>告警列表：</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<!-- <a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="form-inline">
+					<div class="form-group mr">
+						<label for="" class="control-label">过滤：</label>
+						
+						<div class="radio-inline"><input type="radio" value="1" name="filter" selected> ID</div>
+						<div class="radio-inline"><input type="radio" value="2" name="filter"> IP</div>
+						<div class="radio-inline"><input type="radio" value="3" name="filter"> 自定义</div>
+						
+					</div>
+					<div class="form-group mr">
+						<label for="" class="control-label">分组：</label>
+						
+						<select name="" id="" class="form-control">
+							<option value="">不分组(详情和时间)</option>
+							<option value="">分组</option>
+						</select>
+					</div>
+					<div class="form-group mr">
+						<label for="" class="control-label">严重性：</label>
+						
+						<select name="" id="" class="form-control">
+							<option value="">所有</option>
+							<option value="">高</option>
+							<option value="">中</option>
+							<option value="">低</option>
+						</select>
+
+					</div>
+					<div class="form-group mr">
+						<label for="" class="control-label">功能：</label>
+						
+						<select name="" id="" class="form-control">
+							<option value="">所有</option>
+						</select>
+						
+					</div>
+					<div class="form-group mr">
+						<label for="" class="control-label">时间：</label>
+						
+						<select name="" id="" class="form-control">
+							<option value="">Last 2 hrs</option>
+						</select>
+						
+					</div>
+					
+				</div>
+				<table id="orderTable" class="table table-condensed table-striped table-bordered table-block table-hover byoneTable">
+					<thead>
+						<tr>
+							<th>告警等级</th>
+							<th>最近发生时间</th>
+							<th>第一次发生时间</th>
+							<th>告警名</th>
+							<th>类型</th>
+							<th>告警源</th>
+							<th>告警目标</th>
+							<th>告警详情</th>
+							<th>告警数</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>2014-11-3 15:00:00</td>
+							<td>2014-11-1 12:00:00</td>
+							<td>多次登录失败</td>
+							<td>一般</td>
+							<td>10.0.21.1</td>
+							<td>10.0.21.15</td>
+							<td>尝试登录用户名：user, root, test</td>
+							<td>10</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>2014-11-3 14:58:00</td>
+							<td>2014-11-1 11:00:05</td>
+							<td>暴力破解</td>
+							<td>安全</td>
+							<td>10.0.21.1</td>
+							<td>10.0.21.15</td>
+							<td>使用root登录成功</td>
+							<td>1</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+</div>
+<!-- /.row -->
+
+<script type="text/javascript">
+	function tableReady() {
+		$('#propertyTable').byoneTable({
+			ajax: "queryAllIncident.do",
+			"sort":["severity", 'asc'],
+			dataId: "id",
+			"pagination": true,
+			"columns":[{
+				"class": "severity",
+				"data": "severity"
+			},{
+				"class": "last_time",
+				"data": "last_time"
+			},{
+				"class": "creation_time",
+				"data": "creation_time"
+			},{
+				"class": "incident_name",
+				"data": "incident_name"
+			},{
+				"class": "severity_cat",
+				"data": "severity_cat"
+			},{
+				"class": "incident_src",
+				"data": "incident_src"
+			},{
+				"class": "incident_target",
+				"data": "incident_target"
+			},{
+				"class": "incident_detail",
+				"data": "incident_detail"
+			},{
+				"class": "incident_count",
+				"data": "incident_count"
+			}]
+		});
+
+}
+
+
+$(document).ready(function() {
+	LoadByoneTableScripts(tableReady);
+});
+</script>

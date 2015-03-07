@@ -1,0 +1,238 @@
+function LoadFlotScripts(callback) {
+	function LoadFlotScript() {
+		$.getScript('plugins/flot/jquery.flot.min.js', LoadFlotResizeScript);
+	}
+
+	function LoadFlotResizeScript() {
+		$.getScript('plugins/flot/jquery.flot.resize.min.js', LoadFlotTimeScript);
+	}
+
+	function LoadFlotTimeScript() {
+		$.getScript('plugins/flot/jquery.flot.time.min.js', LoadFlotPieScript);
+	}
+
+	function LoadFlotPieScript() {
+		$.getScript('plugins/flot/jquery.flot.pie.min.js', callback)
+	}
+
+	$.fn.UseTooltip = function(xCal, yCal) { //图表插件提示信息
+		$(this).data('previousPoint', null);
+		$(this).data('previousLabel', null);
+		$(this).bind("plothover", function(event, pos, item) {
+			var tooltipId = '#toolTip' + $(this).attr('id') || $(this).attr('class');
+			if (item) {
+				//console.log($(this).data('previousPoint'), item.dataIndex);
+				if (($(this).data('previousLabel') != item.series.label) || ($(this).data('previousPoint') != item.dataIndex)) {
+					$(this).data('previousPoint', item.dataIndex);
+					$(this).data('previousLabel', item.series.label);
+					$(tooltipId).remove();
+					var color = item.series.color;
+					var label = item.series.label;
+					showTooltip(tooltipId.substr(1), pos.pageX,
+						pos.pageY,
+						color, (label ? '<h5><strong>' + label + '</strong><br></h5>' : '') +
+						"<strong>" + xCal(item) +
+						"<strong> —— " + yCal(item));
+				}
+			} else {
+				$(tooltipId).remove();
+				$(this).data('previousPoint', null);
+			}
+		});
+	};
+	if (!$.fn.flot) {
+		LoadFlotScript();
+	} else {
+		if (callback && typeof(callback) === "function") {
+			callback();
+		}
+	}
+	
+}
+
+
+
+
+/***
+*flot图表绘图函数
+*params：
+	placeholder：jquery Object，DOM对象，或者jquery选择器内容 //flot图表的容器
+	dataArr: [
+		{ label:"IBM_sniffer_202.181.176.85" , data: [[x1, y1], [x2, y2], [x3, y3]]},
+		{ label:"sniffer_202.181.225.221_v2" , data: [[x1, y1], [x2, y2], [x3, y3]]},
+		{ label:"ipcad_mrtg_202.181.225.220_v2" , data: [[x1, y1], [x2, y2], [x3, y3]]}
+	] 	//绘图数据，label用于显示legend信息，可不写；
+		//折线图中, data中的x轴为time类型，需转化为毫秒（int型）
+		//饼图的data为一个整型
+	clientOptions: {//个性配置
+		theme: black,
+		legendContainer: legend的容器，用于折线图和饼图
+	}
+*return: plot对象
+***/
+
+function drawChart(placeholder, dataArr, options, clientOptions) {
+	options.grid = {
+		borderWidth: 2,
+		hoverable: true
+	};
+	if (clientOptions) {
+		if (clientOptions.theme && clientOptions.theme == 'black') {
+			options.grid.backgroundColor = {
+				colors: ["#171717", "#4F4F4F"]
+			}
+		};
+		if (clientOptions.legendContainer) {
+			options.legend = {
+				show: true,
+				container: $(clientOptions.legendContainer)
+			}
+		};
+	}
+	return $.plot(placeholder, dataArr, options);
+}
+
+function drawLineChart(placeholder, dataArr, clientOptions) {
+	var options = {
+		series: {
+			shadowSize: 0,
+			lines: {
+				show: true
+			}
+		},
+		xaxis: {
+			mode: "time",
+			timezone: "browser",
+			timeformat: "%H:%M",
+			axisLabel: "Date",
+			axisLabelUseCanvas: true,
+			axisLabelFontSizePixels: 12,
+			axisLabelFontFamily: 'Verdana, Arial',
+			axisLabelPadding: 10
+		}
+	}
+	$(placeholder).UseTooltip(
+		function(item) {
+			var _date = new Date(item.datapoint[0]);
+			return formatTime(_date.getHours()) + ':' + formatTime(_date.getMinutes());
+		},
+		function(item) {
+			return item.datapoint[1];
+		}
+	);
+	return drawChart(placeholder, dataArr, options, clientOptions);
+}
+
+function formatTime(time) {
+	return time >= 10 ? time : '0' + time;
+}
+
+
+/**********
+dataArr: [[1582.3, 0], [28.95, 1],[1603, 2];
+ticks: [[0, "Gold"], [1, "Silver"], [2, "Platinum"]];
+*/
+function cfgBarChart(ticks) {
+	var options = {
+		series: {
+			shadowSize: 0,
+			bars: {
+				align: "center",
+				show: true,
+				lineWidth: 1,
+				barWidth: 0.5
+			}
+		}
+	};
+	return options;
+}
+
+function drawVBarChart(placeholder, dataArr, ticks, clientOptions) {
+	var options = cfgBarChart(ticks);
+	options.xaxis = {
+		axisLabelUseCanvas: true,
+		axisLabelFontSizePixels: 12,
+		min: -1,
+		max: ticks.length,
+		axisLabelFontFamily: 'Verdana, Arial',
+		axisLabelPadding: 3,
+		//tickColor: "#5E5E5E",
+		ticks: ticks
+	}
+	$(placeholder).UseTooltip(
+		function(item) {
+			return item.series.xaxis.ticks[item.datapoint[0]].label;
+		},
+		function(item) {
+			return item.datapoint[1];
+		}
+	);
+	return drawChart(placeholder, dataArr, options, clientOptions);
+}
+
+function drawHBarChart(placeholder, dataArr, ticks, clientOptions) {
+	var options = cfgBarChart(ticks);
+	options.series.bars.horizontal = true;
+	options.yaxis = {
+		axisLabelUseCanvas: true,
+		axisLabelFontSizePixels: 12,
+		min: -1,
+		max: ticks.length,
+		axisLabelFontFamily: 'Verdana, Arial',
+		axisLabelPadding: 3,
+		tickColor: "#5E5E5E",
+		ticks: ticks
+	};
+
+	$(placeholder).UseTooltip(
+		function(item) {
+			return item.series.yaxis.ticks[item.datapoint[1]].label;
+		},
+		function(item) {
+			return item.datapoint[0];
+		}
+	);
+	return drawChart(placeholder, dataArr, options, clientOptions);
+}
+
+function drawPieChart(placeholder, dataArr, clientOptions) {
+	var options = {
+		series: {
+			pie: {
+				show: true,
+				innerRadius: 0.5
+					/*,
+									label: {﻿﻿﻿﻿﻿
+										show: true,
+										﻿﻿﻿﻿﻿formatter: function (label, series) {                
+					                return '<div style="border:1px solid grey;font-size:8pt;text-align:center;padding:5px;color:white;">' +
+					                label + ' : ' +
+					                Math.round(series.percent) +
+					                '%</div>';
+					            },
+					            background: {
+					                opacity: 0.8,
+					                color: '#000'
+					            },
+										﻿ // formatter function
+										﻿﻿﻿﻿﻿radius: 1,
+										﻿ // radius at which to place the labels (based on full calculated radius if <=1, or hard pixel value)
+										﻿﻿﻿﻿﻿
+										﻿﻿﻿﻿﻿threshold: 0﻿ // percentage at which to hide the label (i.e. the slice is too narrow)	﻿﻿﻿﻿
+									}*/
+			}
+		}
+	};
+
+	$(placeholder).UseTooltip(
+		function(item) {
+			return item.series.label;
+		},
+		function(item) {
+			return Math.round(item.series.percent) + "%";
+
+		}
+	);
+	return drawChart(placeholder, dataArr, options, clientOptions);
+	//$.plot(placeholder, dataArr, options);
+}

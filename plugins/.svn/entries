@@ -1,0 +1,106 @@
+10
+
+dir
+53
+http://202.197.33.71:8080/svn/BYone/BYone/WebRoot/plugins
+http://202.197.33.71:8080/svn/BYone
+
+
+
+2015-02-06T06:39:25.864960Z
+50
+yyt
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+dbcdddd8-2e12-904b-883b-41904ffc51a4
+
+Datepicker-for-Bootstrap
+dir
+
+bootstrap
+dir
+
+bootstrapvalidator
+dir
+
+byoneTable
+dir
+
+chartist
+dir
+
+chosen
+dir
+
+d3
+dir
+
+fancybox
+dir
+
+flot
+dir
+
+font-awesome-4.1.0
+dir
+
+fullcalendar
+dir
+
+jQuery-Knob
+dir
+
+jquery
+dir
+
+jquery-ui
+dir
+
+jquery-ui-timepicker-addon
+dir
+
+jtopo
+dir
+
+justified-gallery
+dir
+
+leaflet
+dir
+
+moment
+dir
+
+morris
+dir
+
+raphael
+dir
+
+select2
+dir
+
+sparkline
+dir
+
+terminal
+dir
+
+tinymce
+dir
+
+xcharts
+dir
+

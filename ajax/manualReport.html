@@ -1,0 +1,165 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">报表</a></li>
+			<li><a href="#">手动生成</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>手动生成报表：</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<!-- <a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<form action="#" class="form-horizontal">
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">报表名称：</label>
+						<div class="col-xs-7"><input type="text" name="reportName" class="form-control"></div>
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">报表类型：</label>
+						<div class="col-xs-7">
+							<label class="radio-inline">
+								<input type="radio" name="reportType" id="inlineradio1" value="pdf" checked> PDF
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="reportType" id="inlineradio2" value="xls"> XLS
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">时间：</label>
+						<div class="col-xs-7">
+							<div>
+								<label class="radio-inline">
+									<input type="radio" class="period" name="reportPeriod" id="inlineradio1" value="relative" checked> 相对时间
+								</label>
+								<label class="radio-inline">
+									<input type="radio" class="period" name="reportPeriod" id="inlineradio2" value="absolute"> 绝对时间
+								</label>
+							</div>
+							<div class="mt-20 period-relative hide">
+								最后<input type="number" name="period">
+								<label class="radio-inline">
+									<input type="radio" name="periodUnit" checked> 分钟
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="periodUnit"> 小时
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="periodUnit"> 天
+								</label>
+							</div>
+							<div class="mt-20 period-absolute hide">
+								<div class="col-xs-6">
+									<input type="text" name="startTime" class="form-control date-picker" placeholder="开始时间">
+								</div>
+								<div class="col-xs-6">
+									<input type="text" name="endTime" class="form-control date-picker" placeholder="结束时间">
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.form-group -->
+
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">内容选择：</label>
+						<div class="col-xs-7">
+							<div class="box report-box">
+								<ul>
+									<li><label class="group"><input type="checkbox" name="" id=""> 流信息</label>
+										<ul>
+											<li><label for=""><input type="checkbox" name=""> 条目1</label></li>
+											<li><label for=""><input type="checkbox" name=""> 条目2</label></li>
+											<li><label for=""><input type="checkbox" name=""> 条目3</label></li>
+										</ul>
+									</li>
+									<li><label class="group"><input type="checkbox" name="" id=""> 基线</label>
+										<ul>
+											<li><label for=""><input type="checkbox" name=""> 条目1</label></li>
+											<li><label for=""><input type="checkbox" name=""> 条目2</label></li>
+											<li><label for=""><input type="checkbox" name=""> 条目3</label></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /.form-group -->
+
+					<div class="form-group">
+						<div class="col-xs-8 col-xs-offset-2">
+							<a href="#" class="btn btn-primary pull-right">提 交</a>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+</div>
+<!-- /.row -->
+
+
+<script type="text/javascript">
+	function AllTimePickers() {
+		$('.date-picker').datetimepicker({
+			timeFormat: "HH:mm:ss",
+			dateFormat: "yy-mm-dd"
+		});
+	}
+
+
+	$(document).ready(function() {
+		LoadTimePickerScript(AllTimePickers);
+
+		$('.period').change(periodType).val('relative').change();
+
+		$('.report-box .group>:checkbox').change(function(event) {
+			/* Act on the event */
+			var $children = $(this).closest('.group').next('ul').find(':checkbox');
+			console.log($children.length);
+			if ($(this).is(':checked')) {
+				$children.attr('checked', 'checked').prop('checked', true);
+			} else {
+				$children.removeAttr('checked').prop('checked', false);
+			}
+		}).change();
+
+		function periodType(event) {
+			console.log('change');
+			if ($(this).val() === 'relative') {
+				$(this).closest('form')
+				.find('.period-relative').removeClass('hide').show()
+				.siblings('.period-absolute').hide();
+			} else {
+				$(this).closest('form')
+				.find('.period-absolute').removeClass('hide').show()
+				.siblings('.period-relative').hide();
+			}
+		}
+
+	});
+</script>
