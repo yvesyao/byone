@@ -1,13 +1,13 @@
 K 25
 svn:wc:ra_dav:version-url
 V 39
-/svn/BYone/!svn/ver/53/BYone/WebRoot/js
+/svn/BYone/!svn/ver/84/BYone/WebRoot/js
 END
-devoops(冲突_nyyt-PC_2015-02-10 22-37-52).js
+abadoned.txt
 K 25
 svn:wc:ra_dav:version-url
-V 100
-/svn/BYone/!svn/ver/53/BYone/WebRoot/js/devoops(%E5%86%B2%E7%AA%81_nyyt-PC_2015-02-10%2022-37-52).js
+V 52
+/svn/BYone/!svn/ver/74/BYone/WebRoot/js/abadoned.txt
 END
 clause.js
 K 25
@@ -19,5 +19,5 @@ devoops.js
 K 25
 svn:wc:ra_dav:version-url
 V 50
-/svn/BYone/!svn/ver/53/BYone/WebRoot/js/devoops.js
+/svn/BYone/!svn/ver/92/BYone/WebRoot/js/devoops.js
 END

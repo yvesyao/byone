@@ -33,7 +33,7 @@
 					<div class="form-group mr">
 						<label for="" class="control-label">过滤：</label>
 						
-						<div class="radio-inline"><input type="radio" value="1" name="filter" selected> ID</div>
+						<div class="radio-inline"><input type="radio" value="1" name="filter" checked> ID</div>
 						<div class="radio-inline"><input type="radio" value="2" name="filter"> IP</div>
 						<div class="radio-inline"><input type="radio" value="3" name="filter"> 自定义</div>
 						

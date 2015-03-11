@@ -305,12 +305,16 @@ function(JTopo) {
 
 	function genImageAlarm(a, b) {
 		null == b && (b = 255);
-		try {
+		/*try {
 			if (alarmImageCache[a.src]) return alarmImageCache[a.src];
 			var c = new Image;
 			return c.src = changeColor(graphics, a, b), alarmImageCache[a.src] = c, c
 		} catch (d) {}
-		return null
+		return null*/
+		/**
+		 *阻止alarm变色
+		 */
+		return a;
 	}
 
 	function getOffsetPosition(a) {
@@ -684,7 +688,6 @@ function(a) {
 			}(), setTimeout(function() {
 				n.mousewheel(function(a) {
 					var b = null == a.wheelDelta ? a.detail : a.wheelDelta;
-					alert('hehe');
 					null != this.wheelZoom && (b > 0 ? this.zoomIn(this.wheelZoom) : this.zoomOut(this.wheelZoom))
 				}), n.paint()
 			}, 300), setTimeout(function() {
@@ -1288,31 +1291,40 @@ function(a) {
 		}, this.paintAlarmText = function(a) {
 			if (null != this.alarm && "" != this.alarm) {
 				var b = this.alarmColor || "255,0,0",
-					c = this.alarmAlpha || .5;
+					c = this.alarmAlpha || 1;
 				a.beginPath(), a.font = this.alarmFont || "10px 微软雅黑";
-				var d = a.measureText(this.alarm).width + 6,
-					e = a.measureText("田").width + 6,
+				/*var d = a.measureText(this.alarm).width + 6,*/
+				var d = a.measureText(this.alarm),
+					/*e = a.measureText("田").width + 6,*/
+					e = (a.measureText("田").width + 6) / 2,
 					f = this.width / 2 - d / 2,
-					g = -this.height / 2 - e - 8;
+					g = -this.height / 2 - e - 8,
+					right = this.width / 2,
+					top = -this.height / 2;
 				a.strokeStyle = "rgba(" + b + ", " + c + ")", 
 				a.fillStyle = "rgba(" + b + ", " + c + ")", 
 				a.lineCap = "round", 
 				a.lineWidth = 1, 
-				a.moveTo(f, g), 
+				/*a.moveTo(f, g), 
 				a.lineTo(f + d, g), 
 				a.lineTo(f + d, g + e), 
 				a.lineTo(f + d / 2 + 6, g + e), 
 				a.lineTo(f + d / 2, g + e + 8), 
 				a.lineTo(f + d / 2 - 6, g + e), 
 				a.lineTo(f, g + e), 
-				a.lineTo(f, g), 
+				a.lineTo(f, g), */
+				a.arc(right, top, e, 0, Math.PI*2),
 				a.fill(), 
 				a.stroke(), 
 				a.closePath(), 
 				a.beginPath(), 
-				a.strokeStyle = "rgba(" + this.fontColor + ", " + this.alpha + ")", 
+				/*a.strokeStyle = "rgba(" + this.fontColor + ", " + this.alpha + ")", 
 				a.fillStyle = "rgba(" + this.fontColor + ", " + this.alpha + ")", 
-				a.fillText(this.alarm, f + 2, g + e - 4), 
+				*/
+				a.strokeStyle = "rgba(255, 255, 255," + this.alpha + ")", 
+				a.fillStyle = "rgba(255, 255, 255," + this.alpha + ")", 
+				/*a.fillText(this.alarm, f + 2, g + e - 4), */
+				a.fillText(this.alarm, right - d.width/2, top + e - 4), 
 				a.closePath()
 			}
 		}, this.paintText = function(a) {

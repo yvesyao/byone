@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="by.mybatis.dao.ReportMapper">  
+
+<select id="query_reportType" resultType="by.domain.ReportVo">  
+	select id,typeName,typeChineseName from reportType
+</select>  
+
+<select id="query_report_by_type" parameterType="String" resultType="by.domain.ReportVo">  
+	select r.id,r.name,rt.typeName,rt.typeChineseName from report r
+	LEFT JOIN reportType rt on rt.id=r.typeId
+	where typeId=#{id}
+</select>  
+</mapper>

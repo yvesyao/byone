@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="by.mybatis.dao.SetupMapper">  
+
+<!-- 组织 -->
+<select id="query_org_all" parameterType="by.utils.SqlAdapter" resultType="by.domain.OrgVo">  
+	  ${sql}
+</select>  
+
+<select id="query_org_id" parameterType="String" resultType="by.domain.OrgVo">  
+    select * from org where id = #{id};
+</select>  
+ 
+<insert id="insert_org" parameterType="by.domain.OrgVo" >  
+    insert into org (id,orgname,fullname,adminid,adminname,adminpwd,
+    adminemail,includeip,excludeip,mostdevice,phone,address,description)
+    values (#{id},#{orgName},#{fullName},#{adminId},#{adminName},#{adminPwd},
+    #{adminEmail},#{includeIP},#{excludeIP},#{mostDevice},#{phone},#{address},
+	#{description});
+</insert>  
+ 
+ <update id="update_org" parameterType="by.domain.OrgVo" >  
+    update org set
+	orgname=#{orgName},
+	fullname=#{fullName},
+	adminid=#{adminId},
+	adminname=#{adminName},
+	adminpwd=#{adminPwd},
+	adminemail=#{adminEmail},
+	includeip=#{includeIP},
+	excludeip=#{excludeIP},
+	mostdevice=#{mostDevice},
+	phone=#{phone},
+	address=#{address},
+	description=#{decription}
+	where  id =#{id};
+</update> 
+ 
+ <delete id="delete_org" parameterType="String" >  
+   delete from org where id=#{orgid};
+</delete> 
+
+<select id="query_org_collector_all" parameterType="String" resultType="by.domain.OrgCollectorVo">  
+    select * from org_collectors where orgid = #{orgid};
+</select>  
+
+<select id="query_org_collector_id" parameterType="String" resultType="by.domain.OrgCollectorVo">  
+    select * from org_collectors where id = #{id};
+</select>  
+ 
+<insert id="insert_org_collector" parameterType="by.domain.OrgCollectorVo" >  
+    insert into org_collectors (id,orgid,collectorid,eps,starttime,endtime)
+    values (#{id},#{orgId},#{collectorId},#{eps},#{startTime},#{endTime});
+</insert> 
+
+<update id="update_org_collector" parameterType="by.domain.OrgCollectorVo" >  
+    update org_collectors set
+	orgid=#{orgId},
+	collectorid=#{collectorId},
+	eps=#{eps},
+	starttime=#{startTime},
+	endtime=#{endTime}
+	where  id =#{id};
+</update> 
+<delete id="delete_org_collector" parameterType="String" >  
+   delete from org_collectors where id=#{orgid};
+</delete> 
+
+
+<!-- 凭据 ++++++++++++++++++++++++++++++++++++++-->
+<select id="query_credential_all" parameterType="by.utils.SqlAdapter" resultType="by.domain.CredentialVo">  
+     ${sql}
+</select>  
+
+<select id="query_credential_id" parameterType="String" resultType="by.domain.CredentialVo">  
+    select * from credential where id=#{id};
+</select>  
+
+<insert id="insert_credential" parameterType="by.domain.CredentialVo" >
+	insert into credential (id,name,devicetypeid,linkprotocol,userid,
+	password,other_info,description)values(#{id},#{name},#{deviceTypeId},
+	#{linkProtocol},#{userId},#{password},#{other_info},#{description});
+</insert>
+
+<update id="update_credential" parameterType="by.domain.CredentialVo" >  
+    update credential set
+	name=#{name},
+	devicetypeid=#{deviceTypeId},
+	linkprotocol=#{linkProtocol},
+	userid=#{userId},
+	password=#{password},
+	other_info=#{other_info},
+	description=#{description}
+	where  id =#{id};
+</update> 
+<delete id="delete_credential" parameterType="String" >  
+   delete from credential where id=#{id};
+</delete> 
+
+<!-- //范围Range ++++++++++++++-->
+<select id="query_range_all" parameterType="by.utils.SqlAdapter" resultType="by.domain.RangeVo">  
+      ${sql}
+</select>  
+
+<select id="query_range_id" parameterType="String" resultType="by.domain.RangeVo">  
+    select * from ranges where id=#{id};
+</select> 
+
+<select id="query_credential_rangeid" parameterType="String" resultType="by.domain.CredentialVo">  
+   	SELECT c.* from ranges r LEFT JOIN range_credential rc on r.id=rc.rangeid
+	LEFT JOIN credential c on c.id=rc.credentialid where r.id=#{id}
+</select> 
+
+<insert id="insert_range" parameterType="by.domain.RangeVo" >
+	insert into ranges (id,ip,collectorid,rangename)values(#{id},#{IP},
+	#{collectorId},#{rangeName});
+</insert>
+
+<update id="update_range" parameterType="by.domain.RangeVo" >  
+    update ranges set
+	ip=#{IP},
+	collectorid=#{collectorId},
+	rangename=#{rangeName},
+	where id =#{id};
+</update> 
+
+<delete id="delete_range" parameterType="String" >  
+   delete from ranges where id=#{id};
+</delete> 
+
+<insert id="insert_range_credential" parameterType="String" >
+	insert into range_credential (id,rangeid,credentialid)values(#{id},#{rangeid},
+	#{credentialid});
+</insert>
+
+<delete id="delete_range_credential" parameterType="String" >  
+   delete from range_credential where id=#{rangeid};
+</delete> 
+
+<!-- /探测+++++++++++++++++=========== -->
+<select id="query_search_all" parameterType="String" resultType="by.domain.SearchVo">  
+   	select * from search where collectorid=#{collectorId};
+</select> 
+
+<select id="SearchVo" parameterType="String" resultType="by.domain.SearchVo">  
+   	select * from search where id=#{id};
+</select> 
+
+<insert id="insert_search" parameterType="by.domain.SearchVo" >
+	insert into search (id,searchName,searchType,rootIPs,includeRange,
+	excludeRange,noping,onlyping,collectorid)values(#{id},#{searchName},#{searchType},
+	#{rootIPs},#{includeRange},#{excludeRange},#{noping},#{onlyping},#{collectorId});
+</insert>
+
+<update id="update_search" parameterType="by.domain.SearchVo" >  
+    update search set
+	searchName=#{searchName},
+	searchType=#{searchType},
+	rootIPs=#{rootIPs},
+	includeRange=#{includeRange},
+	excludeRange=#{excludeRange},
+	noping=#{noping},
+	onlyping=#{onlyping}
+	where id =#{id};
+</update> 
+
+<delete id="delete_search" parameterType="String" >  
+   delete from search where id=#{id};
+</delete> 
+
+<!-- /探测任务+++++++++++++++++=========== -->
+<insert id="insert_iceTask" parameterType="String" >
+	insert into iceTask (monitorId,taskContent)
+	values(#{id},#{content});
+</insert>
+
+<delete id="delete_iceTask" parameterType="String" >  
+   	delete from iceTask where monitorId=#{id};
+</delete> 
+
+<select id="query_iceTask" parameterType="String" resultType="String">
+	select taskContent from iceTask where monitorId=#{id};
+</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+

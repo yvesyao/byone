@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="by.mybatis.dao.IncidentMapper">  
+
+
+<select id="query_incident_all"  parameterType="by.utils.SqlAdapter"  resultType="by.domain.IncidentVo">  
+       ${sql}
+</select>  
+
+<select id="query_inciden_chart"  parameterType="by.utils.SqlAdapter"  resultType="by.domain.ChartTempVo">  
+       ${sql}
+</select>  
+</mapper>

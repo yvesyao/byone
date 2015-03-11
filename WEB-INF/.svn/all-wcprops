@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/BYone/!svn/ver/82/BYone/WebRoot/WEB-INF
+END
+applicationContext.xml
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/BYone/!svn/ver/82/BYone/WebRoot/WEB-INF/applicationContext.xml
+END
+web.xml
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/BYone/!svn/ver/5/BYone/WebRoot/WEB-INF/web.xml
+END
+service.xml
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/BYone/!svn/ver/2/BYone/WebRoot/WEB-INF/service.xml
+END
+servlet.xml
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/BYone/!svn/ver/18/BYone/WebRoot/WEB-INF/servlet.xml
+END

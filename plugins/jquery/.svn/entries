@@ -1,7 +1,7 @@
 10
 
 dir
-53
+91
 http://202.197.33.71:8080/svn/BYone/BYone/WebRoot/plugins/jquery
 http://202.197.33.71:8080/svn/BYone
 
@@ -26,13 +26,47 @@ svn:special svn:externals svn:needs-lock
 
 dbcdddd8-2e12-904b-883b-41904ffc51a4
 
+jquery-1.10.2.min.js
+file
+92
+
+
+
+2014-12-09T06:07:11.000000Z
+605fcafebfeda41d0bc7147b98999c99
+2015-03-11T08:39:44.150161Z
+92
+yyt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+93069
+
 jquery.min.js
 file
 
 
 
 
-2015-02-06T07:11:52.959000Z
+2015-03-11T08:39:40.497000Z
 e40ec2161fe7993196f23c8a07346306
 2015-02-04T07:05:51.158039Z
 2

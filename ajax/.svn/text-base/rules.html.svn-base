@@ -683,7 +683,6 @@
 			this.selectSubPattern(sp.name);
 			return true;
 		},
-
 		/**
 		 * [addSubPatternTr description]
 		 * @param {[type]} trHandle [description]
@@ -691,7 +690,13 @@
 		addSubPatternTr: function(trHandle) {
 			var $template = $('#subPatternTable .template');
 			var $target = trHandle ? $(trHandle).next('tr') : $template;
-			return $template.clone(true, true).removeClass('template').insertBefore($target);
+			console.log('addTr');
+
+			var $newTr = $template.clone(true, true).removeClass('template').insertBefore($target);
+			if (this.selArr.length <= 0) {
+				spFuncs.editSubPattern({target: $('.edit-sp', $newTr)});
+			}
+			return $newTr;
 		},
 		selectSubPattern: function(name) {
 			if (!name) return;
@@ -706,13 +711,13 @@
 	 */
 	var spFuncs = {
 		editSubPattern: function(event) {
-			ruleFuncs.currentSel = $(event.target).prev('select');
+			ruleFuncs.currentSel = $(event.target).closest('td').children('select');
 			var _name = $(ruleFuncs.currentSel).val();
 			if (_name) {
 				this.modSubPattern(_name);
-				return;
+			} else {
+				$('#spName', '#subPatternFrm').val(name || __rule.getNewSpName());
 			}
-			$('#spName', '#subPatternFrm').val(name || __rule.getNewSpName());
 			showOverlayFrm('#subPatternFrm');
 		},
 		modSubPattern: function(name) {

@@ -21,12 +21,12 @@
 </div>
 
 <div class="row">
-<!-- 	<div class="col-xs-12 col-sm-6" style="min-height: 100px;">
+<div class="col-xs-12 col-sm-6" style="min-height: 100px;">
 	<div class="box">
 		<div class="box-header">
 			<div class="box-name">
 				<i class="fa fa-search"></i>
-				<span>Realtime (see FlotGraph1 function)</span>
+				<span>Realtime (see Graph1 function)</span>
 			</div>
 			<div class="box-icons">
 				<a class="collapse-link">
@@ -42,10 +42,10 @@
 			<div class="no-move"></div>
 		</div>
 		<div class="box-content">
-			<div id="box-one-content" style="min-height: 200px;"></div>
+			<div id="box-one-content" class="charts"></div>
 		</div>
 	</div>
-</div> -->
+</div>
 <div class="col-xs-12 col-sm-6">
 	<div class="box">
 		<div class="box-header">
@@ -67,7 +67,7 @@
 			<div class="no-move"></div>
 		</div>
 		<div class="box-content">
-			<div id="box-two-content" style="min-height: 200px;"></div>
+			<div id="box-two-content" class="charts"></div>
 		</div>
 	</div>
 </div>
@@ -92,7 +92,7 @@
 			<div class="no-move"></div>
 		</div>
 		<div class="box-content">
-			<div id="box-three-content" style="min-height: 200px;"></div>
+			<div id="box-three-content" class="charts"></div>
 		</div>
 	</div>
 </div>
@@ -117,7 +117,7 @@
 			<div class="no-move"></div>
 		</div>
 		<div class="box-content">
-			<div id="box-pie-content" style="min-height: 200px;"></div>
+			<div id="box-pie-content" class="charts"></div>
 		</div>
 	</div>
 </div>
@@ -180,17 +180,17 @@
 </div>
 
 <script type="text/javascript">
-// Draw all Flot Charts
-function DrawAllFlotCharts(){
-	//FlotGraph1();
-	FlotGraph2();
-	FlotGraph3();
-	FlotGraph4();
-	FlotPie();
+// Draw all Charts
+function DrawAllCharts(){
+	drawChart1();
+	drawChart2();
+	drawChart3();
+	drawChart4();
+	drawPie();
 }
 $(document).ready(function() {
-	// Load required Flot scripts and draw charts
-	LoadFlotScripts(DrawAllFlotCharts);
+	// Load required  scripts and draw charts
+	LoadHighchartsScripts(DrawAllCharts);
 	WinMove();
 });
 </script>

@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 41
-/svn/BYone/!svn/ver/53/BYone/WebRoot/ajax
+/svn/BYone/!svn/ver/84/BYone/WebRoot/ajax
 END
 forms_layouts.html
 K 25
@@ -19,13 +19,13 @@ mrtg.html
 K 25
 svn:wc:ra_dav:version-url
 V 51
-/svn/BYone/!svn/ver/53/BYone/WebRoot/ajax/mrtg.html
+/svn/BYone/!svn/ver/77/BYone/WebRoot/ajax/mrtg.html
 END
 rules.html
 K 25
 svn:wc:ra_dav:version-url
 V 52
-/svn/BYone/!svn/ver/53/BYone/WebRoot/ajax/rules.html
+/svn/BYone/!svn/ver/92/BYone/WebRoot/ajax/rules.html
 END
 charts_chartist.html
 K 25
@@ -61,7 +61,7 @@ dashboard.html
 K 25
 svn:wc:ra_dav:version-url
 V 56
-/svn/BYone/!svn/ver/53/BYone/WebRoot/ajax/dashboard.html
+/svn/BYone/!svn/ver/77/BYone/WebRoot/ajax/dashboard.html
 END
 gallery_flickr.html
 K 25
@@ -199,7 +199,7 @@ property.html
 K 25
 svn:wc:ra_dav:version-url
 V 55
-/svn/BYone/!svn/ver/53/BYone/WebRoot/ajax/property.html
+/svn/BYone/!svn/ver/92/BYone/WebRoot/ajax/property.html
 END
 charts_flot.html
 K 25
@@ -217,7 +217,7 @@ alarmList.html
 K 25
 svn:wc:ra_dav:version-url
 V 56
-/svn/BYone/!svn/ver/53/BYone/WebRoot/ajax/alarmList.html
+/svn/BYone/!svn/ver/77/BYone/WebRoot/ajax/alarmList.html
 END
 dashboard-old.html
 K 25
@@ -289,5 +289,5 @@ manualReport.html
 K 25
 svn:wc:ra_dav:version-url
 V 59
-/svn/BYone/!svn/ver/53/BYone/WebRoot/ajax/manualReport.html
+/svn/BYone/!svn/ver/84/BYone/WebRoot/ajax/manualReport.html
 END

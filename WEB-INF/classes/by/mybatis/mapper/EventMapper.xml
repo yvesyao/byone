@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="by.mybatis.dao.RulesBMapper">  
+
+
+<select id="queryEventAttrTypeDB"  resultType="by.domain.EventAttrTypeVo">  
+      select * from eventattrtype;
+</select>  
+
+<select id="queryEventTypeDB"  resultType="by.domain.EventAttrTypeVo">  
+      SELECT et.id,et.description,et.displayName,et.name,et.severity,
+      dt.model as deviceType,et.eventTypeGroup from eventtype et, 
+      devicetype dt where et.deviceTypeID = dt.id
+</select>  
+ 
+</mapper>

@@ -49,7 +49,7 @@ function LoadChosenScript(callback) {
 //  homepage: http://www.jtopo.com/
 function LoadJTopoScripts(callback) {
 	if (typeof JTopo === 'undefined') {
-		$.getScript('plugins/jtopo/jtopo-0.4.8-min.js', callback); /*-0.4.8-min*/
+		$.getScript('plugins/jtopo/jtopo.js', callback); /*-0.4.8-min*/
 	} else {
 		if (callback && typeof(callback) === "function") {
 			callback();
@@ -138,7 +138,7 @@ function LoadByoneTableScripts(callback) {
 //  homepage: http://www.flotcharts.org  v0.8.2 license- MIT
 //
 //
-function LoadHightchartsScripts(callback) {
+function LoadHighchartsScripts(callback) {
 	if (!$.fn.highcharts) {
 		$.getScript('plugins/highcharts/highcharts.js', callback);
 	} else {
@@ -305,6 +305,9 @@ function drawTopology(placeholder, contextMenu) {
 						default:
 							node[e] = nodeCfg[e];
 					}
+				}
+				if (!(node.x && node.y)) {
+					node.setLocation(scene.width * Math.random(), scene.height * Math.random());
 				}
 				nodesContainer[node.id] = node;
 
@@ -492,9 +495,9 @@ function drawTopology(placeholder, contextMenu) {
 				links: data.links
 			}]
 		}, $canvas[0]); // 创建一个舞台对象
+		stage.wheelZoom = 1.15; // 设置鼠标缩放比例
 	});
 
-	//stage.wheelZoom = 0.85; // 设置鼠标缩放比例
 
 	contextMenuEnv();
 	/*-------------------------------------------
@@ -505,7 +508,7 @@ function drawTopology(placeholder, contextMenu) {
 	function showJTopoToobar(placeholder, stage) {
 		var toobarDiv = $('<div class="jtopo_toolbar">').html(
 			' <input type="button" id="fullScreenButton" value="全屏显示"/>' +
-			' <input type="checkbox" id="zoomCheckbox"> 鼠标缩放' +
+			/*' <input type="checkbox" id="zoomCheckbox"> 鼠标缩放' +*/
 			' <input type="text" id="findText" value="">' +
 			' <input type="button" id="findButton" value=" 查 询 ">' +
 			' <input type="button" id="topoToJson" value=" 保 存 ">' +
@@ -545,13 +548,13 @@ function drawTopology(placeholder, contextMenu) {
 			});
 			console.log(result);
 		});
-		$('#zoomCheckbox').click(function() {
+		/*$('#zoomCheckbox').click(function() {
 			if ($('#zoomCheckbox').is(':checked')) {
 				stage.wheelZoom = 0.85; // 设置鼠标缩放比例
 			} else {
 				stage.wheelZoom = null; // 取消鼠标缩放比例
 			}
-		});
+		});*/
 		$('#fullScreenButton').click(function() {
 			runPrefixMethod(stage.canvas, "RequestFullScreen")
 		});
@@ -572,6 +575,7 @@ function drawTopology(placeholder, contextMenu) {
 					stage.setCenter(location.x, location.y);
 					// 闪烁几下*/
 					nodeFlash(node, 6);
+					stage.setCenter(node.x, node.y);
 				};
 			}
 
@@ -583,7 +587,7 @@ function drawTopology(placeholder, contextMenu) {
 				node.selected = !node.selected;
 				setTimeout(function() {
 					nodeFlash(node, n - 1);
-				}, 300);
+				}, 500);
 			}
 		}
 	}
@@ -624,9 +628,6 @@ function drawChart1() {
 		return res;
 	}
 	var _lineOption = {
-			xAxis: {
-				type: 'datetime'
-			},
 			series: [{
 				name: 'XX'
 			}]
@@ -646,18 +647,15 @@ function drawChart2() {
 	var _columnOption = {
 		title: '标题',
 		type: 'column',
-		xAxis: {
-			categories: [
-				"Web服务",
-				"交易服务",
-				"数据库服务",
-				"CRM",
-				"XX应用"
-			]
-		},
 		series: [{
 			name: 'XX值',
-			data: [49.9, 71.5, 106.4, 129.2, 144.0]
+			data: [
+				["Web服务", 49.9],
+				["交易服务", 71.5],
+				["数据库服务", 106.4],
+				["CRM", 129.2],
+				["XX应用", 144.0]
+			]
 		}]
 	};
 	drawCharts(_columnOption, "#box-two-content");
@@ -670,19 +668,17 @@ function drawChart2() {
 function drawChart3() {
 	var _columnOption = {
 		type: 'bar',
-		xAxis: {
-			categories: [
-				"Web服务",
-				"交易服务",
-				"数据库服务",
-				"CRM",
-				"XX应用"
-			],
-			tickPixelInterval: 80
-		},
+		xName: 'x-title',
+		yName: 'y-title',
 		series: [{
 			name: 'XX值',
-			data: [49.9, 71.5, 106.4, 129.2, 144.0]
+			data: [
+				["Web服务", 49.9],
+				["交易服务", 71.5],
+				["数据库服务", 106.4],
+				["CRM", 129.2],
+				["XX应用", 144.0]
+			]
 		}]
 	};
 	drawCharts(_columnOption, "#box-three-content");
@@ -741,9 +737,6 @@ function drawChart4() {
 		_dataArr[index].data = _data;
 	};
 	var _lineOption = {
-		xAxis: {
-			type: 'datetime'
-		},
 		series: _dataArr
 	}
 	drawCharts(_lineOption, '#box-four-content');
@@ -758,28 +751,14 @@ function drawChart4() {
 /**
 	 * highcharts绘制函数
 	 * @param  {Object} options 图表选项
-	 * @attr  {String} type   图表类型：'area', 'column', 'line', 'pie', 'spline'可不填
+	 * @attr  {String} type   图表类型：'line','area', 'column', 'bar', 'line', 'pie', 'spline'可不填
 	 * @attr  {String} title  图表名
-	 * @attr  {Object} xAxis  x轴配置
-	 * @attr  {Object} yAxis  y轴配置
-	 * ***xAxis | yAxis 配置格式***
-	 * {
-	 * 		title: {
-	 * 			text: [string]
-	 * 		},
-	 * 		label: {
-	 * 			enabled: [boolean];//是否启用
-	 * 			formatter: [function];//格式化函数
-	 * 			step: [number];//labels显示间隔
-	 * 		},
-	 * 		type: 'linear', 'datetime'(使用毫秒数标识),
-	 * 		catagory: [array],//数组轴，同type属性
-	 * 		
-	 * }
+	 * @attr  {String} xName  x轴名称
+	 * @attr  {String} yName  y轴名称
 	 * @attr  {Array} series 图表数据
 	 *      [{                                 //指定数据列
 	            name: 'Jane',                          //数据列名
-	            type: 'area', 'areaspline', 'bar', 'column', 'line', 'pie', 'scatter' or 'spline',
+	            type: 'area', 'areaspline', 'bar', 'column', 'line', 'pie', 'scatter' or 'spline',//待定
 	            data: [1, 0, 4]                        //数据
 	        }, {
 	            name: 'John',
@@ -796,8 +775,21 @@ function drawCharts(option, placeholder) {
 		credits: {
 			enabled: false // 禁用版权信息
 		},
-		xAxis: option.xAxis || null,
-		yAxis: option.yAxis || null,
+		tooltip: {
+            shared: true
+        },
+        plotOptions: {},
+		xAxis: {
+			tickPixelInterval: 25,
+			title: {
+				text: option.xName
+			}
+		},
+		yAxis: {
+			title: {
+				text: option.yName
+			}
+		},
 		/*legend: {                                                          
             layout: 'vertical',                                            
             align: 'right',                                                
@@ -811,13 +803,59 @@ function drawCharts(option, placeholder) {
         }, */
 		series: option.series
 	};
+	if (option.series[0].data.length > 5) {
+		_option.xAxis.labels = {
+			rotation: -40 //调节倾斜角度偏移
+		};
+	}
 	if (option.type) {
+		switch (option.type) {
+			case 'line':
+				lineWorks(_option);
+				break;
+			case 'bar':
+			case 'column':
+				var _categories = [],
+					_series = [],
+					_datas = option.series;
+				for (var i = 0; i < option.series.length; i++) {
+					var op_serie = option.series[i],
+						_vals = []
+					for (var j = 0; j < op_serie.data.length;) {
+						var _data = op_serie.data[j++];
+						if (i == 0) { //柱状图的catagories只需要加载一次
+							_categories.push(_data[0]);
+						}
+						_vals.push(_data[1]);
+					}
+					_series.push({
+						name: op_serie.name,
+						data: _vals
+					});
+				}
+				_option.xAxis.categories = _categories;
+				_option.series = _series;
+				break;
+			default:
+				break;
+		}
 		_option.chart = {
 			type: option.type
 		};
+	} else { //type(default) = 'line'
+		lineWorks(_option);
 	}
 	$(placeholder).highcharts(_option);
 	return $(placeholder).highcharts();
+
+	function lineWorks(option) {
+		_option.xAxis.type = 'datetime';
+		_option.plotOptions.line = {
+			marker: {
+				enabled: false
+			}
+		}
+	}
 }
 
 
@@ -1243,11 +1281,15 @@ function clauseFuncs(callback) {
 
 /**
  * 显示覆盖层
- * @param  {[String/JQuery Object]} handle [覆盖层选择器]
+ * @param  {String/JQuery Object} handle 覆盖层选择器
+ * @param  {boolean} isChild 如果为真，则不隐藏其他overlayFrm
  */
-function showOverlayFrm(handle) {
+function showOverlayFrm(handle, isChild) {
 	var $handle = $(handle);
 	$handle.removeClass('hide').show();
+	if (isChild) {
+		$handle.siblings('.overlay-frm').hide();
+	}
 	$handle.find('.btn-cancel').unbind("click.overlay").on("click.overlay", function(event) {
 		/* Act on the event */
 		window.confirm("确定要取消编辑吗？") && hideOverlayFrm(handle);
@@ -1509,7 +1551,7 @@ function RedrawKnob(elem) {
 }*/
 
 function docReady(selfUrl) {
-	$('a[href="#"]').click(function(e) {
+	$('[href="#"],:not([href])').click(function(e) {
 		e.preventDefault();
 	});
 	/*展开当前菜单栏*/
@@ -1559,7 +1601,9 @@ function docReady(selfUrl) {
 $(document).ready(function() {
 	$('body').on('click', '.show-sidebar', function(e) {
 		e.preventDefault();
-		$('div#main').toggleClass('sidebar-show');
+		$('div#main').toggleClass('sidebar-show').bind('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() {
+			$(document).resize();
+		});
 		/*setTimeout(MessagesMenuWidth, 250);*/
 	});
 
@@ -1588,7 +1632,7 @@ $(document).ready(function() {
 	//初始跳转
 	var ajax_url = location.hash.replace(/^#/, '');
 	if (ajax_url.length < 1) {
-		ajax_url = 'ajax/dashboard.html';
+		ajax_url = 'ajax/asset-dashboard.html';
 	}
 	$('.preloader').show();
 	$('#ajax-content').load(ajax_url, function() {

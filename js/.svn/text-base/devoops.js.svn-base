@@ -49,7 +49,7 @@ function LoadChosenScript(callback) {
 //  homepage: http://www.jtopo.com/
 function LoadJTopoScripts(callback) {
 	if (typeof JTopo === 'undefined') {
-		$.getScript('plugins/jtopo/jtopo-0.4.8-min.js', callback); /*-0.4.8-min*/
+		$.getScript('plugins/jtopo/jtopo.js', callback); /*-0.4.8-min*/
 	} else {
 		if (callback && typeof(callback) === "function") {
 			callback();
@@ -134,55 +134,15 @@ function LoadByoneTableScripts(callback) {
 
 
 //
-//  Dynamically load Flot plugin
+//  Dynamically load Hightcharts plugin
 //  homepage: http://www.flotcharts.org  v0.8.2 license- MIT
 //
-function LoadFlotScripts(callback) {
-	function LoadFlotScript() {
-		$.getScript('plugins/flot/jquery.flot.min.js', LoadFlotResizeScript);
-	}
-
-	function LoadFlotResizeScript() {
-		$.getScript('plugins/flot/jquery.flot.resize.min.js', LoadFlotTimeScript);
-	}
-
-	function LoadFlotTimeScript() {
-		$.getScript('plugins/flot/jquery.flot.time.min.js', LoadFlotPieScript);
-	}
-
-	function LoadFlotPieScript() {
-		$.getScript('plugins/flot/jquery.flot.pie.min.js', callback)
-	}
-
-	$.fn.UseTooltip = function(xCal, yCal) { //图表插件提示信息
-		$(this).data('previousPoint', null);
-		$(this).data('previousLabel', null);
-		$(this).bind("plothover", function(event, pos, item) {
-			var tooltipId = '#toolTip' + $(this).attr('id') || $(this).attr('class');
-			if (item) {
-				//console.log($(this).data('previousPoint'), item.dataIndex);
-				if (($(this).data('previousLabel') != item.series.label) || ($(this).data('previousPoint') != item.dataIndex)) {
-					$(this).data('previousPoint', item.dataIndex);
-					$(this).data('previousLabel', item.series.label);
-					$(tooltipId).remove();
-					var color = item.series.color;
-					var label = item.series.label;
-					showTooltip(tooltipId.substr(1), pos.pageX,
-						pos.pageY,
-						color, (label ? '<h5><strong>' + label + '</strong><br></h5>' : '') +
-						"<strong>" + xCal(item) +
-						"<strong> —— " + yCal(item));
-				}
-			} else {
-				$(tooltipId).remove();
-				$(this).data('previousPoint', null);
-			}
-		});
-	};
-	if (!$.fn.flot) {
-		LoadFlotScript();
+//
+function LoadHighchartsScripts(callback) {
+	if (!$.fn.highcharts) {
+		$.getScript('plugins/highcharts/highcharts.js', callback);
 	} else {
-		if (callback && typeof(callback) === "function") {
+		if (callback || typeof callback === "function") {
 			callback();
 		}
 	}
@@ -324,12 +284,12 @@ function drawTopology(placeholder, contextMenu) {
 				node.fontColor = scenceCfg.nodeFontColor || scenceCfg.fontColor || '67, 110, 144';
 				node.setLocation(stage.width * Math.random(), stage.height * Math.random());
 				for (var e in nodeCfg) {
-					switch(e) {
-						case 'type' : 
+					switch (e) {
+						case 'type':
 							node.setImage('./img/topoNodes/' + nodeCfg[e] + '.png');
 							break;
-						case 'alarm' :
-							if(nodeCfg[e] == '0')
+						case 'alarm':
+							if (nodeCfg[e] == '0')
 								break;
 							node.alarmColor = "203, 88, 69"; //默认"255,0,0"
 							node.alarmAlpha = "1"; //默认0.5
@@ -338,12 +298,16 @@ function drawTopology(placeholder, contextMenu) {
 							 * 告警信息的字体颜色与节点一致
 							 */
 							break;
-						case 'x' :
-						case 'y' :
+						case 'x':
+						case 'y':
 							node[e] = parseFloat(nodeCfg[e]);
 							break;
-						default: node[e] = nodeCfg[e];
+						default:
+							node[e] = nodeCfg[e];
 					}
+				}
+				if (!(node.x && node.y)) {
+					node.setLocation(scene.width * Math.random(), scene.height * Math.random());
 				}
 				nodesContainer[node.id] = node;
 
@@ -497,7 +461,7 @@ function drawTopology(placeholder, contextMenu) {
 	//			}]
 	//	}, $canvas[0]); // 创建一个舞台对象
 
-// 创建一个舞台对象
+	// 创建一个舞台对象
 	$.get('queryAllTopo.do', function(data) {
 		/*optional stuff to do after success */
 		var stage = createStageFromJson({
@@ -531,9 +495,9 @@ function drawTopology(placeholder, contextMenu) {
 				links: data.links
 			}]
 		}, $canvas[0]); // 创建一个舞台对象
+		stage.wheelZoom = 1.15; // 设置鼠标缩放比例
 	});
 
-	//stage.wheelZoom = 0.85; // 设置鼠标缩放比例
 
 	contextMenuEnv();
 	/*-------------------------------------------
@@ -544,7 +508,7 @@ function drawTopology(placeholder, contextMenu) {
 	function showJTopoToobar(placeholder, stage) {
 		var toobarDiv = $('<div class="jtopo_toolbar">').html(
 			' <input type="button" id="fullScreenButton" value="全屏显示"/>' +
-			' <input type="checkbox" id="zoomCheckbox"> 鼠标缩放' +
+			/*' <input type="checkbox" id="zoomCheckbox"> 鼠标缩放' +*/
 			' <input type="text" id="findText" value="">' +
 			' <input type="button" id="findButton" value=" 查 询 ">' +
 			' <input type="button" id="topoToJson" value=" 保 存 ">' +
@@ -584,13 +548,13 @@ function drawTopology(placeholder, contextMenu) {
 			});
 			console.log(result);
 		});
-		$('#zoomCheckbox').click(function() {
+		/*$('#zoomCheckbox').click(function() {
 			if ($('#zoomCheckbox').is(':checked')) {
 				stage.wheelZoom = 0.85; // 设置鼠标缩放比例
 			} else {
 				stage.wheelZoom = null; // 取消鼠标缩放比例
 			}
-		});
+		});*/
 		$('#fullScreenButton').click(function() {
 			runPrefixMethod(stage.canvas, "RequestFullScreen")
 		});
@@ -611,6 +575,7 @@ function drawTopology(placeholder, contextMenu) {
 					stage.setCenter(location.x, location.y);
 					// 闪烁几下*/
 					nodeFlash(node, 6);
+					stage.setCenter(node.x, node.y);
 				};
 			}
 
@@ -622,7 +587,7 @@ function drawTopology(placeholder, contextMenu) {
 				node.selected = !node.selected;
 				setTimeout(function() {
 					nodeFlash(node, n - 1);
-				}, 300);
+				}, 500);
 			}
 		}
 	}
@@ -634,10 +599,10 @@ function drawTopology(placeholder, contextMenu) {
 //
 // Graph1 created in element with id = box-one-content
 //
-function FlotGraph1() {
+function drawChart1() {
 
 	var data = [],
-		totalPoints = 300;
+		totalPoints = 20;
 
 	function getRandomData() {
 		if (data.length > 0)
@@ -658,104 +623,108 @@ function FlotGraph1() {
 		for (var i = 0; i < data.length; ++i) {
 			var date = new Date("2014-11-10 15:" + i + ":00");
 			res.push([date.getTime(), data[i]]);
+			//res.push([Date.UTC(2014, 10, 10, 15, i), data[i]]); //月从0开始
 		}
 		return res;
 	}
-	var updateInterval = 2000;
-	intervalChart(drawLineChart("#box-one-content", [getRandomData()]), getRandomData, updateInterval);
+	var _lineOption = {
+			series: [{
+				name: 'XX'
+			}]
+		},
+		updateInterval = 2000;
+	_lineOption.series[0].data = getRandomData();
+	var _chart = drawCharts(_lineOption, "#box-one-content");
+	setInterval(function() {
+		_chart.series[0].setData(getRandomData());
+	}, updateInterval);
 }
 
 //
 // Graph2 created in element with id = box-two-content
 //
-function FlotGraph2() {
-	var rawData = [
-		[
-			[0, 8], //Gold
-			[1, 5], //Silver
-			[2, 3], //Platinum
-			[3, 22], //Palladium
-			[4, 12]
-		]
-	];
-	var ticks = [
-		[0, "Web服务"],
-		[1, "交易服务"],
-		[2, "数据库服务"],
-		[3, "CRM"],
-		[4, "XX应用"]
-	];
-	drawVBarChart("#box-two-content", rawData, ticks);
+function drawChart2() {
+	var _columnOption = {
+		title: '标题',
+		type: 'column',
+		series: [{
+			name: 'XX值',
+			data: [
+				["Web服务", 49.9],
+				["交易服务", 71.5],
+				["数据库服务", 106.4],
+				["CRM", 129.2],
+				["XX应用", 144.0]
+			]
+		}]
+	};
+	drawCharts(_columnOption, "#box-two-content");
 }
 
 
 //
 // Graph2 created in element with id = box-three-content
 //
-function FlotGraph3() {
-	var rawData = [
-		[
-			[10, 0], //Gold
-			[5, 1], //Silver
-			[1, 2], //Platinum
-			[2, 3], //Palladium
-			[22, 4]
-		]
-	];
-	var ticks = [
-		[0, "10.21.1.14"],
-		[1, "10.21.1.21"],
-		[2, "10.21.1.89"],
-		[3, "10.21.1.11"],
-		[4, "10.21.1.5"]
-	];
-	drawHBarChart("#box-three-content", rawData, ticks, {
-		/*theme: 'black'*/
-	});
+function drawChart3() {
+	var _columnOption = {
+		type: 'bar',
+		xName: 'x-title',
+		yName: 'y-title',
+		series: [{
+			name: 'XX值',
+			data: [
+				["Web服务", 49.9],
+				["交易服务", 71.5],
+				["数据库服务", 106.4],
+				["CRM", 129.2],
+				["XX应用", 144.0]
+			]
+		}]
+	};
+	drawCharts(_columnOption, "#box-three-content");
 }
 
-function FlotPie() {
-	var _dataArr = [{
-		label: "主机不响应",
-		data: 4119630000
-	}, {
-		label: "系统重启",
-		data: 590950000
-	}, {
-		label: "接口关闭",
-		data: 1012960000
-	}, {
-		label: "TCP端口关闭",
-		data: 35100000
-	}, {
-		label: "硬件问题",
-		data: 727080000
-	}];
-	drawPieChart("#box-pie-content", _dataArr);
+function drawPie() {
+	var _pieOption = {
+		type: 'pie',
+		series: [{
+				name: '数目',
+				data: [
+					["主机不响应", 4119630000],
+					["系统重启", 590950000],
+					["接口关闭", 1012960000],
+					["TCP端口关闭", 35100000],
+					["硬件问题", 727080000]
+				]
+			}
+
+		]
+	};
+	drawCharts(_pieOption, "#box-pie-content");
+
 }
 
 //
 // Graph4 created in element with id = box-four-content
 //
-function FlotGraph4() {
-
+function drawChart4() {
 	var _dataArr = [{
-		label: "可用性趋势 202.181.176.85",
+		name: "可用性趋势 202.181.176.85",
 		data: []
 	}, {
-		label: "可用性趋势 202.181.225.221",
+		name: "可用性趋势 202.181.225.221",
 		data: []
 	}, {
-		label: "可用性趋势 202.181.225.220",
+		name: "可用性趋势 202.181.225.220",
 		data: []
 	}, {
-		label: "可用性趋势 202.181.225.219",
+		name: "可用性趋势 202.181.225.219",
 		data: []
 	}, {
-		label: "可用性趋势 202.181.176.83",
+		name: "可用性趋势 202.181.176.83",
 		data: []
 	}, {
-		label: "可用性趋势 202.181.176.183",
+		name: "可用性趋势 202.181.176.183",
 		data: []
 	}];
 	for (var index = 5; index >= 0; index--) {
@@ -763,207 +732,130 @@ function FlotGraph4() {
 		var _data = [];
 		for (var i = 0; i < 20; ++i) { //插入数据
 			_val = getRandomData(_val, 10, 60, 0);
-			_data.push([new Date("2014-11-10 15:" + i + ":00"), _val]);
+			_data.push([Date.UTC(2014, 10, 10, 15, i), _val]); //月从0开始
 		}
 		_dataArr[index].data = _data;
 	};
-
-	drawLineChart("#box-four-content", _dataArr, {
-		legendContainer: '#graph4Legend'
-	});
-
+	var _lineOption = {
+		series: _dataArr
+	}
+	drawCharts(_lineOption, '#box-four-content');
 	/*test*/
 	function getRandomData(base, range, max, min) {
 		var _rel = base + Math.floor(Math.random() * range - range / 2);
 		_rel = _rel > max ? max * 3 - _rel * 2 : _rel;
 		return _rel < min ? min * 3 - _rel * 2 : _rel;
 	}
-
 }
 
-
-/***
-*flot图表绘图函数
-*params：
-	placeholder：jquery Object，DOM对象，或者jquery选择器内容 //flot图表的容器
-	dataArr: [
-		{ label:"IBM_sniffer_202.181.176.85" , data: [[x1, y1], [x2, y2], [x3, y3]]},
-		{ label:"sniffer_202.181.225.221_v2" , data: [[x1, y1], [x2, y2], [x3, y3]]},
-		{ label:"ipcad_mrtg_202.181.225.220_v2" , data: [[x1, y1], [x2, y2], [x3, y3]]}
-	] 	//绘图数据，label用于显示legend信息，可不写；
-		//折线图中, data中的x轴为time类型，需转化为毫秒（int型）
-		//饼图的data为一个整型
-	clientOptions: {//个性配置
-		theme: black,
-		legendContainer: legend的容器，用于折线图和饼图
-	}
-*return: plot对象
-***/
-
-function drawChart(placeholder, dataArr, options, clientOptions) {
-	options.grid = {
-		borderWidth: 2,
-		hoverable: true
-	};
-	if (clientOptions) {
-		if (clientOptions.theme && clientOptions.theme == 'black') {
-			options.grid.backgroundColor = {
-				colors: ["#171717", "#4F4F4F"]
+/**
+	 * highcharts绘制函数
+	 * @param  {Object} options 图表选项
+	 * @attr  {String} type   图表类型：'line','area', 'column', 'bar', 'line', 'pie', 'spline'可不填
+	 * @attr  {String} title  图表名
+	 * @attr  {String} xName  x轴名称
+	 * @attr  {String} yName  y轴名称
+	 * @attr  {Array} series 图表数据
+	 *      [{                                 //指定数据列
+	            name: 'Jane',                          //数据列名
+	            type: 'area', 'areaspline', 'bar', 'column', 'line', 'pie', 'scatter' or 'spline',
+	            data: [1, 0, 4]                        //数据
+	        }, {
+	            name: 'John',
+	            data: [5, 7, 3]
+	        }]
+	 * @param  {String | JQuery Object} placeholder 图表容器
+	 * @return {Object}        highcharts对象
+	 */
+function drawCharts(option, placeholder) {
+	var _option = {
+		title: {
+			text: option.title
+		},
+		credits: {
+			enabled: false // 禁用版权信息
+		},
+		tooltip: {
+            shared: true
+        },
+        plotOptions: {},
+		xAxis: {
+			tickPixelInterval: 25,
+			title: {
+				text: option.xName
 			}
+		},
+		yAxis: {
+			title: {
+				text: option.yName
+			}
+		},
+		/*legend: {                                                          
+            layout: 'vertical',                                            
+            align: 'right',                                                
+            verticalAlign: 'top',                                          
+            x: 0,                                                        
+            y: 0,                                                        
+            floating: true,                                                
+            borderWidth: 1,                                                
+            backgroundColor: '#FFFFFF',                                    
+            shadow: true                                                   
+        }, */
+		series: option.series
+	};
+	if (option.series[0].data.length > 5) {
+		_option.xAxis.labels = {
+			rotation: -40 //调节倾斜角度偏移
 		};
-		if (clientOptions.legendContainer) {
-			options.legend = {
-				show: true,
-				container: $(clientOptions.legendContainer)
-			}
+	}
+	if (option.type) {
+		switch (option.type) {
+			case 'line':
+				lineWorks(_option);
+				break;
+			case 'bar':
+			case 'column':
+				var _categories = [],
+					_series = [],
+					_datas = option.series;
+				for (var i = 0; i < option.series.length; i++) {
+					var op_serie = option.series[i],
+						_vals = []
+					for (var j = 0; j < op_serie.data.length;) {
+						var _data = op_serie.data[j++];
+						if (i == 0) { //柱状图的catagories只需要加载一次
+							_categories.push(_data[0]);
+						}
+						_vals.push(_data[1]);
+					}
+					_series.push({
+						name: op_serie.name,
+						data: _vals
+					});
+				}
+				_option.xAxis.categories = _categories;
+				_option.series = _series;
+				break;
+			default:
+				break;
+		}
+		_option.chart = {
+			type: option.type
 		};
+	} else { //type(default) = 'line'
+		lineWorks(_option);
 	}
-	return $.plot(placeholder, dataArr, options);
-}
+	$(placeholder).highcharts(_option);
+	return $(placeholder).highcharts();
 
-function drawLineChart(placeholder, dataArr, clientOptions) {
-	var options = {
-		series: {
-			shadowSize: 0,
-			lines: {
-				show: true
-			}
-		},
-		xaxis: {
-			mode: "time",
-			timezone: "browser",
-			timeformat: "%H:%M",
-			axisLabel: "Date",
-			axisLabelUseCanvas: true,
-			axisLabelFontSizePixels: 12,
-			axisLabelFontFamily: 'Verdana, Arial',
-			axisLabelPadding: 10
-		}
-	}
-	$(placeholder).UseTooltip(
-		function(item) {
-			var _date = new Date(item.datapoint[0]);
-			return formatTime(_date.getHours()) + ':' + formatTime(_date.getMinutes());
-		},
-		function(item) {
-			return item.datapoint[1];
-		}
-	);
-	return drawChart(placeholder, dataArr, options, clientOptions);
-}
-
-function formatTime(time) {
-	return time >= 10 ? time : '0' + time;
-}
-
-
-/**********
-dataArr: [[1582.3, 0], [28.95, 1],[1603, 2];
-ticks: [[0, "Gold"], [1, "Silver"], [2, "Platinum"]];
-*/
-function cfgBarChart(ticks) {
-	var options = {
-		series: {
-			shadowSize: 0,
-			bars: {
-				align: "center",
-				show: true,
-				lineWidth: 1,
-				barWidth: 0.5
+	function lineWorks(option) {
+		_option.xAxis.type = 'datetime';
+		_option.plotOptions.line = {
+			marker: {
+				enabled: false
 			}
 		}
-	};
-	return options;
-}
-
-function drawVBarChart(placeholder, dataArr, ticks, clientOptions) {
-	var options = cfgBarChart(ticks);
-	options.xaxis = {
-		axisLabelUseCanvas: true,
-		axisLabelFontSizePixels: 12,
-		min: -1,
-		max: ticks.length,
-		axisLabelFontFamily: 'Verdana, Arial',
-		axisLabelPadding: 3,
-		//tickColor: "#5E5E5E",
-		ticks: ticks
 	}
-	$(placeholder).UseTooltip(
-		function(item) {
-			return item.series.xaxis.ticks[item.datapoint[0]].label;
-		},
-		function(item) {
-			return item.datapoint[1];
-		}
-	);
-	return drawChart(placeholder, dataArr, options, clientOptions);
-}
-
-function drawHBarChart(placeholder, dataArr, ticks, clientOptions) {
-	var options = cfgBarChart(ticks);
-	options.series.bars.horizontal = true;
-	options.yaxis = {
-		axisLabelUseCanvas: true,
-		axisLabelFontSizePixels: 12,
-		min: -1,
-		max: ticks.length,
-		axisLabelFontFamily: 'Verdana, Arial',
-		axisLabelPadding: 3,
-		tickColor: "#5E5E5E",
-		ticks: ticks
-	};
-
-	$(placeholder).UseTooltip(
-		function(item) {
-			return item.series.yaxis.ticks[item.datapoint[1]].label;
-		},
-		function(item) {
-			return item.datapoint[0];
-		}
-	);
-	return drawChart(placeholder, dataArr, options, clientOptions);
-}
-
-function drawPieChart(placeholder, dataArr, clientOptions) {
-	var options = {
-		series: {
-			pie: {
-				show: true,
-				innerRadius: 0.5
-					/*,
-									label: {﻿﻿﻿﻿﻿
-										show: true,
-										﻿﻿﻿﻿﻿formatter: function (label, series) {                
-					                return '<div style="border:1px solid grey;font-size:8pt;text-align:center;padding:5px;color:white;">' +
-					                label + ' : ' +
-					                Math.round(series.percent) +
-					                '%</div>';
-					            },
-					            background: {
-					                opacity: 0.8,
-					                color: '#000'
-					            },
-										﻿ // formatter function
-										﻿﻿﻿﻿﻿radius: 1,
-										﻿ // radius at which to place the labels (based on full calculated radius if <=1, or hard pixel value)
-										﻿﻿﻿﻿﻿
-										﻿﻿﻿﻿﻿threshold: 0﻿ // percentage at which to hide the label (i.e. the slice is too narrow)	﻿﻿﻿﻿
-									}*/
-			}
-		}
-	};
-
-	$(placeholder).UseTooltip(
-		function(item) {
-			return item.series.label;
-		},
-		function(item) {
-			return Math.round(item.series.percent) + "%";
-
-		}
-	);
-	return drawChart(placeholder, dataArr, options, clientOptions);
-	//$.plot(placeholder, dataArr, options);
 }
 
 
@@ -1016,10 +908,9 @@ function showTooltip(tooltipId, x, y, color, contents) {
 *定时刷新图表
 *params:
 	plot: plot对象
-	dataFunc: 数据获取函数
 	interval: 刷新时间间隔(毫秒)
 	*/
-function intervalChart(plot, dataFunc, interval) {
+function intervalChart(plot, interval) {
 	plot.setData([dataFunc()]);
 	plot.setupGrid(); //刷新坐标值
 	plot.draw();
@@ -1390,11 +1281,15 @@ function clauseFuncs(callback) {
 
 /**
  * 显示覆盖层
- * @param  {[String/JQuery Object]} handle [覆盖层选择器]
+ * @param  {String/JQuery Object} handle 覆盖层选择器
+ * @param  {boolean} isChild 如果为真，则不隐藏其他overlayFrm
  */
-function showOverlayFrm(handle) {
+function showOverlayFrm(handle, isChild) {
 	var $handle = $(handle);
 	$handle.removeClass('hide').show();
+	if (isChild) {
+		$handle.siblings('.overlay-frm').hide();
+	}
 	$handle.find('.btn-cancel').unbind("click.overlay").on("click.overlay", function(event) {
 		/* Act on the event */
 		window.confirm("确定要取消编辑吗？") && hideOverlayFrm(handle);
@@ -1656,7 +1551,7 @@ function RedrawKnob(elem) {
 }*/
 
 function docReady(selfUrl) {
-	$('a[href="#"]').click(function(e) {
+	$('[href="#"],:not([href])').click(function(e) {
 		e.preventDefault();
 	});
 	/*展开当前菜单栏*/
@@ -1706,7 +1601,9 @@ function docReady(selfUrl) {
 $(document).ready(function() {
 	$('body').on('click', '.show-sidebar', function(e) {
 		e.preventDefault();
-		$('div#main').toggleClass('sidebar-show');
+		$('div#main').toggleClass('sidebar-show').bind('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() {
+			$(document).resize();
+		});
 		/*setTimeout(MessagesMenuWidth, 250);*/
 	});
 
@@ -1799,13 +1696,12 @@ $(document).ready(function() {
 			var button = $(this).find('i');
 			button.toggleClass('fa-expand').toggleClass('fa-compress');
 			box.toggleClass('expanded');
-			body.toggleClass('body-expanded');
-			var timeout = 0;
-			if (body.hasClass('body-expanded')) {
-				timeout = 100;
-			}
 			box.toggleClass('expanded-padding');
-			box.resize();
+			body.toggleClass('body-expanded');
+			box.bind('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() { //
+				box.resize();
+				$(document).resize();
+			});
 		})
 		.on('click', '.collapse-link', function(e) {
 			e.preventDefault();

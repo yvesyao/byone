@@ -1,0 +1,2939 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xmlDatas>
+	<xmlData id="1">
+		<Reports>
+  <Report>
+    <Name>Availability: Network Device Failover</Name>
+    <Description>Tracks network device failovers</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,reptDevName,eventType,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377938" name="Filter_OVERALL_AVAIL_5">
+        <SingleEvtConstr>eventType IN (Group@PH_SYS_EVENT_Failover)  AND ( reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) )</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383812898</Low>
+      <High>1383899297</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+
+	<xmlData id="2">
+		<Reports>
+  <Report>
+    <Name>Availability: Router Down/Restart</Name>
+    <Description>Tracks network device down and restart events</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,reptDevName,eventType,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377937" name="Filter_OVERALL_AVAIL_1">
+        <SingleEvtConstr>eventType IN (Group@PH_SYS_EVENT_SystemShutdown,Group@PH_SYS_EVENT_SystemRestart)  AND ( reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH)  OR  hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) )</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383895799</Low>
+      <High>1383899398</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+
+	<xmlData id="3">
+		<Reports>
+  <Report>
+    <Name>Availability: Router Network Interface Down/Up</Name>
+    <Description>Tracks network device interface down and up events</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,reptDevName,eventType,intfName,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377936" name="Filter_OVERALL_AVAIL_6">
+        <SingleEvtConstr>eventType IN (Group@PH_SYS_EVENT_NetIntfShutdown,Group@PH_SYS_EVENT_NetIntfRestart) AND (reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383895820</Low>
+      <High>1383899419</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+
+	<xmlData id="4">
+		<Reports>
+  <Report>
+    <Name>Availability: Router/Switch Ping Monitor Statistics</Name>
+    <Description>Tracks the PING response times and packet loss for the monitored devices</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName, hostIpAddr, AVG(avgDurationMSec) "Avg RTT (sec)",MIN(minDurationMSec) "Min RTT", MAX(maxDurationMSec) "Max RTT", AVG(pktLossPct) "Avg Pkt Loss(%)"</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(avgDurationMSec) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377935" name="Filter_PERF_MON_17">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_PING_STAT"  AND  hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH)</SingleEvtConstr>
+        <GroupByAttr>hostName,hostIpAddr</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383895835</Low>
+      <High>1383899434</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+
+	<xmlData id="5">
+		<Reports>
+  <Report>
+    <Name>Routing: BGP Neighbor status</Name>
+    <Description>Provides BGP neighbor status</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>srcIpAddr,srcName, destIpAddr,destName, srcASNum,destASNum,bgpState</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377943" name="Filter_Router_2">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_BGP_NBR_STATUS"</SingleEvtConstr>
+        <GroupByAttr>srcIpAddr,srcName, destIpAddr,destName, srcASNum,destASNum,bgpState</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383895853</Low>
+      <High>1383899452</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+
+	<xmlData id="6">
+		<Reports>
+  <Report>
+    <Name>Routing: OSPF Neighbor status</Name>
+    <Description>Provides OSPF neighbor status</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>srcIpAddr,srcName, destIpAddr,destName, ospfAreaId,ospfState</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377942" name="Filter_Router_2">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_OSPF_NBR_STATUS"</SingleEvtConstr>
+        <GroupByAttr>srcIpAddr,srcName, destIpAddr,destName, ospfAreaId,ospfState</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383895872</Low>
+      <High>1383899471</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+
+	<xmlData id="7">
+		<Reports>
+  <Report>
+    <Name>Top Router Interfaces by Days-since-last-use</Name>
+    <Description>This report ranks router/switch interfaces by days since last use</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,hostIpAddr,intfName,intfAlias,LAST(daysSinceLastUse)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>LAST(daysSinceLastUse) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378100" name="Filter_OVERALL_AVAIL_5">
+        <SingleEvtConstr>eventType ="PH_DEV_MON_NET_INTF_UTIL" AND intfOperStatus = "down" AND hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND daysSinceLastUse &gt; 0</SingleEvtConstr>
+        <GroupByAttr>hostName,hostIpAddr,intfName,intfAlias</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383895895</Low>
+      <High>1383899494</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+
+	<xmlData id="8">
+		<Reports>
+  <Report>
+    <Name>Top Router Interfaces by days-since-last-use at least 90 days</Name>
+    <Description>This report ranks router/switch unused interfaces by days since last use. An interface is unused if it has not seen traffic in the last 90 days.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,hostIpAddr,intfName,intfAlias,LAST(daysSinceLastUse)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>LAST(daysSinceLastUse) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378102" name="Filter_OVERALL_AVAIL_5">
+        <SingleEvtConstr>eventType ="PH_DEV_MON_NET_INTF_UTIL" AND intfOperStatus = "down" AND hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND daysSinceLastUse &gt; 90</SingleEvtConstr>
+        <GroupByAttr>hostName,hostIpAddr,intfName,intfAlias</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383895909</Low>
+      <High>1383899508</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+
+	<xmlData id="9">
+		<Reports>
+  <Report>
+    <Name>Top Routers By Interfaces Unused for more than 90 days</Name>
+    <Description>This report ranks router/switch by the number of interfaces that have not been used for more than 90 days</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,COUNT(DISTINCT intfName)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>COUNT(DISTINCT intfName) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378101" name="Filter_OVERALL_AVAIL_5">
+        <SingleEvtConstr>eventType ="PH_DEV_MON_NET_INTF_UTIL" AND intfOperStatus = "down" AND hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND daysSinceLastUse &gt; 90</SingleEvtConstr>
+        <GroupByAttr>hostName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383895925</Low>
+      <High>1383899524</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+
+	<xmlData id="10">
+		<Reports>
+  <Report>
+    <Name>Top Routers/Switches by Business Hours Network Ping Uptime Pct (Achieved Network Ping SLA)</Name>
+    <Description>Ranks routers/switches by system uptime pct over a time window - uptime calculated during business hours (Mon-Friday 8am-5pm)</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,LAST(sysUpTime) "Current Uptime",SUM(sysDownTime) "Total Down time",100 - (100.0 * SUM(sysDownTime))/SUM(pollIntv) "Achieved Uptime", AVG(avgDurationMSec) "Average RTT"</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>SUM(sysDownTime) DESC,AVG(avgDurationMSec) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377949" name="F1">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_PING_STAT"  AND  HourOfDay(phRecvTime) &gt; 8  AND  HourOfDay(phRecvTime) &lt; 17  AND  DayOfWeek(phRecvTime) &gt; 0  AND  DayOfWeek(phRecvTime) &lt; 6  AND  hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH)</SingleEvtConstr>
+        <GroupByAttr>hostName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383895942</Low>
+      <High>1383899541</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+
+	<xmlData id="11">
+		<Reports>
+  <Report>
+    <Name>Top Routers/Switches by Business Hours System Uptime Pct (Achieved System SLA)</Name>
+    <Description>Ranks routers/switches by system uptime pct over a time window - uptime calculated during business hours (Mon-Friday 8am-5pm)</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,LAST(sysUpTime) "Current Uptime",SUM(sysDownTime) "Total Down time",100 - (100.0 * SUM(sysDownTime))/SUM(pollIntv) "Achieved Uptime"</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>SUM(sysDownTime) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377947" name="F1">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_SYS_UPTIME" AND HourOfDay(phRecvTime)  &gt; 8 AND HourOfDay(phRecvTime)  &lt; 17 AND DayOfWeek(phRecvTime) &gt; 0 AND DayOfWeek(phRecvTime) &lt; 6 AND hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH)</SingleEvtConstr>
+        <GroupByAttr>hostName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383895958</Low>
+      <High>1383899557</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData id="12">
+		<Reports>
+  <Report>
+    <Name>Top Routers/Switches by Network Ping Uptime Pct (Achieved Network Ping SLA)</Name>
+    <Description>Ranks routers and switches by network ping uptime pct over a time window</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,LAST(sysUpTime) "Current Uptime",SUM(sysDownTime) "Total Down time", 100 - (100.0 * SUM(sysDownTime))/SUM(pollIntv) "Achieved Uptime (SLA)", AVG(avgDurationMSec) "Average RTT"</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>SUM(sysDownTime) DESC,AVG(avgDurationMSec) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377948" name="F1">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_PING_STAT" AND hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH)</SingleEvtConstr>
+        <GroupByAttr>hostName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383895974</Low>
+      <High>1383899573</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Top Routers/Switches by System Uptime Pct (Achieved System SLA)</Name>
+    <Description>Ranks routers and switches by system uptime pct over a time window</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,LAST(sysUpTime) "Current Uptime",SUM(sysDownTime) "Total Down time", 100 - (100.0 * SUM(sysDownTime))/SUM(pollIntv) "Achieved Uptime (SLA)"</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>SUM(sysDownTime) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377946" name="F1">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_SYS_UPTIME" AND hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH)</SingleEvtConstr>
+        <GroupByAttr>hostName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383895989</Low>
+      <High>1383899588</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Performance: Top Router Network Intf By Util, Error, Discards</Name>
+    <Description>Ranks the routers and their network interfaces by first average inbound and then by outbound interface utilization. The utilization is computed by accounting for the link bandwidth.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,intfName,AVG(inIntfUtil),AVG(recvBitsPerSec),AVG(inIntfPktErrPct), AVG(inIntfPktDiscardedPct), AVG(outIntfUtil), AVG(sentBitsPerSec), AVG(outIntfPktErrPct), AVG(outIntfPktDiscardedPct)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(inIntfUtil) DESC, AVG(outIntfUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377933" name="Filter_PERF_MON_8">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_NET_INTF_UTIL"  AND  hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH)</SingleEvtConstr>
+        <GroupByAttr>hostName,intfName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896009</Low>
+      <High>1383899608</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Performance: Top Routers By Memory Utilization</Name>
+    <Description>Ranks the routers by average memory utilization over a window</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,hostIpAddr,memName,AVG(memUtil)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(memUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377934" name="Filter_PERF_MON_3">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_SYS_MEM_UTIL"  AND  hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH)</SingleEvtConstr>
+        <GroupByAttr>hostName,hostIpAddr,memName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896043</Low>
+      <High>1383899642</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Performance: Top Routers Ranked By CPU Utilization</Name>
+    <Description>Ranks the routers by average cpu utilization over a window</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,hostIpAddr,AVG(cpuUtil),MAX(cpuUtil)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(cpuUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377932" name="Filter_PERF_MON_2">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_SYS_CPU_UTIL" AND hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH)</SingleEvtConstr>
+        <GroupByAttr>hostName, hostIpAddr</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896058</Low>
+      <High>1383899657</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router CBQoS: Top Interface Classmaps by drop pct</Name>
+    <Description>Ranks interface classmaps by drop pct</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,intfName,qosPolicy,qosClass,AVG(qosPrePoliceRate),AVG(qosPostPoliceRate),AVG(qosDropRate),AVG(qosDropPct)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(qosDropPct) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377939" name="Filter_Router_2">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_CBQOS_CMSTAT"</SingleEvtConstr>
+        <GroupByAttr>hostName,intfName,qosPolicy,qosClass</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896075</Low>
+      <High>1383899674</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router CBQoS: Top Interface Police Actions by drop pct</Name>
+    <Description>Ranks interface police actions by drop pct</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,intfName,qosPolicy,qosClass,AVG(qosConformRate),AVG(qosExceedRate),AVG(qosViolateRate)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(qosViolateRate) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377940" name="Filter_Router_2">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_CBQOS_POLICESTAT"</SingleEvtConstr>
+        <GroupByAttr>hostName,intfName,qosPolicy,qosClass</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896096</Low>
+      <High>1383899695</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router CBQoS: Top Interface Queue Stats by discarded packets</Name>
+    <Description>Ranks interface queues by discarded packets</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,intfName,qosPolicy,qosClass,AVG(qosCurrQueue),AVG(qosMaxQueue),AVG(qosDiscardPkt)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(qosDiscardPkt) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377941" name="Filter_Router_2">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_CBQOS_QUEUESTAT"</SingleEvtConstr>
+        <GroupByAttr>hostName,intfName,qosPolicy,qosClass</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896115</Low>
+      <High>1383899714</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Change: Router Config Changes Detected Via Login</Name>
+    <Description>This report captures detected configuration changes via login</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,hostName,hostIpAddr,eventType,oldSVNVersion,newSVNVersion,addedItem, deletedItem</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377907" name="Filter_Router_9">
+        <SingleEvtConstr>hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH)  AND  eventType IN ("PH_DEV_MON_CHANGE_RUN_CONFIG","PH_DEV_MON_CHANGE_STARTUP_CONFIG")</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896269</Low>
+      <High>1383899868</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Change: Router Configuration Changes Detected From Log</Name>
+    <Description>This report provides details about router config changes</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,reptDevName,eventType,srcIpAddr,srcName, user,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377905" name="Filter_Router_7">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType IN (Group@PH_SYS_EVENT_ConfigChange)</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896288</Low>
+      <High>1383899887</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Change: Router Run versus Startup Config Difference Via Login</Name>
+    <Description>This report captures detected differences between a routers running and startup config</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,hostName,hostIpAddr,eventType,startUpConfVer,runningConfVer,addedItem, deletedItem</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377906" name="Filter_Router_8">
+        <SingleEvtConstr>hostIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH)  AND  eventType = "PH_DEV_MON_DELTA_CONFIG"</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896304</Low>
+      <High>1383899903</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Top Conversations By Bytes</Name>
+    <Description>This report ranks the top connections by bytes. The data is collected from netflow and acl logs.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>srcIpAddr,srcName, destIpAddr,destName, SUM(totBytes)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>SUM(totBytes) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377908" name="Filter_Router_10">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType IN (Group@PH_SYS_EVENT_PermitTraffic)</SingleEvtConstr>
+        <GroupByAttr>srcIpAddr,srcName, destIpAddr</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896322</Low>
+      <High>1383899921</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Top Conversations By Bytes: Detailed View</Name>
+    <Description>This report ranks the top connections by bytes. The data is collected from netflow and acl logs.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>srcIpAddr,srcName, destIpAddr,destName, ipProto,destIpPort,SUM(totBytes),SUM(sentBytes),SUM(recvBytes)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>SUM(totBytes) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377909" name="Filter_Router_10">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType IN (Group@PH_SYS_EVENT_PermitTraffic)</SingleEvtConstr>
+        <GroupByAttr>srcIpAddr,srcName, destIpAddr,destName, ipProto,destIpPort</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896336</Low>
+      <High>1383899935</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Top Destination IPs By Bytes</Name>
+    <Description>This report ranks the top destination IPs by bytes. The data is collected from netflow and acl logs.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>destIpAddr,destName, SUM(totBytes),COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>SUM(totBytes) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377912" name="Filter_Router_10">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType IN (Group@PH_SYS_EVENT_PermitTraffic)</SingleEvtConstr>
+        <GroupByAttr>destIpAddr</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896356</Low>
+      <High>1383899955</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Top Destination IPs By Bytes: Detailed View</Name>
+    <Description>This report ranks the top destination IPs and ports by bytes. The data is collected from netflow and acl logs.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>destIpAddr,destName, ipProto,destIpPort,SUM(totBytes),SUM(sentBytes),SUM(recvBytes)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>SUM(totBytes) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377913" name="Filter_Router_10">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType IN (Group@PH_SYS_EVENT_PermitTraffic)</SingleEvtConstr>
+        <GroupByAttr>destIpAddr,destName,ipProto,destIpPort</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896373</Low>
+      <High>1383899972</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Top Outbound Destination Countries By Connections, Bytes</Name>
+    <Description>Ranks countries by destined traffic connections, bytes</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>destGeoCountry,COUNT(*), SUM(sentBytes), SUM(recvBytes), SUM(totBytes)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>COUNT(*)  DESC, SUM(totBytes) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377917" name="Filter_FW_23">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH)  AND  eventType IN (Group@PH_SYS_EVENT_PermitTraffic)  AND  srcIpAddr IN (Group@PH_SYS_NETWORK_ENTERPRISE_INTERNAL_NET)</SingleEvtConstr>
+        <GroupByAttr>destGeoCountry</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896391</Low>
+      <High>1383899990</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Top Protocols By Bytes</Name>
+    <Description>This report ranks the top protocols by bytes. The data is collected from netflow and acl logs.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>ipProto,destIpPort,SUM(totBytes)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>SUM(totBytes) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377914" name="Filter_Router_10">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType IN (Group@PH_SYS_EVENT_PermitTraffic)</SingleEvtConstr>
+        <GroupByAttr>ipProto,destIpPort</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896409</Low>
+      <High>1383900008</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Top Protocols By Bytes: Detailed View</Name>
+    <Description>This report ranks the top protocol and destination ports by bytes. The data is collected from netflow and acl logs.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>ipProto,destIpPort,SUM(totBytes),SUM(sentBytes),SUM(recvBytes)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>SUM(totBytes) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377915" name="Filter_Router_10">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType IN (Group@PH_SYS_EVENT_PermitTraffic)</SingleEvtConstr>
+        <GroupByAttr>ipProto,destIpPort</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896418</Low>
+      <High>1383900017</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Top Router Interface By Bytes</Name>
+    <Description>This report ranks the top router link usage by bytes. The data is collected from netflow and acl logs.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,reptDevName,srcSnmpIntfIndex,srcIntfName,SUM(totBytes),SUM(sentBytes),SUM(recvBytes)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>SUM(totBytes) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377916" name="Filter_Router_10">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType IN (Group@PH_SYS_EVENT_PermitTraffic)</SingleEvtConstr>
+        <GroupByAttr>reptDevIpAddr,reptDevName,srcSnmpIntfIndex, srcIntfName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896433</Low>
+      <High>1383900032</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Top Source IPs By Bytes</Name>
+    <Description>This report ranks the top source IPs by bytes. The data is collected from netflow and acl logs.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>srcIpAddr,srcName, SUM(totBytes),COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>SUM(totBytes) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377910" name="Filter_Router_10">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType IN (Group@PH_SYS_EVENT_PermitTraffic)</SingleEvtConstr>
+        <GroupByAttr>srcIpAddr</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896450</Low>
+      <High>1383900049</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Top Source IPs By Bytes: Detailed View</Name>
+    <Description>This report ranks the top source IPs and destionation ports by bytes. The data is collected from netflow and acl logs.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>srcIpAddr,srcName, ipProto,destIpPort,SUM(totBytes),SUM(sentBytes),SUM(recvBytes)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>SUM(totBytes) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377911" name="Filter_Router_10">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType IN (Group@PH_SYS_EVENT_PermitTraffic)</SingleEvtConstr>
+        <GroupByAttr>srcIpAddr,srcName, ipProto,destIpPort</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896463</Low>
+      <High>1383900062</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Baseline Client and Server Traffic Flow: day of month view</Name>
+    <Description>This report provides baseline traffic flow analysis results from a day of month perspective. It answers questions of the type: "What does my baseline traffic look like on 1st of the month during business hours and after hours"? For every day of the month and activity hour type, the most active connections in terms of the hourly average flows is captured in the report. There is an additional report that captures more detailed statistics.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>profDate, profHourType, srcIpAddr, destIpAddr, ipProto,destIpPort, avgTotFlows, avgSentBytes, avgRecvBytes</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>profDate ASC, profHourType ASC, avgTotFlows DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377918" name="Filter_Router_11">
+        <SingleEvtConstr>eventType = "PH_PROF_FLOW_FULL"  AND  profDateType = 2</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896481</Low>
+      <High>1383900080</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Baseline Client and Server Traffic Flow: day of week view</Name>
+    <Description>This report provides baseline traffic flow analysis results from a day of week perspective. It answers questions of the type: "What does my baseline traffic look like on Mondays during business hours and after hours"? For every day of the week and activity hour type, the most active connections in terms of the hourly average flows is captured in the report. There is an additional report that captures more detailed statistics.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>profDate, profHourType, srcIpAddr, destIpAddr, ipProto,destIpPort,avgTotFlows, avgSentBytes, avgRecvBytes</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>profDate ASC, profHourType ASC, avgTotFlows DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377919" name="Filter_Router_12">
+        <SingleEvtConstr>eventType = "PH_PROF_FLOW_FULL"  AND  profDateType = 1</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896498</Low>
+      <High>1383900097</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Baseline Client and Server Traffic Flow: detailed day of month view</Name>
+    <Description>This report provides detailed baseline traffic flow analysis results from a day of month perspective. It answers questions of the type: "What does my detailed baseline traffic statistics look like on 1st of the month during business hours and after hours"? For every day of the month and activity hour type, the most active connections in terms of the hourly average flows is captured in the report, along with other flow measures such min,max and standard deviation of flows, sent Bytes and received Bytes.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>profDate, profHourType, srcIpAddr, destIpAddr, ipProto,destIpPort,avgTotFlows, minTotFlows, maxTotFlows, sdevTotFlows, avgSentBytes, minSentBytes, maxSentBytes, sdevSentBytes, avgRecvBytes, minRecvBytes,maxRecvBytes, sdevRecvBytes</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>profDate ASC, profHourType ASC, avgTotFlows DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377920" name="Filter_Router_13">
+        <SingleEvtConstr>eventType = "PH_PROF_FLOW_FULL" AND profDateType = 2</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896512</Low>
+      <High>1383900111</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Baseline Client and Server Traffic Flow: detailed day of week view</Name>
+    <Description>This report provides detailed baseline traffic flow analysis results from a day of week perspective. It answers questions of the type: "What does my detailed baseline traffic statistics look like on Mondays during business hours and after hours"? For every week of day and activity hour type, the most active connections in terms of the hourly average flows is captured in the report, along with other flow measures such min,max and standard deviation of flows, sent Bytes and received Bytes.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>profDate, profHourType, srcIpAddr, destIpAddr, ipProto,destIpPort, avgTotFlows, minTotFlows, maxTotFlows, sdevTotFlows, avgSentBytes, minSentBytes, maxSentBytes, sdevSentBytes, avgRecvBytes, minRecvBytes,maxRecvBytes, sdevRecvBytes</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>profDate ASC, profHourType ASC, avgTotFlows DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377921" name="Filter_Router_14">
+        <SingleEvtConstr>eventType = "PH_PROF_FLOW_FULL" AND profDateType = 1</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896527</Low>
+      <High>1383900126</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Baseline Client Traffic Flow: day of month view</Name>
+    <Description>This report provides baseline client traffic flow analysis results from a day of month perspective. A client is a connection initiator. The report answers questions of the type: "What does my baseline client traffic look like on 1st of the month during business hours and after hours"? For every day of the month and activity hour type, the most active client connections in terms of the hourly average flows are captured in the report. There is an additional report that captures more detailed statistics.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>profDate, profHourType, srcIpAddr, ipProto,destIpPort,avgTotFlows, avgSentBytes, avgRecvBytes</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>profDate ASC, profHourType ASC, avgTotFlows DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377922" name="Filter_Router_15">
+        <SingleEvtConstr>eventType = "PH_PROF_FLOW_CLIENT"  AND  profDateType = 2</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896542</Low>
+      <High>1383900141</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Baseline Client Traffic Flow: day of week view</Name>
+    <Description>This report provides baseline client traffic flow analysis results from a day of week perspective. A client is a connection initiator. The report answers questions of the type: "What does my baseline client traffic look like on Mondays during business hours and after hours"? For every day of the week and activity hour type, the most active client connections in terms of the hourly average flows are captured in the report. There is an additional report that captures more detailed statistics.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>profDate, profHourType, srcIpAddr, ipProto,destIpPort,avgTotFlows, avgSentBytes, avgRecvBytes</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>profDate ASC, profHourType ASC, avgTotFlows DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377923" name="Filter_Router_16">
+        <SingleEvtConstr>eventType = "PH_PROF_FLOW_CLIENT" AND profDateType = 1</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896558</Low>
+      <High>1383900157</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Baseline Client Traffic Flow: detailed day of month view</Name>
+    <Description>This report provides baseline client traffic flow analysis results from a day of month perspective. A client is a connection initiator. The report answers questions of the type: "What does my baseline client traffic look like on 1st of the month during business hours and after hours"? For every day of the month and activity hour type, the most active connections in terms of the hourly average flows is captured in the report, along with other flow measures such min,max and standard deviation of flows, sent Bytes and received Bytes.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>profDate, profHourType, srcIpAddr, ipProto,destIpPort,avgTotFlows, minTotFlows, maxTotFlows, avgSentBytes, minSentBytes, maxSentBytes, avgRecvBytes, minRecvBytes,maxRecvBytes</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>profDate ASC, profHourType ASC, avgTotFlows DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377924" name="Filter_Router_17">
+        <SingleEvtConstr>eventType = "PH_PROF_FLOW_CLIENT" AND profDateType = 2</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896572</Low>
+      <High>1383900171</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Baseline Client Traffic Flow: detailed day of week view</Name>
+    <Description>This report provides baseline client traffic flow analysis results from a day of week perspective. A client is a connection initiator. The report answers questions of the type: "What does my baseline client traffic look like on Mondays during business hours and after hours"? For every day of the month and activity hour type, the most active connections in terms of the hourly average flows is captured in the report, along with other flow measures such min,max and standard deviation of flows, sent Bytes and received Bytes.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>profDate, profHourType, srcIpAddr, ipProto,destIpPort,avgTotFlows, minTotFlows, maxTotFlows, avgSentBytes, minSentBytes, maxSentBytes, avgRecvBytes, minRecvBytes,maxRecvBytes</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>profDate ASC, profHourType ASC, avgTotFlows DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377925" name="Filter_Router_18">
+        <SingleEvtConstr>eventType = "PH_PROF_FLOW_CLIENT" AND profDateType = 1</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896589</Low>
+      <High>1383900188</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Baseline Server Traffic Flow: day of month view</Name>
+    <Description>This report provides baseline server traffic flow analysis results from a day of month perspective. A server is a connection responder. The report answers questions of the type: "What does my baseline server traffic look like on 1st of the month during business hours and after hours"? For every day of the month and activity hour type, the most active server connections in terms of the hourly average flows are captured in the report. There is an additional report that captures more detailed statistics.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>profDate, profHourType,destIpAddr,ipProto,destIpPort,avgTotFlows, avgSentBytes, avgRecvBytes</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>profDate ASC, profHourType ASC, avgTotFlows DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377926" name="Filter_Router_19">
+        <SingleEvtConstr>eventType = "PH_PROF_FLOW_SERVER" AND profDateType = 2</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896605</Low>
+      <High>1383900204</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Baseline Server Traffic Flow: day of week view</Name>
+    <Description>This report provides baseline server traffic flow analysis results from a day of week perspective. A server is a connection responder. The report answers questions of the type: "What does my baseline server traffic look like on Mondays during business hours and after hours"? For every day of the week and activity hour type, the most active server connections in terms of the hourly average flows are captured in the report. There is an additional report that captures more detailed statistics.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>profDate, profHourType, srcIpAddr, destIpAddr, ipProto,destIpPort,avgTotFlows, avgSentBytes, avgRecvBytes</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>profDate ASC, profHourType ASC, avgTotFlows DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377927" name="Filter_Router_20">
+        <SingleEvtConstr>eventType = "PH_PROF_FLOW_SERVER" AND profDateType = 1</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896620</Low>
+      <High>1383900219</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Baseline Server Traffic Flow: detailed day of month view</Name>
+    <Description>This report provides baseline server traffic flow analysis results from a day of month perspective. A server is a connection responder. The report answers questions of the type: "What does my baseline server traffic look like on 1st of the month during business hours and after hours"? For every day of the month and activity hour type, the most active connections in terms of the hourly average flows is captured in the report, along with other flow measures such min,max and standard deviation of flows, sent Bytes and received Bytes.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>profDate, profHourType, destIpAddr,ipProto,destIpPort,avgTotFlows, minTotFlows, maxTotFlows, avgSentBytes, minSentBytes, maxSentBytes, avgRecvBytes, minRecvBytes,maxRecvBytes</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>profDate ASC, profHourType ASC, avgTotFlows DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377928" name="Filter_Router_21">
+        <SingleEvtConstr>eventType = "PH_PROF_FLOW_SERVER" AND profDateType = 2</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1384225148</Low>
+      <High>1384228747</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+
+
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Router Permit: Baseline Server Traffic Flow: detailed day of week view</Name>
+    <Description>This report provides baseline server traffic flow analysis results from a day of week perspective. A server is a connection responder. The report answers questions of the type: "What does my baseline server traffic look like on Mondays during business hours and after hours"? For every day of the month and activity hour type, the most active connections in terms of the hourly average flows is captured in the report, along with other flow measures such min,max and standard deviation of flows, sent Bytes and received Bytes.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>profDate, profHourType, destIpAddr,ipProto,destIpPort,avgTotFlows, minTotFlows, maxTotFlows, avgSentBytes, minSentBytes, maxSentBytes, avgRecvBytes, minRecvBytes,maxRecvBytes</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>profDate ASC, profHourType ASC, avgTotFlows DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377929" name="Filter_Router_22">
+        <SingleEvtConstr>eventType = "PH_PROF_FLOW_SERVER" AND profDateType = 1</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896652</Low>
+      <High>1383900251</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Logon: Failed Router Admin Logons</Name>
+    <Description>Details about failed router logons</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,reptDevName,eventType,srcIpAddr,srcName,user,srcIntfName,destIpPort,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377900" name="Filter_Router_3">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType IN (Group@PH_SYS_EVENT_HostLogonFailure))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896672</Low>
+      <High>1383900271</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Logon: Router Admin Activity Details</Name>
+    <Description>Provides details about router admin activity - logons, command executions and logoff</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,reptDevName,eventType,srcIpAddr,srcName, user,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377930" name="Filter_Router_23">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType IN (Group@PH_SYS_EVENT_HostLogonSuccess,Group@PH_SYS_EVENT_ConfigChange,Group@PH_SYS_EVENT_HostLogoff)</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896897</Low>
+      <High>1383900496</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Logon: Successful Router Admin Logon</Name>
+    <Description>Details about successful router logons</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,reptDevName,eventType,srcIpAddr,srcName, user,srcIntfName,destIpPort,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377931" name="Filter_Router_24">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType IN (Group@PH_SYS_EVENT_HostLogonSuccess))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896912</Low>
+      <High>1383900511</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Logon: Top Router Admin IP, Users By Failed Logon Count</Name>
+    <Description>Ranks router/switch admin users by the number of failed logons</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,reptDevName,srcIpAddr,srcName,user,COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>COUNT(*)</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377799" name="Filter_Router_2">
+        <SingleEvtConstr>reptDevIpAddr IN ( Group@PH_SYS_DEVICE_ROUTER_SWITCH)  AND  eventType IN ( Group@PH_SYS_EVENT_HostLogonFailure)</SingleEvtConstr>
+        <GroupByAttr>reptDevIpAddr,reptDevName,srcIpAddr,srcName,user</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896927</Low>
+      <High>1383900526</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Logon: Top Router Admin IP, Users By Successful Logon Count</Name>
+    <Description>Ranks router/switch admin users by the number of successful logons</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,reptDevName,srcIpAddr,srcName,user,COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>COUNT(*)</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377797" name="Filter_Router_1">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH)  AND  eventType IN (Group@PH_SYS_EVENT_HostLogonSuccess)</SingleEvtConstr>
+        <GroupByAttr>reptDevIpAddr,reptDevName,srcIpAddr,srcName,user</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896948</Low>
+      <High>1383900547</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Logon: Top Router Admin Users By Failed Logon Count</Name>
+    <Description>Ranks router/switch admin users by the number of failed logons</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,reptDevName,user,COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>COUNT(*)</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377798" name="Filter_Router_2">
+        <SingleEvtConstr>reptDevIpAddr IN ( Group@PH_SYS_DEVICE_ROUTER_SWITCH)  AND  eventType IN ( Group@PH_SYS_EVENT_HostLogonFailure)</SingleEvtConstr>
+        <GroupByAttr>reptDevIpAddr,reptDevName,user</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896975</Low>
+      <High>1383900574</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Logon: Top Router Admin Users By Successful Logon Count</Name>
+    <Description>Ranks router/switch admin users by the number of successful logons</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,reptDevName,user,COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>COUNT(*)</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377796" name="Filter_Router_1">
+        <SingleEvtConstr>reptDevIpAddr IN ( Group@PH_SYS_DEVICE_ROUTER_SWITCH)  AND  eventType IN ( Group@PH_SYS_EVENT_HostLogonSuccess)</SingleEvtConstr>
+        <GroupByAttr>reptDevIpAddr,reptDevName,user</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383896989</Low>
+      <High>1383900588</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>DDos and anomaly traffic info</Name>
+    <Description/>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>eventType,eventName,srcIpAddr,destIpAddr,COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>COUNT(*) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="0">
+      <SubPattern id="2858640" name="">
+        <SingleEvtConstr>phEventCategory = 1  AND  eventType IN (Group@PH_SYS_EVENT_PH_RULE_SEC)</SingleEvtConstr>
+        <GroupByAttr>eventType,srcIpAddr,destIpAddr</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1384241844</Low>
+      <High>1384245443</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>All Events: Top Reporting Router/Switches and External Events By Severity, Count</Name>
+    <Description>Top Reporting Router/Switches and Events By Severity, Count. This exclude system generated monitoring events.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,reptDevName,eventType,eventSeverity,COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>eventSeverity DESC,COUNT(*) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377902" name="Filter_Router_5">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType NOT CONTAIN "PH_DEV_MON"</SingleEvtConstr>
+        <GroupByAttr>reptDevIpAddr,reptDevName,eventType,eventSeverity</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383897017</Low>
+      <High>1383900616</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>All Events: Top Reporting Router/Switches and System Generated Monitoring Events By Severity, Count</Name>
+    <Description>Top Reporting Router/Switches and Events By Severity, Count</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,reptDevName,eventType,COUNT(*),eventSeverity</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>eventSeverity DESC,COUNT(*) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377903" name="Filter_Router_5">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType CONTAIN "PH_DEV_MON"</SingleEvtConstr>
+        <GroupByAttr>reptDevIpAddr,eventType,eventSeverity</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383897042</Low>
+      <High>1383900641</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>All Events: Top Reporting Router/Switches By Event Count</Name>
+    <Description>Top Reporting Router/Switches By Event Count</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,reptDevName, COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>COUNT(*) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1377901" name="Filter_Router_4">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_ROUTER_SWITCH) AND eventType NOT CONTAIN "PH_DEV_MON"</SingleEvtConstr>
+        <GroupByAttr>reptDevIpAddr,reptDevName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383897060</Low>
+      <High>1383900659</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Device exception record report</Name>
+    <Description/>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2001</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>eventType,eventName,hostIpAddr,COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>COUNT(*) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="0">
+      <SubPattern id="2858641" name="">
+        <SingleEvtConstr>phEventCategory = 1  AND  eventType IN (Group@PH_SYS_EVENT_PH_RULE_AVAIL,Group@PH_SYS_EVENT_PH_RULE_PERF,Group@PH_SYS_EVENT_PH_RULE_CHANGE)  AND  eventType != "PH_RULE_ACCELOPS_HIGH_EPS"</SingleEvtConstr>
+        <GroupByAttr>eventType,hostIpAddr</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles/>
+    <ReportInterval>
+      <Low>1383897077</Low>
+      <High>1383900676</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Availability: Unix Application Down/Restart</Name>
+    <Description>Tracks application stop and start events</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,hostName,hostIpAddr,eventType,appName,swProcName,swParam,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379072" name="Filter_OVERALL_AVAIL_3">
+        <SingleEvtConstr>eventType IN (Group@PH_SYS_EVENT_AppShutdown,Group@PH_SYS_EVENT_AppRestart) AND (reptDevIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER) OR hostIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745472</Low>
+      <High>1389749071</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Availability: Unix Server Down/Restart</Name>
+    <Description>Tracks server down and restart events</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,eventType,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379071" name="Filter_OVERALL_AVAIL_2">
+        <SingleEvtConstr>eventType IN (Group@PH_SYS_EVENT_SystemShutdown,Group@PH_SYS_EVENT_SystemRestart) AND (reptDevIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER) OR hostIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745504</Low>
+      <High>1389749103</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Availability: Unix Server Interface Down/Up</Name>
+    <Description>Tracks server network interface down and up events</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,eventType,intfName,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379073" name="Filter_OVERALL_AVAIL_7">
+        <SingleEvtConstr>eventType IN (Group@PH_SYS_EVENT_NetIntfShutdown,Group@PH_SYS_EVENT_NetIntfRestart) AND (reptDevIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER) OR hostIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745529</Low>
+      <High>1389749128</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Availability: Unix Server Ping Monitor Statistics</Name>
+    <Description>Tracks the PING response times and packet loss for the monitored devices</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,AVG(avgDurationMSec),MIN(minDurationMSec),MAX(maxDurationMSec),AVG(pktLossPct)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(avgDurationMSec) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379070" name="Filter_PERF_MON_17">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_PING_STAT" AND hostIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER)</SingleEvtConstr>
+        <GroupByAttr>hostName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745556</Low>
+      <High>1389749155</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Availability: Unix Server Processes Started/Stopped</Name>
+    <Description>Tracks started/stopped server processes</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,hostIpAddr,hostName,eventType,appName,appGroupName</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>hostName,eventType</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379077" name="Filter_SRVC_UPDOWN">
+        <SingleEvtConstr>eventType IN ("PH_DEV_MON_PROC_START","PH_DEV_MON_PROC_STOP") AND (hostIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745581</Low>
+      <High>1389749180</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Availability: Unix Server TCP/UDP Ports Up/Down</Name>
+    <Description>Tracks TCP/UDP ports that went up or down in a server</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,hostIpAddr,hostName,eventType,ipProto,ipPort</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>hostName,eventType</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379076" name="Filter_PORT_UPDOWN">
+        <SingleEvtConstr>eventType IN ("PH_DEV_MON_PORT_OPEN","PH_DEV_MON_PORT_CLOSE") AND (hostIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745599</Low>
+      <High>1389749198</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Availability: Windows Application Down/Restart</Name>
+    <Description>Tracks application stop and start events</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,hostName,hostIpAddr,eventType,appName,swProcName,swParam,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378889" name="Filter_OVERALL_AVAIL_3">
+        <SingleEvtConstr>eventType IN (Group@PH_SYS_EVENT_AppShutdown,Group@PH_SYS_EVENT_AppRestart) AND (reptDevIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER) OR hostIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745618</Low>
+      <High>1389749217</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Availability: Windows Server Down/Restart</Name>
+    <Description>Tracks server down and restart events</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,eventType,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378888" name="Filter_OVERALL_AVAIL_2">
+        <SingleEvtConstr>eventType IN (Group@PH_SYS_EVENT_SystemShutdown,Group@PH_SYS_EVENT_SystemRestart) AND (reptDevIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER) OR hostIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745640</Low>
+      <High>1389749239</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Availability: Windows Server Interface Down/Up</Name>
+    <Description>Tracks server network interface down and up events</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,eventType,intfName,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378890" name="Filter_OVERALL_AVAIL_7">
+        <SingleEvtConstr>eventType IN (Group@PH_SYS_EVENT_NetIntfShutdown,Group@PH_SYS_EVENT_NetIntfRestart) AND (reptDevIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER) OR hostIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745659</Low>
+      <High>1389749258</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Availability: Windows Server Ping Monitor Statistics</Name>
+    <Description>Tracks the PING response times and packet loss for the monitored devices</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName, AVG(avgDurationMSec),MIN(minDurationMSec),MAX(maxDurationMSec),AVG(pktLossPct)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(avgDurationMSec) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378887" name="Filter_PERF_MON_17">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_PING_STAT" AND hostIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER)</SingleEvtConstr>
+        <GroupByAttr>hostName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745676</Low>
+      <High>1389749275</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Availability: Windows Server Processes Started/Stopped</Name>
+    <Description>Tracks started/stopped server processes</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,hostIpAddr,hostName,eventType,appName,appGroupName</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>hostName,eventType</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378895" name="Filter_SRVC_UPDOWN">
+        <SingleEvtConstr>eventType IN ("PH_DEV_MON_PROC_START","PH_DEV_MON_PROC_STOP") AND (hostIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745694</Low>
+      <High>1389749293</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Availability: Windows Server TCP/UDP Ports Up/Down</Name>
+    <Description>Tracks TCP/UDP ports that went up or down in a server</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,hostIpAddr,hostName,eventType,ipProto,ipPort</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>hostName,eventType</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378894" name="Filter_PORT_UPDOWN">
+        <SingleEvtConstr>eventType IN ("PH_DEV_MON_PORT_OPEN","PH_DEV_MON_PORT_CLOSE") AND (hostIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745711</Low>
+      <High>1389749310</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Performance: Top Datastores By Utilization</Name>
+    <Description>This report ranks datastores by utlization</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>datacenter,datastore,datastoreType,AVG(diskUtil)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(diskUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1381004" name="Filter_VMware_25">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_DATASTORE_UTIL"</SingleEvtConstr>
+        <GroupByAttr>datacenter,datastore,datastoreType</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745734</Low>
+      <High>1389749333</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Performance: Top ESX By CPU Utilization</Name>
+    <Description>This report ranks ESX hosts by aggregate cpu utilization. Other CPU usage metrics are included.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,AVG(cpuUtil)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(cpuUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1380837" name="Filter_VMware_23">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_SYS_CPU_UTIL"  AND hostIpAddr IN (Group@PH_SYS_DEVICE_VM_SERVER)</SingleEvtConstr>
+        <GroupByAttr>hostName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745754</Low>
+      <High>1389749353</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Performance: Top Unix Servers By CPU Util</Name>
+    <Description>Ranks the devices by average cpu utilization</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,AVG(cpuUtil),AVG(sysCpuUtil),AVG(userCpuUtil)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(cpuUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379066" name="Filter_PERF_MON_2">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_SYS_CPU_UTIL" AND hostIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER)</SingleEvtConstr>
+        <GroupByAttr>hostName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745772</Low>
+      <High>1389749371</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Performance: Top Unix Servers By Disk I/O Activity</Name>
+    <Description>Ranks the unix servers by average disk I/O utilization over a window</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,hostIpAddr,diskName,AVG(diskIOUtil), AVG(devDiskRWLatency),AVG(appDiskRWLatency),AVG(diskReadReqPerSec), AVG(diskWriteReqPerSec), AVG(diskReadKBytesPerSec), AVG(diskWriteKBytesPerSec)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(diskIOUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379069" name="Filter_PERF_MON_6">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_DISK_IO_UTIL" AND hostIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER)</SingleEvtConstr>
+        <GroupByAttr>hostName,hostIpAddr,diskName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745788</Low>
+      <High>1389749387</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Performance: Top Unix Servers By Disk Space Util</Name>
+    <Description>Ranks the devices by average system disk utilization over a window</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,diskName,AVG(diskUtil)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(diskUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379068" name="Filter_PERF_MON_6">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_SYS_DISK_UTIL" AND hostIpAddr IN ( Group@PH_SYS_DEVICE_UNIX_SERVER)</SingleEvtConstr>
+        <GroupByAttr>hostName,diskName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745804</Low>
+      <High>1389749403</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Performance: Top Unix Servers By Memory Util and Swap Rate</Name>
+    <Description>Ranks the unix devices by average memory utilization over a window and provides details of memory utilization components such as buffered and cached memory</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,memName, AVG(memUtil), AVG(freeMemKB), AVG(bufMemKB), AVG(cacheMemKB), AVG(swapInRate), AVG(swapOutRate),AVG(swapRate)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(memUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379067" name="Filter_PERF_MON_3">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_SYS_MEM_UTIL" AND hostIpAddr IN ( Group@PH_SYS_DEVICE_UNIX_SERVER)</SingleEvtConstr>
+        <GroupByAttr>hostName,memName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745851</Low>
+      <High>1389749450</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Performance: Top Windows Servers By CPU Util</Name>
+    <Description>Ranks the windows servers by average cpu utilization over a window</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,cpuName, AVG(cpuUtil), MAX(cpuUtil), MIN(cpuUtil)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(cpuUtil) DESC, MAX(cpuUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378880" name="Filter_PERF_MON_2">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_SYS_CPU_UTIL" AND hostIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER)</SingleEvtConstr>
+        <GroupByAttr>hostName,cpuName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745865</Low>
+      <High>1389749464</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Performance: Top Windows Servers By Disk I/O Activity</Name>
+    <Description>Ranks the windows servers by average disk I/O utilization over a window. This requires WMI.</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,hostIpAddr,diskName,AVG(diskIOUtil), AVG(devDiskRdLatency),AVG(devDiskWrLatency),AVG(diskQLen),AVG(diskReadKBytesPerSec), AVG(diskWriteKBytesPerSec),AVG(diskReadReqPerSec), AVG(diskWriteReqPerSec)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(diskIOUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378883" name="Filter_PERF_MON_6">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_DISK_IO_UTIL" AND hostIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER)</SingleEvtConstr>
+        <GroupByAttr>hostName,hostIpAddr,diskName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745879</Low>
+      <High>1389749478</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Performance: Top Windows Servers By Disk Space Util</Name>
+    <Description>Ranks the devices by average system disk utilization over a window</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,diskName,AVG(diskUtil)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(diskUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378884" name="Filter_PERF_MON_6">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_SYS_DISK_UTIL" AND hostIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER)</SingleEvtConstr>
+        <GroupByAttr>hostName,diskName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745890</Low>
+      <High>1389749489</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Performance: Top Windows Servers By Memory Util and swap rate</Name>
+    <Description>Ranks the devices by average memory utilization and swap rate</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,memName, AVG(memUtil), MAX(memUtil), AVG(swapInRate), AVG(swapOutRate),AVG(swapRate)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(memUtil) DESC,MAX(memUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378881" name="Filter_PERF_MON_3">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_SYS_MEM_UTIL" AND hostIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER)</SingleEvtConstr>
+        <GroupByAttr>hostName,memName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745902</Low>
+      <High>1389749501</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Top Unix Applications By CPU, Memory</Name>
+    <Description>Ranks Windows processes by first average cpu utilization and then by memory utilization</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,appName,swProcName,AVG(cpuUtil),AVG(memUtil)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(cpuUtil) DESC, AVG(memUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379080" name="Filter_PERF_MON_4">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_PROC_RESOURCE_UTIL" AND hostIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER)</SingleEvtConstr>
+        <GroupByAttr>hostName,appName,swProcName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745939</Low>
+      <High>1389749538</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Top Unix Network Interfaces By 95th Pctile Traffic</Name>
+    <Description>Ranks the windows network interfaces by 95th percentile traffic</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,intfName,Pctile95(recvBitsPerSec),Pctile95(sentBitsPerSec)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>Pctile95(recvBitsPerSec) DESC, Pctile95(sentBitsPerSec) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379079" name="Filter_PERF_MON_8">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_NET_INTF_UTIL" AND hostIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER) AND intfName NOT IN ("lo","Null0")</SingleEvtConstr>
+        <GroupByAttr>hostName,intfName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745953</Low>
+      <High>1389749552</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Top Windows Applications By CPU, Memory</Name>
+    <Description>Ranks Windows processes by first average cpu utilization and then by memory utilization</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,appName,swProcName,AVG(cpuUtil),AVG(memUtil)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>AVG(cpuUtil) DESC, AVG(memUtil) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379050" name="Filter_PERF_MON_4">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_PROC_RESOURCE_UTIL" AND hostIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER)</SingleEvtConstr>
+        <GroupByAttr>hostName,appName,swProcName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745966</Low>
+      <High>1389749565</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Top Windows Network Interfaces By 95th Pctile Traffic</Name>
+    <Description>Ranks the windows network interfaces by 95th percentile traffic</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>hostName,intfName,Pctile95(recvBitsPerSec),Pctile95(sentBitsPerSec)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>Pctile95(recvBitsPerSec) DESC, Pctile95(sentBitsPerSec) DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378898" name="Filter_PERF_MON_8">
+        <SingleEvtConstr>eventType = "PH_DEV_MON_NET_INTF_UTIL" AND hostIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER) AND intfName NOT IN ("lo","Null0")</SingleEvtConstr>
+        <GroupByAttr>hostName,intfName</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745983</Low>
+      <High>1389749582</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>
+	
+	<xmlData>
+		<Reports>
+  <Report>
+    <Name>Change: Unix User Password Changed</Name>
+    <Description>Tracks password changes</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,srcIpAddr,user,targetUser,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379065" name="Filter_UNIX_13">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_UNIX_SERVER)  AND  eventType IN (Group@PH_SYS_EVENT_PasswordChange)</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389745999</Low>
+      <High>1389749598</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+	</xmlData>		
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Change: Windows Server Password Changes</Name>
+    <Description>Tracks password changes</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,phRecvTime,srcIpAddr,user,domain,targetUser,targetDomain,winLogonId,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378876" name="Filter_WINDOWS_42">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER) AND eventType IN (Group@PH_SYS_EVENT_PasswordChange)</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389746026</Low>
+      <High>1389749625</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Logon: All Failed Logons</Name>
+    <Description>This report lists all failed logons</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime, eventType, user, vmwEventMsg</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>phRecvTime DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1380818" name="Filter_VMware_8">
+        <SingleEvtConstr>eventType IN ( Group@PH_SYS_EVENT_VMware_LogonFailure)</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389746042</Low>
+      <High>1389749641</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Logon: All Successful Logons</Name>
+    <Description>This report lists all successful logons</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime, eventType, user, vmwEventMsg</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>phRecvTime DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1380817" name="Filter_VMware_7">
+        <SingleEvtConstr>eventType IN (Group@PH_SYS_EVENT_VMware_LogonSuccess)</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389746054</Low>
+      <High>1389749653</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Logon: Successful Unix Server Logon Details</Name>
+    <Description>This report details successful unix server logons with all parsed fields and raw logs</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,srcIpAddr,user,phRecvTime,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379055" name="Filter_UNIX_3">
+        <SingleEvtConstr>reptDevIpAddr IN ( Group@PH_SYS_DEVICE_UNIX_SERVER)  AND  eventType IN ( Group@PH_SYS_EVENT_HostLogonSuccess)</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389746065</Low>
+      <High>1389749664</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Error: All Error Events</Name>
+    <Description>This report lists all error events</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime, eventType, vmwEventMsg</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>phRecvTime DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1380813" name="Filter_VMware_1">
+        <SingleEvtConstr>vmwEventCat = "error"</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389746080</Low>
+      <High>1389749679</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Error: All Warning Events</Name>
+    <Description>This report lists all warning events</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime, eventType, vmwEventMsg</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>phRecvTime DESC</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1380814" name="Filter_VMware_2">
+        <SingleEvtConstr>vmwEventCat = "warning"</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1389746091</Low>
+      <High>1389749690</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Logon: Windows Server Logons</Name>
+    <Description>This report captures all logons (sucessful and failed) to windows servers</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime, reptDevIpAddr,srcIpAddr,user,domain,eventType,winLogonType,winLogonFailCode, rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378865" name="Filter_WINDOWS_31">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER)  AND  eventType IN ( Group@PH_SYS_EVENT_HostLogonSuccess,Group@PH_SYS_EVENT_HostLogonFailure)</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1390355257</Low>
+      <High>1390358856</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Logon: Top Windows Servers,Users By Failed Logon Count</Name>
+    <Description>This report ranks the windows servers and their users by the number of failed logons</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,srcIpAddr,user,domain,eventType,winLogonType,COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>COUNT(*)</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378852" name="Filter_WINDOWS_2">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER)  AND  eventType IN (Group@PH_SYS_EVENT_HostLogonFailure)</SingleEvtConstr>
+        <GroupByAttr>reptDevIpAddr,srcIpAddr,user,domain,eventType,winLogonType</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1390355304</Low>
+      <High>1390358903</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Logon: Top Windows Servers, Users By Successful Logon Count</Name>
+    <Description>This report ranks the windows servers and their users by the number of successful logons</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,srcIpAddr,user,domain,eventType,winLogonType,COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>COUNT(*)</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1378850" name="Filter_WINDOWS_1">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_WINDOWS_SERVER)  AND  eventType IN ( Group@PH_SYS_EVENT_HostLogonSuccess)</SingleEvtConstr>
+        <GroupByAttr>reptDevIpAddr,srcIpAddr,user,domain,eventType,winLogonType</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1390355334</Low>
+      <High>1390358933</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Logon: Failed Unix Server Logon Details With Raw Logs</Name>
+    <Description>This report details failed unix server logons with all parsed fields and raw logs</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,srcIpAddr,user,phRecvTime,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379056" name="Filter_UNIX_4">
+        <SingleEvtConstr>reptDevIpAddr IN ( Group@PH_SYS_DEVICE_UNIX_SERVER)  AND  eventType IN ( Group@PH_SYS_EVENT_HostLogonFailure)</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1390355371</Low>
+      <High>1390358970</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Logon: Unix Server Logons</Name>
+    <Description>This report details both successful and failed unix server logons with all parsed fields and raw logs</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,srcIpAddr,user,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1379063" name="Filter_UNIX_11">
+        <SingleEvtConstr>reptDevIpAddr IN ( Group@PH_SYS_DEVICE_UNIX_SERVER)  AND  eventType IN ( Group@PH_SYS_EVENT_HostLogonFailure, Group@PH_SYS_EVENT_HostLogonSuccess)</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1390355392</Low>
+      <High>1390358991</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Logon: Failed Firewall Admin Logon Details</Name>
+    <Description>Details about failed firewall logons</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,eventType,srcIpAddr,user,srcIntfName,destIpPort,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1382165" name="Filter_FW_4">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_FIREWALL) AND eventType IN (Group@PH_SYS_EVENT_HostLogonFailure))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1390355413</Low>
+      <High>1390359012</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Logon: Firewall Admin Activity Details</Name>
+    <Description>Provides details about firewall admin activity - logons, command executions and logoff</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,eventType,srcIpAddr,srcName,user,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1382353" name="Filter_FW_34">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_FIREWALL) AND eventType IN (Group@PH_SYS_EVENT_HostLogonSuccess,Group@PH_SYS_EVENT_ConfigChange,Group@PH_SYS_EVENT_HostLogoff)</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1390355428</Low>
+      <High>1390359027</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Logon: Successful Firewall Admin Logon Details</Name>
+    <Description>Details about successful firewall logons</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>phRecvTime,reptDevIpAddr,eventType,srcIpAddr,user,srcIntfName,destIpPort,rawEventMsg</AttrList>
+    </SelectClause>
+    <PatternClause window="3600">
+      <SubPattern id="1382164" name="Filter_FW_3">
+        <SingleEvtConstr>reptDevIpAddr IN (Group@PH_SYS_DEVICE_FIREWALL) AND eventType IN (Group@PH_SYS_EVENT_HostLogonSuccess))</SingleEvtConstr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1390355454</Low>
+      <High>1390359053</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Logon: Top Firewall Admin Users Ranked By Failed Logon</Name>
+    <Description>This report describes failed admin logon to a firewall</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,srcIpAddr,user,COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>COUNT(*)</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1382163" name="Filter_FW_2">
+        <SingleEvtConstr>reptDevIpAddr IN ( Group@PH_SYS_DEVICE_FIREWALL)  AND  eventType IN ( Group@PH_SYS_EVENT_HostLogonFailure)</SingleEvtConstr>
+        <GroupByAttr>reptDevIpAddr,srcIpAddr,user</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1390355476</Low>
+      <High>1390359075</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+		
+		<xmlData>
+			<Reports>
+  <Report>
+    <Name>Logon: Top Firewall Admin Users Ranked By Successful Logon</Name>
+    <Description>Top Firewall Admin Users Ranked By Successful Logon Count</Description>
+    <CustomerScope groupByEachCustomer="true">
+      <Include>2000</Include>
+      <Exclude/>
+    </CustomerScope>
+    <SelectClause>
+      <AttrList>reptDevIpAddr,srcIpAddr,user,COUNT(*)</AttrList>
+    </SelectClause>
+    <OrderByClause>
+      <AttrList>COUNT(*)</AttrList>
+    </OrderByClause>
+    <PatternClause window="3600">
+      <SubPattern id="1382162" name="Filter_FW_1">
+        <SingleEvtConstr>reptDevIpAddr IN ( Group@PH_SYS_DEVICE_FIREWALL)  AND  eventType IN ( Group@PH_SYS_EVENT_HostLogonSuccess)</SingleEvtConstr>
+        <GroupByAttr>reptDevIpAddr,srcIpAddr,user</GroupByAttr>
+      </SubPattern>
+    </PatternClause>
+    <userRoles>
+      <roles custId="2000">2730500</roles>
+    </userRoles>
+    <ReportInterval>
+      <Low>1390355498</Low>
+      <High>1390359097</High>
+    </ReportInterval>
+  </Report>
+</Reports>
+		</xmlData>
+	
+</xmlDatas>

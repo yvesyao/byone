@@ -103,10 +103,16 @@
 			</a>
 			<ul class="nav main-menu">
 				<li>
-					<a href="./ajax/dashboard.html" class="active ajax-link" title="首页">
+					<a href="#" class="dropdown-toggle ajax-link" title="首页">
 						<i class="fa fa-dashboard"></i>
 						<span class="hidden-xs">首页</span>
 					</a>
+					<ul class="dropdown-menu">
+						<li><a href="./ajax/asset-dashboard.html" class="ajax-link">资产概览</a></li>
+						<li><a href="./ajax/network-dashboard.html" class="ajax-link">网络概览</a></li>
+						<li><a href="./ajax/cloud-dashboard.html" class="ajax-link">云概览</a></li>
+						<li><a href="./ajax/security-dashboard.html" class="ajax-link">安全概览</a></li>
+					</ul>
 				</li>
 				
 				<li class="dropdown">
@@ -264,7 +270,7 @@
 </footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <!--<script src="http://code.jquery.com/jquery.js"></script>-->
-<script src="./plugins/jquery/jquery.min.js"></script>
+<script src="./plugins/jquery/jquery-1.10.2.min.js"></script>
 <script src="./plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="./plugins/bootstrap/bootstrap.min.js"></script>

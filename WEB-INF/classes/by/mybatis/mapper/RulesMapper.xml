@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="by.mybatis.dao.RulesMapper">  
+
+
+<select id="queryRulesDB" parameterType="by.utils.SqlAdapter" resultType="by.domain.RuleVo">  
+      ${sql}
+</select>  
+ 
+<insert id="addRulesDB" parameterType="by.domain.RuleVo" >
+insert into rule (id,ruleName,description,ruleStatus,incidentCategory,severity,
+ruleAttribute,notifyFrequency,conditions,triggerWindow,generateIncident,
+exceptCondition,clearConditon,allXml) values (#{id},#{ruleName},
+#{description},#{ruleStatus},#{incidentCategory},#{severity},
+#{ruleAttribute},#{notifyFrequency},#{conditions},#{triggerWindow},
+#{generateIncident},#{exceptCondition},#{clearConditon},#{allXml))
+</insert>
+
+<update id="updateRulesDB" parameterType="by.domain.RuleVo">
+ update rule set  
+ ruleName = #{ruleName},
+ description=#{description},
+ ruleStatus=#{ruleStatus},
+ incidentCategory=#{incidentCategory},
+ severity=#{severity},
+ ruleAttribute=#{ruleAttribute},
+ notifyFrequency=#{notifyFrequency},
+ conditions=#{conditions},
+ triggerWindow=#{triggerWindow},
+ generateIncident=#{generateIncident},
+ exceptCondition=#{exceptCondition},
+ clearConditon=#{clearConditon},
+ allXml=#{allXml))
+ where id = #{id}
+</update>
+
+<delete id="deleteRulesDB" parameterType="String">
+ delete from rule where id = #{ruleID}
+</delete>
+
+<update id="changeRuleStatus" parameterType="by.domain.RuleVo">
+ update rule set  
+ ruleStatusInt = #{ruleStatusInt}
+ where id = #{id}
+</update>
+
+<select id="queryRuleDetail" parameterType="String" resultType="by.domain.RuleVo">  
+      select * from rule where id =  #{ruleID}
+</select> 
+
+</mapper>

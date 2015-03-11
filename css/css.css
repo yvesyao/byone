@@ -7529,6 +7529,7 @@ h3,
   background-image: -ms-linear-gradient(top, #ffffff 10%, #cccccc 100%);
   background-image: -o-linear-gradient(top, #ffffff 10%, #cccccc 100%);
   background-image: linear-gradient(top, #ffffff 10%, #cccccc 100%);
+  border-bottom: 1px solid #bbb;
 }
 #logo a {
   /* color: #525252;
@@ -7541,7 +7542,9 @@ h3,
   line-height: 50px;
 }
 #logo a img {
-  height: 40px;
+  max-height: 40px;
+  max-width: 140.6px;
+  width: 100%;
 }
 .navbar {
   margin: 0;
@@ -7553,7 +7556,6 @@ h3,
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
-  border-bottom: 1px solid #237cbb;
   z-index: 2000;
 }
 .body-expanded .navbar {
@@ -7561,8 +7563,8 @@ h3,
 }
 #sidebar-left {
   position: relative;
-  padding-bottom: 3000px !important;
-  margin-bottom: -3000px !important;
+  /* padding-bottom: 3000px !important;
+  margin-bottom: -3000px !important; */
   background: #3796da;
   -webkit-transition: 0.1s;
   -moz-transition: 0.1s;
@@ -7571,10 +7573,12 @@ h3,
 }
 #content {
   position: relative;
-  background: #FBFBF0;
-  border-left: #237cbb 1px solid;
-  padding-bottom: 3000px !important;
-  margin-bottom: -2980px !important;
+  background: #f0f5f9;
+  border-left: #278ad1 1px solid;
+  /* padding-bottom: 3000px !important;
+  margin-bottom: -2980px !important; */
+  padding-bottom: 20px;
+  min-height: 600px;
   overflow: hidden;
   -webkit-transition: 0.1s;
   -moz-transition: 0.1s;
@@ -7677,7 +7681,7 @@ h3,
 #top-panel {
   line-height: 50px;
   height: 50px;
-  border-left: #237cbb 1px solid;
+  border-left: #278ad1 1px solid;
 }
 #top-panel .nav .open a:hover,
 #top-panel .nav .open a:focus {
@@ -7693,7 +7697,7 @@ h3,
 }
 #main {
   min-height: 800px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 #search {
   position: relative;
@@ -7736,6 +7740,7 @@ h3,
 }
 .top-panel-right {
   padding-left: 0;
+  border-bottom: 1px solid #278ad1;
 }
 .panel-menu > li > a {
   padding: 0 5px 0 10px;
@@ -7962,17 +7967,17 @@ h3,
   padding-left: 0.5em;
 }
 #sidebar-left.col-xs-2 {
-  opacity: 0;
+  /* opacity: 0; */
   width: 0%;
   padding: 0;
 }
 .sidebar-show #sidebar-left.col-xs-2 {
-  opacity: 1;
+  /* opacity: 1; */
   width: 16.666666666666664%;
   padding: 0 15px;
 }
 .sidebar-show #content.col-xs-12 {
-  opacity: 1;
+  /* opacity: 1; */
   width: 83.33333333333334%;
 }
 .expanded {
@@ -8174,6 +8179,7 @@ ul.DTTT_dropdown.dropdown-menu > li:hover > a {
   padding: 0;
   line-height: 30px;
   background: #fff;
+  border-bottom: #dee9f2 1px solid;
   margin-bottom: 30px;
 }
 .breadcrumb {
@@ -9699,12 +9705,12 @@ io + .radio,
 }
 @media (min-width: 768px) {
   #sidebar-left.col-sm-2 {
-    opacity: 1;
+    /* opacity: 1; */
     width: 16.666666666666664%;
     padding: 0 15px;
   }
   .sidebar-show #sidebar-left.col-sm-2 {
-    opacity: 0;
+    /* opacity: 0; */
     width: 0;
     padding: 0;
   }
@@ -9929,7 +9935,7 @@ table.tr-click tbody tr.active > td {
   color: #f0f0f0;
 }
 #top-panel {
-  border-top: #0098fe solid 2px;
+  /* border-top: #0098fe solid 2px; */
   background-color: #3796da;
 }
 .box {
@@ -10007,8 +10013,21 @@ a.show-sidebar {
   text-align: center;
   line-height: 2em;
   border-radius: 1em;
-  z-index: 30000;
+  z-index: 2100;
+  box-shadow: 1px 1px 1px #aaa;
   margin: -1em -1em 0 0;
+  -moz-transition: all linear 0.2s;
+  -ms-transition: all linear 0.2s;
+  -webkit-transition: all linear 0.2s;
+  -o-transition: all linear 0.2s;
+  transition: all linear 0.2s;
+}
+a.show-sidebar:hover {
+  -webkit-transform: scale(1.2, 1.2);
+  -moz-transform: scale(1.2, 1.2);
+  -ms-transform: scale(1.2, 1.2);
+  -o-transform: scale(1.2, 1.2);
+  transform: scale(1.2, 1.2);
 }
 /* overwrite bootstrap  */
 #breadcrumb {
@@ -10306,6 +10325,21 @@ th {
 .charts {
   min-height: 300px;
   height: 100%;
+}
+.charts-header .page-header {
+  -moz-user-select: none;
+  /*火狐*/
+  -webkit-user-select: none;
+  /*webkit浏览器*/
+  -ms-user-select: none;
+  /*IE10*/
+  -khtml-user-select: none;
+  /*早期浏览器*/
+  user-select: none;
+  cursor: pointer;
+}
+.charts-header .page-header:hover {
+  background-color: rgba(10, 10, 155, 0.2);
 }
 /* chosen */
 .chosen-container-single .chosen-single {

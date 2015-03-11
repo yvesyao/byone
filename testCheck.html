@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="queryAllDevice.do" id="testForm">
+		<label for=""><input type="checkbox" name="check" value="check1">check1</label>
+		<label for=""><input type="checkbox" name="check" value="check2">check2</label>
+		<label for=""><input type="checkbox" name="check" value="check3">check3</label>
+		<input type="submit" value="submit">
+	</form>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<!-- 	<script type="text/javascript">
+		window.$ && $(function(){
+			$('#testForm').submit(function(event) {
+				event.preventDefault();
+				$.get('queryAllDevice.do', $(this).serialize(),function(data) {
+					/*optional stuff to do after success */
+				});
+			
+			});
+		})
+	</script> -->
+</body>
+</html>

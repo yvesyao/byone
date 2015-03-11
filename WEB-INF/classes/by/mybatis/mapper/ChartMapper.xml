@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="by.mybatis.dao.ChartMapper">  
+
+<select id="queryChartIds" parameterType="by.domain.ChartBaseVo" resultType="by.domain.ChartBaseVo">  
+	select * from chartindex where userId=#{userId} ,orgid=#{orgId} ,topCategory=#{topCategory} ,lowCategory=#{lowCategory} ;
+</select>  
+
+<select id="queryChartDetails" parameterType="String" resultType="by.domain.ChartDetailVo">  
+    select * from chartdetail where id = #{chartId};
+</select>  
+ 
+
+<insert id="addChartBase" parameterType="by.domain.ChartBaseVo" >  
+    insert into chartindex (id,userId,orgId,topCategory,lowCategory,chartId)
+    values (#{indexId},#{userId},#{orgId},#{topCategory},#{lowCategory},#{chartId});
+</insert>  
+
+<insert id="addChartDetail" parameterType="by.domain.ChartDetailVo" >  
+    insert into chartdetail (id,chartName,chineseName,description,xname,yname,style,allStyle,timeType,timeVal,startTime,endTime,itemCount,groupCount,groupAttr,orderBy,otherInfo)
+    values (#{detailId},#{chartName},#{chineseName},#{description},#{xname},#{yname},#{style},#{allStyle},#{timeType},#{timeVal},#{startTime},#{endTime},#{itemCount},#{groupCount},#{groupAttr},#{orderBy},#{otherInfo});
+</insert> 
+
+
+ <delete id="deleteChartBase" parameterType="String" >  
+   delete from chartindex where id=#{indexId};
+</delete> 
+
+<update id="updateChartDetail" parameterType="by.domain.ChartDetailVo" >  
+    update chartdetail set
+	chartName=#{chartName},
+	chineseName=#{chineseName},
+	description=#{description},
+	xname=#{xname},
+	yname=#{yname},
+	style=#{style},
+	allStyle=#{allStyle},
+	time=#{time},
+	itemCount=#{itemCount},
+	groupCount=#{groupCount},
+	groupAttr=#{groupAttr},
+	orderBy=#{orderBy},
+	otherInfo=#{otherInfo}
+	where id =#{detailId};
+</update> 
+
+</mapper>

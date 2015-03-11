@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 40
-/svn/BYone/!svn/ver/53/BYone/WebRoot/css
+/svn/BYone/!svn/ver/77/BYone/WebRoot/css
 END
 jquery.terminal.css
 K 25
@@ -19,13 +19,13 @@ css.less
 K 25
 svn:wc:ra_dav:version-url
 V 49
-/svn/BYone/!svn/ver/53/BYone/WebRoot/css/css.less
+/svn/BYone/!svn/ver/77/BYone/WebRoot/css/css.less
 END
 css.css
 K 25
 svn:wc:ra_dav:version-url
 V 48
-/svn/BYone/!svn/ver/53/BYone/WebRoot/css/css.css
+/svn/BYone/!svn/ver/77/BYone/WebRoot/css/css.css
 END
 prefixer.less
 K 25
@@ -37,5 +37,5 @@ style_v1.less
 K 25
 svn:wc:ra_dav:version-url
 V 54
-/svn/BYone/!svn/ver/53/BYone/WebRoot/css/style_v1.less
+/svn/BYone/!svn/ver/77/BYone/WebRoot/css/style_v1.less
 END

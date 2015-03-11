@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="by.mybatis.dao.TopoMapper">  
+<select id="query_topo_edge_all"  resultType="by.domain.TopoEdgeVo">  
+   	select * from topoedge
+</select>
+ 
+<select id="query_topo_node_all"  resultType="by.domain.TopoNodeVo">  
+   	select * from toponode
+</select>
+
+<update id="update_topo_node_location" parameterType="by.domain.TopoNodeVo">
+	update toponode set
+	lastModifyTime=#{lastModifyTime},
+	x=#{x},
+	y=#{y}
+	where id=#{id}
+</update>
+
+<delete id="delete_topo_node_all">
+	delete from toponode
+</delete>
+
+<insert id="insert_topo_node" parameterType="by.domain.TopoNodeVo">
+	insert into toponode (id,creationTime,orgid,lastModifyTime,
+		ownerID,ip,x,y,collectorID,layer,text,alarm,type)
+	values(#{id},#{creationTime},#{orgid},#{lastModifyTime},#{ownerID},
+		#{ip},#{x},#{y},#{collectorID},#{layer},#{text},#{alarm},
+		#{type})
+</insert>
+
+<insert id="insert_topo_edge" parameterType="by.domain.TopoEdgeVo">
+	insert into topoedge (id,creationTime,orgid,lastModifyTime,ownerID,
+		nodeA,nodeZ,param,collectorID,layer,text)
+	values(#{id},#{creationTime},#{orgid},#{lastModifyTime},#{ownerID},
+		#{nodeA},#{nodeZ},#{param},#{collectorID},#{layer},#{text})
+</insert>
+
+<delete id="delete_topo_edge_all">
+	delete from topoedge
+</delete>
+</mapper>

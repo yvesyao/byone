@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="by.mybatis.dao.CMDBMapper">  
+<select id="queryDeviceBaseDB" parameterType="by.utils.SqlAdapter" resultType="by.domain.DeviceBaseVo">  
+      ${sql}
+</select>  
+ 
+<select id="queryDeviceDetailDB" parameterType="String" resultType="by.domain.DeviceDetailVo">  
+    SELECT d.id as deviceID,d.deviceName,d.deviceIP,devicetype.model as typeName,
+			d.version,d.hardSerialNum,u.fullname as contactName,d.country,
+		d.province,d.city,d.GPS,d.area,d.location,
+		d.description,d.createTime,d.lastModifyTime,d.remarks,
+		d.maintainStart,d.maintainEnd,d.importanceLevel,org.orgName
+		FROM device d,devicetype,user u,org where d.TypeID=devicetype.id and u.id=d.contactID 
+		and d.id=#{deviceID} and org.id=d.orgid
+</select>
+
+<update id="updateDeviceConfigure" parameterType="by.domain.DeviceDetailVo">
+	update device set
+	deviceName=#{deviceName},
+	deviceIP=#{deviceIP},
+	importanceLevel=#{importanceLevel},
+	description=#{description},
+	remarks=#{remarks},
+    typeName=#{typeName},
+    version=#{version},
+	area=#{area},
+	location=#{location},
+	orgName=#{orgName},
+	maintainStart=#{maintainStart},
+	maintainEnd=#{maintainEnd},
+	contactName=#{contactName}
+	where id=#{deviceID}
+</update>
+
+<select id="getIPByDeviceGroup" parameterType="String" resultType="by.domain.DeviceDetailVo">
+	SELECT d.deviceIP from device d 
+	LEFT JOIN devicetype dt on dt.id=d.TypeID
+	where dt.topcat=#{typeGroup}
+</select>
+
+
+<select id="queryAllDeviceType" resultType="by.domain.DeviceTypeVo">
+	select * from devicetype 
+</select>
+
+<select id="queryAllCollector" resultType="by.domain.CollectorVo">
+	select * from collector 
+</select>
+
+
+</mapper>

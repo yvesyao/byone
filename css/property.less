@@ -1,0 +1,110 @@
+.text-center {
+	text-align: center;
+}
+
+.hide {
+	display: none;
+	visibility: none;
+	opacity: 0;
+}
+
+.clearfix {
+	&:before,&:after {
+		content: " ";
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+}
+/* property */
+.byoneTable {
+	table-layout: fixed;
+	thead {
+
+
+//		th {
+//			white-space:nowrap;
+//			overflow-x: hidden;
+//		}
+
+
+		th {
+			vertical-align: middle!important;
+		}
+		.sorting {
+			padding-top: 5px;
+			&:hover {
+				background: url("../img/sort-asc.png") no-repeat top center;
+			}
+			cursor: pointer;
+			&.sorting-asc {
+				background: url("../img/sort-asc.png") no-repeat top center #eee;
+			}
+			&.sorting-desc {
+				background: url("../img/sort-desc.png") no-repeat top center #eee;
+			}
+		}
+	}
+	tbody {
+		td {
+			.level-high, .level-mid, .level-low {
+				padding-left: 0.5em;
+			}
+		}
+	}
+}
+
+table[action-handle], table.tr-click {
+	tbody {
+		tr {
+			&:hover {
+				cursor: pointer;
+			}
+			&.active {
+				background-color: #89a !important;
+				>td {
+					background-color: transparent !important;
+				}
+			}
+		}
+	}
+}
+
+#ruleTable {
+	th {
+		&.ruleStatus {
+			width: 3em;
+			.text-center;
+		}
+		&.ruleName {
+			width: 15em;
+		}
+		&.source {
+			width: 4.5em;
+		}
+	}
+
+}
+
+.tab-pane {
+	padding: 1em 0;
+	min-height: 300px;
+}
+.tab-content {
+	border: 1px solid #ddd;
+	border-top: none;
+}
+
+.box-content {
+	min-height: 174px;
+}
+
+#terminalModal {
+	.modal-content{
+		.modal-body {	
+			/* height: 600px; */
+			.border-radius(0px 0px 6px 6px);
+		}	
+	}
+}

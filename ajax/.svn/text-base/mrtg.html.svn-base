@@ -46,7 +46,6 @@
 			<div class="box-content clearfix">
 				<div class="col-sm-8 col-xs-12">
 					<div id="box-three-content" style="min-height: 200px;"></div>
-					<div id="graphLegend" class="mt-20 col-xs-12"></div>
 				</div>
 				<div class="col-sm-4 col-xs-12">
 					<dl>
@@ -118,45 +117,48 @@
 
 		function DrawAllFlotCharts() {
 			var _dataArr = [{
-				label: "输出接口",
+				name: "输出接口",
 				data: []
 			}, {
-				label: "输入接口",
+				name: "输入接口",
 				data: []
 			}];
 			for (var index = 1; index >= 0; index--) {
 				var _val = (index + 1) * 10;
 				var _data = [];
-		for (var i = 0; i < 20; ++i) { //插入数据
-			_val = getRandomData(_val, 10, 60, 0);
-			_data.push([new Date("2014-11-10 15:" + i + ":00"), _val]);
+				for (var i = 0; i < 20; ++i) { //插入数据
+					_val = getRandomData(_val, 10, 60, 0);
+					_data.push([new Date("2014-11-10 15:" + i + ":00").getTime(), _val]);
+				}
+				_dataArr[index].data = _data;
+			};
+			var _lineOption = {
+				xAxis: {
+					type: 'datetime'
+				},
+				series: _dataArr
+			}
+			drawCharts(_lineOption, '#box-three-content');
+
+			/*test*/
+			function getRandomData(base, range, max, min) {
+				var _rel = base + Math.floor(Math.random() * range - range / 2);
+				_rel = _rel > max ? max * 3 - _rel * 2 : _rel;
+				return _rel < min ? min * 3 - _rel * 2 : _rel;
+			}
 		}
-		_dataArr[index].data = _data;
-	};
 
-	drawLineChart("#box-three-content", _dataArr, {
-		legendContainer: '#graphLegend'
-	});
+		$(document).ready(function() {
+			LoadTimePickerScript(AllTimePickers);
+			LoadHighchartsScripts(DrawAllFlotCharts);
 
-	/*test*/
-	function getRandomData(base, range, max, min) {
-		var _rel = base + Math.floor(Math.random() * range - range / 2);
-		_rel = _rel > max ? max * 3 - _rel * 2 : _rel;
-		return _rel < min ? min * 3 - _rel * 2 : _rel;
-	}
-}
-
-$(document).ready(function() {
-	LoadTimePickerScript(AllTimePickers);
-	LoadFlotScripts(DrawAllFlotCharts);
-
-	$('.period').change(function(event) {
-		/* Act on the event */
-		if ($(this).val() === 'self') {
-			$(this).closest('.box').find('.periodBySelf').show();
-		} else {
-			$(this).closest('.box').find('.periodBySelf').hide();
-		}
-	});
-});
+			$('.period').change(function(event) {
+				/* Act on the event */
+				if ($(this).val() === 'self') {
+					$(this).closest('.box').find('.periodBySelf').show();
+				} else {
+					$(this).closest('.box').find('.periodBySelf').hide();
+				}
+			});
+		});
 </script>
