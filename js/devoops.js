@@ -596,6 +596,35 @@ function drawTopology(placeholder, contextMenu) {
 /*-------------------------------------------
 	Demo graphs for Flot Chart page (charts_flot.html)
 	---------------------------------------------*/
+
+/**
+ * dashboard页面公用工作
+ * @return {[type]} [description]
+ */
+function dashboardWorks() {
+	$('.charts-header').click(function(event) {
+		/* Act on the event */
+		$(this).next('.charts-body').toggle();
+	});
+}
+
+/**
+ * 接收一级目录下的图表
+ * @param  {String} topCatagory [asset | network | cloud]
+ * @return {[type]}             [description]
+ */
+function receiveCharts(topCatagory) {
+	$.get('queryChart.do', {
+		topCatagory: topCatagory
+	}, function(data) {
+		/*optional stuff to do after success */
+		var $template = $('div class="col-xs-12 col-sm-6"><div class="box"><div class="box-header"><div class="box-name"><i class="fa fa-line-chart"></i><span class="chart-title"></span></div><div class="box-icons"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a><a class="expand-link"><i class="fa fa-expand"></i></a><a class="close-link"><i class="fa fa-times"></i></a></div><div class="no-move"></div></div><div class="box-content"><div class="charts"></div></div></div></div>');
+		for (var i = 0, _chart; i < elements.length; i++) {
+
+		}
+	});
+}
+
 //
 // Graph1 created in element with id = box-one-content
 //
@@ -645,18 +674,19 @@ function drawChart1() {
 //
 function drawChart2() {
 	var _columnOption = {
-		title: '标题',
-		type: 'column',
-		series: [{
-			name: 'XX值',
-			data: [
-				["Web服务", 49.9],
-				["交易服务", 71.5],
-				["数据库服务", 106.4],
-				["CRM", 129.2],
-				["XX应用", 144.0]
+		"series": [{
+			"name": "数目",
+			"data": [
+				["202.168.2.1", '220'],
+				["202.168.2.2", '236'],
+				["202.168.2.3", '242'],
+				["202.168.2.4", '185'],
+				["202.168.2.5", '131']
 			]
-		}]
+		}],
+		"yName": null,
+		"type": null,
+		"xName": null
 	};
 	drawCharts(_columnOption, "#box-two-content");
 }
@@ -776,9 +806,9 @@ function drawCharts(option, placeholder) {
 			enabled: false // 禁用版权信息
 		},
 		tooltip: {
-            shared: true
-        },
-        plotOptions: {},
+			shared: true
+		},
+		plotOptions: {},
 		xAxis: {
 			tickPixelInterval: 25,
 			title: {
@@ -801,7 +831,7 @@ function drawCharts(option, placeholder) {
             backgroundColor: '#FFFFFF',                                    
             shadow: true                                                   
         }, */
-		series: option.series
+		series: formatNumber(option.series)
 	};
 	if (option.series[0].data.length > 5) {
 		_option.xAxis.labels = {
@@ -843,11 +873,19 @@ function drawCharts(option, placeholder) {
 			type: option.type
 		};
 	} else { //type(default) = 'line'
+		_option.chart = {
+			type: 'line'
+		};
 		lineWorks(_option);
 	}
 	$(placeholder).highcharts(_option);
 	return $(placeholder).highcharts();
 
+	/**
+	 * 线形图所需操作
+	 * @param  {Object} option
+	 * @return {[type]}        [description]
+	 */
 	function lineWorks(option) {
 		_option.xAxis.type = 'datetime';
 		_option.plotOptions.line = {
@@ -855,6 +893,21 @@ function drawCharts(option, placeholder) {
 				enabled: false
 			}
 		}
+	}
+
+	/**
+	 * 将series中y轴的值转换为number
+	 * @param  {[type]} series [description]
+	 * @return {[type]}        [description]
+	 */
+	function formatNumber(series) {
+		for (var i = 0; i < series.length; i++) {
+			var datas = series[i].data;
+			for (var j = 0; j < datas.length; j++) {
+				datas[j][1] -= 0;
+			}
+		}
+		return series;
 	}
 }
 
@@ -1148,127 +1201,127 @@ function clauseFuncs(callback) {
 
 
 	//eval
-	$('.clause .eval').click(function(event) {
-		/* Act on the event */
-		var _clauseType = $(this).closest('table').attr('data-clause');
-		$('#evalModal').modal('show').on('shown.bs.modal', function() {
-			$("#evalModal .chosen-select").chosen({
-				disable_search_threshold: 10,
-				search_contains: true,
-				no_results_text: "没有对应结果!"
-			});
-		});
-		//从远端获取下拉框数据
-		console.log('拉取下拉数据：' + _clauseType);
-		//success
-		var data = [{
-			name: '函数1',
-			extern: 'func1(eventAttr)'
-		}, {
-			name: '函数2',
-			extern: 'func2(eventAttr,CMDBAttr)'
-		}, {
-			name: '函数3',
-			extern: 'func3(eventAttr,CMDBAttr)'
-		}, {
-			name: '函数4',
-			extern: 'func4(eventAttr,CMDBAttr)'
-		}, {
-			name: '函数6',
-			extern: 'func6(eventAttr)'
-		}, {
-			name: '函数7',
-			extern: 'func7(eventAttr)'
-		}];
-		$('#evalModal #evalStr').val('');
-		var $evalSel = $("#evalModal #evalFunc");
-		$('option:gt(0)', $evalSel).remove();
-		for (var i = 0; i < data.length; i++) {
-			$('<option></option>').text(data[i].name).val(data[i].extern).appendTo($evalSel);
-		};
-		$('#evalCMDB').val('');
-		var $targetSel = $(this).prevAll('input, select');
-		$('#evalSubmit').unbind('click.eval').on('click.eval', function(event) {
-			var _val = $('#evalModal #evalStr').val();
-			addEvalToInput($targetSel, _val, _val);
-			$('#evalModal').modal('hide');
-		})
-	});
+	// 	$('.clause .eval').click(function(event) {
+	// 		/* Act on the event */
+	// 		var _clauseType = $(this).closest('table').attr('data-clause');
+	// 		$('#evalModal').modal('show').on('shown.bs.modal', function() {
+	// 			$("#evalModal .chosen-select").chosen({
+	// 				disable_search_threshold: 10,
+	// 				search_contains: true,
+	// 				no_results_text: "没有对应结果!"
+	// 			});
+	// 		});
+	// 		//从远端获取下拉框数据
+	// 		console.log('拉取下拉数据：' + _clauseType);
+	// 		//success
+	// 		var data = [{
+	// 			name: '函数1',
+	// 			extern: 'func1(eventAttr)'
+	// 		}, {
+	// 			name: '函数2',
+	// 			extern: 'func2(eventAttr,CMDBAttr)'
+	// 		}, {
+	// 			name: '函数3',
+	// 			extern: 'func3(eventAttr,CMDBAttr)'
+	// 		}, {
+	// 			name: '函数4',
+	// 			extern: 'func4(eventAttr,CMDBAttr)'
+	// 		}, {
+	// 			name: '函数6',
+	// 			extern: 'func6(eventAttr)'
+	// 		}, {
+	// 			name: '函数7',
+	// 			extern: 'func7(eventAttr)'
+	// 		}];
+	// 		$('#evalModal #evalStr').val('');
+	// 		var $evalSel = $("#evalModal #evalFunc");
+	// 		$('option:gt(0)', $evalSel).remove();
+	// 		for (var i = 0; i < data.length; i++) {
+	// 			$('<option></option>').text(data[i].name).val(data[i].extern).appendTo($evalSel);
+	// 		};
+	// 		$('#evalCMDB').val('');
+	// 		var $targetSel = $(this).prevAll('input, select');
+	// 		$('#evalSubmit').unbind('click.eval').on('click.eval', function(event) {
+	// 			var _val = $('#evalModal #evalStr').val();
+	// 			addEvalToInput($targetSel, _val, _val);
+	// 			$('#evalModal').modal('hide');
+	// 		})
+	// 	});
 
-	function addEvalToInput(input, val, text) {
-		var $input = $(input);
-		if ($input.is('input')) {
-			$input.val(val);
-			return;
-		};
-		if ($input.is('select')) {
-			$('<option></option>').val(val).text(text).appendTo($input);
-			$input.val(val).chosen().trigger("chosen:updated");
-			return;
-		};
-		console.log('其他form元素。');
-	}
+	// 	function addEvalToInput(input, val, text) {
+	// 		var $input = $(input);
+	// 		if ($input.is('input')) {
+	// 			$input.val(val);
+	// 			return;
+	// 		};
+	// 		if ($input.is('select')) {
+	// 			$('<option></option>').val(val).text(text).appendTo($input);
+	// 			$input.val(val).chosen().trigger("chosen:updated");
+	// 			return;
+	// 		};
+	// 		console.log('其他form元素。');
+	// 	}
 
-	//evalFunc
-	$('#evalFunc').change(addFuncToEval)
-		.next('.add-again').click(function(event) {
-			addFuncToEval(null, $(this).siblings('select').val());
-		});
-	$('#evalCMDB, #evalEvent').on('change', addAttrToEval)
-		.next('.add-again').click(function(event) {
-			addAttrToEval(null, $(this).siblings('select').val());
-		});
+	// 	//evalFunc
+	// 	$('#evalFunc').change(addFuncToEval)
+	// 		.next('.add-again').click(function(event) {
+	// 			addFuncToEval(null, $(this).siblings('select').val());
+	// 		});
+	// 	$('#evalCMDB, #evalEvent').on('change', addAttrToEval)
+	// 		.next('.add-again').click(function(event) {
+	// 			addAttrToEval(null, $(this).siblings('select').val());
+	// 		});
 
-	document.getElementById('evalStr').curPos = 0;
+	// 	document.getElementById('evalStr').curPos = 0;
 
-	/**
-	 * 添加eval函数
-	 * @param {jQuery Event Object} event [description]
-	 * @param {String} attr  参数
-	 */
-	function addFuncToEval(event, attr) {
-		/* Act on the event */
-		var target = $('#evalModal #evalStr')[0];
-		var _val = addAttrToEval(null, (event ? $(this).val() : attr || ''));
-		var _start = _val.lastIndexOf('(') + 1;
-		target.curPos = _start; //更新起点
-		var _reg = /[\,\)]/;
-		_reg.lastIndex = _start;
-		var _end = _val.search(_reg); //定位第一个参数
-		setInputSelection(target, _start, _end);
-	}
-
-
-	/**
-	 * 填充表达式参数，待定参数用eventAttr|CMDBAttr标识
-	 * @param {jQuery Event Object} event
-	 * @param {String} attr  参数
-	 */
-	function addAttrToEval(event, attr) {
-		var _attr = event ? event.target.value : attr || null;
-		if (!_attr) return false;
-		var target = $('#evalModal #evalStr')[0];
-		var _val = target.value;
-		var _reg = /([\,\(])eventAttr|CMDBAttr/; //定位最新函数的第一个待定参数
-		_reg.lastIndex = target.curPos; //正则起始位置
-		var _pos = _val.search(_reg);
-		if (_pos >= 0) { //有函数
-			_reg.lastIndex = target.curPos; //正则起始位置
-			_val = _val.replace(_reg, '$1' + _attr); //填充参数
-			target.curPos = _pos; //更新起点
-		} else _val += _attr; //没有待定参数
-		return target.value = _val;
-	}
+	// 	/**
+	// 	 * 添加eval函数
+	// 	 * @param {jQuery Event Object} event [description]
+	// 	 * @param {String} attr  参数
+	// 	 */
+	// 	function addFuncToEval(event, attr) {
+	// 		/* Act on the event */
+	// 		var target = $('#evalModal #evalStr')[0];
+	// 		var _val = addAttrToEval(null, (event ? $(this).val() : attr || ''));
+	// 		var _start = _val.lastIndexOf('(') + 1;
+	// 		target.curPos = _start; //更新起点
+	// 		var _reg = /[\,\)]/;
+	// 		_reg.lastIndex = _start;
+	// 		var _end = _val.search(_reg); //定位第一个参数
+	// 		setInputSelection(target, _start, _end);
+	// 	}
 
 
-	$('#evalReset').click(function(event) {
-		event.preventDefault();
-		$('#evalStr').val('').prop('curPos', 0);
-	});
+	// 	/**
+	// 	 * 填充表达式参数，待定参数用eventAttr|CMDBAttr标识
+	// 	 * @param {jQuery Event Object} event
+	// 	 * @param {String} attr  参数
+	// 	 */
+	// 	function addAttrToEval(event, attr) {
+	// 		var _attr = event ? event.target.value : attr || null;
+	// 		if (!_attr) return false;
+	// 		var target = $('#evalModal #evalStr')[0];
+	// 		var _val = target.value;
+	// 		var _reg = /([\,\(])eventAttr|CMDBAttr/; //定位最新函数的第一个待定参数
+	// 		_reg.lastIndex = target.curPos; //正则起始位置
+	// 		var _pos = _val.search(_reg);
+	// 		if (_pos >= 0) { //有函数
+	// 			_reg.lastIndex = target.curPos; //正则起始位置
+	// 			_val = _val.replace(_reg, '$1' + _attr); //填充参数
+	// 			target.curPos = _pos; //更新起点
+	// 		} else _val += _attr; //没有待定参数
+	// 		return target.value = _val;
+	// 	}
 
-	if (callback && typeof callback === 'function') {
-		callback();
-	};
+
+	// 	$('#evalReset').click(function(event) {
+	// 		event.preventDefault();
+	// 		$('#evalStr').val('').prop('curPos', 0);
+	// 	});
+
+	// 	if (callback && typeof callback === 'function') {
+	// 		callback();
+	// 	};
 }
 
 
@@ -1551,7 +1604,7 @@ function RedrawKnob(elem) {
 }*/
 
 function docReady(selfUrl) {
-	$('[href="#"],:not([href])').click(function(e) {
+	$('a, buttom').filter('[href="#"]').click(function(e) {
 		e.preventDefault();
 	});
 	/*展开当前菜单栏*/
@@ -1689,7 +1742,7 @@ $(document).ready(function() {
 
 	var height = window.innerHeight - 49;
 	$('#main').css('min-height', height)
-		.on('click', '.expand-link', function(e) {
+		.delegate('.expand-link', 'click', function(e) {
 			var body = $('body');
 			e.preventDefault();
 			var box = $(this).closest('div.box');
@@ -1703,7 +1756,7 @@ $(document).ready(function() {
 				$(document).resize();
 			});
 		})
-		.on('click', '.collapse-link', function(e) {
+		.delegate('.collapse-link', 'click', function(e) {
 			e.preventDefault();
 			var box = $(this).closest('div.box');
 			var button = $(this).find('i');
@@ -1715,7 +1768,7 @@ $(document).ready(function() {
 				box.find('[id^=map-]').resize();
 			}, 50);
 		})
-		.on('click', '.config-link', function(e) {
+		.delegate('.config-link', 'click', function(e) {
 			e.preventDefault();
 			var $box = $(this).closest('div.box');
 			var $config = $('.config-panel', $box);
@@ -1723,10 +1776,10 @@ $(document).ready(function() {
 				$box.addClass('half');
 				setTimeout(function() {
 					$config.show();
-					$box.removeClass('half');
+					$box.addClass('hover').removeClass('half');
 				}, 400);
 			} else {
-				$box.addClass('half');
+				$box.removeClass('hover').addClass('half');
 				setTimeout(function() {
 					$config.hide();
 					$box.removeClass('half');
@@ -1734,7 +1787,7 @@ $(document).ready(function() {
 			}
 
 		})
-		.on('click', '.close-link', function(e) {
+		.delegate('.close-link', 'click', function(e) {
 			e.preventDefault();
 			var content = $(this).closest('div.box');
 			content.remove();

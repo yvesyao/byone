@@ -1,5 +1,5 @@
 @import url("prefixer.less");
-@import url("../plugins/font-awesome-4.1.0/css/font-awesome.min.css");
+@import url("../plugins/font-awesome-4.2.0/css/font-awesome.min.css");
 @import url("../plugins/bootstrap/less/bootstrap.less");
 @import url("../plugins/bootstrap/less/theme.less");
 @import url("../plugins/jquery-ui/jquery-ui.min.css");
@@ -33,6 +33,13 @@
 }
 
 .box {
+	.box-header {
+		-moz-user-select:none;/*火狐*/
+		-webkit-user-select:none;/*webkit浏览器*/
+		-ms-user-select:none;/*IE10*/
+		-khtml-user-select:none;/*早期浏览器*/
+		user-select:none;
+	}
 	.config-panel {
 		position: absolute;
 		top: 0;
@@ -61,11 +68,11 @@
 	transform: rotateX(0deg) rotateY(0deg);
 
 	&.half{
-		-webkit-transform: rotateY(90deg);
-		-moz-transform: rotateY(90deg);
-		-ms-transform: rotateY(90deg);
-		-o-transform: rotateY(90deg);
-		transform: rotateY(90deg);
+		-webkit-transform: perspective(1200px) rotateY(90deg);
+		-moz-transform: perspective(1200px) rotateY(90deg);
+		-ms-transform: perspective(1200px)  rotateY(90deg);
+		-o-transform: perspective(1200px) rotateY(90deg);
+		transform: perspective(1200px) rotateY(90deg);
 	}
 
 	&.hover{

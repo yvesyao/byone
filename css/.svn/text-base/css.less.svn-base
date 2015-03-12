@@ -434,6 +434,20 @@ th {
 			height: 100%;
 		}
 
+		.charts-header {
+			.page-header {
+				-moz-user-select:none;/*火狐*/
+				-webkit-user-select:none;/*webkit浏览器*/
+				-ms-user-select:none;/*IE10*/
+				-khtml-user-select:none;/*早期浏览器*/
+				user-select:none;
+				cursor: pointer;
+				&:hover {
+					background-color: rgba(10, 10, 155, 0.2);
+				}
+			}
+		}
+
 		/* chosen */
 		.chosen-container-single .chosen-single{
 			height: 26px;

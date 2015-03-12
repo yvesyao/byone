@@ -45,6 +45,11 @@
 							</label>
 						</div>
 					</div>
+
+					<input type="radio" name="reportType1" id="inlineradio1" value="pdf" checked> PDF
+<input type="radio" name="reportType1" id="inlineradio2" value="xls"> XLS<input type="radio" name="reportType1" id="inlineradio1" value="pdf" checked> PDF
+<input type="radio" name="reportType1" id="inlineradio2" value="xls"> XLS<input type="radio" name="reportType1" id="inlineradio1" value="pdf" checked> PDF
+<input type="radio" name="reportType1" id="inlineradio2" value="xls"> XLS
 					<div class="form-group">
 						<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">时间：</label>
 						<div class="col-xs-7">

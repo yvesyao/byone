@@ -135,7 +135,7 @@
 	$(document).ready(function() {
 		LoadTimePickerScript(AllTimePickers);
 
-		$('.period').change(periodType).val('relative').change();
+		$('.period').change(periodType).filter('[value = "relative"]').click().change();
 
 		$('.report-box .group>:checkbox').change(function(event) {
 			/* Act on the event */

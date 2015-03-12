@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
-V 41
-/svn/BYone/!svn/ver/84/BYone/WebRoot/ajax
+V 42
+/svn/BYone/!svn/ver/104/BYone/WebRoot/ajax
 END
 forms_layouts.html
 K 25
@@ -26,6 +26,12 @@ K 25
 svn:wc:ra_dav:version-url
 V 52
 /svn/BYone/!svn/ver/92/BYone/WebRoot/ajax/rules.html
+END
+asset-dashboard.html
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/BYone/!svn/ver/104/BYone/WebRoot/ajax/asset-dashboard.html
 END
 charts_chartist.html
 K 25
@@ -288,6 +294,6 @@ END
 manualReport.html
 K 25
 svn:wc:ra_dav:version-url
-V 59
-/svn/BYone/!svn/ver/84/BYone/WebRoot/ajax/manualReport.html
+V 60
+/svn/BYone/!svn/ver/104/BYone/WebRoot/ajax/manualReport.html
 END

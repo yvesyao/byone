@@ -61,7 +61,7 @@
 				</div>
 
 				<div class="config-panel form-horizontal">
-					<div class="form-group col-xs-12 col-sm-6">
+					<!-- <div class="form-group col-xs-12 col-sm-6">
 						<label class="control-label col-xs-4">单位选择: </label>
 						<div class="col-xs-8">
 							<select class="form-control">
@@ -89,17 +89,38 @@
 								<input type="text" class="form-control date-picker">
 							</div>
 						</div>
-						<!-- /.form-group -->
-
+						/.form-group
+					
 						<div class="form-group col-xs-12 col-sm-6">
 							<label class="control-label col-xs-4">结束时间：</label>
 							<div class="col-xs-8">
 								<input type="text" class="form-control date-picker">
 							</div>
 						</div>
-						<!-- /.form-group -->
+						/.form-group
 					</div>
-					<!-- /#periodBySelf -->
+					/#periodBySelf -->
+					<div class="form-group col-xs-12 col-sm-6">
+						<label class="control-label col-xs-4">显示: </label>
+						<div class="col-xs-8">
+							<select class="form-control">
+								<option value="bits">Bits/Second</option>
+								<option value="packet">Packet/Second</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group col-xs-12 col-sm-6">
+						<label class="control-label col-xs-4">时间选择: </label>
+						<div class="col-xs-8">
+							<select class="form-control period">
+								<option value="self">自选周期</option>
+								<option value="5">最近5分钟</option>
+								<option value="30">最近30分钟</option>
+								<option value="2">最近2小时</option>
+								<option value="1">最近1天</option>
+							</select>
+						</div>
+					</div>
 				</div>
 				<!-- /.config-panel  -->
 			</div>
