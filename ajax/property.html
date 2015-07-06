@@ -1,0 +1,828 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">资产管理</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+
+<div class="row mb">
+	<div class="col-xs-12">
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="active"><a href="network" class="topcatTab" role="tab" data-toggle="tab">网络设备</a></li>
+			<li><a href="server" class="topcatTab" role="tab" data-toggle="tab">服务器</a></li>
+			<li><a href="vmware" class="topcatTab" role="tab" data-toggle="tab">VMWare</a></li>
+		</ul> 
+	</div>
+</div>
+<!-- /.row -->
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header no-drop">
+				<div class="box-name">
+					<span>资产信息</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<!-- <a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="row">
+					<div class="col-sm-6 mb-half">
+						<input type="text" class="form-control" id="propertySearch" placeholder="输入查询条件">
+					</div>
+					<a href="#" class="btn btn-xs btn-default">备份配置</a>
+					<a href="#" class="btn btn-xs btn-default">恢复配置</a>
+				</div>
+				<table id="propertyTable" class="table table-condensed table-striped table-bordered table-block table-hover property-table byoneTable" action-handle="#propertyActions">
+					<thead>
+						<tr>
+							<th>设备名称</th>
+							<th>IP</th>
+							<th>类型</th>
+							<th>可用状态</th>
+							<th>运行时间</th>
+							<th>可用率</th>
+							<th>性能状态</th>
+							<th>CPU使用率</th>
+							<th>内存使用率</th>
+							<th>接口使用率</th>
+							<th>可用性告警</th>
+							<th>性能告警</th>
+							<th>安全告警</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+
+				<!-- /.col-sm-6 -->
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+		
+		
+	</div>
+	<!-- /.col-xs-12 -->
+	
+	<div class="col-xs-12 mb" id="propertyActions">
+		<a href="#" class="btn btn-primary rely-on-table" disabled data-func="configProperty('{1}')">配置
+		</a>
+		<a href="#" class="btn btn-primary rely-on-table" disabled data-func="inserfaceStatics('{1}')">接口状态
+		</a>
+		<a href="#" class="btn btn-primary rely-on-table" disabled data-func="showTerminal('TCP Port', '{1}')">TCP Port
+		</a>
+		<a href="#" class="btn btn-primary rely-on-table" disabled data-func="showTerminal('SSH', '{1}')">SSH
+		</a>
+		<a href="#" class="btn btn-primary rely-on-table" disabled data-func="showTerminal('telnet', '{1}')">Telnet
+		</a>
+	</div>
+</div>
+
+<div class="row hidden-xs hidden-sm" id="propertyInfo">
+
+	<!-- Nav tabs
+	<ul class="nav nav-tabs" role="tablist">
+		<li class="active"><a href="#tab-zonglan" role="tab" data-toggle="tab">总览</a></li>
+		<li><a href="#tab-jkzt" role="tab" data-toggle="tab">健康状态</a></li>
+		<li><a href="#tab-lxxx" role="tab" data-toggle="tab">联系信息</a></li>
+		<li><a href="#tab-wk" role="tab" data-toggle="tab">网卡</a></li>
+		<li><a href="#tab-sw" role="tab" data-toggle="tab">软件</a></li>
+		<li><a href="#tab-hw" role="tab" data-toggle="tab">硬件</a></li>
+		<li><a href="#tab-conf" role="tab" data-toggle="tab">配置</a></li>
+		<li><a href="#tab-relation" role="tab" data-toggle="tab">关系</a></li>
+		
+	</ul> -->
+
+	<!-- Tab panes -->
+	<div><!-- tab-content  -->
+		<!-- <div class="tab-pane active" id="tab-zonglan"> -->
+		<div class="col-xs-12 col-sm-6">
+			<div class="box">
+				<div class="box-header">
+					<div class="box-name">基础</div>
+				</div>
+				<div class="box-content clearfix" id="basic">
+					<div class="row">
+						<label class="control-label col-sm-3">名称</label>
+						<div class="col-sm-9" data-name="deviceName"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">IP</label>
+						<div class="col-sm-9" data-name="deviceIP"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">类型</label>
+						<div class="col-sm-9" data-name="typeName"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">版本</label>
+						<div class="col-sm-9" data-name="version"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">硬件序列号</label>
+						<div class="col-sm-9" data-name="hardSerialNum"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">资产联系人</label>
+						<div class="col-sm-9" data-name="contactName"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-6">
+			<div class="box">
+				<div class="box-header">
+					<div class="box-name">位置信息</div>
+				</div>
+				<div class="box-content clearfix" id="position">
+					<div class="row">
+						<label class="control-label col-sm-3 col-md-2">国家</label>
+						<div class="col-sm-9" data-name="country"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3 col-md-2">省</label>
+						<div class="col-sm-9" data-name="province"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3 col-md-2">市</label>
+						<div class="col-sm-9" data-name="city"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3 col-md-2">坐标</label>
+						<div class="col-sm-9" data-name="gps"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3 col-md-2">区域</label>
+						<div class="col-sm-9" data-name="area"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3 col-md-2">位置</label>
+						<div class="col-sm-9" data-name="location"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-6">
+			<div class="box">
+				<div class="box-header">
+					<div class="box-name">描述信息</div>
+				</div>
+				<div class="box-content clearfix">
+					<p data-name="description"></p> 
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-6">
+			<div class="box">
+				<div class="box-header">
+					<div class="box-name">健康状态总览</div>
+				</div>
+				<div class="box-content clearfix" id="health">
+					<div class="row">
+						<label class="control-label col-sm-3">可用性</label>
+						<div class="col-sm-9"  data-name="hUsability"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">性能</label>
+						<div class="col-sm-9"  data-name="hPerformance"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">告警级别</label>
+						<div class="col-sm-9 alarm-level sparkpie" data-name="hIncidentLevel"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">告警特性</label>
+						<div class="col-sm-9 alarm-feature sparkpie" data-name="hIncidentType"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-6">
+			<div class="box">
+				<div class="box-header">
+					<div class="box-name">可用性 <span class="pull-right">趋势(1小时内) </span> </div>
+				</div>
+				<div class="box-content clearfix" id="useablity">
+					<div class="row">
+						<label class="control-label col-sm-3">健康状态</label>
+						<div class="col-sm-9" data-name="uHealthStatus"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">Ping丢失率</label>
+						<div class="col-sm-9 sparkline" id="pingLost" data-name="uPingLoss"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">Ping响应时间</label>
+						<div class="col-sm-9 sparkline" id="pingResponse" data-name="uPingTime"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">Tcp Port</label>
+						<div class="col-sm-9" id="tcp" data-name="uTCPPort"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">告警</label>
+						<div class="col-sm-9 sparkline" id="alarm" data-name="uIncidentInfo"></div>
+					</div>
+				</div>
+			</div>
+			<!-- /.box -->
+		</div>
+
+
+		<div class="col-xs-12 col-sm-6">
+			<div class="box">
+				<div class="box-header">
+					<div class="box-name">性能 <span class="pull-right">趋势(1小时内) </span> </div>
+				</div>
+				<div class="box-content clearfix" id="capability">
+					<div class="row">
+						<label class="control-label col-sm-3">健康状态</label>
+						<div class="col-sm-9" data-name="pHealthStatus"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">性能</label>
+						<div class="col-sm-9" data-name="pPerformance"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">告警级别</label>
+						<div class="col-sm-9 alarm-level sparkpie" data-name="pIncidentLevel"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">告警特性</label>
+						<div class="col-sm-9 alarm-feature sparkpie" data-name="pIncidentType"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+			<div class="box">
+				<div class="box-header">
+					<div class="box-name">安全</div>
+				</div>
+				<div class="box-content clearfix" id="security">
+					<div class="row">
+						<label class="control-label col-sm-3">安全等级</label>
+						<div class="col-sm-9" data-name="safeLevel"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">漏洞数</label>
+						<div class="col-sm-9" data-name="bugNum"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">风险级别</label>
+						<div class="col-sm-9 danger-level sparkpie" data-name="riskLevel"></div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-3">告警趋势</label>
+						<div class="col-sm-9 sparkline" id="alarmTrend" data-name="sIncidentTrend"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- </div>
+		<div class="tab-pane" id="tab-jkzt"><h1>健康状态</h1></div>
+		<div class="tab-pane" id="tab-lxxx"><h1>联系信息</h1></div>
+		<div class="tab-pane" id="tab-wk"><h1>网卡</h1></div>
+		<div class="tab-pane" id="tab-sw"><h1>软件</h1></div>
+		<div class="tab-pane" id="tab-hw"><h1>硬件</h1></div>
+		<div class="tab-pane" id="tab-conf"><h1>配置</h1></div>
+		<div class="tab-pane" id="tab-relation"><h1>关系</h1></div> -->
+		<!-- 资产配置 -->
+		<div class="overlay-frm hide" id="propertyFrm"><!--  hide -->
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<div class="pull-right">
+							<a href="#" id="modDeviceSubmit" class="mr">保存</a><a href="#" class="btn-cancel mr">取消</a>
+						</div>
+						<div class="box-name">
+							<span>资产配置</span>
+						</div>
+						<div class="no-move"></div>
+					</div>
+					<!-- /.box-header -->
+					<div class="box-content">
+						<form action="#" class="form-horizontal">
+							<input type="hidden" name="deviceID">
+							<fieldset>
+								<legend>基础信息</legend>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="propertyName" class="control-label col-sm-3">名称：</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="propertyName" name="deviceName" placeholder="输入资产名称">
+											</div>
+										</div>
+										<!-- /.form-group -->
+										<div class="form-group">
+											<label for="propertyIP" class="control-label col-sm-3">IP：</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="propertyIP" name="deviceIP" placeholder="输入资产IP">
+											</div>
+										</div>
+										<!-- /.form-group -->
+										<div class="form-group">
+											<label for="propertyType" class="control-label col-sm-3">类型：</label>
+											<div class="col-sm-8">
+												<select class="form-control" id="propertyType" placeholder="选择资产类型" name="typeName">
+												</select>
+											</div>
+										</div>
+										<!-- /.form-group -->
+										<div class="form-group">
+											<label for="propertyVersion" class="control-label col-sm-3">版本：</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="propertyVersion" name="version" placeholder="输入资产版本">
+											</div>
+										</div>
+										<!-- /.form-group -->
+										<div class="form-group">
+											<label for="propertyImportance" class="control-label col-sm-3">重要等级：</label>
+											<div class="col-sm-8">
+												<select class="form-control" id="propertyImportance" placeholder="选择重要等级" name="importanceLevel">
+													<option value="1">非常核心</option><!-- mCritical -->
+													<option value="2">核心</option><!-- critical -->
+													<option value="3">重要</option><!-- inportant -->
+													<option value="4">一般</option><!-- normal -->
+												</select>
+											</div>
+										</div>
+										<!-- /.form-group -->
+										<div class="form-group">
+											<label for="propertyDepart" class="control-label col-sm-3">所属部门：</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="propertyDepart" name="orgName" placeholder="输入资产名称">
+											</div>
+										</div>
+										<!-- /.form-group -->
+										<div class="form-group">
+											<label for="propertyContact" class="control-label col-sm-3">联系人：</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="propertyContact" name="contactName" placeholder="输入联系人">
+											</div>
+										</div>
+										<!-- /.form-group -->
+									</div>
+									<!-- /.col-md-6 -->
+									
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="propertyDesc" class="control-label col-sm-3">描述：</label>
+											<div class="col-sm-8">
+												<textarea type="text" class="form-control" id="propertyDesc" name="description"></textarea>
+											</div>
+										</div>
+										<!-- /.form-group -->
+										<div class="form-group">
+											<label for="propertyDesc" class="control-label col-sm-3">备注：</label>
+											<div class="col-sm-8">
+												<textarea type="text" class="form-control" id="propertyRec" name="remarks"></textarea>
+											</div>
+										</div>
+										<!-- /.form-group -->
+									</div>
+									<!-- /.col-md-6 -->
+								</div>
+								<!-- /.row -->
+							</fieldset>
+
+							<fieldset id="areaField">
+								<legend>地理位置</legend>
+								<div class="row">
+									<div class="col-sm-6 col-md-4">
+										<div class="form-group">
+											<label for="propertyCountry" class="control-label col-sm-3">国家：</label>
+											<div class="col-sm-8">
+												<select class="form-control" id="propertyCountry" name="country">
+													<option value=""></option>	
+												</select>
+											</div>
+										</div>
+										<!-- /.form-group -->
+									</div>
+									<!-- /.col-md-4 -->
+									<div class="col-sm-6 col-md-4 china">
+										<div class="form-group">
+											<label for="propertyProvince" class="control-label col-sm-3">省：</label>
+											<div class="col-sm-8">
+												<select class="form-control prov" id="propertyProvince" name="province">
+												</select>
+											</div>
+										</div>
+										<!-- /.form-group -->
+									</div>
+									<!-- /.col-md-4 -->
+									<div class="col-sm-6 col-md-4 china">
+										<div class="form-group">
+											<label for="propertyCity" class="control-label col-sm-3">市：</label>
+											<div class="col-sm-8">
+												<select class="form-control city" id="propertyCity" name="city">
+												</select>
+											</div>
+										</div>
+										<!-- /.form-group -->
+									</div>
+									<!-- /.col-md-4 -->
+									<div class="col-sm-6 col-md-4 china">
+										<div class="form-group">
+											<label for="propertyArea" class="control-label col-sm-3">区域：</label>
+											<div class="col-sm-8">
+												<select type="text" class="form-control dist" id="propertyArea" name="area">
+												</select>
+											</div>
+										</div>
+										<!-- /.form-group -->
+									</div>
+									<!-- /.col-md-4 -->
+									<div class="col-sm-6 col-md-8">
+										<div class="form-group">
+											<label for="propertyFloor" class="control-label col-sm-3">地址：</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="propertyFloor" name="location">
+											</div>
+										</div>
+										<!-- /.form-group -->
+									</div>
+									<!-- /.col-sm-6 -->
+								</div>
+								<!-- /.row -->
+							</fieldset>
+
+							<fieldset>
+								<legend>维护设定</legend>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="startTime" class="control-label col-sm-3">开始时间：</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="startTime" name="maintainStart">
+											</div>
+										</div>
+										<!-- /.form-group -->
+									</div>
+									<!-- /.col-sm-6 -->
+
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="endTime" class="control-label col-sm-3">结束时间：</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="endTime" name="maintainEnd">
+											</div>
+										</div>
+										<!-- /.form-group -->
+									</div>
+									<!-- /.col-sm-6 -->
+								</div>
+								<!-- /.row -->
+							</fieldset>
+						</form>
+					</div>
+					<!-- /.box-content -->
+				</div>
+				<!-- /.box -->
+			</div>
+			<!-- /.col-xs-12 -->
+		</div>
+		<!-- /#propertyFrm -->
+
+
+		<div class="overlay-frm hide" id="interfaceFrm"><!--  hide -->
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<div class="box-name">
+							<span>接口状态</span>
+						</div>
+						<div class="no-move"></div>
+					</div>
+					<!-- /.box-header -->
+					<div class="box-content">
+						<table id="interfaceTable" class="table table-condensed table-striped table-bordered table-block table-hover">
+							<thead>
+								<th>名称</th>
+								<th>描述</th>
+								<th>类型</th>
+								<th>IP</th>
+								<th>掩码</th>
+								<th>MAC地址</th>
+								<th>速度</th>
+								<th>当前状态</th>
+							</thead>
+							<tbody>
+								<tr class="template">
+									<td data-name="interfaceName"></td>
+									<td data-name="description"></td>
+									<td data-name="typeName"></td>
+									<td data-name="interfaceIP"></td>
+									<td data-name="interfaceMask"></td>
+									<td data-name="macaddress"></td>
+									<td data-name="speed"></td>
+									<td data-name="nowStatus"></td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="zoom loading">
+							<div class="spinner"></div>
+						</div>
+					</div>
+					<!-- /.box-content -->
+				</div>
+				<!-- /.box -->
+			</div>
+			<!-- /.col-xs-12 -->
+		</div>
+		<!-- /#interfaceFrm -->
+
+
+	</div>
+	<!-- /.row -->
+
+</div>
+<!-- /.col-xs-12 -->
+
+
+
+
+<!-- terminals -->
+<!-- Modal -->
+<div class="modal fade" id="terminalModal" tabindex="-1" role="dialog" aria-labelledby="terminalModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h5 class="modal-title" id="terminalModalLabel">运维工具</h5>
+			</div>
+			<div class="modal-body">
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /.modal -->
+
+
+<script type="text/javascript">
+	function tableReady(topcat) {
+		console.log(topcat);
+		topcat = topcat || 'network';
+		$('#propertyTable').byoneTable({
+			ajax: "queryAllDevice.do",
+			"sort":["deviceName", 'asc'],
+			dataId: "deviceID",
+			filter: {"topcat": topcat},
+			"pagination": true,
+			"searchHandle": "#propertySearch",
+			
+			"columns":[{
+				"class": "deviceName",
+				"data": "deviceName"
+			},{
+				"class": "deviceIP",
+				"data": "deviceIP"
+			},{
+				"class": "typeName",
+				"data": "typeName"
+			},{
+				"class": "usability",
+				"sortable": false,
+				"data": "usability"
+			},{
+				"class": "runTime",
+				"sortable": false,
+				"data": "runTime"
+			},{
+				"class": "usableRate",
+				"sortable": false,
+				"data": "usableRate"
+			},{
+				"class": "performanceStatus",
+				"sortable": false,
+				"data": "performanceStatus"
+			},{
+				"class": "cpuutil",
+				"sortable": false,
+				"data": "cpuutil"
+			},{
+				"class": "memoryUtil",
+				"sortable": false,
+				"data": "memoryUtil"
+			},{
+				"class": "interfaceUtil",
+				"sortable": false,
+				"data": "interfaceUtil"
+			},{
+				"class": "usabilityIncident",
+				"sortable": false,
+				"data": "usabilityIncident",
+				"format": formatLevel
+			},{
+				"class": "performanceIncident",
+				"sortable": false,
+				"data": "performanceIncident",
+				"format": formatLevel
+			},{
+				"class": "safeIncident",
+				"sortable": false,
+				"data": "safeIncident",
+				"format": formatLevel
+			}]
+		});
+
+function formatLevel(data) {
+	var _dataList = data.split(',');
+	return '<span class="level-high">H: </span>' + _dataList[0] + '<span class="level-mid">M: </span>' + _dataList[1] + '<span class="level-low">L: </span>' + _dataList[2];
+}
+
+tableTrClick('#propertyTable', fillForm);
+}
+
+	/**
+	 * 单击资产列表后显示详细信息
+	 * @param  {[String]} propertyId [资产ID]
+	 */
+	 function fillForm(propertyId) {
+	 	//console.log(propertyId + ' clicked');
+	 	$.get("queryDeviceDetail.do", {
+	 		"deviceID": propertyId
+	 	}, function(data) {
+	 		//console.log(data);
+	 		fillInfo(data, '#propertyInfo', {
+	 			uPingLoss: fillSparklineValues,
+	 			uIncidentInfo: fillSparklineValues,
+	 			sIncidentTrend: fillSparklineValues,
+	 			uPingTime: fillSparklineValues,
+	 			pIncidentLevel: fillIncidentLevel,
+	 			pIncidentType: fillIncidentType,
+	 			hIncidentLevel: fillIncidentLevel,
+	 			hIncidentType: fillIncidentType,
+	 			sIncidentLevel: fillIncidentLevel,
+	 			riskLevel: fillIncidentLevel
+	 		});
+
+			//line graph
+			SparkLineDrawLineGraph(".sparkline", 'html');
+			//pie graph
+			SparkLineDrawPieGraph(".danger-level .pie", 'html');
+			SparkLineDrawPieGraph(".alarm-level .pie", 'html');
+			SparkLineDrawPieGraph(".alarm-feature .pie", 'html', ['#af5e9c', '#f86b4f', '#00529c']);
+		});
+
+	 	function fillIncidentLevel(elem, data) {
+	 		$(elem).html('高：<span class="level-high">' + data[0] + '</span>    中：<span class="level-mid">' + data[1] + '</span>    低：<span class="level-low">' + data[2] + '</span><span class="pie pl-half"></span>').find('.pie').attr('values', data);
+	 	}
+	 	function fillIncidentType(elem, data) {
+	 		$(elem).html('可用性：<span class="useablity">' + data[0] + '</span>    性能：<span class="performance">' + data[1] + '</span>    安全：<span class="security">' + data[2] + '</span><span class="pie pl-half"></span>').find('.pie').attr('values', data);
+	 	}
+	 	function fillSparklineValues(elem, data) {
+	 		$(elem).data('sparkline', data);
+	 		var values = [];
+	 		for (var i = 0; i < data.length; ++i) {
+	 			values.push(data[i][1]);
+	 		};
+	 		$(elem).attr('values', values);
+	 	}
+	 }
+	/**
+	 * 资产配置
+	 * @param  {[String]} propertyId [资产ID]
+	 */
+	 function configProperty(propertyId) {
+	 	var $form = $('form', '#propertyFrm');
+	 	$form[0].reset();
+	 	showOverlayFrm("#propertyFrm", true);
+	 	$.get('queryDeviceDetail.do', {
+	 		deviceID: propertyId
+	 	},function(data) {
+	 		/*optional stuff to do after success */
+	 		loadFormData($form, data);
+	 		$('#areaField').citySelect({
+	 			prov:data.province, //省份 
+	 			city:data.city, //城市 
+	 			dist:data.area, //区县 
+	 			nodata:"none" //当子集无数据时，隐藏select 
+	 		});
+	 		$('#propertyCountry').change();
+	 	});
+	 }
+
+	/**
+	 * 接口状态
+	 * @param  {[String]} propertyId [资产ID]
+	 */
+	 function inserfaceStatics(propertyId) {
+		//ajax
+		//...
+		//success
+		// console.log(propertyId);
+		showOverlayFrm("#interfaceFrm", true);
+		$('#interfaceFrm').find('.loading').show();
+
+		$.get('queryDeviceInterface.do', {
+			"deviceID": propertyId
+		}, function(data) {
+			/*optional stuff to do after success */
+			// console.log(data);
+			loadTableData('#interfaceTable', data);
+			$('#interfaceFrm').find('.loading').hide();
+		});
+	}
+
+	function terminalReady() {
+		//sshTerminal();
+	}
+
+	function sparkLineReady() {
+	}
+
+	function AllTimePickers() {
+		$('#startTime, #endTime').datetimepicker({
+			timeFormat: "HH:mm:ss",
+			dateFormat: "yy-mm-dd"
+		});
+	}
+
+	function getDeviceTypes() {
+		buildDeviceTypeSel(getPropertyTypes());
+		function buildDeviceTypeSel(deviceTypeList) {
+			var $typeSel = $('#propertyType').children('option').remove().end();
+			for (var i = 0; i < deviceTypeList.length; i++) {
+				var _type = deviceTypeList[i];
+				$('<option value="'+ _type +'">').text(_type).appendTo($typeSel);
+			}
+			$typeSel.chosen({
+				disable_search_threshold: 10,
+				search_contains: true,
+				width: "300px",
+				no_results_text: "没有对应结果!"
+			});
+		}
+	}
+
+	function buildAreaSel() {
+		var _countryArr = [{en:"CN", ch:"中国"}, {en:"AE", ch:"阿联酋"}, {en:"KR", ch:"北朝鲜"}, {en:"AF", ch:"阿富汗"}, {en:"KW", ch:"科威特"}, {en:"AL", ch:"阿尔巴尼亚"}, {en:"KZ", ch:"哈萨克斯坦"}, {en:"AO", ch:"安哥拉"}, {en:"LA", ch:"老挝"}, {en:"AR", ch:"阿根廷"}, {en:"LB", ch:"黎巴嫩"}, {en:"AT", ch:"奥地利"}, {en:"LT", ch:"立陶宛"}, {en:"AU", ch:"澳大利亚"}, {en:"LU", ch:"卢森堡"}, {en:"AZ", ch:"阿塞拜疆"}, {en:"LV", ch:"拉托维亚"}, {en:"BD", ch:"孟加拉"}, {en:"LY", ch:"利比亚"}, {en:"BE", ch:"比利时"}, {en:"MA", ch:"摩洛哥"}, {en:"BG", ch:"保加利亚"}, {en:"MC", ch:"摩纳哥"}, {en:"BH", ch:"巴林"}, {en:"MD", ch:"摩尔多瓦"}, {en:"BI", ch:"布隆迪"}, {en:"MG", ch:"马达加斯加"}, {en:"BJ", ch:"贝宁"}, {en:"ML", ch:"马里"}, {en:"BM", ch:"百慕大"}, {en:"MN", ch:"蒙古"}, {en:"BN", ch:"文莱"}, {en:"MO", ch:"中国澳门"}, {en:"BO", ch:"玻利维亚"}, {en:"MR", ch:"毛里塔尼亚"}, {en:"BR", ch:"巴西"}, {en:"MT", ch:"马耳他"}, {en:"BS", ch:"巴哈马"}, {en:"MU", ch:"毛里求斯"}, {en:"BT", ch:"不丹"}, {en:"MV", ch:"马尔代夫"}, {en:"BW", ch:"博茨瓦纳"}, {en:"MX", ch:"墨西哥"}, {en:"CA", ch:"加拿大"}, {en:"MY", ch:"马来西亚"}, {en:"CF", ch:"中非共和国"}, {en:"MZ", ch:"莫桑比克"}, {en:"CG", ch:"刚果"}, {en:"NA", ch:"纳米比亚"}, {en:"CH", ch:"瑞士"}, {en:"NE", ch:"尼日尔"}, {en:"CK", ch:"库克群岛"}, {en:"NG", ch:"尼日利亚"}, {en:"CL", ch:"智利"}, {en:"NI", ch:"尼加拉瓜"}, {en:"CM", ch:"喀麦隆"}, {en:"NL", ch:"荷兰"}, {en:"NO", ch:"挪威"}, {en:"CO", ch:"哥伦比亚"}, {en:"NP", ch:"尼泊尔"}, {en:"CR", ch:"哥斯达黎加"}, {en:"NZ", ch:"新西兰"}, {en:"CU", ch:"古巴"}, {en:"OM", ch:"阿曼"}, {en:"CV", ch:"佛得角群岛"}, {en:"PA", ch:"巴拿马"}, {en:"CY", ch:"塞浦路斯"}, {en:"PE", ch:"秘鲁"}, {en:"CZ", ch:"捷克共和国"}, {en:"PG", ch:"巴布亚新几内亚"}, {en:"DE", ch:"德国"}, {en:"PH", ch:"菲律宾"}, {en:"DK", ch:"丹麦"}, {en:"PK", ch:"巴基斯坦"}, {en:"DZ", ch:"阿尔及利亚"}, {en:"PL", ch:"波兰"}, {en:"EC", ch:"厄瓜多尔"}, {en:"PT", ch:"葡萄牙"}, {en:"EE", ch:"爱沙尼亚"}, {en:"PY", ch:"巴拉圭"}, {en:"EG", ch:"埃及"}, {en:"QA", ch:"卡塔尔"}, {en:"ES", ch:"西班牙"}, {en:"RO", ch:"罗马尼亚"}, {en:"ET", ch:"埃塞俄比亚"}, {en:"RU", ch:"俄罗斯"}, {en:"FI", ch:"芬兰"}, {en:"RW", ch:"卢旺达"}, {en:"FJ", ch:"斐济"}, {en:"SA", ch:"沙特阿拉伯"}, {en:"FR", ch:"法国"}, {en:"SD", ch:"苏丹"}, {en:"GA", ch:"加蓬"}, {en:"SE", ch:"瑞典"}, {en:"GB", ch:"英国"}, {en:"SG", ch:"新加坡"}, {en:"GD", ch:"格林纳达"}, {en:"SK", ch:"斯洛伐克"}, {en:"GH", ch:"加纳"}, {en:"SM", ch:"圣马力诺"}, {en:"GM", ch:"冈比亚"}, {en:"SN", ch:"塞内加尔"}, {en:"GN", ch:"几内亚"}, {en:"SO", ch:"索马里"}, {en:"GQ", ch:"赤道几内亚"}, {en:"SY", ch:"叙利亚"}, {en:"GR", ch:"希腊"}, {en:"TH", ch:"泰国"}, {en:"GT", ch:"危地马拉"}, {en:"TJ", ch:"塔吉克斯坦"}, {en:"GU", ch:"关岛"}, {en:"TM", ch:"土库曼斯坦"}, {en:"GY", ch:"圭亚那"}, {en:"TN", ch:"突尼斯"}, {en:"HK", ch:"中国香港"}, {en:"TO", ch:"汤加"}, {en:"HN", ch:"洪都拉斯"}, {en:"TW", ch:"中国台湾"}, {en:"HR", ch:"克罗地亚"}, {en:"TZ", ch:"坦桑尼亚"}, {en:"HT", ch:"海地"}, {en:"UA", ch:"乌克兰"}, {en:"HU", ch:"匈牙利"}, {en:"UG", ch:"乌干达"}, {en:"ID", ch:"印度尼西亚"}, {en:"UK", ch:"英国"}, {en:"IE", ch:"爱尔兰"}, {en:"US", ch:"美国"}, {en:"IL", ch:"以色列"}, {en:"UY", ch:"乌拉圭"}, {en:"IN", ch:"印度"}, {en:"UZ", ch:"乌兹别克斯坦"}, {en:"IQ", ch:"伊拉克"}, {en:"VA", ch:"梵蒂冈"}, {en:"IR", ch:"伊朗"}, {en:"VE", ch:"委内瑞拉"}, {en:"IS", ch:"冰岛"}, {en:"VN", ch:"越南"}, {en:"IT", ch:"意大利"}, {en:"YE", ch:"也门"}, {en:"JM", ch:"牙买加"}, {en:"YU", ch:"南斯拉夫"}, {en:"JO", ch:"约旦"}, {en:"ZA", ch:"南非"}, {en:"JP", ch:"日本"}, {en:"ZM", ch:"赞比亚"}, {en:"KE", ch:"肯尼亚"}, {en:"ZR", ch:"扎伊尔"}, {en:"KH", ch:"柬埔寨"}, {en:"ZW", ch:"津巴布韦"}, {en:"KP", ch:"韩国"}];
+		$('#areaField').citySelect();
+		var $countrySel = $('#propertyCountry').children('option').remove().end();
+		for (var i = 0; i < _countryArr.length; i++) {
+			var _country = _countryArr[i];
+			$('<option>').val(_country.en).text(_country.ch).appendTo($countrySel);
+		}
+		$countrySel.change(function(event) {
+			/* Act on the event */
+			if ($(this).val() == 'CN') {
+				$('#areaField .china').show().find('select, input').removeAttr('disabled');
+			} else {
+				$('#areaField .china').hide().find('select, input').attr('disabled', 'disabled');
+			}
+		}).val('CN').change();
+		$('#propertyCity').change();
+		console.log($countrySel.val());
+	}
+
+	$(document).ready(function() {
+		LoadByoneTableScripts(tableReady, 'network');
+		LoadTerminalScripts(terminalReady);
+		LoadSparkLineScript(sparkLineReady);
+		LoadTimePickerScript(AllTimePickers);
+		LoadChosenScript(getDeviceTypes);
+		LoadCitySelectScript(buildAreaSel);
+		WinMove();
+		//tableContextMenu('#propertyTable');
+		$('.topcatTab').click(function(event) {
+			/* Act on the event */
+			tableReady($(this).attr('href'));
+		});
+		$('#modDeviceSubmit').click(function(event) {
+			/* Act on the event */
+			showAlert(true, '提交中...', 'info', true);
+			$.get('updateDeviceInfo.do', $('#propertyFrm form').serialize(), function(data) {
+				/*optional stuff to do after success */
+				// console.log(data);
+				if (data === "updateSuccess") {
+					showAlert(true, '提交成功！', 'success', false, 500, function() {
+						LoadAjaxContent(window.location.hash.substring(1), true);
+					});
+				} else {
+					showAlert(true, '提交失败，请联系管理员。', 'danger', false, 2000);
+				}
+			});
+		});
+	});
+</script>

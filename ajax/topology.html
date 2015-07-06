@@ -1,0 +1,184 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">网络管理</a></li>
+			<li><a href="#">网络拓扑</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+<div class="col-xs-12">
+	<div class="box">
+		<div class="box-header">
+			<div class="box-name">
+				<span>网络拓扑</span>
+			</div>
+			<div class="box-icons">
+				<a class="expand-link">
+					<i class="fa fa-expand"></i>
+				</a>
+				<a class="close-link">
+					<i class="fa fa-times"></i>
+				</a>
+			</div>
+			<div class="no-move"></div>
+		</div>
+		<div class="box-content clearfix" id="topoContainer">
+			<canvas id="topoCanvas"></canvas>
+		</div>
+		<!-- /.box-content -->
+	</div>
+	<!-- /.box -->
+
+
+</div>
+<!-- /.col-xs-12 -->
+
+
+<div class="dropdown right-click-menu" id="topoDropMenu">
+	<ul aria-labelledby="dropdownMenu" role="menu" class="dropdown-menu">
+		<li id="nodeInfo">
+			<a href="#" onclick="showNodeInfo('{2}')" tabindex="-1">节点信息
+			</a>
+		</li>
+		<li class="divider"><!-- 分割线 -->
+		</li>
+		<li id="SSH">
+			<a href="#" onclick="showTerminal('SSH', '{1}')" tabindex="-1">SSH
+			</a>
+		</li>
+		<li id="telnet">
+			<a href="#" onclick="showTerminal('telnet', '{1}')" tabindex="-1">telnet
+			</a>
+		</li>
+
+	</ul>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="nodeModal" tabindex="-1" role="dialog" aria-labelledby="nodeModalLabel" aria-hidden="true">
+	<div class="modal-dialog  modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h5 class="modal-title" id="nodeModalLabel">设备信息</h5>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-sm-5">
+						<div class="row">
+							<label class="control-label col-xs-4">名称</label>
+							<div class="col-xs-8" data-name="deviceName">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">IP</label>
+							<div class="col-xs-8" data-name="deviceIP">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">类型</label>
+							<div class="col-xs-8" data-name="typeName">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">版本</label>
+							<div class="col-xs-8" data-name="">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">运行时间</label>
+							<div class="col-xs-8" data-name="runTime">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">方法</label>
+							<div class="col-xs-8" data-name="">info</div>
+						</div>
+					</div>
+					<!-- /.col-sm-6 -->
+					<div class="col-sm-7">
+						<div class="row">
+							<label class="control-label col-xs-4">可用性</label>
+							<div class="col-xs-8" data-name="usability">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">性能健康状态</label>
+							<div class="col-xs-8" data-name="performanceStatus">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">CPU均值</label>
+							<div class="col-xs-8" data-name="cpuutil">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">内存均值</label>
+							<div class="col-xs-8" data-name="memoryUtil">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">告警级别</label>
+							<div class="col-xs-8 alarm-level" data-name="hIncidentLevel">info</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-xs-4">告警特性</label>
+							<div class="col-xs-8 alarm-feature" data-name="hIncidentType">info</div>
+						</div>
+					</div>
+					<!-- /.col-sm-6 -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.modal-body -->
+		</div>
+	</div>
+</div>
+
+<!-- terminals -->
+<!-- Modal -->
+<div class="modal fade" id="terminalModal" tabindex="-1" role="dialog" aria-labelledby="terminalModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h5 class="modal-title" id="terminalModalLabel">运维工具</h5>
+			</div>
+			<div class="modal-body">
+
+			</div>
+			<!-- /.modal-body -->
+		</div>
+	</div>
+</div>
+<!-- /#terminalModal -->
+
+<script type="text/javascript">
+	function topoReady() {
+		drawTopology('#topoContainer', topoDropMenu);
+	}
+	function showNodeInfo(nodeIp) {
+		//get node infos
+		$.get('queryDeviceDetailByIP.do', {
+			'deviceIP': nodeIp
+		}, function(data) {
+	 		//console.log(data);
+	 		fillInfo($.extend(true, data.deviceVo, data.deviceDetailVo), '#nodeModal', {
+	 			hIncidentLevel: fillIncidentLevel,
+	 			hIncidentType: fillIncidentType
+	 		});
+			SparkLineDrawPieGraph(".alarm-level .pie", 'html');
+			SparkLineDrawPieGraph(".alarm-feature .pie", 'html', ['#af5e9c', '#f86b4f', '#00529c']);
+		});
+
+	 	function fillIncidentLevel(elem, data) {
+	 		$(elem).html('高：<span class="level-high">' + data[0] + '</span>    中：<span class="level-mid">' + data[1] + '</span>    低：<span class="level-low">' + data[2] + '</span><span class="pie pl-half"></span>').find('.pie').attr('values', data);
+	 	}
+	 	function fillIncidentType(elem, data) {
+	 		$(elem).html('可用性：<span class="useablity">' + data[0] + '</span>    性能：<span class="performance">' + data[1] + '</span>    安全：<span class="security">' + data[2] + '</span><span class="pie pl-half"></span>').find('.pie').attr('values', data);
+	 	}
+		$('#nodeModal').modal('show')/*.find('#nodeModalLabel').text('node ' + nodeId)*/;
+	}
+	function sparkLineReady() {
+
+	}
+	$(document).ready(function() {
+		LoadJTopoScripts(topoReady);
+		LoadSparkLineScript(sparkLineReady);
+		LoadTerminalScripts();
+	});
+</script>

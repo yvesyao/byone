@@ -1,0 +1,1283 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">知识库</a></li>
+			<li><a href="#">规则</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>规则列表</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+				<!-- <a class="expand-link">
+					<i class="fa fa-expand"></i>
+				</a> -->
+			</div>
+			<div class="no-move"></div>
+		</div>
+		<div class="box-content clearfix">
+			<div class="col-sm-6 mb-half">
+				<input type="text" class="form-control" id="ruleSearch" placeholder="输入查询条件">
+			</div>
+			<table id="ruleTable" class="table table-condensed table-striped table-bordered table-block table-hover rule-table byoneTable" action-handle="#ruleActions">
+				<thead>
+					<tr>
+						<th>状态</th>
+						<th>名称</th>
+						<th>来源</th>
+						<th>描述</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			
+			<!-- /.col-sm-6 -->
+		</div>
+		<!-- /.box-content -->
+	</div>
+	<!-- /.box -->
+	<div class="col-xs-12 mb" id="ruleActions">
+		<!-- test 添加的onclik -->
+		<a href="#" class="btn btn-default" onclick="addRule()" data-func="addRule()"><span class="glyphicon glyphicon-plus"></span> 添加</a>
+		<a href="#" class="btn btn-default rely-on-table" data-func="fillRule('{1}')" disabled><span class="glyphicon glyphicon-edit"></span> 编辑</a>
+		<a href="#" class="btn btn-default rely-on-table" data-func="delRule('{1}')" disabled><span class="glyphicon glyphicon-trash"></span> 删除</a>
+		<a href="#" class="btn btn-default rely-on-table" data-func="copyRule('{1}')" disabled><span class="glyphicon glyphicon-share"></span> 复制</a>
+	</div>
+
+</div>
+<!-- /.col-xs-12 -->
+
+<!-- <div class="dropdown right-click-menu" id="ruleDropMenu">
+	<ul aria-labelledby="dropdownMenu" role="menu" class="dropdown-menu">
+		<li id="add">
+			<a href="#" onclick="addRule()" tabindex="-1"><span class="glyphicon glyphicon-plus"></span> 新建
+			</a>
+		</li>
+		<li id="edit">
+			<a href="#" onclick="modRule('{1}')" tabindex="-1"><span class="glyphicon glyphicon-edit"></span> 编辑
+			</a>
+		</li>
+		<li id="copy">
+			<a href="#" onclick="copyRule('{1}')" tabindex="-1"><span class="glyphicon glyphicon-share"></span> 复制
+			</a>
+		</li>
+		<li id="del">
+			<a href="#" tabindex="delRule('{1}')"><span class="glyphicon glyphicon-trash"></span> 删除
+			</a>
+		</li>
+	</ul>
+</div> -->
+<div class="col-xs-12" id="ruleInfo">
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs" role="tablist">
+		<li class="active"><a href="#tab-zonglan" role="tab">概述</a></li>
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="tab-content clearfix">
+		<div class="tab-pane active clearfix" id="tab-zonglan">
+			<div class="col-xs-12">
+				<div class="form-horizontal">
+					<div class="clearfix">
+						<label class="control-label col-xs-5 col-sm-3 col-lg-1 col-md-2">名称:</label>
+						<div class="">Account Locked: Server_12/27/2013</div>
+					</div>
+					<div class="clearfix">
+						<label class="control-label col-xs-5 col-sm-3 col-lg-1 col-md-2">状态:</label>
+						<div class="">激活的</div>
+					</div>
+					<div class="clearfix">
+						<label class="control-label col-xs-5 col-sm-3 col-lg-1 col-md-2">类型:</label>
+						<div class="">高级</div>
+					</div>
+					<div class="clearfix">
+						<label class="control-label col-xs-5 col-sm-3 col-lg-1 col-md-2">通知频率:</label>
+						<div class="">1 day</div>
+					</div>
+					<div class="clearfix">
+						<label class="control-label col-xs-5 col-sm-3 col-lg-1 col-md-2">告警种类:</label>
+						<div class="">Server</div>
+					</div>
+				</div>
+				<!-- /.row -->
+				<!-- <div class="row">
+					<div class="col-xs-12">
+						<label class="control-label col-sm-2 col-md-1">描述:</label>
+						<div class="col-xs-10 col-sm-10 col-md-11">Detects account lockout caused by excessive logon failures</div>
+					</div>
+					<div class="col-xs-12">
+						<label class="control-label col-sm-2 col-md-1">条件:</label>
+						<div class="col-xs-10 col-sm-10 col-md-11">
+							<table>
+								<tr>
+									<td class="green-label">PATTERN</td>
+									<td>
+										<span class="purple-pattern">backdoorfound</span>
+									</td>
+								</tr>
+								<tr>
+									<td class="green-label">OCCURS</td>
+									<td> in any 300 second time window</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="col-xs-12">
+						<label class="control-label col-sm-2 col-md-1">告警:</label>
+						<div class="col-xs-10 col-sm-10 col-md-11">
+							<table>
+								<tr>
+									<td class="green-label">GENERATE</td> 
+									<td>Severity  9  <span class="level">(HIGH)</span>  Incident:  <strong>Backdoor_Attack_detected_by_NIPS</strong>   Display Name: <strong>Backdoor Attack detected by NIPS</strong></td>
+								</tr>
+								<tr>
+									<td class="green-label">WITH</td>
+									<td>源IP  =  <span class="purple-pattern">backdoorfound</span>.源IP, 目标IP  =  <span class="purple-pattern">backdoorfound</span>.目标IP</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				/.row
+				
+				<div class="row">
+					<div class="col-xs-12">
+						<label class="control-label col-xs-12">模式定义:</label>
+						<div class="col-xs-12 pattern">
+							<div><span class="purple-pattern"><i>backdoorfound</i></span></div>
+							<table>
+								<tr>
+									<td class="green-label">If</td>
+									<td>(源设备IP  <span class="pattern-keyword">IN</span>  Devices: Network IPS <strong>OR</strong> (源设备IP  <span class="pattern-keyword">IN</span>  Applications: Network IPS App <strong>AND</strong> 事件类型 <span class="pattern-keyword">CONTAINS</span> Snort-)) <strong>AND</strong> 事件类型 <span class="pattern-keyword">IN</span> EventTypes: Backdoor</td>
+								</tr>
+								<tr>
+									<td class="green-label">WHERE</td>
+									<td>源IP = <span class="purple-pattern">backdoorfound</span>.源IP, 目标IP  =  <span class="purple-pattern">backdoorfound</span>.目标IP</td>
+								</tr>
+								<tr>
+									<td class="green-label">GROUP BY</td>
+									<td>源IP, 目标IP</td>
+								</tr>
+							</table>
+						</div>
+						/.pattern
+						<div class="col-xs-12 pattern">
+							<div><span class="purple-pattern"><i>backdoorfound</i></span></div>
+							<table>
+								<tr>
+									<td class="green-label">If</td>
+									<td>(源设备IP  <span class="pattern-keyword">IN</span>  Devices: Network IPS <strong>OR</strong> (源设备IP  <span class="pattern-keyword">IN</span>  Applications: Network IPS App <strong>AND</strong> 事件类型 <span class="pattern-keyword">CONTAINS</span> Snort-)) <strong>AND</strong> 事件类型 <span class="pattern-keyword">IN</span> EventTypes: Backdoor</td>
+								</tr>
+								<tr>
+									<td class="green-label">WHERE</td>
+									<td>源IP = <span class="purple-pattern">backdoorfound</span>.源IP, 目标IP  =  <span class="purple-pattern">backdoorfound</span>.目标IP</td>
+								</tr>
+								<tr>
+									<td class="green-label">GROUP BY</td>
+									<td>源IP, 目标IP</td>
+								</tr>
+							</table>
+						</div>
+						/.pattern
+					</div>
+					<div class="col-xs-12">
+						<label class="control-label col-xs-12">触发事件属性:</label>
+						<div class="col-xs-12">
+							事件接收时间, 事件类型, 源IP, 目标IP, IP协议, 源TCP/UDP端口, 目标TCP/UDP端口, 源设备IP, 原始事件日志
+						</div>
+					</div>
+				</div> -->
+				<!-- /.row -->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /.col-xs-12 -->
+
+
+<div class="overlay-frm hide" id="addRuleFrm">
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="pull-right">
+					<a href="#" id = "saveRule" class="mr">保存</a><a href="#" class="btn-cancel mr">取消</a>
+				</div>
+				<div class="box-name">
+					<span class="box-title">添加新规则</span>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-content">
+				<form action="#" id="ruleForm" class="form-horizontal">
+					<div class="form-group">
+						<label for="ruleName" class="control-label col-sm-2">规则名称：</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" data-name="ruleName" name="ruleName" id="ruleName" placeholder="输入规则名称" required>
+							<input type="hidden" class="form-control" data-name="id" name="id">
+						</div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label for="ruleDesc" class="control-label col-sm-2">描述：</label>
+						<div class="col-sm-8">
+							<textarea type="text" class="form-control" name="description" data-name="description" id="ruleDesc"></textarea>
+						</div>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<label class="control-label col-sm-2">状态：</label>
+						<div class="col-sm-3">
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-default active"> 
+									<input data-name="ruleStatusInt" name="ruleStatusInt" type="radio" value="0" checked>未激活
+								</label>
+								<label class="btn btn-default"> 
+									<input data-name="ruleStatusInt" name="ruleStatusInt" type="radio" value="1">激活的 
+								</label>
+							</div>
+							<!-- /.btn-group -->
+						</div>
+
+						<label class="control-label col-sm-2">告警种类：</label>
+						<div class="col-sm-2">
+							<select name="incidentCategory" data-name="incidentCategory" class="form-control" id="alertType" required>
+								<option value="应用">应用</option>
+								<option value="环境">环境</option>
+								<option value="内部">内部</option>
+								<option value="网络">网络</option>
+								<option value="服务器">服务器</option>
+								<option value="存储">存储</option>
+								<option value="系统">系统</option>
+								<option value="虚拟化">虚拟化</option>
+								<option value="其他">其他</option>
+							</select>
+						</div>
+					</div>
+					<!-- /.form-group -->
+
+					<div class="form-group">
+						<label for="ruleDesc" class="control-label col-sm-2">严重程度：</label>
+						<div class="col-sm-6">
+							<select name="severity" data-name="severity" id="criticalLevel" class="form-control level-low" required>
+								<option class="level-low" value="1">1 - LOW</option>
+								<option class="level-low" value="2">2 - LOW</option>
+								<option class="level-low" value="3">3 - LOW</option>
+								<option class="level-low" value="4">4 - LOW</option>
+								<option class="level-mid" value="5">5 - MID</option>
+								<option class="level-mid" value="6">6 - MID</option>
+								<option class="level-mid" value="7">7 - MID</option>
+								<option class="level-mid" value="8">8 - MID</option>
+								<option class="level-high" value="9">9 - HIGH</option>
+								<option class="level-high" value="10">10 - HIGH</option>
+							</select>
+						</div>
+					</div>
+					<!-- /.form-group -->
+
+					<div class="form-group">
+						<label for="ruleDesc" class="control-label col-sm-2">属性：</label>
+						<div class="col-sm-2">
+							<select name="ruleAttribute" data-name="ruleAttribute" class="form-control" id="category" required>
+								<option value="all">所有</option>
+								<option value="avai">可用的</option>
+								<option value="perf">性能</option>
+								<option value="change">修改</option>
+								<option value="secu">安全</option>
+							</select>
+						</div>
+
+						<div class="mt-15 visible-xs clearfix"></div>
+						<label for="ruleDesc" class="control-label col-xs-12 col-sm-2">通知频率：</label>
+						<div class="numberCol">
+							<input type="number" class="form-control" name="notifyFrequency" data-name="notifyFrequency" id="informFreq" value="1" required>
+						</div>
+						<div class="col-xs-5 col-sm-4 pl-0">
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-default active"> 
+									<input name="time" data-name="time" type="radio" value="min">分钟
+								</label>
+								<label class="btn btn-default"> 
+									<input name="time" data-name="time" type="radio" value="hour" checked>时 
+								</label>
+							</div>
+							<!-- /.btn-group -->
+						</div>
+					</div>
+					<!-- /.form-group -->
+
+					<div class="form-group">
+						<label for="ruleDesc" class="control-label col-sm-2">条件：</label>
+						<div class="col-sm-10">
+							<a id="addSubPtn" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span> 添加子模式</a>
+							<!-- <a id="delSubPth" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus"></span> 删除子模式</a> -->
+							<div class="mt-15"><label for="" class="control-label">如果该模式被触发：</label></div>
+							<table id="subPatternTable" class="table table-bordered table-condensed">
+								<thead>
+									<th>操作</th>
+									<th>括号</th>
+									<th>子模式</th>
+									<th>括号</th>
+									<th>行</th>
+								</thead>
+								<tbody>
+									<tr class="clause template">
+										<td>
+											<select class="form-control relation">
+												<option value="AND">AND</option>
+												<option value="OR">OR</option>
+											</select>
+										</td>
+										<td class="left-bracket bracket">
+										</td>
+										<td>
+											<select class="form-control sub-pattern-sel">
+											</select>
+											<a href="#" class="edit-sp"><span class="glyphicon glyphicon-edit"></span> </a>
+										</td>
+										<td class="right-bracket bracket">
+										</td>
+										<td class="row-action">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<div class="mt-15">
+								<label class="control-label pull-left">包含任意：</label>
+								<div class="numberCol">
+									<input type="number" name="occurs" class="form-control" value="300" id="occurs" required>
+								</div>
+								<label class="control-label pull-left">秒(时间窗口)</label>
+							</div>
+						</div>
+					</div>
+					<!-- /.form-group -->
+				</form>
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+</div>
+<!-- /#addRuleFrm -->
+
+
+<div class="overlay-frm hide" id="subPatternFrm">
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="pull-right">
+					<a href="#" id="saveSubPattern" class="mr">保存</a><a href="#" class="btn-cancel mr">取消</a>
+				</div>
+				<div class="box-name">
+					<span>添加新的子模式</span>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-content clearfix">
+				<form action="#" class="form-horizontal">
+					<div class="form-group">
+						<label for="spName" class="control-label col-sm-2">子模式名称：</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="spName" value="filter1" placeholder="输入子模式名称">
+							<!-- <a href="#" onclick="setUpTest();" class="btn btn-danger">填充测试</a> -->
+						</div>
+					</div>
+					<!-- /.form-group -->
+
+					<div class="col-xs-12 clearfix">
+						<fieldset>
+							<legend>过滤：<a href="#" class="pull-right add-row btn btn-default"><span class="glyphicon glyphicon-plus"></span> 添加一行</a></legend>
+							<table id="filterTable" data-clause="rule-filter" class="table table-bordered table-condensed mt-15">
+								<thead>
+									<th>关系</th>
+									<th>括号</th>
+									<th>属性</th>
+									<th>操作</th>
+									<th>值</th>
+									<th>括号</th>
+									<th>行</th>
+								</thead>
+								<tbody>
+									<tr class="clause template">
+										<td>
+											<select class="form-control relation" name="relation">
+												<option value="AND">AND</option>
+												<option value="OR">OR</option>
+											</select>
+										</td>
+										<td class="left-bracket bracket">
+										</td>
+										<td>
+											<input class="event-attr form-control" value="" name="attribute">
+										</td>
+										<td>
+											<select class="form-control" name="operator">
+												<option value=""></option>
+												<option value="=">=</option>
+												<option value="!=">!=</option>
+												<option value=">">&gt;</option>
+												<option value="<">&lt;</option>
+												<option value=">=">&gt;=</option>
+												<option value="<=">&lt;=</option>
+												<!-- <option value="between">BETWEEN</option>
+												<option value="nbetween">NOT BETWEEN</option> -->
+												<option value="in">IN</option>
+												<option value="nin">NOT IN</option>
+												<!-- <option value="contains">CONTAINS</option>
+												<option value="ncontains">NOT CONTAINS</option>
+												<option value="is">IS</option>
+												<option value="isnot">IS NOT</option> -->
+											</select>
+										</td>
+										<td>
+											<input type="text" class="form-control" name="value">
+										</td>
+										<td class="right-bracket bracket">
+										</td>
+										<td class="row-action">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</fieldset>
+					</div>
+					<!-- /.col-xs-12 -->
+					<div class="col-xs-12 clearfix">
+						<fieldset>
+							<legend>聚合条件：<a href="#" class="pull-right add-row btn btn-default"><span class="glyphicon glyphicon-plus"></span> 添加一行</a></legend>
+							<table id="whereTable" data-clause="rule-where" class="table table-bordered table-condensed mt-15">
+								<thead>
+									<th>关系</th>
+									<th>括号</th>
+									<th>属性</th>
+									<th>操作</th>
+									<th>值</th>
+									<th>括号</th>
+									<th>行</th>
+								</thead>
+								<tbody>
+									<tr class="clause template">
+										<td>
+											<select class="form-control relation" name="relation">
+												<option value="AND">AND</option>
+												<option value="OR">OR</option>
+											</select>
+										</td>
+										<td class="left-bracket bracket">
+										</td>
+										<td>
+											<input class="event-attr form-control" value="" name="attribute">
+											<a href="#" class="eval btn btn-default btn-xs ml-half">e</a>
+										</td>
+										<td>
+											<select class="form-control" name="operator">
+												<option value=""></option>
+												<option value="=">=</option>
+												<option value="!=">!=</option>
+												<option value=">">&gt;</option>
+												<option value="<">&lt;</option>
+												<option value=">=">&gt;=</option>
+												<option value="<=">&lt;=</option>
+												<!-- <option value="between">BETWEEN</option>
+												<option value="nbetween">NOT BETWEEN</option> -->
+												<option value="in">IN</option>
+												<option value="nin">NOT IN</option>
+												<!-- <option value="contains">CONTAINS</option>
+												<option value="ncontains">NOT CONTAINS</option>
+												<option value="is">IS</option>
+												<option value="isnot">IS NOT</option> -->
+											</select>
+										</td>
+										<td>
+											<input type="text" class="form-control" name="value">
+										</td>
+										<td class="right-bracket bracket">
+										</td>
+										<td class="row-action">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</fieldset>
+					</div>
+					<!-- /.col-xs-12 -->
+
+					<div class="col-xs-12 clearfix mb-15">
+						<fieldset>
+							<legend>Count：<input type="checkbox" id="clauseCount"></legend>
+						</fieldset>
+					</div>
+					<!-- /.col-xs-12 -->
+
+					<div class="col-xs-6 clearfix">
+						<fieldset>
+							<legend>分组方式：<a href="#" class="pull-right add-row btn btn-default"><span class="glyphicon glyphicon-plus"></span> 添加一行</a></legend>
+							<table id="groupByTable" data-clause="rule-group" class="table table-bordered table-condensed mt-15">
+								<thead>
+									<th>属性</th>
+									<th>行</th>
+								</thead>
+								<tbody>
+									<tr class="clause template">
+										<td>
+											<input class="event-attr form-control" value="" name="attribute">
+										</td>
+										<td class="row-action">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</fieldset>
+					</div>
+					<!-- /.col-xs-6 -->
+				</form>
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+</div>
+<!-- /#subPatternFrm -->
+
+</div>
+<!-- /.row -->
+
+
+<!-- evalModal -->
+<div class="modal fade" id="evalModal" tabindex="-1" role="dialog" aria-labelledby="evalModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h5 class="modal-title" id="evalModalLabel">Eval</h5>
+			</div>
+			<div class="modal-body clearfix form-inline">
+				<div class="row mb">
+					<div class="col-xs-12">
+						<input type="text" id="evalStr" class="form-control" name="eval" placeholder="表达式" readonly>
+					</div>
+				</div>
+				<!-- /.row mb -->
+				<div class="row mb">
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label for="evalFunc" class="control-label">添加方法</label>		
+							<select id="evalFunc" class="form-control">
+								<option value=""></option>
+								<option value="SUM(eventAttr)">SUM</option>
+								<option value="AVG(eventAttr)">AVG</option>
+								<option value="MIN(eventAttr)">MIN</option>
+								<option value="MAX(eventAttr)">MAX</option>
+							</select>
+							<a href="#" class="btn btn-xs add-again"><span class="glyphicon glyphicon-plus"></span></a>
+						</div>
+						<!-- /.form-group -->
+						<div class="form-group">
+							<label for="evalEvent" class="control-label">添加属性</label>
+							<input id="evalEvent" class="event-attr form-control" value="">
+						</div>
+						<!-- /.form-group -->
+					</div>
+				</div>
+				<!-- /.row mb -->
+				<div class="row mb">
+					<div class="col-sm-6">
+						<a href="#" class="pull-right btn btn-default" data-dismiss="modal">取 消</a>
+						<a href="#" id="evalSubmit" class="pull-right mr eval-btn btn btn-primary">确 定</a>
+					</div>
+					<div class="col-sm-6">
+						<a href="#" id="evalReset" class="btn btn-default">清 理</a>
+					</div>
+				</div>
+				<!-- /.form-group -->
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h5 class="modal-title" id="errorModalLabel">Error</h5>
+			</div>
+			<div class="modal-body">
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	
+	(function() {
+	/**
+	 * 条件类
+	 */
+	 function Rule() {
+	 	this.subPatterns = {};
+	 	this.addSubPattern = function(sp) {
+	 		console.log('addSp');
+			if (ruleFuncs.isAdd && this.subPatterns[sp.name]) //子模式名重复
+				return false;
+			this.subPatterns[sp.name] = sp;
+			return true;
+		};
+		/**
+		 * 返回当前子模式个数
+		 * @return {[type]} [description]
+		 */
+		 this.getSPLength = function() {
+		 	var _index = 0;
+		 	for (attr in this.subPatterns) {
+		 		if (this.subPatterns.hasOwnProperty(attr)) {
+		 			++_index;
+		 		}
+		 	}
+		 	return _index;
+		 };
+		 this.getNewSpName = function() {
+		 	console.log('SubPattern' + this.getSPLength());
+		 	return 'SubPattern' + this.getSPLength();
+		 };
+		 this.getSpByName = function(name) {
+		 	return this.subPatterns[name] || null;
+		 };
+
+		/*this.setUpByJSON = function(clauseObj, nameHandle, filterHandle, whereHandle, groupByHandle) {
+			console.log('setup');
+			this.setUpName(nameHandle, clauseObj.name);
+			this.setUpClause(filterHandle, clauseObj.IF);
+			this.setUpClause(whereHandle, clauseObj.WHERE);
+			this.setUpClause(groupByHandle, clauseObj.GROUPBY);
+		};*/
+
+		this.loadClause = function(placeholder) {
+			var $clauses = $('.clause', placeholder).not('.template');
+			var _ruleClauses = [];
+			for (var i = 0, $clause = $clauses[0]; i < $clauses.length; $clause = $clauses[++i]) {
+				var _clauseObj = getObj($clause, i == 0);
+				if (!_clauseObj)
+					return false;
+				if (_clauseObj == 'empty')
+					$clause.remove();
+				else
+					_ruleClauses.push(_clauseObj);
+			};
+			//if (_ruleClauses.length == 0) return true;
+			return checkBrackets(_ruleClauses) && _ruleClauses;
+		};
+
+		/**
+		 * 规则对象序列化
+		 * @param  {String || jQuery 或 Object } attr 目标容器或loadClause函数返回的对象
+		 * @return {[type]}      [description]
+		 */
+		 /*this.serialize = function(attr) {
+		 	console.debug('serialize!!!');
+		 	var _clauseList = (typeof attr == "string" || attr instanceof jQuery) ? this.loadClause(attr) : attr,
+		 	_serializedRule = {
+		 		SELECT: '',
+		 		FROM: '',
+		 		subPatterns: []
+		 	},
+		 	_selectStr = '';
+		 	for (var i = 0; i < _clauseList.length; i++) {
+		 		var _clause = _clauseList[i],
+		 		_spname = _clause.subPattern.name,
+		 		_tables = (i ? _clause.relation : '') + ' ' + getBrackets(_clause.leftBracket, true) + _spname + getBrackets(_clause.rightBracket, false) + ' ',
+		 		_sp = _clause.subPattern.serialize(),
+		 		_select = _sp.selArr;
+		 		if (_select && _select.length > 0) {
+		 			_selectStr += _select.join(', ').replace(/(data\(\')/g, _spname + '.' + '$1') + ', ';
+		 		}
+		 		_serializedRule.subPatterns.push(_sp);
+		 		_serializedRule.FROM += _tables;
+		 	};
+
+		 	_serializedRule.SELECT = _selectStr.replace(/,\s*$/, '');
+		 	return _serializedRule;
+
+		 	function getBrackets(count, isLeft) {
+		 		var _bracket = isLeft ? '(' : ')';
+		 		var _brackets = '';
+		 		while (count--) _brackets += _bracket;
+		 		return _brackets ? _brackets + ' ' : '';
+		 	}
+		 };*/
+
+		/**
+		 * 规则对象序列化
+		 * @param  {String || jQuery 或 Object } attr 目标容器或loadClause函数返回的对象
+		 * @return {[type]}      [description]
+		 */
+		 this.stringify = function(attr) {
+		 	var _clauseList = (typeof attr == "string" || attr instanceof jQuery) ? this.loadClause(attr) : attr,
+		 	_result = {
+		 		spNameArray: [],
+		 		spStringifyArray: [],
+		 		stringify: ''
+		 	}, 
+		 	_selStr = '',
+		 	_fromStr = 'pattern[';
+		 	for (var i = 0; i < _clauseList.length; i++) {
+		 		var _clause = _clauseList[i],
+		 		_sp = _clause.subPattern,
+		 		_spName = _sp.name,
+		 		_spSerialized = _sp.serialize();
+		 		_spStringify = _sp.stringify(_spSerialized);
+		 		/*_result.stringify += getVal(_clause.relation) + '(' + getBrackets(_clause.leftBracket, true) + _spStringify + getBrackets(_clause.rightBracket, false) + ') '; // rule的关系和括号到底在哪里表现？*/
+		 		_selStr += _spSerialized.selArr.join(', ').replace(/(data\(\')/g, _spName + '.' + '$1') + ', ';
+		 			_fromStr += " every "+_spName+"=PatternEvent(data('patternName')='"+_spName+"'), ";
+		 			_result.spNameArray.push(_spName);
+		 			_result.spStringifyArray.push(_spStringify);
+		 		};
+		 		_fromStr = _fromStr.replace(/,\s*$/, '') + ']';
+		 		_result.stringify = 'select ' + _selStr.replace(/,\s*$/, '') + ' from ' + _fromStr;
+		 		return _result;
+
+		 		function getVal(str) {
+		 			return str ? str + ' ' : '';
+		 		}
+
+		 		function getBrackets(count, isLeft) {
+		 			var _bracket = isLeft ? '(' : ')';
+		 			var _brackets = '';
+		 			while (count--) _brackets += _bracket;
+		 			return _brackets ? _brackets + ' ' : '';
+		 		};
+		 	};
+
+		 	var getObj = function(placeholder, isFirst) {
+		 		var _brCount = 0,
+		 		_subPatternName = $('.sub-pattern-sel', placeholder).val(),
+		 		_brVal,
+		 		_obj = {
+		 			leftBracket: (_brVal = ($('.left-bracket .br-content', placeholder).data('bracketCount') || 0) + 0) && (_brCount++, _brVal),
+		 			rightBracket: (_brVal = ($('.right-bracket .br-content', placeholder).data('bracketCount') || 0) + 0) && (_brCount++, _brVal)
+		 		};
+			//跳过首行关系字段
+			isFirst || (_obj.relation = $('.relation', placeholder).val());
+			if (_subPatternName == '') { //未选择子模式
+				if (_brCount <= 0) //该行为空，删除即可
+					return 'empty';
+				else { //该行不为空，返回错误
+					showAlert(true, '必须选择子模式！', 'danger', false, 2000);
+					return false;
+				}
+			};
+			_obj.subPattern = __rule.getSpByName(_subPatternName);
+			if (!_obj.subPattern) {
+				showAlert(true, '子模式名称有误！', 'danger', false, 2000);
+				return false;
+			}
+			return _obj;
+		};
+
+
+		/**
+		 * 检查括弧合法性
+		 * @param  {Object} objArr     检查对象数组
+		 * @param  {String} clauseType 对象类型(用于输出错误信息)
+		 * @return {boolean}         检查结果
+		 */
+		 var checkBrackets = function(objArr) {
+			//console.log('checkBrackets');
+			//console.log(objArr);
+			var _leftCount = 0,
+			_rightCount = 0;
+			for (var i = 0, item = objArr[0]; i < objArr.length; item = objArr[++i]) {
+				//console.log(item);
+				_leftCount += item.leftBracket;
+				_rightCount += item.rightBracket;
+			}
+			if (_leftCount != _rightCount) {
+				showAlert(true, '发现不匹配的括弧！', 'danger', false, 2000);
+				return false;
+			};
+			return true;
+		}
+	}
+
+	var __rule = null;
+	/**
+	 * 规则表现函数
+	 * @type {Object}
+	 */
+	 var ruleFuncs = {
+	 	currentSel: null,
+	 	selArr: [],
+		isAdd: false, //增加、修改标识符
+		addSubPattern: function(sp) {
+			console.log('addSp');
+			if (!__rule.addSubPattern(sp))
+				return false;
+			if (this.isAdd) {
+				this.pushToSelArr(sp.name);
+				this.selectSubPattern(sp.name);
+			}
+			return true;
+		},
+		/**
+		 * [addSubPatternTr description]
+		 * @param {[type]} trHandle [description]
+		 * @param {String} subpattern 子模式
+		 */
+		 addSubPatternTr: function(trHandle, subpattern) {
+		 	var $template = $('#subPatternTable .template'),
+		 	$target = trHandle ? $(trHandle).next('tr') : $template,
+		 	$newTr = $template.clone(true, true).removeClass('template').insertBefore($target);
+		 	this.isAdd = true;
+		 	this.currentSel = $('.edit-sp', $newTr).closest('td').children('select');
+		 	if (!subpattern) {
+		 		spFuncs.editSubPattern({
+		 			target: $('.edit-sp', $newTr)
+		 		}, true);
+		 	} else {
+		 		this.addSubPattern(subpattern);
+		 	}
+		 	return $newTr;
+		 },
+		 setUpRule: function(obj) {
+		 	if (!obj || !obj instanceof Array) {
+		 		return null;
+		 	}
+		 	__rule = new Rule();
+		 	for (var i = 0; i < obj.length; i++) {
+		 		var _spTr = obj[i],
+		 		$newTr = this.addSubPatternTr(null, _spTr);
+		 		this.setUpBracket($newTr, _spTr.leftBracket, true);
+		 		this.setUpBracket($newTr, _spTr.rightBracket, false);
+		 		$('.relation', $newTr).val(_spTr.relation || '');
+		 	};
+		 },
+		 setUpBracket: function(placeholder, count, isLeft) {
+		 	if (!count) {
+		 		return;
+		 	};
+		 	var _bracketItem = isLeft ? '(' : ')';
+		 	var _brackets = '';
+		 	var $target = $((isLeft ? '.left-bracket' : '.right-bracket') + ' .br-content', placeholder);
+		 	$target.data('bracketCount', count);
+		 	while ((count--) && (_brackets += _bracketItem));
+		 	$target.text(_brackets);
+		 },
+		 cancelAdd: function() {
+		 	$(this.currentSel).closest('.clause').remove();
+		 },
+		 selectSubPattern: function(name) {
+		 	if (!name) return;
+		 	$(this.currentSel).val(name);
+		 },
+		 pushToSelArr: function(name) {
+		 	this.selArr.push(name);
+			//子模式下拉列表
+			$('#subPatternTable .sub-pattern-sel').each(function(index, el) {
+				ruleFuncs.rebuildSel(this);
+			});
+		},
+		rebuildSel: function(selObj) {
+			var _selObj = selObj;
+			var _originVal = _selObj.value || null,
+			_options = _selObj.options,
+			_optArr = this.selArr;
+			_options.length = 0;
+			for (var i = 0; i < _optArr.length; i++) {
+				var _option = new Option(_optArr[i], _optArr[i]);
+				_option.onclick = function(e) {
+					console.log('click', e.target);
+				}
+				_options[_options.length] = _option;
+				//console.log(_options.length);
+			};
+			_originVal && (_selObj.value = _originVal);
+		}
+	};
+
+	/**
+	 * 子模式表现函数
+	 * @type {Object}
+	 */
+	 var spFuncs = {
+	 	editSubPattern: function(event, isAdd) {
+	 		ruleFuncs.isAdd = !!isAdd;
+	 		ruleFuncs.currentSel = $(event.target).closest('td').children('select');
+	 		showOverlayFrm('#subPatternFrm');
+	 		if (isAdd) {
+	 			$('#spName').removeAttr('readonly');
+	 			$('#spName', '#subPatternFrm').val(name || __rule.getNewSpName());
+	 		} else {
+	 			$('#spName').attr('readonly', 'readonly');
+	 			this.modSubPattern($(ruleFuncs.currentSel).val());
+	 		}
+	 	},
+	 	modSubPattern: function(name) {
+	 		var _sp = __rule.getSpByName(name);
+	 		if (!_sp) {
+	 			showAlert(true, '获取子模式失败！', 'danger', false, 2000);
+	 			return;
+	 		};
+			clauseFunc.setUpByJSON(_sp, '#spName', '#filterTable', '#whereTable', '#groupByTable'); //有问题?
+		},
+		clearSubPattern: function(name) {
+			$('#spName', '#subPatternFrm').val(name || '');
+			$('.template', '#subPatternFrm').siblings('tr').remove();
+		}
+	};
+
+	function tableReady() {
+		$('#ruleTable').byoneTable({
+			ajax: "queryAllRules.do",
+			"sort": ["ruleName", 'asc'],
+			/*"rightClick": {
+				targetMenu: "#ruleDropMenu"
+			},*/
+			dataId: "id",
+			"pagination": true,
+			"searchHandle": "#ruleSearch",
+			"columns": [{
+				"class": "ruleStatus",
+				"data": "ruleStatus",
+				"sortable": false,
+				"format": function (data) {
+					return '<input type="checkbox" class="rule-state-check" '+(data||'')+'>' //checked | null;
+				}
+			}, {
+				"class": "ruleName",
+				"data": "ruleName"
+			}, {
+				"class": "source",
+				"data": "source"
+			}, {
+				"class": "description",
+				"sortable": false,
+				"data": "description"
+			}]
+		});
+		tableTrClick('#ruleTable', function(ruleId) {
+			console.log(ruleId + ' clicked');
+		});
+	}
+
+	/**
+	 * 等级颜色
+	 * @param  {String | Jquery Object} placeholder 容器
+	 */
+	 function changeSelectColor(placeholder) {
+	 	var $placeholder = $(placeholder);
+	 	var level = $placeholder.val();
+	 	if ((level -= 4) < 0) {
+	 		$placeholder[0].className = 'form-control level-low';
+	 		return;
+	 	};
+	 	if ((level -= 4) < 0) {
+	 		$placeholder[0].className = 'form-control level-mid';
+	 		return;
+	 	};
+	 	$placeholder[0].className = 'form-control level-high';
+	 }
+
+	 /*新增规则*/
+	 window.addRule = function() {
+	 	__rule = new Rule();
+	 	$('#ruleForm').attr('action', 'addRule.do');
+	 	$('#addRuleFrm .box-title').text('添加新规则');
+	 	resetSpTable();
+	 	showOverlayFrm('#addRuleFrm');
+	 	return false;
+	 }
+
+	 window.fillRule = function(id) {
+		//fillForm(id);
+		$('#ruleForm').attr('action', 'updateRule.do');
+		$('#addRuleFrm .box-title').text('修改规则');
+		resetSpTable();
+		showAlert(true, '请稍等...', 'info', true);
+		$.get('queryRuleById.do',{
+	 		'id': id
+	 	}, function(data) {
+			/*optional stuff to do after success */
+			fillInfo(data.vo, '#ruleForm', {
+				ruleobj: function(elem, data) {
+					ruleFuncs.setUpRule(JSON.parse(data));
+				}
+			});
+			showAlert(false);
+		});
+		showOverlayFrm('#addRuleFrm');
+		return false;
+	}
+
+	function resetSpTable() {
+		$('#subPatternTable tbody tr:not(.template)').remove();
+	}
+
+	window.delRule = function(id) {
+		if(!confirm('删除操作不可逆，您确定要删除吗')) {
+			return;
+		}
+		showAlert(true, '删除中...', 'info', true);
+		$.get('deleteRule.do', {
+			'id': id
+		}, function(data) {
+			if (data === "success") {
+				showAlert(true, '删除成功！', 'success', false, 500, function() {
+					LoadAjaxContent(window.location.hash.substring(1), true);
+				});
+			}
+		});
+	}
+
+
+	/**
+	 * 规则状态变更回调函数
+	 * @param  {[type]}  id        [description]
+	 * @param  {[type]}  ruleName  [description]
+	 * @param  {Boolean} isChecked [description]
+	 * @return {boolean}            [description]
+	 */
+	 function ruleCheckCallback(id, ruleName, isChecked) {
+	 	var _check = isChecked ? '启用' : '停用';
+	 	if (!confirm('确定要' + _check + '规则"' + ruleName + '"吗？')) {
+	 		return false;
+	 	}
+	 	var $checkbox = $(this);
+		//console.log($(this));
+		showAlert(true, '状态更改中...', 'info', true);
+		$.get('changeStatus.do', {
+			id: id,
+			ruleStatus: isChecked ? 'checked' : 'null'
+		}, function(data) {
+			/*optional stuff to do after success */
+			if ($.trim(data) === 'success') {
+				showAlert(true, '状态更改成功！', 'success', false, 2000);
+			} else {
+				showAlert(true, '状态更改失败。', '', false, 2000);
+				isChecked = !isChecked;
+			}
+			if (isChecked) {
+				$checkbox.prop('checked', true);
+			} else {
+				$checkbox.prop('checked', false);
+			}
+		});
+		return true;
+	}
+
+
+	function clauseReady() {
+
+		//保存子模式
+		$('#saveSubPattern').click(function(event) {
+			/* Act on the event */
+			event.preventDefault();
+
+			var _name = $('#spName').val();
+			if (!_name) {
+				Clause.prototype.showError('子模式名不能为空');
+				return false;
+			};
+			var _newSP = new Clause(_name);
+			if (!_newSP.loadFromForm('#filterTable', '#whereTable', '#groupByTable')) {
+				delete _newSP;
+				return false;
+			}
+			if (!ruleFuncs.addSubPattern(_newSP)) {
+				console.log('addSp');
+				Clause.prototype.showError('子模式名"' + _newSP.name + '"已存在');
+				return false;
+			};
+			/*console.debug('newSP');
+			console.log(_newSP);
+			console.log(_newSP.serialize());*/
+			/*console.log(_newSP.stringify());*/
+			hideOverlayFrm('#subPatternFrm');
+			/*console.log(_newSP.serialize());*/
+		});
+	}
+
+	function formValidate() {
+		$('#ruleForm').bootstrapValidator({
+			feedbackIcons: {
+				valid: 'glyphicon glyphicon-ok',
+				invalid: 'glyphicon glyphicon-remove',
+				validating: 'glyphicon glyphicon-refresh'
+			},
+			fields: {
+
+			}
+		}).on('success.form.bv', function(e) {
+			e.preventDefault();
+			var _clauseObj = __rule.loadClause('#subPatternTable'),
+				//_serializedClause = __rule.serialize(_clauseObj),/*,*/ //参数也可以是'#subPatternTable'
+				_stringify = __rule.stringify(_clauseObj); //参数也可以是'#subPatternTable'
+				/*生成需要提交的数据*/
+				console.log('origin');
+				console.log(_clauseObj);
+				console.log('rule');
+				console.log(__rule);
+				/*console.log('serialized');
+				console.log(_serializedClause);*/
+				console.log('stringify');
+				console.log(_stringify);
+				console.log('wocao');
+				console.log($(this).serializeArray().concat([
+					{
+						name: 'ruleobj', 
+						value: JSON.stringify(_clauseObj)
+					}, {
+						name: 'subpatternArray',
+						value: _stringify.spStringifyArray
+					}, {
+						name: 'subpatternNameArray',
+						value: _stringify.spNameArray 
+					}, {
+						name: 'rule',
+						value: _stringify.stringify
+					}]));
+				submitWorks.call(this, function() {
+					$('#orgModal').modal('hide');
+					LoadAjaxContent(window.location.hash.substring(1), true);
+				}, {
+					'serialize': $(this).serializeArray().concat([
+					{
+						name: 'ruleobj', 
+						value: JSON.stringify(_clauseObj)
+					}, {
+						name: 'subpatternArray',
+						value: _stringify.spStringifyArray
+					}, {
+						name: 'subpatternNameArray',
+						value: _stringify.spNameArray 
+					}, {
+						name: 'rule',
+						value: _stringify.stringify
+					}]),
+					'method': 'GET'
+				});
+
+			});
+
+}
+
+
+$(document).ready(function() {
+	LoadByoneTableScripts(tableReady);
+	LoadClauseScript(clauseReady);
+	LoadBootstrapValidatorScript(formValidate);
+	WinMove();
+	tableContextMenu('#ruleTable');
+	ruleCheck(ruleCheckCallback);
+	$('#saveRule').click(function(event) {
+		/* Act on the event */
+		event.preventDefault();
+		$('#ruleForm').submit();
+	});
+	$('#criticalLevel').change(function(event) {
+		/* Act on the event */
+		changeSelectColor(this);
+	});
+	$('#addSubPtn').click(function(event) {
+		/* Act on the event */
+		ruleFuncs.addSubPatternTr();
+	});
+	$('#subPatternTable .row-action .add').unbind('click').on('click', function(event) {
+		event.preventDefault();
+		ruleFuncs.addSubPatternTr();
+	})
+
+		//取消编辑子模式
+		$('#saveSubPattern').siblings('.btn-cancel').on('canceld', function(event) {
+			if (ruleFuncs.isAdd)
+				ruleFuncs.cancelAdd();
+		});
+
+		//编辑子模式
+		$('.edit-sp').click($.proxy(spFuncs.editSubPattern, spFuncs));
+
+		$('#subPatternFrm').on('closed', function(event) {
+			event.preventDefault();
+			/* Act on the event */
+			clauseFunc.clearClause(this);
+		});
+	});
+})()
+
+
+
+/*
+	function setUpTest() {
+		var _clause = {
+			name: 'test',
+			filters: [{
+				attribute: "attr3",
+				leftBracket: 2,
+				operator: "ueq",
+				rightBracket: 0,
+				value: "1"
+			},{
+				relation: "AND",
+				attribute: "attr2",
+				leftBracket: 0,
+				operator: "eq",
+				rightBracket: 1,
+				value: "13"
+			},{
+				relation: "OR",
+				attribute: "attr1",
+				leftBracket: 2,
+				operator: "ueq",
+				rightBracket: 1,
+				value: "1"
+			}],
+			where: [{
+				attribute: "attr3",
+				leftBracket: 2,
+				operator: "ueq",
+				rightBracket: 0,
+				value: "1"
+			},{
+				relation: "AND",
+				attribute: "attr2",
+				leftBracket: 0,
+				operator: "eq",
+				rightBracket: 1,
+				value: "13"
+			},{
+				relation: "AND",
+				attribute: "attr1",
+				leftBracket: 2,
+				operator: "ueq",
+				rightBracket: 0,
+				value: "1"
+			}],
+			groupBys: [{
+				attribute: "attr1"
+			}, {
+				attribute: "attr2"
+			}]
+		};
+		clauseFunc.setUpByJSON(_clause, '#spName', '#filterTable', '#whereTable', '#groupByTable');
+	}*/
+</script>

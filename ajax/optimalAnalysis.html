@@ -1,0 +1,173 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">大数据分析</a></li>
+			<li><a href="#">优化分析</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+<div class="mt-15 clearfix">
+	<h4 class="page-header">优化分析</h4>
+</div>
+<!-- /.form-group -->
+<div class="row">
+	<div class="col-xs-12 mb-15">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-search"></i>
+					<span class="chart-title">分析条件</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="config-link">
+						<i class="glyphicon glyphicon-cog"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+					<a href="#" class="close-link"><i class="fa fa-times"></i></a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix" style="min-height: 10px;">
+				<form action="" id="filterForm" class="form-inline">
+					<div class="form-group">
+						<label for="period" class="control-label">分析数据范围选择:</label>
+						<select name="period" id="period" class="form-control">
+							<option value="self">自选时间</option>
+							<option value="1">近1个月</option>
+							<option value="3">近3个月</option>
+							<option value="6">近6个月</option>
+							<option value="12">近1年</option>
+						</select>
+					</div>
+					<div class="form-group periodBySelf">
+						<label class="control-label">开始时间：</label>
+						<input type="text" name="stime" class="form-control date-picker" required>
+					</div>
+					<!-- /.form-group -->
+
+					<div class="form-group periodBySelf">
+						<label class="control-label">结束时间：</label>
+						<input type="text" name="etime" class="form-control date-picker" required>
+					</div>
+					<!-- /.form-group -->
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary">优化分析</button>
+					</div>
+				</form>
+				<div class="form-group">
+					<label for="period" class="control-label">优化结论:</label>
+					<ul id="suggest">
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+	<div class="col-sm-6 template chart-template">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-search"></i>
+					<span data-name="deviceName" class="chart-title">设备A</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="charts" style="min-height: 200px;"></div>
+				<div class="zoom loading">
+					<div class="spinner"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	function AllTimePickers() {
+		$('.date-picker').datetimepicker({
+			timeFormat: "",
+			dateFormat: "yy-mm-dd"
+		});
+	}
+
+/**
+ * 获取图表数据
+ * @param  {[type]} chartCfg    [description]
+ * @param  {[type]} placeholder [description]
+ * @return {[type]}             [description]
+ */
+ function queryChart(chartCfg, placeholder) {
+ 	$.get('optimalAnalysis.do', chartCfg, function(data) {
+ 		/*optional stuff to do after success */
+ 		drawCharts(data, $('.charts', placeholder));
+ 		$('.loading', placeholder).hide();
+ 	});
+ }
+
+ $(document).ready(function() {
+ 	LoadTimePickerScript(AllTimePickers);
+ 	LoadHighchartsScripts(function() {
+
+ 	});
+ 	$('#period').change(function(event) {
+ 		/* Act on the event */
+ 		if ($(this).val() === 'self') {
+ 			$(this).closest('form').find('.periodBySelf').show().find('input').removeAttr('disabled');
+ 		} else {
+ 			$(this).closest('form').find('.periodBySelf').hide().find('input').attr('disabled', 'disabled');
+ 		}
+ 	});
+
+ 	var _charts = {
+ 		'17': '网络流量统计',
+ 		'18': '网络设备cpu统计',
+ 		'19': '网络设备Mem统计',
+ 		'20': '服务器Cpu统计',
+ 		'21': '服务器men统计'
+ 	}
+ 	$('#filterForm').submit(function(event) {
+ 		/* Act on the event */
+ 		event.preventDefault();
+ 		$('.new-chart, #suggest li').remove();
+ 		showAlert(true, "分析中...", 'info', true);
+ 		var $template = $('.chart-template'),
+ 		_formVals = $(this).serializeArray();
+ 		console.log(_formVals.concat({name: "chartCat", value: prop}));
+ 		for (var prop in _charts) {
+ 			if (_charts.hasOwnProperty(prop)) {
+ 				(function(prop) {
+ 					var $newChart = $template.clone(true, true).removeClass('template').addClass('new-chart').insertBefore($template).find('.chart-title').text(_charts[prop]).end().find('.charts');
+ 					$.get('optimalAnalysis.do', _formVals.concat({name: "chartCat", value: prop}), function(data) {
+ 						/*optional stuff to do after success */
+ 						drawCharts(data, $newChart);
+ 						$newChart.next('.loading').hide();
+ 						if (data.suggest) {
+ 							$('<li>').text(data.suggest).appendTo('#suggest');
+ 						}
+ 						showAlert(true, _charts[prop]+" 分析成功", 'success', false, 1000);
+ 					});
+ 				})(prop)
+ 			}
+ 		}
+ 	});
+ });
+</script>

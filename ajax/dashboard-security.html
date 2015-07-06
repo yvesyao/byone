@@ -1,0 +1,51 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a href="#">首页</a></li>
+			<li><a href="#">安全概览</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+
+<div id="secu" class="low-category">
+	<div class="charts-header mt-15 clearfix">
+		<a href="#" class="btn btn-xs btn-default pull-right mr add-chart-btn"><span class="glyphicon glyphicon-plus"></span></a>
+		<div class="pull-right">
+			<select class="chart-catagory form-control">
+				<option value="10">全局安全事件趋势</option> 
+				<option value="11">主机漏洞统计</option> 
+				<option value="12">漏洞类型统计</option>  
+				<option value="">安全事件严重统计</option>
+				<option value="13">告警源计数</option> 
+				<option value="14">告警目标计数</option>   
+				<option value="15">源地理位置计数</option>   
+				<option value="16">目标地理位置计数</option>   
+			</select>
+		</div>
+		<h4 class="page-header">安全概览</h4>
+	</div>
+	
+	<div class="charts-body row">
+	</div>
+	<!-- /.row -->
+</div>
+<!-- /#secu -->
+
+
+
+<script type="text/javascript">
+// Draw all Charts
+function DrawAllCharts(){
+	receiveCharts("security");
+}
+$(document).ready(function() {
+	// Load required  scripts and draw charts
+	LoadHighchartsScripts(DrawAllCharts);
+	WinMove();
+	dashboardWorks();
+});
+
+</script>

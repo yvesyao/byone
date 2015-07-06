@@ -1,0 +1,109 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a href="#">首页</a></li>
+			<li><a href="#">网络概览</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+
+<div id="avai" class="low-category">
+	<div class="charts-header mt-15 clearfix">
+		<a href="#" class="btn btn-xs btn-default pull-right mr add-chart-btn"><span class="glyphicon glyphicon-plus"></span></a>
+		<div class="pull-right">
+			<select class="chart-catagory form-control">
+				<option value="1">告警统计</option>
+				<option value="3">类型统计</option>
+				<option value="4">严重等级统计</option>
+				<option value="2">告警趋势</option>
+				<option value="6">VM主机存活时间</option>
+			</select>
+		</div>
+		<h4 class="page-header"> 可用性概览</h4>
+	</div>
+	
+	<div class="charts-body row">
+	</div>
+	<!-- /.row -->
+</div>
+<!-- /#avai -->
+
+
+<div id="perf" class="low-category">
+	<div class="charts-header mt-15 clearfix">
+		<a href="#" class="btn btn-xs btn-default pull-right mr add-chart-btn"><span class="glyphicon glyphicon-plus"></span></a>
+		<div class="pull-right">
+			<select class="chart-catagory form-control">
+				<option value="1">告警统计</option>
+				<option value="3">类型统计</option>
+				<option value="4">严重等级统计</option>
+				<option value="2">告警趋势</option>
+				<option value="7">VM CPU使用率趋势图</option>
+				<option value="70">VM 内存使用率趋势图</option>
+				<option value="8">ESX磁盘读写速度</option>
+				<option value="9">TOP VM CPU 使用率</option>
+				<option value="90">TOP VM 内存使用率</option>
+			</select>
+		</div>
+		<h4 class="page-header"> 性能概览</h4>
+	</div>
+
+	<div class="charts-body row">
+	</div>
+	<!-- /.row perf -->
+</div>
+<!-- /#perf-->
+
+<div id="change" class="low-category">
+	<div class="charts-header mt-15 clearfix">
+		<a href="#" class="btn btn-xs btn-default pull-right mr add-chart-btn"><span class="glyphicon glyphicon-plus"></span></a>
+		<div class="pull-right">
+			<select class="chart-catagory form-control">
+				<option value="3">类型统计</option>
+				<option value="2">告警趋势</option>
+				<option value="1">告警统计</option>
+			</select>
+		</div>
+		<h4 class="page-header"> 变更概览</h4>
+	</div>
+	<div class="charts-body row">
+	</div>
+	<!-- /.row change -->
+</div>
+<!-- /#change-->
+<div id="secu" class="low-category">
+	<div class="charts-header mt-15 clearfix">
+		<a href="#" class="btn btn-xs btn-default pull-right mr add-chart-btn"><span class="glyphicon glyphicon-plus"></span></a>
+		<div class="pull-right">
+			<select class="chart-catagory form-control">
+				<option value="1">告警统计</option>
+				<option value="3">类型统计</option>
+				<option value="4">严重都等级统计</option>
+			</select>
+		</div>
+		<h4 class="page-header"> 安全告警概览</h4>
+	</div>
+	<div class="charts-body row">
+	</div>
+	<!-- /.row secu -->
+</div>
+<!-- /#secu-->
+
+
+
+<script type="text/javascript">
+// Draw all Charts
+function DrawAllCharts(){
+	receiveCharts("cloud");
+}
+$(document).ready(function() {
+	// Load required  scripts and draw charts
+	LoadHighchartsScripts(DrawAllCharts);
+	WinMove();
+	dashboardWorks();
+});
+
+</script>

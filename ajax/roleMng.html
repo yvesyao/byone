@@ -1,0 +1,464 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">系统</a></li>
+			<li><a href="#">角色管理</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>角色管理</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="row">
+					<div class="col-sm-5 col-md-4 mb-half" id="roleActions">
+						<!-- test 添加的onclik -->
+						<a href="#" class="btn btn-xs btn-default" onclick="addRole()" data-func="addRole()"><span class="glyphicon glyphicon-plus"></span> 添加</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" data-func="fillRole('{1}')" disabled><span class="glyphicon glyphicon-edit"></span> 编辑</a>
+						<a href="#" class="btn btn-xs btn-default rely-on-table" data-func="delRole('{1}')" disabled><span class="glyphicon glyphicon-trash"></span> 删除</a>
+					</div>
+				</div>
+				<table id="roleTable" class="table table-condensed table-striped table-bordered table-block table-hover role-table byoneTable" action-handle="#roleActions">
+					<thead>
+						<tr>
+							<th>名称</th>
+							<th>描述</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="template">
+							<td data-name="roleName"></td>
+							<td data-name="description"></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<!-- /.col-sm-6 -->
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+
+	</div>
+	<!-- /.col-xs-12 -->
+	<div class="overlay-frm clearfix hide" id="roleFrm">
+		<div class="col-xs-12">
+			<div class="box no-drop">
+				<div class="box-header">
+					<div class="pull-right">
+						<a href="#" id = "saverole" class="mr">保存</a><a href="#" class="btn-cancel mr">取消</a>
+					</div>
+					<div class="box-name">
+						<span>编辑角色</span>
+					</div>
+					<div class="no-move"></div>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-content clearfix">
+					<form action="#" class="form-horizontal" id="roleForm">
+						<input type="hidden" data-name="id" name="id">
+						<div class="form-group">
+							<label for="roleName" class="control-label col-xs-3">角色名称：</label>
+							<div class="col-xs-8"><input type="text" id="roleName" class="form-control" data-name="roleName" name="roleName" required maxLength="40"></div>
+						</div>
+						<div class="form-group">
+							<label for="description" class="control-label col-xs-3">描述：</label>
+							<div class="col-xs-8"><textarea id="description" class="form-control" data-name="description" name="description" maxLength="1000"></textarea></div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-xs-3">数据条件：</label>
+							<input type="hidden" id="dataCondition" name="dataCondition">
+							<input type="hidden" id="dataConditionObj" name="dataConditionObj">
+							<div class="col-xs-8">
+								<div class="mb-half">
+									<label class="checkbox-inline"><input type="checkbox" class="data-attr-sel" value="reptDevIpAddr">报告IP</label>
+									<label class="checkbox-inline"><input type="checkbox" class="data-attr-sel" value="srcIpAddr">源IP</label>
+									<label class="checkbox-inline"><input type="checkbox" class="data-attr-sel" value="destIpAddr">目标IP</label>
+									<label class="checkbox-inline"><input type="checkbox" class="data-attr-sel" value="hostIpAddr">主机IP</label>
+								</div>
+								<table id="dataConTable" class="table table-bordered table-condensed">
+									<thead>
+										<th>操作</th>
+										<th>括号</th>
+										<th>属性</th>
+										<th>操作</th>
+										<th>值</th>
+										<th>括号</th>
+									</thead>
+									<tbody>
+										<tr class="clause data-clause template">
+											<td>
+												<select class="form-control relation">
+													<option value="AND">AND</option>
+													<option value="OR">OR</option>
+												</select>
+											</td>
+											<td class="left-bracket bracket">
+											</td>
+											<td>
+												<input type="hidden" class="attribute">
+												<span class="attribute-name">attr name</span>
+											</td>
+											<td>
+												<select class="form-control operator">
+													<option value="in" selected>IN</option>
+													<option value="not in">NOT IN</option>
+												</select>
+											</td>
+											<td>
+												<input type="text" class="ipvalue form-control">
+												<a href="#" class="fetch btn btn-default btn-xs ml-half">... </a>
+											</td>
+											<td class="right-bracket bracket">
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- /.form-group -->
+
+						<div class="form-group">
+							<label class="control-label col-xs-3">UI连接：</label>
+							<div class="col-xs-8">
+								<div class="box collapseListBox">
+									<ul>
+										<li class="topCategory checkbox" data-id="1"><label class="group"><input type="checkbox"><i class="fa fa-dashboard"></i> 首页</label><ul></ul></li>
+										<li class="topCategory checkbox" data-id="2"><label class="group"><input type="checkbox"><i class="fa fa-desktop"></i> 资产管理</label><ul></ul></li>
+										<li class="topCategory checkbox" data-id="3"><label class="group"><input type="checkbox"><i class="fa fa-sitemap"></i><!-- .fa-hdd-o --> 网络管理</label><ul></ul></li>
+										<li class="topCategory checkbox" data-id="4"><label class="group"><input type="checkbox"><i class="fa fa-cloud"></i> 云管理</label><ul></ul></li>
+										<li class="topCategory checkbox" data-id="5"><label class="group"><input type="checkbox"><i class="fa fa-lock"></i> 安全管理</label><ul></ul></li>
+										<li class="topCategory checkbox" data-id="6"><label class="group"><input type="checkbox"><i class="fa fa-bar-chart-o"></i> 数据分析</label><ul></ul></li>
+										<li class="topCategory checkbox" data-id="7"><label class="group"><input type="checkbox"><i class="fa fa-table"></i> 报表</label><ul></ul></li>
+										<li class="topCategory checkbox" data-id="8"><label class="group"><input type="checkbox"><i class="fa fa-code"></i> 知识库</label><ul></ul></li>
+										<li class="topCategory checkbox" data-id="9"><label class="group"><input type="checkbox"><i class="fa fa-gears"></i> 系统</label><ul></ul></li>
+									</ul>
+								</div>
+							</div>
+							<!-- /.col-xs-8 -->
+						</div>
+						<!-- /.form-group -->
+					</form>
+				</div>
+				<!-- /.box-content -->
+			</div>
+			<!-- /.box -->
+		</div>
+		<!-- /.col-xs-12 -->
+	</div>
+	<!-- /.overlay -->
+</div>
+<!-- /.row -->
+
+<div class="modal fade" id="deviceSelModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="deviceSelModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h5 class="modal-title" id="deviceSelModalLabel">添加设备</h5>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-7">
+						<table id="deviceTable" class="table table-condensed table-striped table-bordered table-block table-hover byoneTable" action-handle="#addDeviceAction">
+							<thead>
+								<tr>
+									<th>名称</th>
+									<th>IP地址</th>
+									<th>类型</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="template">
+									<td data-name="deviceName"></td>
+									<td data-name="deviceIP"></td>
+									<td data-name="typeName"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="pull-left action-List col-xs-1">
+						<div id="addDeviceAction" class="mt-20">
+							<a href="#" class="btn btn-xs btn-default rely-on-table" data-func="addToList('{1}')" disabled>&gt;&gt;</a>
+						</div>
+						<div class="mt-20">
+							<a href="#" class="btn btn-xs btn-default" id="rmDeviceAction" disabled>&lt;&lt;</a>
+						</div>
+					</div>
+					<!-- /.action-List -->
+					<div class="col-xs-4">
+						<nav class="box" id="ipList">
+							<ul id="seledDevList">
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.modal-body -->
+			<div class="modal-footer">
+				<a href="#" id="commitIpListBtn" class="btn btn-default">确 定</a>
+				<a href="#" data-dismiss="modal" class="btn btn-primary">取 消</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	function addRole() {
+		resetForm($('#roleForm').attr('action', 'addRole.do'));
+		$('#roleName').removeAttr('readonly');
+		$('.data-clause').not('.template').remove();
+		showOverlayFrm('#roleFrm');
+	}
+
+	function fillRole(roleId) {
+		$('#roleName').attr('readonly', 'readonly');
+		resetForm($('#roleForm').attr('action', 'updateRole.do'));
+		$.get('queryRoleById.do', {
+			'roleId': roleId
+		}, function(data) {
+			/*optional stuff to do after success */
+			fillInfo(data.roleVo, '#roleForm', {
+				dataConditionObj: function (elem, data) {
+					setUpDc(data);
+				},
+				uiLinkList: fillRoleVos
+			});
+			function fillRoleVos(elem, data) {
+				var _interval = setInterval(function() {
+					var $vos = $('.collapseListBox :checkbox');
+					if ($vos.length > 0) {
+						clearInterval(_interval);
+						$vos.filter(':checked').removeAttr('checked');
+						for (var i = 0; i < data.length; i++) {
+							$('.collapseListBox [value="' + data[i].id + '"]').click();
+						};
+					}
+				}, 200);
+				//console.log(data);
+			}
+
+			$('#roleFrm').resize();
+		});
+		//待定
+		showOverlayFrm('#roleFrm');
+		/*setUpDc('{"i2":{"attrName":"源iP","relation":"","leftBr":"((","leftBrCnt":2,"operator":"in","ipvalue":"222.22.22.2","rightBr":"","rightBrCnt":0},"i3":{"attrName":"目标IP","relation":"AND","leftBr":"","leftBrCnt":0,"operator":"in","ipvalue":"22.2.2.2","rightBr":"","rightBrCnt":0}}');*/
+	}
+
+	function delRole(roleId) {
+		showAlert(true, '删除中...', 'info', true);
+		$.get('deleteRole.do', {
+			'id': roleId
+		}, function(data) {
+			if (data === "operateSuccess") {
+				showAlert(true, '删除成功！', 'success', false, 500, function() {
+					LoadAjaxContent(window.location.hash.substring(1), true);
+				});
+			}
+		});
+	}
+
+	/**
+ * 比较两个ip的大小
+ * @param  {[type]} ipBegin [description]
+ * @param  {[type]} ipEnd   [description]
+ * @return {[type]}         [description]
+ */
+ function compareIP(ipblock)
+ {
+ 	var ips = ipblock.split('-');
+ 	if (!ips || ips.length != 2) {//如果不是IPduan，则返回-1
+ 		return -1;
+ 	}
+ 	temp1 = ips[0].split("."),
+ 	temp2 = ips[1].split(".");
+ 	console.log(temp1);
+ 	console.log(temp2);
+ 	for (var i = 0; i < 4; i++)
+ 	{
+ 		if (temp1[i]>temp2[i])
+ 		{
+ 			return 1;
+ 		}
+ 		else if (temp1[i]<temp2[i])
+ 		{
+ 			return -1;
+ 		}
+ 	}
+ 	return 0;	
+ }
+
+ function formValidate() {
+ 	$('#roleForm').bootstrapValidator({
+ 		feedbackIcons: {
+ 			valid: 'glyphicon glyphicon-ok',
+ 			invalid: 'glyphicon glyphicon-remove',
+ 			validating: 'glyphicon glyphicon-refresh'
+ 		}
+ 	}).on('success.form.bv', function(e) {
+ 		e.preventDefault();
+ 		showAlert(true, '提交中...', 'info', true);
+ 		console.log($(this).serializeArray());
+ 		var $uiLinkList = $('.uiLinkList:checked'),
+ 		_uiLinkList = [],
+ 		_formData = $(this).serializeArray(),
+ 		_result = {};
+ 		$uiLinkList.each(function(index, el) {
+ 			_uiLinkList.push($(this).data('vo'));
+ 		});
+ 		for (var i = 0; i < _formData.length; i++) {
+ 			_result[_formData[i].name] = _formData[i].value;
+ 		};
+ 		_result.uiLinkList = _uiLinkList;
+			/*_formData.push({
+				name: 'uiLinkList',
+				value: _uiLinkList
+			});
+ 	console.log(_uiLinkList);*/
+
+ 	$.ajax({
+ 		url: $(this).attr('action'),
+ 		type: "POST",
+ 		datatype: "json",
+ 		contentType: 'application/json;charset=UTF-8',
+ 		data: JSON.stringify(_result),
+ 		success: function(data) {
+ 			/*optional stuff to do after success */
+ 			console.log(data);
+ 			if (data!='error') {
+ 				showAlert(true, '提交成功！', 'success', false, 500, function() {
+ 					showAlert(true, '提交成功！', 'success', false, 500, function() {
+ 						LoadAjaxContent(window.location.hash.substring(1), true);
+ 					});
+ 				});
+ 			} else {
+ 				showAlert(true, '提交失败，请联系管理员。', 'danger', false, 2000);
+ 			}
+ 		}
+ 	});
+ 	console.log($(this).serializeArray());
+ });
+}
+
+function resetForm(placeholder) {
+	//console.log('reset');
+	$(placeholder).data('bootstrapValidator').resetForm(true).$form[0].reset();
+	$('textarea', placeholder).text('');
+	$(':checked', placeholder).click();
+}
+
+function checkIpVal(ipvalue) {
+	return ipvalue && ipvalue.match(/^\s*((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))(\s*\,\s*(?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))*\s*$/);
+}
+
+function setUpDc(dcObjArr) {
+	var _dcObj = JSON.parse(dcObjArr);
+	$('.data-clause').not('.template').remove();
+	for (prop in _dcObj) {
+		if (_dcObj.hasOwnProperty(prop)) {
+			var _dc = _dcObj[prop];
+			$clause = addDcRow(prop, _dc.attrName);
+			$('.data-attr-sel[value="'+prop+'"]').attr('checked', 'checked');
+			$('.relation', $clause).val(_dc.relation);
+			$('.left-bracket .br-content', $clause).text(_dc.leftBr).data('bracketCount', _dc.leftBrCnt);
+			$('.right-bracket .br-content', $clause).text(_dc.rightBr).data('bracketCount', _dc.rightBrCnt);
+			$('.ipvalue', $clause).val(_dc.ipvalue);
+			$('.operator', $clause).val(_dc.operator);
+		}
+	}
+}
+
+function setUpUIList() {
+	$.get('queryUiLink.do', function(data) {
+		var _linkList = data.uiLinkList,
+		$uiLinkUl = $('.collapseListBox ul');
+		for (var i = 0; i < _linkList.length; i++) {
+			var _link = _linkList[i]
+			$newLi = $('<li><label><input type="checkbox" value="'+_link['id']+'" class="uiLinkList" data-name="uiLinkList">'+_link['uiNameZn']+'</label></li>').appendTo('[data-id="'+_link['parentId']+'"] ul', $uiLinkUl);
+			$(':checkbox', $newLi).data('vo', _link);
+		};
+	});
+}
+function addDcRow(attr, attrName) {
+	if ($('.data-clause[data-attr= "' + attr + '"]').length <= 0) {
+		var $template = $('#dataConTable .template');
+		return $template.clone(true, true).attr('data-attr', attr).removeClass('template').insertBefore($template).find('.attribute').val(attr).end().find('.attribute-name').text(attrName).end();
+	}
+}
+
+window.$ && $(function() {
+	setUpListTable('#roleTable', 'queryAllRole.do', {
+		dataId: 'id'
+	});
+	clauseFuncs();
+		$('#saverole').click(function(event) { //整理数据条件
+			event.preventDefault();
+			var $clauses = $('.data-clause').not('.template'),
+			_dcObj = {},
+			_leftBrCnt = 0,
+			_rightBrCnt = 0,
+			_dcResult = [];
+			for (var i = 0; i < $clauses.length; i++) {
+				var $clause = $($clauses[i]),
+				$leftBr = $('.left-bracket .br-content', $clause),
+				$rightBr = $('.right-bracket .br-content', $clause),
+				_attr = $clause.data('attr'),
+				_dc = {
+					'attrName': $('.attribute-name', $clause).text(),
+					'relation': (i == 0) ? '' : $('.relation', $clause).val(),
+					'leftBr': $leftBr.text(),
+					'leftBrCnt': $leftBr.data('bracketCount') || 0,
+					'operator': $('.operator', $clause).val(),
+					'ipvalue': $('.ipvalue', $clause).val(),
+					'rightBr': $rightBr.text(),
+					'rightBrCnt': $rightBr.data('bracketCount') || 0
+				};
+				if (!checkIpVal(_dc.ipvalue)) {
+					alert(_dc.attrName + ": 值不能为空，且格式需为正确的ip地址数组，用逗号分隔。");
+					$('.ipvalue', $clause).focus();
+					return false;
+				}
+				_leftBrCnt += _dc.leftBrCnt;
+				_rightBrCnt += _dc.rightBrCnt;
+				_dcObj[_attr] = _dc;
+				_dcResult.push(_dc.relation, _dc.leftBr, _attr, _dc.operator, _dc.ipvalue, _dc.rightBr);
+			}
+			console.log('test');
+			if (_leftBrCnt != _rightBrCnt) {
+				alert('数据条件的括号不匹配!');
+				return false;
+			}
+			$('#dataCondition').val(_dcResult.join(' '));
+			$('#dataConditionObj').val(JSON.stringify(_dcObj));
+			$('#roleForm').submit();
+		});
+$('.data-attr-sel').click(function(event) {
+	console.log('change');
+	var _val = $(this).val();
+	if ($(this).is(':checked')) {
+		addDcRow(_val, $(this).closest('label').text());
+	} else {
+		$('.data-clause[data-attr= "' + $(this).val() + '"]').remove();
+	}
+}).change();
+tableTrClick('#roleTable');
+setUpUIList();
+LoadBootstrapValidatorScript(formValidate);
+});
+</script>

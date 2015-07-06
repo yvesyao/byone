@@ -1,0 +1,177 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">系统</a></li>
+			<li><a href="#">平台状态</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>云状态：</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<!-- <a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="col-xs-12">
+					<table id="cloudTable" class="mt-20 table table-condensed table-striped table-bordered table-block table-hover byoneTable">
+						<thead>
+							<tr>
+								<th>名称</th>
+								<th>IP地址</th>
+								<th>健康状态</th>
+								<th>模块角色</th>
+								<th>更新时间</th>
+								<th>CPU</th>
+								<th>版本</th>
+								<th>创建时间</th>
+								<th>物理内存</th>
+								<th>虚拟内存</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<div class="zoom loading">
+						<div class="spinner"></div>
+					</div>
+					<nav class="pull-right">
+						<ul class="pagination" id="alarmPag">
+							<li class="prev"><a href="#">&laquo;</a></li>
+							<li class="next"><a href="#">&raquo;</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+</div>
+<!-- /.row -->
+
+<div class="row">
+
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>进程：</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<!-- <a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="col-xs-12">
+					<table id="processTable" class="mt-20 table table-condensed table-striped table-bordered table-block table-hover byoneTable">
+						<thead>
+							<tr>
+								<th>进程名称</th>
+								<th>状态</th>
+								<th>更新时间</th>
+								<th>CPU</th>
+								<th>事件率</th>
+								<th>物理内存</th>
+								<th>虚拟内存</th>
+								<th>共享存储ID</th>
+								<th>sharedStorePis</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<div class="zoom loading">
+						<div class="spinner"></div>
+					</div>
+					<nav class="pull-right">
+						<ul class="pagination" id="alarmPag">
+							<li class="prev"><a href="#">&laquo;</a></li>
+							<li class="next"><a href="#">&raquo;</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+</div>
+<!-- /.row -->
+
+
+<script type="text/javascript">
+	
+	/*function byTableReady() {
+		tableTrClick('#alarmTable', function(alarmId) {
+			$('#triggerModal').modal('show');
+			$('#triggerTable').data('byoneTable', null).find('tbody *').remove().end().byoneTable({
+				ajax: "queryEventByIncident.do",
+				"sort":["hostIpAddr", 'asc'],
+				"filter": {
+					"id": alarmId,
+					"timeType": $('.period:checked').val(),
+					"timeVal": $('#timeVal').val(),
+					"startTime": $('#startTime').val(),
+					"endTime": $('#endTime').val()
+				},
+				"pagination": true,
+				"columns":[{
+					"sortable": false,
+					"data": "hostIpAddr"
+				},{
+					"sortable": false,
+					"data": "srcIpAddr"
+				},{
+					"sortable": false,
+					"data": "reptDevIpAddr"
+				},{
+					"sortable": false,
+					"data": "eventType"
+				},{
+					"sortable": false,
+					"data": "eventName"
+				},{
+					"sortable": false,
+					"data": "phRecvTime"
+				},{
+					"sortable": false,
+					"data": "eventSeverityCat"
+				},{
+					"sortable": false,
+					"data": "rawEventMsg"
+				}]
+			});
+		})
+	}*/
+
+	$(document).ready(function() {
+		//LoadByoneTableScripts(byTableReady)
+	});
+</script>

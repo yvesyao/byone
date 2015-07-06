@@ -1,0 +1,300 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">系统</a></li>
+			<li><a href="#">使用情况</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>使用情况：</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<!-- <a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="col-xs-12">
+					<table id="cloudTable" class="mt-20 table table-condensed table-striped table-bordered table-block table-hover byoneTable">
+						<thead>
+							<tr>
+								<th rowspan="2">客户</th>
+								<th rowspan="2">采集器</th>
+								<th>EPS</th>
+								<th colspan="2">数据访问-ODA(GB)</th>
+								<th colspan="2">设备数</th>
+								<th colspan="2">有效时间</th>
+							</tr>
+							<tr>
+								<th>授权的</th>
+								<th>授权的</th>
+								<th>使用的</th>
+								<th>授权的</th>
+								<th>使用的</th>
+								<th>授权的</th>
+								<th>使用的</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<div class="zoom loading">
+						<div class="spinner"></div>
+					</div>
+					<nav class="pull-right">
+						<ul class="pagination" id="alarmPag">
+							<li class="prev"><a href="#">&laquo;</a></li>
+							<li class="next"><a href="#">&raquo;</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+</div>
+<!-- /.row -->
+
+<div class="row">
+	<div id="mrtgTemplate" class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-search"></i>
+					<span data-name="deviceName" class="chart-title">每秒事件速率-平均,最大和最小(last 1 hour updated@21:31:59)</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="config-link">
+						<i class="glyphicon glyphicon-cog"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+					<a href="#" class="close-link"><i class="fa fa-times"></i></a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="col-xs-12">
+					<div class="charts" style="min-height: 200px;"></div>
+				</div>
+
+				<div class="config-panel form-horizontal">
+					<form action="#" class="form-horizontal">
+						<div class="form-group">
+							<label for="title" class="control-label col-xs-4">标题: </label>
+							<div class="col-xs-8"><input id="title" name="" type="text" class="form-control"></div>
+						</div>
+						<div class="form-group">
+							<label for="describe" class="control-label col-xs-4">描述: </label>
+							<div class="col-xs-8"><textarea id="describe" name="" class="form-control"></textarea></div>
+						</div>
+						<div class="form-group col-xs-12">
+						<label class="control-label col-xs-4">显示: </label>
+							<div class="col-xs-8">
+								<select class="form-control" name="style">
+									<option value="line">线形图</option>
+									<option value="area">区域图</option>
+									<option value="bar">柱状图(水平)</option>
+									<option value="pie">饼状图</option>
+								</select>
+							</div>
+						</div>
+						<!-- /.form-group -->
+						<div class="form-group">
+							<label class="control-label col-xs-4">刷新时间: </label>
+							<div class="col-xs-8">
+								<select class="form-control" name="refreshTime">
+									<option value="">1</option>
+									<option value="120000">2</option>
+									<option value="">3</option>
+									<option value="300000">5</option>
+									<option value="">10</option>
+									<option value="900000">15</option>
+								</select>
+							</div>
+						</div>
+						<!-- /.form-group -->
+						
+						<div class="form-group">
+							<label class="control-label col-xs-4">时间选择: </label>
+							<div class="col-xs-8">
+								<select class="form-control period" name="period">
+									<option value="30">最近30分钟</option>
+									<option value="1">最近1小时</option>
+									<option value="8">最近1小时</option>
+									<option value=
+									"24">最近1小时</option>
+									<option value="week">最近1周</option>
+								</select>
+							</div>
+						</div>
+						<!-- /.form-group -->
+						
+						<div class="periodBySelf">
+							<div class="form-group">
+								<label class="control-label col-xs-4">开始时间：</label>
+								<div class="col-xs-8">
+									<input type="text" class="form-control date-picker">
+								</div>
+							</div>
+							<!-- /.form-group -->
+							
+							<div class="form-group">
+								<label class="control-label col-xs-4">结束时间：</label>
+								<div class="col-xs-8">
+									<input type="text" class="form-control date-picker">
+								</div>
+							</div>
+							<!-- /.form-group -->
+						</div>
+						<!-- /#periodBySelf -->
+					</form>
+					
+				</div>
+				<!-- /.config-panel  -->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /.row -->
+
+
+<div class="row">
+
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>每秒事件速率-平均,最大和最小(last 1 hour updated@21:31:59)</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<!-- <a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="col-xs-12">
+					<table id="processTable" class="mt-20 table table-condensed table-striped table-bordered table-block table-hover byoneTable">
+						<thead>
+							<tr>
+								<th>AVG(事件速率/秒)</th>
+								<th>MAX(事件速率/秒)</th>
+								<th>MIN(事件速率/秒)</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<div class="zoom loading">
+						<div class="spinner"></div>
+					</div>
+					<nav class="pull-right">
+						<ul class="pagination" id="alarmPag">
+							<li class="prev"><a href="#">&laquo;</a></li>
+							<li class="next"><a href="#">&raquo;</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+</div>
+<!-- /.row -->
+
+
+<script type="text/javascript">
+	
+	/*function byTableReady() {
+		tableTrClick('#alarmTable', function(alarmId) {
+			$('#triggerModal').modal('show');
+			$('#triggerTable').data('byoneTable', null).find('tbody *').remove().end().byoneTable({
+				ajax: "queryEventByIncident.do",
+				"sort":["hostIpAddr", 'asc'],
+				"filter": {
+					"id": alarmId,
+					"timeType": $('.period:checked').val(),
+					"timeVal": $('#timeVal').val(),
+					"startTime": $('#startTime').val(),
+					"endTime": $('#endTime').val()
+				},
+				"pagination": true,
+				"columns":[{
+					"sortable": false,
+					"data": "hostIpAddr"
+				},{
+					"sortable": false,
+					"data": "srcIpAddr"
+				},{
+					"sortable": false,
+					"data": "reptDevIpAddr"
+				},{
+					"sortable": false,
+					"data": "eventType"
+				},{
+					"sortable": false,
+					"data": "eventName"
+				},{
+					"sortable": false,
+					"data": "phRecvTime"
+				},{
+					"sortable": false,
+					"data": "eventSeverityCat"
+				},{
+					"sortable": false,
+					"data": "rawEventMsg"
+				}]
+			});
+		})
+}*/
+
+function AllTimePickers() {
+	$('.date-picker').datetimepicker({
+		timeFormat: "HH:mm:ss",
+		dateFormat: "yy-mm-dd"
+	});
+}
+
+$(document).ready(function() {
+		//LoadByoneTableScripts(byTableReady)
+		LoadTimePickerScript(AllTimePickers);
+		LoadHighchartsScripts(/*receiveMRTGCharts*/);
+		/*$('.period').change(function(event) {
+			if ($(this).val() === 'self') {
+				$(this).closest('.box').find('.periodBySelf').show();
+			} else {
+				$(this).closest('.box').find('.periodBySelf').hide();
+			}
+		});*/
+	});
+</script>

@@ -1,0 +1,131 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">报表</a></li>
+			<li><a href="#">手动生成</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>手动生成报表：</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<!-- <a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<form id="reportForm" class="form-horizontal">
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">报表名称：</label>
+						<div class="col-xs-7"><input type="text" name="name" class="form-control"></div>
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">报表类型：</label>
+						<div class="col-xs-7">
+							<label class="radio-inline">
+								<input type="radio" name="format" id="inlineradio1" value="pdf" checked> PDF
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="format" id="inlineradio2" value="xls"> EXCEL
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">时间：</label>
+						<div class="col-xs-7">
+							<div>
+								<label class="radio-inline">
+									<input type="radio" class="period" name="timeType" value="0" checked> 相对时间
+								</label>
+								<label class="radio-inline">
+									<input type="radio" class="period" name="timeType" value="1"> 绝对时间
+								</label>
+							</div>
+							<div class="mt-20 period-relative hide">
+								最后<input type="number" class="relative-time" name="timeVal">
+								<label class="radio-inline">
+									<input type="radio" name="periodUnit" value="min" checked> 分钟
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="periodUnit" value="hour"> 小时
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="periodUnit" value="day"> 天
+								</label>
+							</div>
+							<div class="mt-20 period-absolute hide">
+								<div class="col-xs-6">
+									<input type="text" name="stime" class="form-control date-picker absolute-time" placeholder="开始时间">
+								</div>
+								<div class="col-xs-6">
+									<input type="text" name="etime" class="form-control date-picker absolute-time" placeholder="结束时间">
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.form-group -->
+
+					<div class="form-group">
+						<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">内容选择：</label>
+						<div class="col-xs-8">
+							<div class="box collapseListBox" id="reportBox">
+								<div class="zoom loading">
+									<div class="spinner"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.form-group -->
+
+					<div class="form-group">
+						<div class="col-xs-8 col-xs-offset-2">
+							<a href="#" id="downloadBtn" class="btn btn-success pull-right mr hide">下 载</a>
+							<input type="submit" class="btn btn-primary pull-right mr" value="提 交"></input>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<!-- /.box-content -->
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.col-xs-12 -->
+
+</div>
+<!-- /.row -->
+
+
+<script type="text/javascript">
+	function AllTimePickers() {
+		$('.date-picker').datetimepicker({
+			timeFormat: "HH:mm:ss",
+			dateFormat: "yy-mm-dd",
+			onClose: function(dateText, inst) {
+				console.log('close');
+				$('#reportForm').bootstrapValidator('revalidateField', $(this));
+			}
+		});
+	}
+
+	$(document).ready(function() {
+		LoadTimePickerScript(AllTimePickers);
+		$('#reportForm').data('type', 'manual');
+		reportWorks();
+	});
+</script>

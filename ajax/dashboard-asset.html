@@ -1,0 +1,103 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a href="#">首页</a></li>
+			<li><a href="#">资产概览</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+
+<div id="avai" class="low-category">
+	<div class="charts-header mt-15 clearfix">
+		<a href="#" class="btn btn-xs btn-default pull-right mr add-chart-btn"><span class="glyphicon glyphicon-plus"></span></a>
+		<div class="pull-right">
+			<select class="chart-catagory form-control">
+				<option value="1">告警统计</option>
+				<option value="3">类型统计</option>
+				<option value="4">严重等级统计</option>
+				<option value="2">告警趋势</option>
+			</select>
+		</div>
+		<h4 class="page-header"> 可用性概览</h4>
+	</div>
+	
+	<div class="charts-body row">
+	</div>
+	<!-- /.row -->
+</div>
+<!-- /#avai -->
+
+
+<div id="perf" class="low-category">
+	<div class="charts-header mt-15 clearfix">
+		<a href="#" class="btn btn-xs btn-default pull-right mr add-chart-btn"><span class="glyphicon glyphicon-plus"></span></a>
+		<div class="pull-right">
+			<select class="chart-catagory form-control">
+				<option value="1">告警统计</option>
+				<option value="3">类型统计</option>
+				<option value="4">严重等级统计</option>
+				<option value="2">告警趋势</option>
+			</select>
+		</div>
+		<h4 class="page-header"> 性能概览</h4>
+	</div>
+
+	<div class="charts-body row">
+	</div>
+	<!-- /.row perf -->
+</div>
+<!-- /#perf-->
+
+<div id="change" class="low-category">
+	<div class="charts-header mt-15 clearfix">
+		<a href="#" class="btn btn-xs btn-default pull-right mr add-chart-btn"><span class="glyphicon glyphicon-plus"></span></a>
+		<div class="pull-right">
+			<select class="chart-catagory form-control">
+				<option value="3">类型统计</option>
+				<option value="2">告警趋势</option>
+				<option value="1">告警统计</option>
+			</select>
+		</div>
+		<h4 class="page-header"> 变更概览</h4>
+	</div>
+	<div class="charts-body row">
+	</div>
+	<!-- /.row change -->
+</div>
+<!-- /#change-->
+<div id="secu" class="low-category">
+	<div class="charts-header mt-15 clearfix">
+		<a href="#" class="btn btn-xs btn-default pull-right mr add-chart-btn"><span class="glyphicon glyphicon-plus"></span></a>
+		<div class="pull-right">
+			<select class="chart-catagory form-control">
+				<option value="1">告警统计</option>
+				<option value="3">类型统计</option>
+				<option value="4">严重都等级统计</option>
+			</select>
+		</div>
+		<h4 class="page-header"> 安全告警概览</h4>
+	</div>
+	<div class="charts-body row">
+	</div>
+	<!-- /.row secu -->
+</div>
+<!-- /#safe-->
+
+
+
+<script type="text/javascript">
+// Draw all Charts
+function DrawAllCharts(){
+	receiveCharts("asset");
+}
+$(document).ready(function() {
+	// Load required  scripts and draw charts
+	LoadHighchartsScripts(DrawAllCharts);
+	WinMove();
+	dashboardWorks();
+});
+
+</script>

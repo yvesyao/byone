@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<title>BYone-login</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="description">
+	<meta name="author" content="Evgeniya">
+	<meta name="keyword" content="keywords">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./css/css.css" rel="stylesheet">
+	<link rel="shortcut icon" href="img/favicon.gif">
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]><script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script><![endif]-->
+
+</head>
+<body id="page-login">
+	<div class="container-fluid">
+		<div class="login-row row">
+			<div class="col-xs-12 text-center">
+				<div class="box login-box">
+					<div class="box-header">
+					</div>
+					<div class="box-content clearfix">
+						<form action="./login.do" id="loginForm" class="form-horizontal mt"> 
+							<div class="form-group">
+								<!-- <label for="username" class="control-label col-xs-4">用户名：</label> -->
+								<div class="col-xs-12">
+									<input type="text" id="username" name="userName" placeholder="用户名" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<!-- <label for="password" class="control-label col-xs-4">密码：</label> -->
+								<div class="col-xs-12">
+									<input type="password" id="password" name="password" placeholder="密码" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<!-- <label for="department" class="control-label col-xs-4">组织/部门：</label> -->
+								<div class="col-xs-12">
+									<input type="text" id="department" name="orgName" placeholder="组织/部门" value="管理部" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<!-- <label for="domain" class="control-label col-xs-4">域：</label> -->
+								<div class="col-xs-12">
+									<select id="domain" name="domain" class="form-control">
+										<option value="local" selected>本地</option>
+										<option value="ldap">LDAP</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<!-- <label for="validate" class="control-label col-xs-4">验证码：</label> -->
+								<div class="col-xs-12" id="validateFrame">
+									<div class="input-group">
+										<input type="text" id="validate" name="validate" placeholder="验证码" class="form-control">
+										<a href="#" class="input-group-addon validate" onclick="loadImage();return false;" ><img src="tools/validateImage.jsp" id="validateImg" height="24" alt="验证码"></a>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div id="msgBox" class="hidden" style="color: #a00;">
+								</div>
+								<div class="col-xs-12">
+									<input type="submit" value="登 录" class="btn btn-default btn-block">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /.box -->
+
+			</div>
+		</div>
+	</div>
+	<script src="./plugins/jquery/jquery.min.js"></script>
+	<script src="./plugins/bootstrap/bootstrap.min.js"></script>
+	<script src="./plugins/bootstrapvalidator/bootstrapValidator.min.js"></script>
+	<script src="./plugins/bootstrapvalidator/language/zh_CN.js"></script>
+	<script type="text/javascript">
+		// window.onresize = resizeGradient;
+		window.$ && $(function() {
+
+			$('#loginForm').bootstrapValidator({
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				container: 'tooltip',
+				fields: {
+					'userName': {
+						validators: {
+							notEmpty: {
+								message:"用户名不能为空"
+							},
+							stringLength: {
+								min: 5,
+								max: 20
+							}
+						}
+					},
+					'password': {
+						validators: {
+							notEmpty: {
+								message:"密码不能为空"
+							},
+							stringLength: {
+								min: 5,
+								max: 20
+							}
+						}
+					},
+					'orgName': {
+						validators: {
+							notEmpty: {
+								message:"不能为空"
+							}
+						}
+					},
+					'validate': {
+						validators: {
+							notEmpty: {
+								message:"验证码不能为空"
+							},
+							stringLength: {
+								message:"请输入正确的验证码",
+								min: 4,
+								max: 4
+							}
+						}
+					}
+				}
+			}).on('success.form.bv', function(e) {
+				e.preventDefault();
+				$('#msgBox').hide();
+				var $form = $(e.target);
+				var bv = $form.data('bootstrapValidator');
+				$.get($form.attr('action')+'?' + Math.random(), $form.serialize(), function(data) {
+					result = $.trim(data.result);
+					console.debug('login');
+					if(result == "loginSuccess") {
+						window.location.href = "./main.html";
+					}else {
+						console.log(result);
+						$('#msgBox').removeClass('hidden').show().text(result);
+						loadImage();
+					}
+				},'json');
+			});
+			// resizeGradient();
+			/*console.log(getContextPath());*/
+		});
+
+/*function getContextPath() {
+　 var pathName = document.location.pathname;
+　 var index = pathName.substr(1).indexOf("/");
+　 var result = pathName.substr(0,index+1);
+　 return result;
+}
+*/
+/*function resizeGradient() {
+	var _width = (document.body.clientWidth - document.getElementById('centerLayout').offsetWidth) / 2;
+	var $left = document.getElementById('leftGradient'),
+	$right = document.getElementById('rightGradient');
+	$left.style.width = _width + 'px';
+	$right.style.width = _width + 'px';
+	$left.style.display = 'inline-block';
+	$right.style.display = 'inline-block';
+}*/
+function loadImage() {
+	document.getElementById("validateImg").src = 'tools/validateImage.jsp?' + Math.random();
+}
+</script>
+</body>
+</html>

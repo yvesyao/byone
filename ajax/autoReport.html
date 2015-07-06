@@ -1,0 +1,267 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">报表</a></li>
+			<li><a href="#">自动生成</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<span>报表模版列表</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+				<!-- <a class="expand-link">
+					<i class="fa fa-expand"></i>
+				</a> -->
+			</div>
+			<div class="no-move"></div>
+		</div>
+		<div class="box-content clearfix">
+			<div class="col-xs-6 mb-half">
+				<input type="text" class="form-control" id="moduleSearch" placeholder="输入查询条件">
+			</div>
+			<div class="col-xs-6 mb-half" id="moduleActions">
+				<!-- test 添加的onclik -->
+				<a href="#" class="btn btn-xs btn-default" onclick="addModule()" data-func="addModule()"><span class="glyphicon glyphicon-plus"></span> 添加</a>
+				<a href="#" class="btn btn-xs btn-default rely-on-table" data-func="delModule('{1}')" disabled><span class="glyphicon glyphicon-trash"></span> 删除</a>
+			</div>
+			<table id="moduleTable" class="table table-condensed table-striped table-bordered table-block table-hover module-table byoneTable" action-handle="#moduleActions">
+				<thead>
+					<tr>
+						<th>模版名称</th>
+						<th>自动生成时间</th>
+						<th>类型</th>
+						<th>输出格式</th>
+						<th>接收者</th>						
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			
+			<!-- /.col-sm-6 -->
+		</div>
+		<!-- /.box-content -->
+	</div>
+	<!-- /.box -->
+
+</div>
+<!-- /.col-xs-12 -->
+
+<div class="col-xs-12">
+	<div id="reportFrame" class="box no-drop">
+		<div class="box-header">
+			<div class="box-name">
+				<span id="reportFrameTitle">报表模版</span>
+			</div>
+			<div class="box-icons">
+				<a class="collapse-link">
+					<i class="fa fa-chevron-up"></i>
+				</a>
+			</div>
+			<div class="no-move"></div>
+		</div>
+		<div class="box-content clearfix">
+			<form id="reportForm" class="form-horizontal">
+				<div class="form-group">
+					<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">模板名称：</label>
+					<div class="col-xs-7">
+						<input type="text" data-name="moduleName" name="moduleName" class="form-control">
+						<input type="hidden" data-name="id" name="id">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">输出格式：</label>
+					<div class="col-xs-7">
+						<label class="radio-inline">
+							<input type="radio" data-name="format" name="format" id="inlineradio1" value="pdf" checked> PDF
+						</label>
+						<label class="radio-inline">
+							<input type="radio" data-name="format" name="format" id="inlineradio2" value="xls"> EXCEL
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">模板类型：</label>
+					<div class="col-xs-7">
+						<select data-name="moduleType" name="moduleType" class="form-control" id="moduleType">
+							<option value="year">每年</option>
+							<option value="month">每月</option>
+							<option value="day">每日</option>
+						</select>
+					</div>
+				</div>
+				<!-- /.form-group -->
+
+				<div class="form-group">
+					<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">生成时间：</label>
+					<div class="col-xs-7" id="genTime">
+						<div class="col-xs-4 no-padding month">
+							<label class="pull-left control-label col-xs-2">月:</label>
+							<div class="col-xs-8"><select name="month" data-name="month" class="form-control"></select></div>
+						</div>
+						<div class="col-xs-4 no-padding day">
+							<label class="pull-left control-label col-xs-2">日:</label>
+							<div class="col-xs-8"><select name="day" data-name="day" class="form-control"></select></div>
+						</div>
+						<div class="col-xs-4 no-padding hour">
+							<label class="pull-left control-label col-xs-2">时:</label>
+							<div class="col-xs-8"><select name="hour" data-name="hour" class="form-control"></select></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">接收者(email,用分号隔开)：</label>
+					<div class="col-xs-7">
+						<input type="text" data-name="receiver" name="receiver" class="form-control">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="" class="control-label col-xs-4 col-sm-3 col-md-2">内容选择：</label>
+					<div class="col-xs-8">
+						<div class="box collapseListBox" id="reportBox">
+							<div class="zoom loading">
+								<div class="spinner"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.form-group -->
+
+				<div class="form-group">
+					<div class="col-xs-8 col-xs-offset-2">
+						<input type="submit" class="btn btn-primary pull-right mr" value="提 交"></input>
+					</div>
+				</div>
+
+			</form>
+			<div class="zoom loading">
+				<div class="spinner"></div>
+			</div>
+		</div>
+		<!-- /.box-content -->
+	</div>
+	<!-- /.box -->
+</div>
+<!-- /.col-xs-12 -->
+
+</div>
+<!-- /.row -->
+
+
+<script type="text/javascript">
+
+	function tableReady() {
+		$('#moduleTable').byoneTable({
+			ajax: "queryAutoReport.do",
+			"sort": ["moduleName", 'asc'],
+			/*"rightClick": {
+				targetMenu: "#ruleDropMenu"
+			},*/
+			dataId: "id",
+			"pagination": true,
+			"searchHandle": "#moduleSearch",
+			"columns": [{
+				"data": "moduleName"
+			},{
+				"data": "time"
+			},{
+				"sortable": false,
+				"data": "moduleType",
+				"format": function(data) {
+					switch(data) {
+						case 'year':
+						return '年报';
+						case 'month':
+						return '月报';
+						case 'day':
+						return '日报';
+					}
+				}
+			},{
+				"data": "format"
+			},{
+				"sortable": false,
+				"data": "receiver"
+			}]
+		});
+		tableTrClick('#moduleTable', fillForm);
+	}
+
+	/**
+	 * 单击资产列表后显示详细信息
+	 * @param  {[String]} moduleId [资产ID]
+	 */
+	 function fillForm(moduleId) {
+	 	$('#reportForm').data('type', 'update');
+	 	var $loading = $('#reportFrame .loading').show();
+	 	$('#reportFrameTitle').text('报表信息');
+	 	$.get("queryAutoReportById.do", {
+	 		"id": moduleId
+	 	}, function(data) {
+	 		fillInfo(data, '#reportForm', {
+	 			reportVos: fillReportVos
+	 		});
+	 		$loading.hide();
+	 	});
+	 	function fillReportVos(elem, data) {
+	 		var _interval = setInterval(function() {
+	 			console.log('wait');
+	 			var $vos = $('#reportBox :checkbox');
+	 			if ($vos.length > 0) {
+	 				clearInterval(_interval);
+	 				$vos.filter(':checked').removeAttr('checked');
+	 				for (var i = 0; i < data.length; i++) {
+	 					$('#reportBox [value="' + data[i].id + '"]').click();
+	 				};
+	 			}
+	 		}, 200);
+	 		console.log(data);
+	 	}
+	 }
+
+	 function addModule() {
+	 	$('#moduleTable .active').removeClass('active');
+	 	$('#reportFrameTitle').text('添加自动报表');
+	 	/*重置form*/
+	 	$('#reportForm :text').val('');
+	 	$('#reportForm').data('type', 'add');
+	 	$('#reportBox :checkbox').removeAttr('checked');
+	 	$(document).scrollTop($('#reportFrame').offset().top);
+	 }
+	 function delModule(id) {
+	 	if(!confirm('您确定要删除该模板吗？')) {
+	 		return;
+	 	}
+	 	showAlert(true, "提交中...", 'info', true);
+	 	$.get('deleteAutoReport.do', {
+	 		'id': id
+	 	}, function(data) {
+	 		if (data.result === 'operateSuccess') {
+	 			showAlert(true, "删除成功", 'success', false, 500, function() {
+	 				LoadAjaxContent(window.location.hash.substring(1), true);
+	 			});
+	 		}
+	 	});
+	 }
+	 $(document).ready(function() {
+	 	LoadByoneTableScripts(tableReady);
+	 	reportWorks();
+	 	$('#moduleType').change(function(event) {
+	 		mdhSelector('#genTime', $(this).val());
+	 	}).change();
+	 });
+	</script>

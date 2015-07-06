@@ -1,0 +1,135 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">大数据分析</a></li>
+			<li><a href="#">全文检索</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-search"></i>
+					<span>全文检索</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a><!-- 
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+					<a class="close-link">
+						<i class="fa fa-times"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="row mb">
+					<div class="col-sm-8">
+						<div class="input-group">
+							<input type="text" class="form-control" id="keyword" placeholder="输入搜索关键词">
+							<span class="input-group-btn">
+								<a href="#" id="searchBtn" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> 检索</a>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div id="searchResults" class="mtb-15">
+					<ul id="results">
+						<!-- 模板 -->
+						<li class="template">
+							<a class="content"></a>
+							<div class="view">
+								<table class="table table-condensed table-striped table-hover">
+									<thead>
+										<tr>
+											<th>Field</th>
+											<th>Value</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+// Draw all Flot Charts
+
+$(document).ready(function() {
+	// Load required Flot scripts and draw charts
+	LoadChosenScript(function() {
+		$(".chosen-sel").chosen({
+			disable_search_threshold: 10,
+			search_contains: true,
+			no_results_text: "没有对应结果!"
+		});
+	});
+	WinMove();
+	$('#keyword').keydown(function(event) {
+		/* Act on the event */
+		if (event.which == 13) {
+			$('#searchBtn').click();
+		}
+	});
+	$('#searchBtn').click(function(event) {
+		/* Act on the event */
+		event.preventDefault();
+		var _keyword = $.trim($('#keyword').val());
+		if (!_keyword) return false;
+		//ajax send _keyword
+		//success
+		$.get('fullSearch.do', {
+			filter: _keyword,
+			fingerprint: Math.random()
+		}, function(data) {
+			setResult(data, _keyword);
+		}, 'text');
+	});
+});
+
+/**
+ * 显示搜索结果
+ * @param {String} resultStr 检索结果(字符串形式)
+ * @param {String} keyword 检索关键词
+ */
+function setResult(resultStr, keyword) {
+	var _resultArr = $.parseJSON(resultStr);
+	if (!_resultArr) {return};
+	var $resultBox = $('#searchResults ul#results');
+	var $template = $('.template', $resultBox);
+	$template.siblings('li').remove();
+	for(_index in _resultArr) {
+		var _result = _resultArr[_index];
+		var $resultLi = $template.clone(true, true).removeClass('template').insertBefore($template);
+		var $view = $('.view tbody', $resultLi);
+		$('.content', $resultLi).html(_index + decorateKw(JSON.stringify(_result), keyword)).click(function(event) {
+			/* Act on the event */
+			$(this).next('.view').stop(true, true).slideToggle();
+		});
+		for(_attr in _result) {
+			$('<tr>').append('<td>' + decorateKw(_attr, keyword) + '</td><td>' + decorateKw(_result[_attr], keyword) + '</td>').appendTo($view);
+		}
+	}
+
+	function decorateKw(str, keyword) {
+		var reg = new RegExp(keyword, 'g');
+		return str.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(reg, '<span class="keyword">'+keyword+'</span>');
+	}
+}
+
+</script>

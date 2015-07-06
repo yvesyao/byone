@@ -1,0 +1,303 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb pull-left">
+			<li><a class="ajax-link" href="./ajax/dashboard.html">首页</a></li>
+			<li><a href="#">网络管理</a></li>
+			<li><a href="#">MRTG</a></li>
+		</ol>
+	</div>
+	<!-- /#breadcrumb -->
+</div>
+<!-- /.row -->
+
+<div class="mt-15 clearfix">
+	<a href="#" id="addMRTGBtn" class="btn btn-xs btn-default pull-right mr"><span class="glyphicon glyphicon-plus"></span></a>
+	<div class="pull-right">
+		<select name="" id="MRTGSel" class="form-control">
+		</select>
+	</div>
+	<h4 class="page-header"> MRTG</h4>
+</div>
+
+<div class="row">
+	<div id="mrtgTemplate" class="template col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-search"></i>
+					<span data-name="deviceName" class="chart-title">设备A</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="config-link">
+						<i class="glyphicon glyphicon-cog"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+					<a href="#" class="close-link"><i class="fa fa-times"></i></a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content clearfix">
+				<div class="col-sm-8 col-xs-12">
+					<div class="charts" style="min-height: 200px;"></div>
+				</div>
+				<div class="col-sm-4 col-xs-12 mrtg-info">
+					<dl>
+						<dt class="mt-one">位置：</dt>
+						<dd data-name="location"></dd>
+						<dt class="mt-one">IP：</dt>
+						<dd data-name="deviceIP"></dd>
+						<dt class="mt-one">资产负责人：</dt>
+						<dd data-name="contactName"></dd>
+					</dl>
+				</div>
+
+				<div class="config-panel form-horizontal">
+					<form action="#" class="form-horizontal">
+						<div class="form-group col-xs-12 col-sm-6">
+							<label class="control-label col-xs-4">单位选择: </label>
+							<div class="col-xs-8">
+								<select class="form-control">
+									<option value="bits">Bits/Second</option>
+									<option value="packet">Packet/Second</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group col-xs-12 col-sm-6">
+							<label class="control-label col-xs-4">显示: </label>
+							<div class="col-xs-8">
+								<select class="form-control">
+									<option value="bits">Bits/Second</option>
+									<option value="packet">Packet/Second</option>
+								</select>
+							</div>
+						</div>
+						<!-- /.form-group -->
+						
+						<div class="form-group col-xs-12 col-sm-6">
+							<label class="control-label col-xs-4">时间选择: </label>
+							<div class="col-xs-8">
+								<select class="form-control period">
+									<option value="self">自选周期</option>
+									<option value="5">最近5分钟</option>
+									<option value="30">最近30分钟</option>
+									<option value="2">最近2小时</option>
+									<option value="1">最近1天</option>
+								</select>
+							</div>
+						</div>
+						<!-- /.form-group -->
+						
+						<div class="periodBySelf">
+							<div class="form-group col-xs-12 col-sm-6">
+								<label class="control-label col-xs-4">开始时间：</label>
+								<div class="col-xs-8">
+									<input type="text" class="form-control date-picker">
+								</div>
+							</div>
+							<!-- /.form-group -->
+							
+							<div class="form-group col-xs-12 col-sm-6">
+								<label class="control-label col-xs-4">结束时间：</label>
+								<div class="col-xs-8">
+									<input type="text" class="form-control date-picker">
+								</div>
+							</div>
+							<!-- /.form-group -->
+						</div>
+						<!-- /#periodBySelf -->
+
+						<div class="form-group">
+							<input type="submit" class="btn btn-primary" value="提 交">
+							<button class="btn btn-default dismiss-config">取 消</button>
+						</div>
+					</form>
+					
+				</div>
+				<!-- /.config-panel  -->
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	function AllTimePickers() {
+		$('.date-picker').datetimepicker({
+			timeFormat: "HH:mm:ss",
+			dateFormat: "yy-mm-dd"
+		});
+	}
+
+					/**
+ * 接收一级目录下的图表
+ * @param  {String} topCategory [asset | network | cloud]
+ * @return {[type]}             [description]
+ */
+ function receiveMRTGCharts() {
+ 	showAlert(true, "获取图表数据...", 'info', true);
+ 	var $template = $('#mrtgTemplate');
+
+ 	/*获取图表结构*/
+ 	$.get('queryMRTGChart.do', {
+ 		topCategory: 'mrtg',
+ 		fingerprint: new Date().getTime()
+ 	}, function(data) {
+ 		/*optional stuff to do after success */
+ 		showAlert(false);
+ 		for (var i = 0; i < data[0].length; ++i) {
+ 			addChart(data[0][i], data[1][i]);
+ 		}
+ 	});
+
+
+ 	/*绑定图表添加事件*/
+ 	$('#addMRTGBtn').click(function(event) {
+ 		/* Act on the event */
+ 		event.preventDefault();
+ 		showAlert(true, "添加图表中...", 'info', true);
+ 		$.get('addMRTGChart.do', {
+ 			chartCategory: 17,
+ 			topCategory: 'mrtg',
+ 			otherInfo: $('#MRTGSel').val()
+ 		}, function(data) {
+ 			if (data === "error") {
+ 				showAlert(true, "添加失败，请重试或联系管理员。", 'danger', false, 5000);
+ 				return;
+ 			}
+ 			showAlert(true, "添加成功。", 'success', false, 2000);
+ 			addChart(data[0], data[1]);
+ 		});
+
+ 	});
+
+
+ 	function dismissConfig(event) {
+ 		$(this).closest('.box').find('.config-link').trigger('click');
+ 	}
+
+	/**
+	 * 根据配置信息新建或者修改图表
+	 * @param {Object} chartCfg  图表配置信息
+	 * @param {String | jQuery Object} [targetBox] 更新图表信息时的容器
+	 */
+	 function addChart(chartCfg, mrtgInfo, targetBox) {
+	 	var _chartCfg = chartCfg,
+	 	_mrtgInfo = mrtgInfo;
+	 	var $newBox = targetBox ? $(targetBox) : $template.clone(true, true).removeClass('template').insertBefore($template);
+	 	$('.chart-title', $newBox).text(_mrtgInfo.deviceName);
+	 	fillInfo(_mrtgInfo, $newBox);
+
+	 	/*设置定时刷新*/
+	 	var queryInterval = setInterval(queryChart(_chartCfg, $newBox), 300000)
+
+	 	/*填充配置form信息*/
+	 	/*var $form = $('.config-panel form', $newBox);
+	 	var $refresh = $('select[name="refresh"]', $form),
+	 	$type = $('select[name="type"]', $form),
+	 	$itemCount = $('select[name="itemCount"]', $form),
+	 	$timeVal = $('select[name="timeVal"]', $form);*/
+	 	/*重置可选类型下拉框的条目*/
+	 	/*var $options = $('option', $type);
+	 	for (var j = 0; j < $options.length; ++j) {
+	 		var _option = $($options[j]);
+	 		if (_chartCfg.allStyle.indexOf(_option.val()) < 0) {
+	 			_option.remove();
+	 		}
+	 	}
+	 	$type.val(_chartCfg['style']);
+	 	$refresh.val(_chartCfg.refreshTime);
+	 	$itemCount.val(_chartCfg.itemCount);
+	 	$timeVal.val(_chartCfg.timeVal);*/
+
+	 	/*绑定newBox中元素的事件*/
+	 	/*删除图表事件*/
+	 	$newBox.bind('removed', function() {
+	 		showAlert(true, "删除中...", 'info', true);
+
+	 		console.log($newBox);
+	 		$.get('deleteChartBase.do', {
+	 			indexId: _chartCfg.detailId
+	 		}, function(data) {
+	 			if (data === 'operateSuccess') {
+	 				showAlert(true, "删除成功。", 'success', false, 2000);
+	 			} else {
+	 				showAlert(true, "删除失败，请重试或联系管理员。", 'danger', false, 2000);
+	 				$newBox.show();
+	 			}
+	 		});
+	 	})
+
+	 	/*更改配置事件*/
+	 // 	$form.unbind('submit').bind('submit', function(event) {
+	 // 		/* Act on the event */
+	 // 		event.preventDefault();
+		// 	var $submitBtn = $(':submit', this).attr('disabled', 'disabled'); //禁用提交按钮
+		// 	showAlert(true, "更改图表配置中...", 'info', true);
+
+		// 	/*更新数据*/
+		// 	$.get('updateChartDetail.do', $.extend(true, _chartCfg, {
+		// 		refreshTime: $refresh.val(),
+		// 		style: $type.val(),
+		// 		itemCount: $itemCount.val(),
+		// 		timeVal: $timeVal.val()
+		// 	}), function(data) {
+		// 		/*optional stuff to do after success */
+		// 		console.log(data);
+		// 		$submitBtn.removeAttr('disabled'); //解除禁用提交按钮
+		// 		if (data === "error") {
+		// 			showAlert(true, "更改失败，请重试或联系管理员。", 'danger', false, 5000);
+		// 			return;
+		// 		}
+		// 		showAlert(true, "更改成功。", 'success', false, 2000);
+		// 		clearInterval(queryInterval); //清除原定时刷新
+		// 		$('.loading', $newBox).show(); //显示等待界面
+		// 		dismissConfig.call($form); //退出配置界面
+		// 		addChart(data, $newBox);
+		// 	});
+		// });
+$('.dismiss-config').unbind('click.config').bind('click.config', dismissConfig);
+}
+
+
+}
+
+/**
+ * 获取图表数据
+ * @param  {[type]} chartCfg    [description]
+ * @param  {[type]} placeholder [description]
+ * @return {[type]}             [description]
+ */
+ function queryChart(chartCfg, placeholder) {
+ 	$.get('receiveData.do', chartCfg, function(data) {
+ 		/*optional stuff to do after success */
+ 		drawCharts(data, $('.charts', placeholder));
+ 		$('.loading', placeholder).hide();
+ 	});
+ }
+
+ $(document).ready(function() {
+ 	LoadTimePickerScript(AllTimePickers);
+ 	LoadHighchartsScripts(receiveMRTGCharts);
+ 	$.get('queryAllNetworkDevice.do', {
+ 		fingerprint: new Date().getTime()
+ 	}, function(data) {
+ 		var $sel = $('#MRTGSel').children().remove().end();
+ 		for (var i = 0; i < data.length; i++) {
+ 			$('<option>').attr('value', data[i].deviceID).text(data[i].deviceName).appendTo($sel);
+ 		}
+ 	});
+ 	$('.period').change(function(event) {
+ 		/* Act on the event */
+ 		if ($(this).val() === 'self') {
+ 			$(this).closest('.box').find('.periodBySelf').removeAttr('disabled').show();
+ 		} else {
+ 			$(this).closest('.box').find('.periodBySelf').attr('disabled', 'disabled').hide();
+ 		}
+ 	});
+ });
+</script>
