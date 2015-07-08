@@ -2487,9 +2487,9 @@ function getPropertyTypes() {
 $(document).ready(function() {
 	$('body').on('click', '.show-sidebar', function(e) {
 		e.preventDefault();
-		$('div#main').toggleClass('sidebar-show').bind('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() {
+		$('div#main').toggleClass('sidebar-show')/*.bind('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() {
 			$(document).resize();
-		});
+		})*/;
 		/*setTimeout(MessagesMenuWidth, 250);*/
 	});
 

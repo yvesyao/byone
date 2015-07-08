@@ -47,7 +47,7 @@
 							</div>
 						</div> -->
 						<div class="col-xs-12 top-panel-right">
-				<a class="pull-left" href="main.html"><img src="./img/logo.png" alt="logo" width="110" height="23"></a>
+							<a class="pull-left" href="main.html"><img src="./img/logo.png" alt="logo" width="110" height="23"></a>
 							<ul class="nav navbar-nav pull-right panel-menu">
 							<!-- <li class="hidden-xs">
 								<a href="main.html" class="modal-link">
@@ -89,72 +89,77 @@
 							</li>
 						</ul>
 					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</header>
-<!--End Header-->
-<!--Start Container-->
-<div id="main" class="container-fluid">
-	<div class="row">
-		<div id="sidebar-left" class="col-xs-2 col-sm-2">
-			<a href="#" class="show-sidebar">
-				<i class="fa fa-bars"></i>
-			</a>
-			<ul class="nav main-menu">
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle ajax-link" title="首页">
-						<i class="fa fa-dashboard"></i>
-						<span class="fa arrow hidden-xs"></span>
-						<span class="hidden-xs">首页</span>
+	</header>
+	<!--End Header-->
+	<!--Start Container-->
+	<div id="main" class="container-fluid">
+		<div class="row">
+			<div id="sidebar-left">
+				<div class="tool-box">
+					<a href="#" class="show-sidebar">
+						<i class="fa fa-bars"></i>
 					</a>
-					<ul class="dropdown-menu">
-						<li><a href="./ajax/dashboard-asset.html" class="ajax-link">资产概览</a></li>
-						<li><a href="./ajax/dashboard-network.html" class="ajax-link">网络概览</a></li>
-						<li><a href="./ajax/dashboard-cloud.html" class="ajax-link">云概览</a></li>
-						<li><a href="./ajax/dashboard-security.html" class="ajax-link">安全概览</a></li>
-					</ul>
-				</li>
-				
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" title="资产管理">
-						<i class="fa fa-desktop"></i>
-						<span class="fa arrow hidden-xs"></span>
-						<span class="hidden-xs">资产管理</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="./ajax/property.html" class="ajax-link">CMDB</a></li>
-					</ul>
-				</li>
+				</div>
+				<div class="tool-box">
+					<input type="text" id="page-search" placeholder="Search...">
+				</div>
+				<ul class="nav main-menu">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle ajax-link" title="首页">
+							<i class="fa fa-dashboard"></i>
+							<span class="fa arrow hidden-collapse"></span>
+							<span class="hidden-collapse">首页</span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="./ajax/dashboard-asset.html" class="ajax-link">资产概览</a></li>
+							<li><a href="./ajax/dashboard-network.html" class="ajax-link">网络概览</a></li>
+							<li><a href="./ajax/dashboard-cloud.html" class="ajax-link">云概览</a></li>
+							<li><a href="./ajax/dashboard-security.html" class="ajax-link">安全概览</a></li>
+						</ul>
+					</li>
 
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" title="网络管理">
-						<i class="fa fa-sitemap"></i><!-- .fa-hdd-o -->
-						<span class="fa arrow hidden-xs"></span>
-						<span class="hidden-xs">网络管理</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="./ajax/topology.html" class="ajax-link">网络拓扑</a></li>
-						<li><a href="./ajax/mrtg.html" class="ajax-link">MRTG图</a></li>
-					</ul>
-				</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" title="资产管理">
+							<i class="fa fa-desktop"></i>
+							<span class="fa arrow hidden-collapse"></span>
+							<span class="hidden-collapse">资产管理</span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="./ajax/property.html" class="ajax-link">CMDB</a></li>
+						</ul>
+					</li>
 
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" title="云管理">
-						<i class="fa fa-cloud"></i>
-						<span class="fa arrow hidden-xs"></span>
-						<span class="hidden-xs">云管理</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="./ajax/virtualInfrastructure.html" class="ajax-link">虚拟化架构</a></li>
-					</ul>
-				</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" title="网络管理">
+							<i class="fa fa-sitemap"></i><!-- .fa-hdd-o -->
+							<span class="fa arrow hidden-collapse"></span>
+							<span class="hidden-collapse">网络管理</span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="./ajax/topology.html" class="ajax-link">网络拓扑</a></li>
+							<li><a href="./ajax/mrtg.html" class="ajax-link">MRTG图</a></li>
+						</ul>
+					</li>
+
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" title="云管理">
+							<i class="fa fa-cloud"></i>
+							<span class="fa arrow hidden-collapse"></span>
+							<span class="hidden-collapse">云管理</span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="./ajax/virtualInfrastructure.html" class="ajax-link">虚拟化架构</a></li>
+						</ul>
+					</li>
 <!-- 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="业务服务管理">
 						<i class="fa fa-briefcase"></i>
-						 <span class="fa arrow hidden-xs"></span>
-						 <span class="hidden-xs">业务服务管理</span>
+						 <span class="fa arrow hidden-collapse"></span>
+						 <span class="hidden-collapse">业务服务管理</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="#" class="ajax-link">业务设定</a></li>
@@ -167,8 +172,8 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="安全管理">
 						<i class="fa fa-lock"></i>
-						<span class="fa arrow hidden-xs"></span>
-						<span class="hidden-xs">安全管理</span>
+						<span class="fa arrow hidden-collapse"></span>
+						<span class="hidden-collapse">安全管理</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="./ajax/fragilityScan.html" class="ajax-link">脆弱性扫描</a></li>
@@ -180,8 +185,8 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="数据分析">
 						<i class="fa fa-bar-chart-o"></i>
-						<span class="fa arrow hidden-xs"></span>
-						<span class="hidden-xs">大数据分析</span>
+						<span class="fa arrow hidden-collapse"></span>
+						<span class="hidden-collapse">大数据分析</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="./ajax/optimalAnalysis.html" class="ajax-link">优化分析</a></li>
@@ -194,8 +199,8 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="报表">
 						<i class="fa fa-table"></i>
-						<span class="fa arrow hidden-xs"></span>
-						<span class="hidden-xs">报表</span>
+						<span class="fa arrow hidden-collapse"></span>
+						<span class="hidden-collapse">报表</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="./ajax/manualReport.html" class="ajax-link">手动生成</a></li>
@@ -206,13 +211,13 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="知识库">
 						<i class="fa fa-code"></i>
-						<span class="fa arrow hidden-xs"></span>
-						<span class="hidden-xs">知识库</span>
+						<span class="fa arrow hidden-collapse"></span>
+						<span class="hidden-collapse">知识库</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li class="dropdown">
 							<a href="./ajax/rules.html" class="ajax-link dropdown-toggle" title="规则">
-								<span class="hidden-xs">规则</span>
+								<span class="hidden-collapse">规则</span>
 							</a>
 							<ul class="dropdown-menu pl-half">
 								<li><a href="./ajax/rules.html" class="ajax-link">全部</a></li>
@@ -229,8 +234,8 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" title="系统">
 						<i class="fa fa-gears"></i>
-						<span class="fa arrow hidden-xs"></span>
-						<span class="hidden-xs">系统</span>
+						<span class="fa arrow hidden-collapse"></span>
+						<span class="hidden-collapse">系统</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="./ajax/installGuide.html" class="ajax-link">安装向导</a></li>
@@ -247,7 +252,7 @@
 			</ul>
 		</div>
 		<!--Start Content-->
-		<div id="content" class="col-xs-12 col-sm-10">
+		<div id="content">
 			<div class="preloader">
 				<img src="./img/devoops_getdata.gif" class="devoops-getdata" alt="preloader"/>
 			</div>
