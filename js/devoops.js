@@ -2549,7 +2549,8 @@ $(document).ready(function() {
 	/*menu*/
 	var $menu = $('.main-menu');
 
-	$menu.find("li").has("ul").find("a").unbind('click.menu').bind("click.menu", function(e) {
+	$menu.find("li").has("ul").find("a.dropdown-toggle").unbind('click.menu').bind("click.menu", function(e) {
+		//debugger
 		$(this).parent("li").toggleClass("active")
 		.children("ul").stop(true, true).slideToggle('fast')
 		.end().siblings('li').removeClass('active').children('ul').slideUp('fast');
