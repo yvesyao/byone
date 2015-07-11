@@ -420,7 +420,8 @@ th {
 
 /* login */
 #page-login {
-	background: url("../img/login-bg.jpg") center top no-repeat #fff;
+	background: url("../img/login-bg.jpg");
+	background-size: 100% 100%;
 	.login-box {
 		margin: 30px auto 50px;
 		max-width: 400px;
@@ -449,6 +450,25 @@ th {
 			top: 7px;
 		}
 	}
+	.box-content {
+		border-color: #fff;
+		padding: 25px;
+	}
+	.form-control {
+		height: 40px;
+		margin: 0;
+		border: 2px solid #e0e0e0;
+		box-shadow: none;
+		padding: 4px 6px;
+		&:focus {
+			border: 2px solid #ef9b29;
+			box-shadow: none;
+		}
+	}
+	.form-control-feedback {
+		top: 7px;
+	}
+
 }
 
 /* highcharts */
