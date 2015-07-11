@@ -16,7 +16,7 @@ try{
 response.setHeader("Pragma","No-cache");
 response.setHeader("Cache-Control","no-cache");
 response.setDateHeader("Expires", 0);
-int width=70, height=32;
+int width=87, height=40;
 BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 OutputStream os=response.getOutputStream();
 Graphics g = image.getGraphics();

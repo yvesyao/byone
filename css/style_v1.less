@@ -1,6 +1,6 @@
 * {outline:none !important;}
 body {
-  color:#525252;
+  color:#444;
   background:#fcfcfc;
   font: 14px/1.5 tahoma, arial, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', sans-serif;
 }
@@ -56,6 +56,9 @@ h1, .h1, h2, .h2, h3, .h3 {
   background:#f9f9f9;
   width: 225px;
   z-index: 10;
+  .fa {
+    text-align: center;
+  }
   .tool-box {
     padding: 0 15px;
     margin: 10px 0;
@@ -96,44 +99,44 @@ h1, .h1, h2, .h2, h3, .h3 {
     }
     >a {
       text-align: center;
-  color:#666;//#f0f0f0;
-  min-height: 40px;
-  &:hover, &:focus {
-    background: #ef9b29;
-    color: #fff;
-  }
-}
-&.dropdown.active {
-  >a {
-    background: #ef9b29;
-    color: #fff;
-  }
-}
-.dropdown-menu {
-  position: relative;
-  float: none;
-  display: none;
-  border: none;
-  box-shadow: none;
-  li {
-   border-top: 1px solid #fff !important;
-   &.active {
-    a {
-      color: #ef9b29 !important;
-      background: #f1f5f9 !important;
+      color:#666;
+      min-height: 40px;
+      &:hover, &:focus {
+        background: #ef9b29;
+        color: #fff;
+      }
     }
-  }
-  a {
-    padding:5px 15px 5px 40px;
-    color:#666;
-    font-size: 14px;
-    &:hover, &:focus {
-     color: #ef9b29 !important;
-     background: #f1f5f9 !important;
+    &.dropdown.active {
+      >a {
+        background: #ef9b29;
+        color: #fff;
+      }
+    }
+    .dropdown-menu {
+      position: relative;
+      float: none;
+      display: none;
+      border: none;
+      box-shadow: none;
+      li {
+       border-top: 1px solid #fff !important;
+       &.active {
+        a {
+          color: #ef9b29 !important;
+          background: #f1f5f9 !important;
+        }
+      }
+      a {
+        padding:5px 15px 5px 40px;
+        color:#666;
+        font-size: 14px;
+        &:hover, &:focus {
+         color: #ef9b29 !important;
+         background: #f1f5f9 !important;
+       }
+     }
    }
  }
-}
-}
 }
 }
 
@@ -144,14 +147,20 @@ h1, .h1, h2, .h2, h3, .h3 {
     .nav {
       .open {
         a:hover, a:focus {
-          background-color: rgba(0,0,0,0.1);
+          background-color: rgba(0,0,0,0.1)!important;
         }
       }
       > li {
         > a:hover, >a:focus{
           background-color: rgba(0, 0, 0, 0.1);
+          +.dropdown-menu {
+            display: block;
+          }
         }
         .dropdown-menu {
+          &:hover {
+            display: block;
+          }
           a:hover {
             background-color: rgba(0, 0, 0, 0.1);
             background-image: none;
@@ -262,7 +271,7 @@ h1, .h1, h2, .h2, h3, .h3 {
   }
   .panel-menu .dropdown-menu {
     position: absolute;
-    background: rgba(0, 0, 0, 0.7)!important;
+    //background: rgba(0, 0, 0, 0.7)!important;
     padding: 0;
     border: 0;
     right: 0;
@@ -296,24 +305,10 @@ h1, .h1, h2, .h2, h3, .h3 {
   }
   .full-content .box {
     border: 0;
-    margin-bottom: 0;
-    -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
   }
-  .box-header {
-    color: #505559;
-    position:relative;
-    overflow: hidden;
-    height: 24px;
-    border-bottom: 1px solid #ccc;
-    background-color: #eaeaea;
-    background-image: -webkit-linear-gradient(top, #eaeaea, #e0e0e0);
-    background-image:    -moz-linear-gradient(top, #eaeaea, #e0e0e0);
-    background-image:     -ms-linear-gradient(top, #eaeaea, #e0e0e0);
-    background-image:      -o-linear-gradient(top, #eaeaea, #e0e0e0);
-    background-image:         linear-gradient(to bottom, #eaeaea, #e0e0e0);
-  }
+
   .box-name, .modal-header-name {
     padding-left: 15px;
     line-height: 24px;
@@ -445,9 +440,35 @@ h1, .h1, h2, .h2, h3, .h3 {
     }
     .main-menu>li {
       &:hover {
+        width: 236px !important;
+        position: relative !important;
+        z-index: 2000;
+        display: block !important;
+        >a {
+          background: #ef9b29;
+          color: #fff;
+          .fa {
+            margin-right: 10px;
+          }
+          .title {
+            display: inline !important;
+          }
+        }
         .dropdown-menu {
           visibility: visible!important;
           display: block!important;
+          background-color: #fff;
+          border: 1px solid #ccc;
+          border-width: 0 1px 1px 0;
+          width: 200px;
+          position: absolute;
+          z-index: 2000;
+          left: 36px;
+          margin-top: 0;
+          top: 100%;
+          a {
+            padding-left: 15px !important;
+          }
         }
       }
       .dropdown-menu {
@@ -477,9 +498,9 @@ h1, .h1, h2, .h2, h3, .h3 {
         }
       }
       >a {
-        line-height: 40px;
-        padding: 0;
-        text-align: center;
+        //line-height: 40px;
+        padding: 10px 15px 10px 7px;
+        //text-align: center;
       }
     }
 
@@ -645,11 +666,18 @@ h1, .h1, h2, .h2, h3, .h3 {
       -moz-border-radius: 0;
       border-radius: 0;
       margin: 0;
+      border-bottom: 1px solid #e9e9e9;
+      box-shadow: 0 2px 6px #f2f2f2;
     }
-    .breadcrumb > li > a {
-      /* color:#d8d8d8; */
-      color: #57cfed;
-    }
+    .breadcrumb > li {
+      +li:before {
+        content: "/";
+      }
+      > a {
+        /* color:#d8d8d8; */
+        color: @orange;
+      }
+    } 
     .breadcrumb > li > a:hover, .breadcrumb > li:last-child > a {
       /* color:#f8f8f8; */
       color: #555;
@@ -1066,97 +1094,7 @@ h1, .h1, h2, .h2, h3, .h3 {
   .knob-clock {
     text-align: center;
   }
-  .knob-clock > div {
-    font-size:50px;
-    text-align: center;
-    color:#a2a2a2;
-  }
-  .knob {
-    border:0;
-    background: 0;
-  }
-  .box-pricing:hover {
-    box-shadow: 0 0 5px #525252;
-    -webkit-transition: 0.5s;
-    -moz-transition: 0.5s;
-    -o-transition: 0.5s;
-    transition: 0.5s;
-  }
-  .box-pricing .row-fluid > div {
-    padding: 18px 15px 8px;
-    line-height: 1.428571429;
-    vertical-align: top;
-  }
-  .box-pricing .row-fluid.centered > div {
-    background-color: #f5f5f5;
-    padding: 8px;
-    text-align: center;
-  }
-  .box-pricing .row-fluid.centered > div:nth-child(odd) {
-    background-color: #f9f9f9;
-  }
-  .box-pricing .box-header {
-    height: 80px;
-    padding: 10px 0;
-  }
-  .box-pricing .box-name {
-    padding: 0 10px;
-    text-align: center;
-  }
-  .box-pricing .box-name:hover {
-    cursor: inherit;
-  }
-  #messages #breadcrumb {
-    margin-bottom: 0;
-    position: fixed;
-    width: 100%;
-    z-index: 2000;
-  }
-  #messages-menu {
-    position:fixed;
-    top:90px;
-    background:@bgColor;
-    margin:0;
-    height: 100%;
-    z-index: 2;
-  }
-  #messages-list {
-    margin-top: 40px;
-    padding: 0;
-  }
-  .one-list-message {
-    background: #F1F1F1;
-    border-bottom: 1px solid #CCC;
-    padding: 15px 15px 15px 25px;
-    margin: 0;
-  }
-  .one-list-message .checkbox {
-    margin: 0;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-  .one-list-message .message-title {
-    overflow: hidden;
-    white-space: nowrap;
-    width: 80%;
-  }
-  .one-list-message .message-date {
-    overflow: hidden;
-    white-space: nowrap;
-    font-size: 11px;
-    line-height: 20px;
-    text-align: center;
-    position: absolute;
-    right: 10px;
-    font-weight: bold;
-    background: #D8D8D8;
-    padding: 0;
-    width: 50px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    color: #000;
-  }
+
   .form-control {
     height: 26px;
     padding: 2px 12px;
@@ -1170,38 +1108,7 @@ h1, .h1, h2, .h2, h3, .h3 {
   .input-sm {
     height:18px;
   }
-  .select2-container-multi .select2-choices {
-    min-height: 26px;
-    display: block;
-    height: 26px;
-    padding: 0 0 0 8px;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid #aaa;
-    white-space: nowrap;
-    line-height: 26px;
-    color: #444;
-    text-decoration: none;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    background-clip: padding-box;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-color: #fff;
-    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eee), color-stop(0.5, #fff));
-    background-image: -webkit-linear-gradient(center bottom, #eee 0%, #fff 50%);
-    background-image: -moz-linear-gradient(center bottom, #eee 0%, #fff 50%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#eeeeee', GradientType = 0);
-    background-image: linear-gradient(top, #fff 0%, #eee 50%);
-  }
-  .select2-container-multi .select2-choices .select2-search-field input {
-    padding: 0;
-    margin: 0;
-  }
+ 
   .has-feedback .form-control-feedback {
     width: 26px;
     height: 26px;
