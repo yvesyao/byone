@@ -147,6 +147,46 @@
 </div>
 <!-- /#terminalModal -->
 
+
+
+
+<div class="modal fade" id="alarmModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="alarmModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h5 class="modal-title" id="alarmModalLabel">告警</h5>
+			</div>
+			<div class="modal-body clearfix">
+				<table id="alarmTable" class="mt-20 table table-condensed table-striped  table-block table-hover byoneTable">
+					<thead>
+						<tr>
+							<th>最近发生时间</th>
+							<th>第一次发生时间</th>
+							<th>告警类型</th>
+							<th>告警源</th>
+							<th>告警详情</th>
+							<th>告警状态</th>
+							<th>告警数</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<div class="zoom loading">
+					<div class="spinner"></div>
+				</div>
+				<nav class="pull-right">
+					<ul class="pagination" id="alarmPag">
+						<li class="prev"><a href="#">&laquo;</a></li>
+						<li class="next"><a href="#">&raquo;</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script type="text/javascript">
 	function topoReady() {
 		drawTopology('#topoContainer', topoDropMenu);
@@ -161,18 +201,44 @@
 	 			hIncidentLevel: fillIncidentLevel,
 	 			hIncidentType: fillIncidentType
 	 		});
-			SparkLineDrawPieGraph(".alarm-level .pie", 'html');
-			SparkLineDrawPieGraph(".alarm-feature .pie", 'html', ['#af5e9c', '#f86b4f', '#00529c']);
-		});
-
-	 	function fillIncidentLevel(elem, data) {
-	 		$(elem).html('高：<span class="level-high">' + data[0] + '</span>    中：<span class="level-mid">' + data[1] + '</span>    低：<span class="level-low">' + data[2] + '</span><span class="pie pl-half"></span>').find('.pie').attr('values', data);
-	 	}
-	 	function fillIncidentType(elem, data) {
-	 		$(elem).html('可用性：<span class="useablity">' + data[0] + '</span>    性能：<span class="performance">' + data[1] + '</span>    安全：<span class="security">' + data[2] + '</span><span class="pie pl-half"></span>').find('.pie').attr('values', data);
-	 	}
-		$('#nodeModal').modal('show')/*.find('#nodeModalLabel').text('node ' + nodeId)*/;
+	 		SparkLineDrawPieGraph(".alarm-level .pie", 'html');
+	 		SparkLineDrawPieGraph(".alarm-feature .pie", 'html', ['#af5e9c', '#f86b4f', '#00529c']);
+	 	});
+		function fillIncidentLevel(elem, data) {
+			$(elem).html('高：<a href="4" class="J-incident-trigger level-high">' + data[0] + '</a>    中：<a href="2" class="J-incident-trigger level-mid">' + data[1] + '</a>    低：<a href="1" class="J-incident-trigger level-low">' + data[2] + '</a><span class="pie pl-half"></span>').find('.pie').attr('values', data);
+		}
+		function fillIncidentType(elem, data) {
+			$(elem).html('可用性：<span class="useablity">' + data[0] + '</span>    性能：<span class="performance">' + data[1] + '</span>    安全：<span class="security">' + data[2] + '</span><span class="pie pl-half"></span>').find('.pie').attr('values', data);
+		}
+		$('#nodeModal').modal('show').data('ip', nodeIp).find('#nodeModalLabel').text('device ip ' + nodeIp);
 	}
+
+	function getAlarmData(severitycat, target, callback) {
+
+		var _itemCount = 15,
+		_levelName = {
+			'1': '低',
+			'2': '中',
+			'4': '高'
+		},
+		_columns = ['latest_time', 'creation_time', 'incident_et', 'incident_src', 'incident_detail', 'incident_status', 'incident_count'],
+		$loading = $('#alarmTable + .loading').show();
+		$('#alarmModal').modal('show').find('.modal-title').text('设备：' + target + ' 告警等级：'+_levelName[severitycat]);
+		$.get('queryAllIncident.do', {
+			'incident_target': target,
+			'severitycat': severitycat,
+			itemCount: _itemCount,
+			draw: $('#alarmPag').data('draw') - 0 || 1
+		}, function(data) {
+			setTableData('#alarmTable', data.voList, _columns);
+			setPages(data.draw, parseInt((data.total - 1)/_itemCount)+1, '#alarmPag');
+			if (callback && typeof callback === 'function') {
+				callback();
+			}
+			$loading.hide();
+		});
+	}
+
 	function sparkLineReady() {
 
 	}
@@ -180,5 +246,9 @@
 		LoadJTopoScripts(topoReady);
 		LoadSparkLineScript(sparkLineReady);
 		LoadTerminalScripts();
+		$('#nodeModal').delegate('.J-incident-trigger', 'click', function(event) {
+			event.preventDefault();
+			getAlarmData($(this).attr('href'), $('#nodeModal').data('ip'));
+		});
 	});
 </script>

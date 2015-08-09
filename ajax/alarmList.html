@@ -11,7 +11,6 @@
 <!-- /.row -->
 
 <div class="row">
-
 	<div class="col-xs-12">
 		<div class="box no-drop">
 			<div class="box-header">
@@ -33,7 +32,7 @@
 					<div class="form-group mr">
 						<label class="control-label">过滤：</label>
 						<input type="text" name="incident_id" class="form-control" placeholder="ID">
-						<input type="text" name="incident_src" class="form-control" placeholder="IP">
+						<input type="text" name="incident_src" class="form-control" placeholder="告警源IP">
 						<!-- <div class="radio-inline"><input type="radio" value="3" name="filter"> 自定义</div> -->
 					</div>
 					<div class="form-group mr">
@@ -102,7 +101,7 @@
 					</div>
 
 					<div class="form-group mr">
-						<input type="submit" value="筛 选">
+						<input type="submit" class="btn btn-default" value="筛 选">
 					</div>
 					
 				</form>
@@ -212,59 +211,8 @@
 		'incident_count': '告警数'
 	};
 
-	/**
-	 * 填入表格数据
-	 * @param {[type]} tableHandle 表格句柄
-	 * @param {[type]} tableData   表格数据
-	 * @param {[type]} columns     表格列名
-	 * @param {[type]} colConfig   特殊列配置
-	 */
-	 function setTableData(tableHandle, tableData, columns, colConfig) {
-	 	var $tbody = $('tbody', tableHandle).children('tr').remove().end();
-	 	if (!tableData) {
-	 		return;
-	 	}
-	 	for (var i = 0; i < tableData.length; i++) {
-	 		var _trData = tableData[i];
-	 		var $newTr = $('<tr>').attr('data-id', _trData['id']).appendTo($tbody);
-	 		for (var j = 0; j < columns.length; j++) {
-	 			var _tdCol = columns[j],
-	 			_tdCfg = colConfig[_tdCol],
-	 			_tdData = _trData[_tdCol];
-	 			$('<td>').html(_tdCfg ? _tdCfg(_tdData) : _tdData).attr('title', _tdData).appendTo($newTr);
-	 		}
-	 	}
-	 }
 
-	 function setPages(draw, total, placeholder) {
-	 	draw -= 0;//转换为number
-	 	var $pagination = $(placeholder).data('draw', draw);
-		//清空状态
-		$('li', $pagination).removeClass('disabled');
-		//清空页码
-		var $nextLi = $('li.next', $pagination);
-		$nextLi.prevUntil('li.prev').remove();
-		(draw === 1) && ($('li.prev').addClass('disabled'));
-		(draw === total) && ($('li.next').addClass('disabled'));
-		if (!total || total <= 0) {
-			return;
-		}
-		var _pageList = getPageCfg(draw, total),
-		_prePage = 0,
-		_index = 0,
-		_length = _pageList.length,
-		_page;
-		while (_page = _pageList[_index++]) {
-			if (_page - _prePage > 1) {
-				$('<li class="disabled"><a href="#">...</a></li>').insertBefore($nextLi);
-			}
-			var $newPage = $('<li data-page="' + _page + '"><a href="">' + _page + '</a></li>').insertBefore($nextLi);
-			(draw === _page) && ($newPage.addClass('active'));
-			_prePage = _page;
-		}
-	}
-
-	function periodType(event) {
+	function alarmPeriodType(event) {
 		console.log('change');
 		if ($(this).val() === '0') {
 			$(this).closest('form')
@@ -376,7 +324,7 @@
 		});
 
 		LoadTimePickerScript(AllTimePickers);
-		$('.period').change(periodType).filter('[value = "0"]').click().change();
+		$('.period').change(alarmPeriodType).filter('[value = "0"]').click().change();
 		$('#timeNum, #timeUnit').change(function(event) {
 			/* Act on the event */
 			var _timeVal = $('#timeNum').val() * $('#timeUnit').val();

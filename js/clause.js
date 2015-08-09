@@ -18,6 +18,7 @@ var __select = {};
 Clause.prototype = {
 	constructor: Clause,
 	mirror: function(obj) {
+		//debugger
 		if (!obj) {
 			console.log('obj is null');
 			return;
@@ -28,6 +29,7 @@ Clause.prototype = {
 		this.WHERE = obj.WHERE;
 		this.COUNT = obj.COUNT;
 		this.GROUPBY = obj.GROUPBY;
+		return this;
 	},
 	showError: function(message, title) {
 		//console.log('error:'+message+' title:'+title);

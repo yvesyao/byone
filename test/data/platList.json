@@ -1,0 +1,32 @@
+{
+	"draw": 1,
+	"recordsFiltered": 1,
+	"data": [{
+		"id": "1",
+		"ip": "202.168.2.2",
+		"name": "byone-super",
+		"cpuUtil": "1%",
+		"physicalMem": "1768MB",
+		"virtualMem": "2280MB",
+		"healthStatus": "Normal",
+		"moduleRole": "supervisor",
+		"version": "1.1.0",
+		"updateTime": "92d 19h 20m 33s",
+		"createTime": "10:58:22 AM 2013年03月02日",
+		"healthStatus": "Normal"
+	}, {
+		"id": "2",
+		"ip": "202.168.2.3",
+		"name": "byone-worker",
+		"cpuUtil": "1%",
+		"physicalMem": "1768MB",
+		"virtualMem": "2280MB",
+		"healthStatus": "Normal",
+		"moduleRole": "worker",
+		"version": "1.3.0",
+		"updateTime": "92d 01h 20m 33s",
+		"createTime": "10:59:22 AM 2013年03月02日",
+		"healthStatus": "Normal"
+	}],
+	"recordsTotal": 1
+}

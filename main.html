@@ -76,13 +76,13 @@
 									<li>
 										<a href="#">
 											<i class="fa fa-user"></i>
-											<span>Profile</span>
+											<span>个人信息</span>
 										</a>
 									</li>
 									<li>
-										<a href="./index.html">
+										<a href="#" id="J-log-out">
 											<i class="fa fa-power-off"></i>
-											<span>Logout</span>
+											<span>注销</span>
 										</a>
 									</li>
 								</ul>
@@ -107,7 +107,7 @@
 					<input type="text" id="page-search" placeholder="Search...">
 				</div>
 				<ul class="nav main-menu">
-					<li class="dropdown">
+					<li class="dropdown J-top-menu">
 						<a href="#" class="dropdown-toggle ajax-link" title="首页">
 							<i class="fa fa-dashboard"></i>
 							<span class="fa arrow hidden-collapse"></span>
@@ -121,7 +121,7 @@
 						</ul>
 					</li>
 
-					<li class="dropdown">
+					<li class="dropdown J-top-menu">
 						<a href="#" class="dropdown-toggle" title="资产管理">
 							<i class="fa fa-desktop"></i>
 							<span class="fa arrow hidden-collapse"></span>
@@ -132,7 +132,7 @@
 						</ul>
 					</li>
 
-					<li class="dropdown">
+					<li class="dropdown J-top-menu">
 						<a href="#" class="dropdown-toggle" title="网络管理">
 							<i class="fa fa-sitemap"></i><!-- .fa-hdd-o -->
 							<span class="fa arrow hidden-collapse"></span>
@@ -144,7 +144,7 @@
 						</ul>
 					</li>
 
-					<li class="dropdown">
+					<li class="dropdown J-top-menu">
 						<a href="#" class="dropdown-toggle" title="云管理">
 							<i class="fa fa-cloud"></i>
 							<span class="fa arrow hidden-collapse"></span>
@@ -155,7 +155,7 @@
 						</ul>
 					</li>
 <!-- 
-				<li class="dropdown">
+				<li class="dropdown J-top-menu">
 					<a href="#" class="dropdown-toggle" title="业务服务管理">
 						<i class="fa fa-briefcase"></i>
 						 <span class="fa arrow hidden-collapse"></span>
@@ -169,7 +169,7 @@
 					</ul>
 				</li> -->
 
-				<li class="dropdown">
+				<li class="dropdown J-top-menu">
 					<a href="#" class="dropdown-toggle" title="安全管理">
 						<i class="fa fa-lock"></i>
 						<span class="fa arrow hidden-collapse"></span>
@@ -182,7 +182,7 @@
 					</ul>
 				</li>
 
-				<li class="dropdown">
+				<li class="dropdown J-top-menu">
 					<a href="#" class="dropdown-toggle" title="数据分析">
 						<i class="fa fa-bar-chart-o"></i>
 						<span class="fa arrow hidden-collapse"></span>
@@ -196,7 +196,7 @@
 					</ul>
 				</li>
 
-				<li class="dropdown">
+				<li class="dropdown J-top-menu">
 					<a href="#" class="dropdown-toggle" title="报表">
 						<i class="fa fa-table"></i>
 						<span class="fa arrow hidden-collapse"></span>
@@ -208,7 +208,7 @@
 					</ul>
 				</li>
 
-				<li class="dropdown">
+				<li class="dropdown J-top-menu">
 					<a href="#" class="dropdown-toggle" title="知识库">
 						<i class="fa fa-code"></i>
 						<span class="fa arrow hidden-collapse"></span>
@@ -216,14 +216,12 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li class="dropdown">
-							<a href="./ajax/rules.html" class="ajax-link" title="规则">
-								<span class="hidden-collapse title">规则</span>
-							</a>
+							<a href="./ajax/rules.html" class="ajax-link" title="规则">规则</a>
 						</li>
 					</ul>
 				</li>
 
-				<li class="dropdown">
+				<li class="dropdown J-top-menu">
 					<a href="#" class="dropdown-toggle" title="系统">
 						<i class="fa fa-gears"></i>
 						<span class="fa arrow hidden-collapse"></span>
@@ -232,12 +230,12 @@
 					<ul class="dropdown-menu">
 						<li><a href="./ajax/installGuide.html" class="ajax-link">安装向导</a></li>
 						<li><a href="./ajax/platState.html" class="ajax-link">平台状态</a></li>
-						<li><a href="./ajax/collector.html" class="ajax-link">采集器状态</a></li>
+						<li><a href="./ajax/collector.html" class="ajax-link" disabled>采集器状态</a></li>
 						<li><a href="./ajax/useage.html" class="ajax-link">使用情况</a></li>
-						<li><a href="./ajax/useage.html" class="ajax-link">外部认证</a></li>
+						<li><a href="./ajax/useage.html" class="ajax-link" disabled>外部认证</a></li>
 						<li><a href="./ajax/roleMng.html" class="ajax-link">角色管理</a></li>
 						<li><a href="./ajax/userMng.html" class="ajax-link">用户管理</a></li>
-						<li><a href="./ajax/eventDB.html" class="ajax-link">事件数据库</a></li>
+						<li><a href="./ajax/eventDB.html" class="ajax-link" disabled>事件数据库</a></li>
 					</ul>
 				</li>
 

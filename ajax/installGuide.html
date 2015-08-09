@@ -412,22 +412,22 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					<h5 class="modal-title" id="collectorModalLabel">采集器维护</h5>
-				</div>
-				<form action="#" id="collectorForm" class="form-horizontal">
-					<div class="modal-body">
-						<input type="hidden" id="collOrgId" data-name="orgId" name="orgId">
-						<input type="hidden" data-name="id" name="id">
-						<div class="form-group">
-							<label for="collectorName" class="control-label col-xs-3 no-empty">名称</label>
-							<div class="col-xs-8"><input class="form-control" data-name="collectorName" name="collectorName" id="collectorName" type="text" required></div>
-						</div>
-						<div class="form-group">
-							<label for="collectorEPS" class="control-label col-xs-3 no-empty">初始EPS</label>
-							<div class="col-xs-8"><input class="form-control" data-name="eps" name="eps" id="collectorEPS" type="number" required min="0"></div>
-						</div><!-- 
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h5 class="modal-title" id="collectorModalLabel">采集器维护</h5>
+			</div>
+			<form action="#" id="collectorForm" class="form-horizontal">
+				<div class="modal-body">
+					<input type="hidden" id="collOrgId" data-name="orgId" name="orgId">
+					<input type="hidden" data-name="id" name="id">
+					<div class="form-group">
+						<label for="collectorName" class="control-label col-xs-3 no-empty">名称</label>
+						<div class="col-xs-8"><input class="form-control" data-name="collectorName" name="collectorName" id="collectorName" type="text" required></div>
+					</div>
+					<div class="form-group">
+						<label for="collectorEPS" class="control-label col-xs-3 no-empty">初始EPS</label>
+						<div class="col-xs-8"><input class="form-control" data-name="eps" name="eps" id="collectorEPS" type="number" required min="0"></div>
+					</div>
+						<!-- 
 						<div class="form-group">
 							<label for="collectorStartTime" class="control-label col-xs-4">开始时间</label>
 							<div class="col-xs-8"><input class="form-control" id="collectorStartTime" type="text"></div>
@@ -445,178 +445,147 @@
 			</div>
 		</div>
 	</div>
-</div>
 
 
-<div class="modal fade" id="proofModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="proofModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-				<h5 class="modal-title" id="proofModalLabel">连接方法定义</h5>
-			</div>
-			<form action="#" id="proofForm" class="form-horizontal">
-				<div class="modal-body">
-					<div class="form-group">
-						<label for="proofName" class="control-label col-xs-3">名称</label>
-						<div class="col-xs-8">
-							<input type="hidden" name="id" data-name="id"><input type="text" name="name" data-name="name" id="proofName" class="form-control" required></div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group">
-							<label for="deviceType" class="control-label col-xs-3">设备类型</label>
-							<div class="col-xs-8">
-								<select id="deviceType" name="deviceTypeName" data-name="deviceTypeName" class="form-control" required>
-								</select>
-							</div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group">
-							<label for="connProtoco" class="control-label col-xs-3">连接协议</label>
-							<div class="col-xs-8">
-								<select id="connProtoco" name="accessProtocol" data-name="accessProtocol" class="form-control" required>
-									<option value="WMI">WMI</option>
-									<option value="VM SDK">VM SDK</option>
-									<option value="SNMP">SNMP</option>
-									<option value="SNMP V3">SNMP V3</option>
-								</select>
-							</div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="1">
-							<label for="orderFreq" class="control-label col-xs-3">请求间隔</label>
-							<div class="col-xs-8"><input type="number" name="reqTime" data-name="reqTime" id="orderFreq" class="form-control" min="0"> minute(s)</div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="1">
-							<label for="domain" class="control-label col-xs-3">NetBIOS/域</label>
-							<div class="col-xs-8"><input type="text" name="netBIOS" data-name="netBIOS" id="domain" class="form-control"></div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="1,2">
-							<label for="username" class="control-label col-xs-3">用户名</label>
-							<div class="col-xs-8"><input type="text" name="userName" data-name="userName" id="username" class="form-control" pattern="^\w{5,20}$" data-bv-regexp-message="用户名由英文字母、数字和下划线组成" minLength="5" maxLength="20" required></div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="1,2">
-							<label for="password" class="control-label col-xs-3">密码</label>
-							<div class="col-xs-8"><input type="password" name="password" data-name="password" id="password" class="form-control" minLength="5" maxLength="20" required></div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="1,2">
-							<label for="cfmpwd" class="control-label col-xs-3">确认密码</label>
-							<div class="col-xs-8"><input type="password" data-name="password" id="cfmpwd" class="form-control"></div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="3">
-							<label for="commuStr" class="control-label col-xs-3">社区字符串</label>
-							<div class="col-xs-8"><input type="password" name="communityString" data-name="communityString" id="commuStr" class="form-control" minLength="5" maxLength="20" required></div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="3">
-							<label for="cfmCommuStr" class="control-label col-xs-3">确认社区字符串</label>
-							<div class="col-xs-8"><input type="password" id="cfmCommuStr" data-name="communityString" class="form-control"></div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="4">
-							<label for="secuLevel" name="safeLevel" data-name="safeLevel" class="control-label col-xs-3">安全级别</label>
-							<div class="col-xs-8">
-								<select id="secuLevel" name="safeLevel" data-name="safeLevel" class="form-control" required>
-									<option value="noAuthNoPriv" selected>noAuthNoPriv</option>
-									<option value="authNoPriv">authNoPriv</option>
-									<option value="authPriv">authPriv</option>
-								</select>
-							</div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="4">
-							<label for="secuName" class="control-label col-xs-3">安全名称</label>
-							<div class="col-xs-8"><input type="text" name="safeName" data-name="safeName" id="secuName" class="form-control" required></div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="4">
-							<label for="cfmProtocol" class="control-label col-xs-3">验证协议</label>
-							<div class="col-xs-8">
-								<select id="cfmProtocol" name="vertifyProtocol" data-name="vertifyProtocol" class="form-control" required>
-									<option value="MD5">MD5</option>
-									<option value="SHA">SHA</option>
-								</select>
-							</div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="4">
-							<label for="cfmPassword" class="control-label col-xs-3">验证密码</label>
-							<div class="col-xs-8"><input type="password" name="vertifyPwd" data-name="vertifyPwd" id="cfmPassword" class="form-control" minLength="5" maxLength="20" required></div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="4">
-							<label for="cfmCfmPassword" class="control-label col-xs-3">确认验证密码</label>
-							<div class="col-xs-8"><input type="password" data-name="vertifyPwd" id="cfmCfmPassword" class="form-control"></div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="4">
-							<label for="privProtocol" class="control-label col-xs-3">私有协议</label>
-							<div class="col-xs-8">
-								<select id="privProtocol" name="privacyProtocol" data-name="privacyProtocol" class="form-control" required>
-									<option value="MD5">MD5</option>
-									<option value="SHA">SHA</option>
-								</select>
-							</div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="4">
-							<label for="privPassword" class="control-label col-xs-3">私有密码</label>
-							<div class="col-xs-8"><input type="password" id="privacyPwd" name="privacyPwd" data-name="privacyPwd" class="form-control" minLength="5" maxLength="20" required></div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="4">
-							<label for="cfmCfmPassword" class="control-label col-xs-3">确认私有密码</label>
-							<div class="col-xs-8"><input type="password" id="cfmPrivPassword" data-name="privacyPwd" class="form-control"></div>
-						</div>
-						<!-- /.form-group -->
-						<div class="form-group protocolItem" data-protocol="4">
-							<label for="relationship" class="control-label col-xs-3">关系</label>
-							<div class="col-xs-8"><input type="text" id="relationship" name="relationship" data-name="relationship" class="form-control"></div>
-						</div>
-						<!-- /.form-group -->
-
-						<div class="form-group protocolItem" data-protocol="1,2,3">
-							<label for="description" class="control-label col-xs-3">描述</label>
-							<div class="col-xs-8">
-								<textarea name="description" data-name="description" class="form-control" id="description" cols="30" rows="10"></textarea>
-							</div>
-						</div>
-						<!-- /.form-group -->
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-default">提 交</button>
-						<button class="btn btn-primary" data-dismiss="modal">取 消</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<!-- /#proofModal -->
-	<div class="modal fade" id="ipModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="ipModalLabel" aria-hidden="true">
+	<div class="modal fade" id="proofModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="proofModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-						<h5 class="modal-title" id="ipModalLabel">设备凭据管理定义</h5>
-					</div>
-					<form action="#" id="ipForm" class="form-horizontal">
-						<div class="modal-body">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h5 class="modal-title" id="proofModalLabel">连接方法定义</h5>
+				</div>
+				<form action="#" id="proofForm" class="form-horizontal">
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="proofName" class="control-label col-xs-3">名称</label>
+							<div class="col-xs-8">
+								<input type="hidden" name="id" data-name="id"><input type="text" name="name" data-name="name" id="proofName" class="form-control" required></div>
+							</div>
+							<!-- /.form-group -->
 							<div class="form-group">
-								<label for="ipBlock" class="control-label col-xs-3 no-empty">IP/IP段</label>
+								<label for="deviceType" class="control-label col-xs-3">设备类型</label>
 								<div class="col-xs-8">
-									<input type="hidden" id="ipCollectorId" name="collectorId"><input type="hidden" id="ipCollectorName" name="collectorName"><input type="hidden" id="ipCollectorName" data-name="rangeId" name="rangeId"><input class="form-control" data-name="ipRange" name="ipRange" id="ipBlock" type="text" required>
+									<select id="deviceType" name="deviceTypeName" data-name="deviceTypeName" class="form-control" required>
+									</select>
 								</div>
 							</div>
+							<!-- /.form-group -->
 							<div class="form-group">
-								<label for="ipProofList" class="control-label col-xs-3 no-empty">凭据</label>
-								<div class="col-xs-8"><select name="credentials" id="ipProofSel" data-name="credentials" class="form-control" multiple required></select></div>
+								<label for="connProtoco" class="control-label col-xs-3">连接协议</label>
+								<div class="col-xs-8">
+									<select id="connProtoco" name="accessProtocol" data-name="accessProtocol" class="form-control" required>
+										<option value="WMI">WMI</option>
+										<option value="VM SDK">VM SDK</option>
+										<option value="SNMP">SNMP</option>
+										<option value="SNMP V3">SNMP V3</option>
+									</select>
+								</div>
 							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="1">
+								<label for="orderFreq" class="control-label col-xs-3">请求间隔</label>
+								<div class="col-xs-8"><input type="number" name="reqTime" data-name="reqTime" id="orderFreq" class="form-control" min="0"> minute(s)</div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="1">
+								<label for="domain" class="control-label col-xs-3">NetBIOS/域</label>
+								<div class="col-xs-8"><input type="text" name="netBIOS" data-name="netBIOS" id="domain" class="form-control"></div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="1,2">
+								<label for="username" class="control-label col-xs-3">用户名</label>
+								<div class="col-xs-8"><input type="text" name="userName" data-name="userName" id="username" class="form-control" pattern="^\w{5,20}$" data-bv-regexp-message="用户名由英文字母、数字和下划线组成" minLength="5" maxLength="20" required></div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="1,2">
+								<label for="password" class="control-label col-xs-3">密码</label>
+								<div class="col-xs-8"><input type="password" name="password" data-name="password" id="password" class="form-control" minLength="5" maxLength="20" required></div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="1,2">
+								<label for="cfmpwd" class="control-label col-xs-3">确认密码</label>
+								<div class="col-xs-8"><input type="password" data-name="password" id="cfmpwd" class="form-control"></div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="3">
+								<label for="commuStr" class="control-label col-xs-3">社区字符串</label>
+								<div class="col-xs-8"><input type="password" name="communityString" data-name="communityString" id="commuStr" class="form-control" minLength="5" maxLength="20" required></div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="3">
+								<label for="cfmCommuStr" class="control-label col-xs-3">确认社区字符串</label>
+								<div class="col-xs-8"><input type="password" id="cfmCommuStr" data-name="communityString" class="form-control"></div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="4">
+								<label for="secuLevel" name="safeLevel" data-name="safeLevel" class="control-label col-xs-3">安全级别</label>
+								<div class="col-xs-8">
+									<select id="secuLevel" name="safeLevel" data-name="safeLevel" class="form-control" required>
+										<option value="noAuthNoPriv" selected>noAuthNoPriv</option>
+										<option value="authNoPriv">authNoPriv</option>
+										<option value="authPriv">authPriv</option>
+									</select>
+								</div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="4">
+								<label for="secuName" class="control-label col-xs-3">安全名称</label>
+								<div class="col-xs-8"><input type="text" name="safeName" data-name="safeName" id="secuName" class="form-control" required></div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="4">
+								<label for="cfmProtocol" class="control-label col-xs-3">验证协议</label>
+								<div class="col-xs-8">
+									<select id="cfmProtocol" name="vertifyProtocol" data-name="vertifyProtocol" class="form-control" required>
+										<option value="MD5">MD5</option>
+										<option value="SHA">SHA</option>
+									</select>
+								</div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="4">
+								<label for="cfmPassword" class="control-label col-xs-3">验证密码</label>
+								<div class="col-xs-8"><input type="password" name="vertifyPwd" data-name="vertifyPwd" id="cfmPassword" class="form-control" minLength="5" maxLength="20" required></div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="4">
+								<label for="cfmCfmPassword" class="control-label col-xs-3">确认验证密码</label>
+								<div class="col-xs-8"><input type="password" data-name="vertifyPwd" id="cfmCfmPassword" class="form-control"></div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="4">
+								<label for="privProtocol" class="control-label col-xs-3">私有协议</label>
+								<div class="col-xs-8">
+									<select id="privProtocol" name="privacyProtocol" data-name="privacyProtocol" class="form-control" required>
+										<option value="MD5">MD5</option>
+										<option value="SHA">SHA</option>
+									</select>
+								</div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="4">
+								<label for="privPassword" class="control-label col-xs-3">私有密码</label>
+								<div class="col-xs-8"><input type="password" id="privacyPwd" name="privacyPwd" data-name="privacyPwd" class="form-control" minLength="5" maxLength="20" required></div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="4">
+								<label for="cfmCfmPassword" class="control-label col-xs-3">确认私有密码</label>
+								<div class="col-xs-8"><input type="password" id="cfmPrivPassword" data-name="privacyPwd" class="form-control"></div>
+							</div>
+							<!-- /.form-group -->
+							<div class="form-group protocolItem" data-protocol="4">
+								<label for="relationship" class="control-label col-xs-3">关系</label>
+								<div class="col-xs-8"><input type="text" id="relationship" name="relationship" data-name="relationship" class="form-control"></div>
+							</div>
+							<!-- /.form-group -->
+
+							<div class="form-group protocolItem" data-protocol="1,2,3">
+								<label for="description" class="control-label col-xs-3">描述</label>
+								<div class="col-xs-8">
+									<textarea name="description" data-name="description" class="form-control" id="description" cols="30" rows="10"></textarea>
+								</div>
+							</div>
+							<!-- /.form-group -->
 						</div>
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-default">提 交</button>
@@ -626,455 +595,485 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- /#ipmodal -->
-
-	<div class="modal fade" id="detectModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="detectModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
+		<!-- /#proofModal -->
+		<div class="modal fade" id="ipModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="ipModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-						<h5 class="modal-title" id="detectModalLabel">范围定义</h5>
-					</div>
-					<form action="#" id="detectForm" class="form-horizontal">
-						<div class="modal-body">
-							<div class="form-group">
-								<label for="name" class="control-label col-xs-3 no-empty">名称</label>
-								<div class="col-xs-8"><input type="hidden" id="detectColledtorId" name="collectorId" data-name="collectorId"><input class="form-control" data-name="searchName" name="searchName" id="name" type="text" minlength="3" maxlength="40" required></div>
-							</div>
-							<div class="form-group">
-								<label for="includeRange" class="control-label col-xs-3 no-empty">包含的段</label>
-								<div class="col-xs-8"><input class="form-control" data-name="includeRange" name="includeRange" id="includeRange" type="text"></div>
-							</div>
-							<div class="form-group">
-								<label for="excludeRange" class="control-label col-xs-3 no-empty">不包含的段</label>
-								<div class="col-xs-8"><input class="form-control" data-name="excludeRange" name="excludeRange" id="excludeRange" type="text"></div>
-							</div>
-							<div class="form-group">
-								<div class="col-xs-8 col-xs-offset-3">
-									<div class="checkbox"><label><input type="checkbox" name="noPing" data-name="noPing" value="1"> 探测前不要执行Ping</label></div>
-									<div class="checkbox"><label><input type="checkbox" name="onlyPing" data-name="onlyPing" value="1"> 仅在探测时Ping</label></div>
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+							<h5 class="modal-title" id="ipModalLabel">设备凭据管理定义</h5>
+						</div>
+						<form action="#" id="ipForm" class="form-horizontal">
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="ipBlock" class="control-label col-xs-3 no-empty">IP/IP段</label>
+									<div class="col-xs-8">
+										<input type="hidden" id="ipCollectorId" name="collectorId"><input type="hidden" id="ipCollectorName" name="collectorName"><input type="hidden" id="ipCollectorName" data-name="rangeId" name="rangeId"><input class="form-control" data-name="ipRange" name="ipRange" id="ipBlock" type="text" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="ipProofList" class="control-label col-xs-3 no-empty">凭据</label>
+									<div class="col-xs-8"><select name="credentials" id="ipProofSel" data-name="credentials" class="form-control" multiple required></select></div>
 								</div>
 							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-default">提 交</button>
-							<button class="btn btn-primary" data-dismiss="modal">取 消</button>
-						</div>
-					</form>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-default">提 交</button>
+								<button class="btn btn-primary" data-dismiss="modal">取 消</button>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<script type="text/javascript">
+		<!-- /#ipmodal -->
 
-		var __orgId = '';
-		/*add actions*/
-		function addOrg() {
-			$('#collectorTable tbody tr').remove();
-			resetForm($('#orgForm').attr('action', 'insertOrg.do')).find('.hide-mod').removeAttr('disabled').closest('.form-group').show();
-			$('#orgId').val(__orgId = new Date().getTime() + Math.random());
-			$('#orgModal').modal('show');
-		}
-		function addCollector() {
-			/* Act on the event */
-			resetForm($('#collectorForm').attr('action', 'insertOrgCollector.do'));
-			$('#collOrgId').val(__orgId);
-			$('#collectorModal').modal('show');
-		};
-		function addProof() {
-			resetForm($('#proofForm').attr('action', 'insertCredential.do'));
-			$('#proofModal').modal('show');
-		};
-		function addIP() {
-			resetForm($('#ipForm').attr('action', 'insertRange.do'));
-			$('#ipModal').modal('show');
-		};
-		function addDetect() {
-			resetForm($('#detectForm').attr('action', 'insertSearch.do'));
-			$('#detectModal').modal('show');
-		}
+		<div class="modal fade" id="detectModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="detectModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+							<h5 class="modal-title" id="detectModalLabel">范围定义</h5>
+						</div>
+						<form action="#" id="detectForm" class="form-horizontal">
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="name" class="control-label col-xs-3 no-empty">名称</label>
+									<div class="col-xs-8"><input type="hidden" id="detectColledtorId" name="collectorId" data-name="collectorId"><input class="form-control" data-name="searchName" name="searchName" id="name" type="text" minlength="3" maxlength="40" required></div>
+								</div>
+								<div class="form-group">
+									<label for="includeRange" class="control-label col-xs-3 no-empty">包含的段</label>
+									<div class="col-xs-8"><input class="form-control" data-name="includeRange" name="includeRange" id="includeRange" type="text"></div>
+								</div>
+								<div class="form-group">
+									<label for="excludeRange" class="control-label col-xs-3 no-empty">不包含的段</label>
+									<div class="col-xs-8"><input class="form-control" data-name="excludeRange" name="excludeRange" id="excludeRange" type="text"></div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-8 col-xs-offset-3">
+										<div class="checkbox"><label><input type="checkbox" name="noPing" data-name="noPing" value="1"> 探测前不要执行Ping</label></div>
+										<div class="checkbox"><label><input type="checkbox" name="onlyPing" data-name="onlyPing" value="1"> 仅在探测时Ping</label></div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-default">提 交</button>
+								<button class="btn btn-primary" data-dismiss="modal">取 消</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
 
-		/*fill actions*/
-		function fillOrg(orgId) {
-			__orgId = orgId;
-			$('#collectorTable tbody tr').remove();
-			resetForm($('#orgForm'));
-			$.get('queryOrgById.do', {
-				'orgId': orgId
-			}, function(data) {
-				/*optional stuff to do after success */
-				fillInfo(data.orgVo, '#orgForm');
-				for (var i = 0; i < data.orgCollectorList.length; i++) {
-					addCollRow(data.orgCollectorList[i]);
-				}
-				$('#orgForm').attr('action', 'updateOrg.do').find('.hide-mod').attr('disabled', 'disabled').closest('.form-group').hide();
+			var __orgId = '';
+			/*add actions*/
+			function addOrg() {
+				$('#collectorTable tbody tr').remove();
+				resetForm($('#orgForm').attr('action', 'insertOrg.do')).find('.hide-mod').removeAttr('disabled').closest('.form-group').show();
+				$('#orgId').val(__orgId = new Date().getTime() + Math.random());
 				$('#orgModal').modal('show');
-			});
-		}
-
-		function fillCollector(collId) {
-			$('#collOrgId').val(__orgId);
-			$('#orgId').val(__orgId = orgId);
-			resetForm($('#collectorForm').attr('action', 'updateOrgCollector.do').data('update', true));
-			$.get('queryCollectorById.do', {
-				'id': collId
-			}, function(data) {
-				/*optional stuff to do after success */
-				fillInfo(data.orgCollectorVo, '#collectorForm');
-			});
-			$('#collectorModal').modal('show');
-		}
-
-
-		function fillProof(proofId) {
-			resetForm($('#proofForm').attr('action', 'updateCredential.do'));
-			$.get('queryCredentialById.do', {
-				'credentialId': proofId
-			}, function(data) {
-				/*optional stuff to do after success */
-				fillInfo(data.credentialVo, '#proofForm', {
-					accessProtocol: function (elem, data) {
-						$(elem).val(data).change();
-					}
-				});
-			});
-			$('#proofModal').modal('show');
-		}
-
-		function fillIP(ipId) {
-			resetForm($('#ipForm').attr('action', 'updateRange.do'));
-			$.get('queryRangeById.do', {
-				'rangeId': ipId
-			}, function(data) {
-				/*optional stuff to do after success */
-				fillInfo(data.rangeVo, '#ipForm', {
-					credentials: function (elem, data) {
-						var _list = data.split(',');
-						$('option', elem).removeAttr('selected');
-						for (var i = 0; i < _list.length; i++) {
-							$('option[value="'+_list[i]+'"]', elem).attr('selected', 'selected');
-						};
-						$(elem).trigger('chosen:updated');
-					}
-				});
-			});
-			$('#ipModal').modal('show');
-		}
-
-		function fillDetect(detectId) {
-			resetForm($('#detectForm').attr('action', 'updateSearch.do'));
-			$.get('querySearchById.do', {
-				'id': detectId
-			}, function(data) {
-				/*optional stuff to do after success */
-				fillInfo(data.svo, '#detectForm');
-			});
-			$('#detectModal').modal('show');
-		}
-
-		/*del functiona*/
-		function delOrg(orgId) {
-			if(!confirm('删除操作不可逆，您确定要删除吗')) {
-				return;
 			}
-			showAlert(true, '删除中...', 'info', true);
-			$.get('deleteOrg.do', {
-				'orgId': orgId
-			}, function(data) {
-				if (data === "operateSuccess") {
-					showAlert(true, '删除成功！', 'success', false, 500, function() {
+			function addCollector() {
+				/* Act on the event */
+				resetForm($('#collectorForm').attr('action', 'insertOrgCollector.do'));
+				$('#collOrgId').val(__orgId);
+				$('#collectorModal').modal('show');
+			};
+			function addProof() {
+				resetForm($('#proofForm').attr('action', 'insertCredential.do'));
+				$('#proofModal').modal('show');
+			};
+			function addIP() {
+				resetForm($('#ipForm').attr('action', 'insertRange.do'));
+				$('#ipModal').modal('show');
+			};
+			function addDetect() {
+				resetForm($('#detectForm').attr('action', 'insertSearch.do'));
+				$('#detectModal').modal('show');
+			}
+
+			/*fill actions*/
+			function fillOrg(orgId) {
+				__orgId = orgId;
+				$('#collectorTable tbody tr').remove();
+				resetForm($('#orgForm'));
+				$.get('queryOrgById.do', {
+					'orgId': orgId
+				}, function(data) {
+					/*optional stuff to do after success */
+					fillInfo(data.orgVo, '#orgForm');
+					for (var i = 0; i < data.orgCollectorList.length; i++) {
+						addCollRow(data.orgCollectorList[i]);
+					}
+					$('#orgForm').attr('action', 'updateOrg.do').find('.hide-mod').attr('disabled', 'disabled').closest('.form-group').hide();
+					$('#orgModal').modal('show');
+				});
+			}
+
+			function fillCollector(collId) {
+				$('#collOrgId').val(__orgId);
+				$('#orgId').val(__orgId = orgId);
+				resetForm($('#collectorForm').attr('action', 'updateOrgCollector.do').data('update', true));
+				$.get('queryCollectorById.do', {
+					'id': collId
+				}, function(data) {
+					/*optional stuff to do after success */
+					fillInfo(data.orgCollectorVo, '#collectorForm');
+				});
+				$('#collectorModal').modal('show');
+			}
+
+
+			function fillProof(proofId) {
+				resetForm($('#proofForm').attr('action', 'updateCredential.do'));
+				$.get('queryCredentialById.do', {
+					'credentialId': proofId
+				}, function(data) {
+					/*optional stuff to do after success */
+					fillInfo(data.credentialVo, '#proofForm', {
+						accessProtocol: function (elem, data) {
+							$(elem).val(data).change();
+						}
+					});
+				});
+				$('#proofModal').modal('show');
+			}
+
+			function fillIP(ipId) {
+				resetForm($('#ipForm').attr('action', 'updateRange.do'));
+				$.get('queryRangeById.do', {
+					'rangeId': ipId
+				}, function(data) {
+					/*optional stuff to do after success */
+					fillInfo(data.rangeVo, '#ipForm', {
+						credentials: function (elem, data) {
+							var _list = data.split(',');
+							$('option', elem).removeAttr('selected');
+							for (var i = 0; i < _list.length; i++) {
+								$('option[value="'+_list[i]+'"]', elem).attr('selected', 'selected');
+							};
+							$(elem).trigger('chosen:updated');
+						}
+					});
+				});
+				$('#ipModal').modal('show');
+			}
+
+			function fillDetect(detectId) {
+				resetForm($('#detectForm').attr('action', 'updateSearch.do'));
+				$.get('querySearchById.do', {
+					'id': detectId
+				}, function(data) {
+					/*optional stuff to do after success */
+					fillInfo(data.svo, '#detectForm');
+				});
+				$('#detectModal').modal('show');
+			}
+
+			/*del functiona*/
+			function delOrg(orgId) {
+				if(!confirm('删除操作不可逆，您确定要删除吗')) {
+					return;
+				}
+				showAlert(true, '删除中...', 'info', true);
+				$.get('deleteOrg.do', {
+					'orgId': orgId
+				}, function(data) {
+					if (data === "operateSuccess") {
+						showAlert(true, '删除成功！', 'success', false, 500, function() {
+							LoadAjaxContent(window.location.hash.substring(1), true);
+						});
+					}
+				});
+			}
+			function delCollector(collId) {
+				if(!confirm('删除操作不可逆，您确定要删除吗')) {
+					return;
+				}
+				showAlert(true, '删除中...', 'info', true);
+				$.get('deleteOrgCollector.do', {
+					'id': collId
+				}, function(data) {
+					if (data === "operateSuccess") {
+						showAlert(true, '删除成功！', 'success', false, 500, function() {
+							delCollRow(collId);
+						});
+					}
+				});
+			}
+			function delProof(proofId) {
+				if(!confirm('删除操作不可逆，您确定要删除吗')) {
+					return;
+				}
+				showAlert(true, '删除中...', 'info', true);
+				$.get('deleteCredential.do', {
+					'credentialId': proofId
+				}, function(data) {
+					if (data === "operateSuccess") {
+						showAlert(true, '删除成功！', 'success', false, 500, function() {
+							LoadAjaxContent(window.location.hash.substring(1), true);
+						});
+					}
+				});
+			}
+
+			function delRange(ipId) {
+				if(!confirm('删除操作不可逆，您确定要删除吗')) {
+					return;
+				}
+				showAlert(true, '删除中...', 'info', true);
+				$.get('deleteRange.do', {
+					'id': ipId
+				}, function(data) {
+					if (data === "operateSuccess") {
+						showAlert(true, '删除成功！', 'success', false, 500, function() {
+							LoadAjaxContent(window.location.hash.substring(1), true);
+						});
+					}
+				});
+			}
+
+			function delDetect(detectId) {
+				if(!confirm('删除操作不可逆，您确定要删除吗')) {
+					return;
+				}
+				showAlert(true, '删除中...', 'info', true);
+				$.get('deleteSearch.do', {
+					'id': detectId
+				}, function(data) {
+					if (data === "operateSuccess") {
+						showAlert(true, '删除成功！', 'success', false, 500, function() {
+							LoadAjaxContent(window.location.hash.substring(1), true);
+						});
+					}
+				});
+			}
+
+
+			/*functions*/
+			function resetForm(placeholder) {
+				$(placeholder).data('bootstrapValidator').resetForm(true).$form[0].reset();
+				$('textarea', placeholder).text('');
+				$(':checked', placeholder).click();
+				$('#ipProofSel').children('option').removeAttr('selected').end().trigger('chosen:updated');
+				$('#connProtoco').change();
+				return $(placeholder);
+			}
+			function addCollRow(collObj) {
+				$('<tr data-id="'+collObj.id+'"><td class="name">'+collObj.collectorName+'</td><td class="eps">'+collObj.eps+'</td></tr>').prependTo('#collectorTable tbody');
+			}
+			function modCollRow(collObj) {
+				$('#collectorTable tbody tr[data-id='+collObj.id+']').find('.name').html(collObj.collectorName).end().find('.eps').html(collObj.eps);
+			}
+			function delCollRow(collId) {
+				$('#collectorTable tbody tr[data-id="'+collId+'"]').remove();
+			}
+
+			function getDeviceTypes() {
+				buildDeviceTypeSel(getPropertyTypes());
+				function buildDeviceTypeSel(deviceTypeList) {
+					var $typeSel = $('#deviceType').children('option').remove().end();
+					for (var i = 0; i < deviceTypeList.length; i++) {
+						var _type = deviceTypeList[i];
+						$('<option value="'+ _type +'">').text(_type).appendTo($typeSel);
+					}
+					$typeSel.chosen({
+						disable_search_threshold: 10,
+						search_contains: true,
+						width: "300px",
+						no_results_text: "没有对应结果!"
+					})
+				}
+			}
+
+			function formValidate() {
+				$('#orgForm').bootstrapValidator({
+					feedbackIcons: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						'orgName': {
+							validators: {
+								stringLength: {
+									max: 40
+								}
+							}
+						},
+						'adminName': {
+							validators: {
+								stringLength: {
+									min: 5,
+									max: 40
+								},
+								regexp: {
+									regexp: /^[a-zA-Z0-9_]+$/i,
+									message: '用户名只能由大小写英文字母、数字及下划线组成'
+								}
+							}
+						},
+						'cfmpwd': {
+							selector: '#ORG_cfmpwd',
+							validators: {
+								notEmpty: {},
+								callback: {
+									message: '两次密码输入须一致',
+									callback: function(value, validator) {
+										return value == $('#ORG_password').val();
+									}
+								}
+							}
+						},
+						'phone': {
+							validators: {
+								regexp: {
+									regexp: /^(1[3|4|5|8][0-9]\d{8})|(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/,
+									message: '电话应为手机号或[区号-]座机号'
+								}
+							}
+						}
+					}
+				}).on('success.form.bv', function(e) {
+					e.preventDefault();
+					submitWorks.call(this, function() {
+						$('#orgModal').modal('hide');
 						LoadAjaxContent(window.location.hash.substring(1), true);
 					});
-				}
-			});
-		}
-		function delCollector(collId) {
-			if(!confirm('删除操作不可逆，您确定要删除吗')) {
-				return;
-			}
-			showAlert(true, '删除中...', 'info', true);
-			$.get('deleteOrgCollector.do', {
-				'id': collId
-			}, function(data) {
-				if (data === "operateSuccess") {
-					showAlert(true, '删除成功！', 'success', false, 500, function() {
-						delCollRow(collId);
-					});
-				}
-			});
-		}
-		function delProof(proofId) {
-			if(!confirm('删除操作不可逆，您确定要删除吗')) {
-				return;
-			}
-			showAlert(true, '删除中...', 'info', true);
-			$.get('deleteCredential.do', {
-				'credentialId': proofId
-			}, function(data) {
-				if (data === "operateSuccess") {
-					showAlert(true, '删除成功！', 'success', false, 500, function() {
+				});
+
+				$('#collectorForm').bootstrapValidator({
+					feedbackIcons: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {}
+				}).on('success.form.bv', function(e) {
+					e.preventDefault();
+					var $form = $(this);
+					submitWorks.call(this, function(data) {
+						if ($form.data('update')) {
+							$form.data('update', false);
+							modCollRow(data['collectorVo']);
+						} else {
+							addCollRow(data['collectorVo']);
+						}
+						resetForm($form);
+						$('#collectorModal').modal('hide');
+					})
+				});
+
+				$('#proofForm').bootstrapValidator({
+					feedbackIcons: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						'cfmpwd': {
+							selector: '#cfmpwd',
+							validators: {
+								notEmpty: {},
+								callback: {
+									message: '两次密码输入须一致',
+									callback: function(value, validator) {
+										return value == $('#password').val();
+									}
+								}
+							}
+						},
+						'cfmCommuStr': {
+							selector: '#cfmCommuStr',
+							validators: {
+								notEmpty: {},
+								callback: {
+									message: '两次密码输入须一致',
+									callback: function(value, validator) {
+										return value == $('#commuStr').val();
+									}
+								}
+							}
+						},
+						'cfmCfmPassword': {
+							selector: '#cfmCfmPassword',
+							validators: {
+								notEmpty: {},
+								callback: {
+									message: '两次密码输入须一致',
+									callback: function(value, validator) {
+										return value == $('#cfmPassword').val();
+									}
+								}
+							}
+						},
+						'cfmPrivPassword': {
+							selector: '#cfmPrivPassword',
+							validators: {
+								notEmpty: {},
+								callback: {
+									message: '两次密码输入须一致',
+									callback: function(value, validator) {
+										return value == $('#privacyPwd').val();
+									}
+								}
+							}
+						}
+					}
+				}).on('success.form.bv', function(e) {
+					e.preventDefault();
+					submitWorks.call(this, function() {
+						$('#proofModal').modal('hide');
 						LoadAjaxContent(window.location.hash.substring(1), true);
 					});
-				}
-			});
-		}
+				});
 
-		function delRange(ipId) {
-			if(!confirm('删除操作不可逆，您确定要删除吗')) {
-				return;
-			}
-			showAlert(true, '删除中...', 'info', true);
-			$.get('deleteRange.do', {
-				'id': ipId
-			}, function(data) {
-				if (data === "operateSuccess") {
-					showAlert(true, '删除成功！', 'success', false, 500, function() {
+				$('#ipForm').bootstrapValidator({
+					feedbackIcons: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						ipRange: {
+							validators: {
+								noEmpty: {},
+								regexp: {
+									regexp: /^((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))(-((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))))?$/,
+									message: 'IP/IP段格式不正确，应为ip[-ip]'
+								},
+								callback: {
+									message: 'IP段左侧应小于右侧',
+									callback: function(value, validator) {
+										return compareIP(value) < 0;
+									}
+								}
+							}
+						}
+					}
+				}).on('success.form.bv', function(e) {
+					e.preventDefault();
+					submitWorks.call(this, function() {
+						$('#ipModal').modal('hide');
 						LoadAjaxContent(window.location.hash.substring(1), true);
 					});
-				}
-			});
-		}
-
-		function delDetect(detectId) {
-			if(!confirm('删除操作不可逆，您确定要删除吗')) {
-				return;
-			}
-			showAlert(true, '删除中...', 'info', true);
-			$.get('deleteSearch.do', {
-				'id': detectId
-			}, function(data) {
-				if (data === "operateSuccess") {
-					showAlert(true, '删除成功！', 'success', false, 500, function() {
-						LoadAjaxContent(window.location.hash.substring(1), true);
-					});
-				}
-			});
-		}
-
-
-		/*functions*/
-		function resetForm(placeholder) {
-			$(placeholder).data('bootstrapValidator').resetForm(true).$form[0].reset();
-			$('textarea', placeholder).text('');
-			$(':checked', placeholder).click();
-			$('#ipProofSel').children('option').removeAttr('selected').end().trigger('chosen:updated');
-			$('#connProtoco').change();
-			return $(placeholder);
-		}
-		function addCollRow(collObj) {
-			$('<tr data-id="'+collObj.id+'"><td class="name">'+collObj.collectorName+'</td><td class="eps">'+collObj.eps+'</td></tr>').prependTo('#collectorTable tbody');
-		}
-		function modCollRow(collObj) {
-			$('#collectorTable tbody tr[data-id='+collObj.id+']').find('.name').html(collObj.collectorName).end().find('.eps').html(collObj.eps);
-		}
-		function delCollRow(collId) {
-			$('#collectorTable tbody tr[data-id="'+collId+'"]').remove();
-		}
-
-		function getDeviceTypes() {
-			buildDeviceTypeSel(getPropertyTypes());
-			function buildDeviceTypeSel(deviceTypeList) {
-				var $typeSel = $('#deviceType').children('option').remove().end();
-				for (var i = 0; i < deviceTypeList.length; i++) {
-					var _type = deviceTypeList[i];
-					$('<option value="'+ _type +'">').text(_type).appendTo($typeSel);
-				}
-				$typeSel.chosen({
-					disable_search_threshold: 10,
-					search_contains: true,
-					width: "300px",
-					no_results_text: "没有对应结果!"
-				})
-			}
-		}
-
-		function formValidate() {
-			$('#orgForm').bootstrapValidator({
-				feedbackIcons: {
-					valid: 'glyphicon glyphicon-ok',
-					invalid: 'glyphicon glyphicon-remove',
-					validating: 'glyphicon glyphicon-refresh'
-				},
-				fields: {
-					'orgName': {
-						validators: {
-							stringLength: {
-								max: 40
-							}
-						}
-					},
-					'adminName': {
-						validators: {
-							stringLength: {
-								min: 5,
-								max: 40
-							},
-							regexp: {
-								regexp: /^[a-zA-Z0-9_]+$/i,
-								message: '用户名只能由大小写英文字母、数字及下划线组成'
-							}
-						}
-					},
-					'cfmpwd': {
-						selector: '#ORG_cfmpwd',
-						validators: {
-							notEmpty: {},
-							callback: {
-								message: '两次密码输入须一致',
-								callback: function(value, validator) {
-									return value == $('#ORG_password').val();
-								}
-							}
-						}
-					},
-					'phone': {
-						validators: {
-							regexp: {
-								regexp: /^(1[3|4|5|8][0-9]\d{8})|(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/,
-								message: '电话应为手机号或[区号-]座机号'
-							}
-						}
-					}
-				}
-			}).on('success.form.bv', function(e) {
-				e.preventDefault();
-				submitWorks.call(this, function() {
-					$('#orgModal').modal('hide');
-					LoadAjaxContent(window.location.hash.substring(1), true);
 				});
-			});
 
-			$('#collectorForm').bootstrapValidator({
-				feedbackIcons: {
-					valid: 'glyphicon glyphicon-ok',
-					invalid: 'glyphicon glyphicon-remove',
-					validating: 'glyphicon glyphicon-refresh'
-				},
-				fields: {}
-			}).on('success.form.bv', function(e) {
-				e.preventDefault();
-				var $form = $(this);
-				submitWorks.call(this, function(data) {
-					if ($form.data('update')) {
-						$form.data('update', false);
-						modCollRow(data['collectorVo']);
-					} else {
-						addCollRow(data['collectorVo']);
-					}
-					resetForm($form);
-					$('#collectorModal').modal('hide');
-				})
-			});
-
-			$('#proofForm').bootstrapValidator({
-				feedbackIcons: {
-					valid: 'glyphicon glyphicon-ok',
-					invalid: 'glyphicon glyphicon-remove',
-					validating: 'glyphicon glyphicon-refresh'
-				},
-				fields: {
-					'cfmpwd': {
-						selector: '#cfmpwd',
-						validators: {
-							notEmpty: {},
-							callback: {
-								message: '两次密码输入须一致',
-								callback: function(value, validator) {
-									return value == $('#password').val();
-								}
-							}
-						}
+				$('#detectForm').bootstrapValidator({
+					feedbackIcons: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
 					},
-					'cfmCommuStr': {
-						selector: '#cfmCommuStr',
-						validators: {
-							notEmpty: {},
-							callback: {
-								message: '两次密码输入须一致',
-								callback: function(value, validator) {
-									return value == $('#commuStr').val();
-								}
-							}
-						}
-					},
-					'cfmCfmPassword': {
-						selector: '#cfmCfmPassword',
-						validators: {
-							notEmpty: {},
-							callback: {
-								message: '两次密码输入须一致',
-								callback: function(value, validator) {
-									return value == $('#cfmPassword').val();
-								}
-							}
-						}
-					},
-					'cfmPrivPassword': {
-						selector: '#cfmPrivPassword',
-						validators: {
-							notEmpty: {},
-							callback: {
-								message: '两次密码输入须一致',
-								callback: function(value, validator) {
-									return value == $('#privacyPwd').val();
-								}
-							}
-						}
-					}
-				}
-			}).on('success.form.bv', function(e) {
-				e.preventDefault();
-				submitWorks.call(this, function() {
-					$('#proofModal').modal('hide');
-					LoadAjaxContent(window.location.hash.substring(1), true);
-				});
-			});
-
-			$('#ipForm').bootstrapValidator({
-				feedbackIcons: {
-					valid: 'glyphicon glyphicon-ok',
-					invalid: 'glyphicon glyphicon-remove',
-					validating: 'glyphicon glyphicon-refresh'
-				},
-				fields: {
-					ipRange: {
-						validators: {
-							noEmpty: {},
-							regexp: {
-								regexp: /^((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))(-((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))))?$/,
-								message: 'IP/IP段格式不正确，应为ip[-ip]'
-							},
-							callback: {
-								message: 'IP段左侧应小于右侧',
-								callback: function(value, validator) {
-									return compareIP(value) < 0;
-								}
-							}
-						}
-					}
-				}
-			}).on('success.form.bv', function(e) {
-				e.preventDefault();
-				submitWorks.call(this, function() {
-					$('#ipModal').modal('hide');
-					LoadAjaxContent(window.location.hash.substring(1), true);
-				});
-			});
-
-			$('#detectForm').bootstrapValidator({
-				feedbackIcons: {
-					valid: 'glyphicon glyphicon-ok',
-					invalid: 'glyphicon glyphicon-remove',
-					validating: 'glyphicon glyphicon-refresh'
-				},
-				fields: {
-					includeRange: {
-						validators: {
-							regexp: {
-								regexp: /^((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))(-((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))))?$/,
-								message: 'IP/IP段格式不正确，应为ip[-ip]'
+					fields: {
+						includeRange: {
+							validators: {
+								regexp: {
+									regexp: /^((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))(-((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))))?$/,
+									message: 'IP/IP段格式不正确，应为ip[-ip]'
 							}/*,
 							callback: {
 								message: 'IP段左侧应小于右侧',

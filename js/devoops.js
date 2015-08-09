@@ -95,15 +95,15 @@ function LoadTerminalScripts(callback) {
 function LoadBootstrapValidatorScript(callback) {
 	if (!$.fn.bootstrapValidator) {
 		//$.getScript('http://cdn.bootcss.com/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js', function() {
-			$.getScript('plugins/bootstrapvalidator/bootstrapValidator.min.js', function() {
-				$.getScript('plugins/bootstrapvalidator/language/zh_CN.js', callback);
-			});		
-		} else {
-			if (callback && typeof(callback) === "function") {
-				callback();
-			}
+		$.getScript('plugins/bootstrapvalidator/bootstrapValidator.min.js', function() {
+			$.getScript('plugins/bootstrapvalidator/language/zh_CN.js', callback);
+		});
+	} else {
+		if (callback && typeof(callback) === "function") {
+			callback();
 		}
 	}
+}
 
 //
 //  Dynamically load jQuery Select2 plugin
@@ -138,18 +138,18 @@ function LoadDataTablesScripts(callback) {
 		}
 	}*/
 
-	function LoadByoneTableScripts(callback, option) {
-		function LoadByoneTable() {
-			$.getScript('plugins/byoneTable/jquery.byoneTable.js', function() {
-				if (callback && typeof(callback) === "function") callback(option);
-			});
-		}
-		if (!$.fn.byoneTable) {
-			LoadByoneTable();
-		} else if (callback && typeof(callback) === "function") {
-			callback(option);
-		}
+function LoadByoneTableScripts(callback, option) {
+	function LoadByoneTable() {
+		$.getScript('plugins/byoneTable/jquery.byoneTable.js', function() {
+			if (callback && typeof(callback) === "function") callback(option);
+		});
 	}
+	if (!$.fn.byoneTable) {
+		LoadByoneTable();
+	} else if (callback && typeof(callback) === "function") {
+		callback(option);
+	}
+}
 
 
 //
@@ -324,16 +324,16 @@ function drawTopology(placeholder, contextMenu) {
 			//加载节点(Nodes)
 			var nodes = scenceCfg.nodes,
 				nodesContainer = {}; //所有节点的容器
-				for (var i = 0, nodeCfg = nodes[0]; i < nodes.length; nodeCfg = nodes[++i]) {
-					var node = new JTopo.Node;
-					node.fontColor = scenceCfg.nodeFontColor || scenceCfg.fontColor || '67, 110, 144';
-					node.setLocation(stage.width * Math.random(), stage.height * Math.random());
-					for (var e in nodeCfg) {
-						switch (e) {
-							case 'type':
+			for (var i = 0, nodeCfg = nodes[0]; i < nodes.length; nodeCfg = nodes[++i]) {
+				var node = new JTopo.Node;
+				node.fontColor = scenceCfg.nodeFontColor || scenceCfg.fontColor || '67, 110, 144';
+				node.setLocation(stage.width * Math.random(), stage.height * Math.random());
+				for (var e in nodeCfg) {
+					switch (e) {
+						case 'type':
 							node.setImage('./img/topoNodes/' + nodeCfg[e] + '.png');
 							break;
-							case 'alarm':
+						case 'alarm':
 							if (nodeCfg[e] == '0')
 								break;
 							node.alarmColor = "203, 88, 69"; //默认"255,0,0"
@@ -342,32 +342,32 @@ function drawTopology(placeholder, contextMenu) {
 							/**
 							 * 告警信息的字体颜色与节点一致
 							 */
-							 break;
-							 case 'x':
-							 case 'y':
-							 node[e] = parseFloat(nodeCfg[e]);
-							 break;
-							 default:
-							 node[e] = nodeCfg[e];
-							}
-						}
-						if (!(node.x && node.y)) {
-							node.setLocation(scene.width * Math.random(), scene.height * Math.random());
-						}
-						nodesContainer[node.id] = node;
+							break;
+						case 'x':
+						case 'y':
+							node[e] = parseFloat(nodeCfg[e]);
+							break;
+						default:
+							node[e] = nodeCfg[e];
+					}
+				}
+				if (!(node.x && node.y)) {
+					node.setLocation(scene.width * Math.random(), scene.height * Math.random());
+				}
+				nodesContainer[node.id] = node;
 
-						node.mouseup(function(event) {
-							var $targetMenu = $(contextMenu);
-							if (event.button == '2') {
-								$targetMenu.addClass('open').css({
-									top: event.pageY,
-									left: event.pageX
-								}).html($targetMenu[0].originHtml.replace(/\{1\}/g, this.id).replace(/\{2\}/g, this.ip));
-							}
+				node.mouseup(function(event) {
+					var $targetMenu = $(contextMenu);
+					if (event.button == '2') {
+						$targetMenu.addClass('open').css({
+							top: event.pageY,
+							left: event.pageX
+						}).html($targetMenu[0].originHtml.replace(/\{1\}/g, this.id).replace(/\{2\}/g, this.ip));
+					}
 					//showNodeInfo(this.id);
 				});
-						scene.add(node);
-					}
+				scene.add(node);
+			}
 			//加载连接(Links)
 			var links = scenceCfg.links;
 			for (var i = 0, linkCfg = links[0]; i < links.length; linkCfg = links[++i]) {
@@ -527,7 +527,7 @@ function drawTopology(placeholder, contextMenu) {
 				 * text: 节点名
 				 * [y]: 纵坐标
 				 */
-				 nodes: data.nodes,
+				nodes: data.nodes,
 				/**
 				 * [连线配置]
 				 * @type {Array}
@@ -537,8 +537,8 @@ function drawTopology(placeholder, contextMenu) {
 				 * nodeA: 起点名
 				 * nodeZ: 终点名
 				 */
-				 links: data.links
-				}]
+				links: data.links
+			}]
 		}, $canvas[0]); // 创建一个舞台对象
 		stage.wheelZoom = 1.15; // 设置鼠标缩放比例
 	});
@@ -552,13 +552,13 @@ function drawTopology(placeholder, contextMenu) {
 	// 页面工具栏
 	function showJTopoToobar(placeholder, stage) {
 		var toobarDiv = $('<div class="jtopo_toolbar">').html(
-			' <input type="button" id="fullScreenButton" value="全屏显示"/>' +
+			' <input type="button" class="btn btn-primary" id="fullScreenButton" value="全屏显示"/>' +
 			/*' <input type="checkbox" id="zoomCheckbox"> 鼠标缩放' +*/
 			' <input type="text" id="findText" value="">' +
-			' <input type="button" id="findButton" value=" 查 询 ">' +
-			' <input type="button" id="topoToJson" value=" 保 存 ">' +
-			' <input type="button" id="exportButton" value="导出PNG">' +
-			' <input type="button" id="redoLayout" value="自动布局">');
+			' <input type="button" class="btn btn-default" id="findButton" value=" 查 询 ">' +
+			' <input type="button" class="btn btn-default" id="topoToJson" value=" 保 存 ">' +
+			' <input type="button" class="btn btn-default" id="exportButton" value="导出PNG">' +
+			' <input type="button" class="btn btn-default" id="redoLayout" value="自动布局">');
 		$(placeholder).prepend(toobarDiv);
 
 		// 工具栏按钮处理
@@ -610,11 +610,11 @@ function drawTopology(placeholder, contextMenu) {
 				stage.wheelZoom = null; // 取消鼠标缩放比例
 			}
 		});*/
-$('#fullScreenButton').click(function() {
-	runPrefixMethod(stage.canvas, "RequestFullScreen")
-});
+		$('#fullScreenButton').click(function() {
+			runPrefixMethod(stage.canvas, "RequestFullScreen")
+		});
 
-$("#findText").keyup(searchNode);
+		$("#findText").keyup(searchNode);
 		// 查询
 		$('#findButton').click(searchNode);
 
@@ -656,28 +656,28 @@ $("#findText").keyup(searchNode);
  * dashboard页面公用工作
  * @return {[type]} [description]
  */
- function dashboardWorks() {
- 	$('.charts-header').click(function(event) {
- 		/* Act on the event */
- 		$(this).next('.charts-body').toggle();
- 	});
+function dashboardWorks() {
+	$('.charts-header').click(function(event) {
+		/* Act on the event */
+		$(this).next('.charts-body').toggle();
+	});
 
- 	$('.add-chart-btn, .chart-catagory').click(function(event) {
- 		/* Act on the event */
- 		event.preventDefault();
- 		event.stopPropagation();
- 		return false;
- 	});
- }
+	$('.add-chart-btn, .chart-catagory').click(function(event) {
+		/* Act on the event */
+		event.preventDefault();
+		event.stopPropagation();
+		return false;
+	});
+}
 
 /**
  * 接收一级目录下的图表
  * @param  {String} topCategory [asset | network | cloud]
  * @return {[type]}             [description]
  */
- function receiveCharts(topCategory) {
- 	showAlert(true, "获取图表数据...", 'info', true);
- 	var $template = $('<div class="col-xs-12 col-sm-6">\
+function receiveCharts(topCategory) {
+	showAlert(true, "获取图表数据...", 'info', true);
+	var $template = $('<div class="col-xs-12 col-sm-6">\
  		<div class="box">\
  		<div class="box-header">\
  		<div class="box-name">\
@@ -766,86 +766,86 @@ $("#findText").keyup(searchNode);
  		</div>\
  		</div>');
 
-/*获取图表结构*/
-$.get('queryChart.do', {
-	topCategory: topCategory,
-	fingerprint: new Date().getTime()
-}, function(data) {
-	/*optional stuff to do after success */
-	showAlert(false);
-	for (var i = 0; i < data.length; ++i) {
-		addChart(data[i]);
-	}
-});
-
-
-/*绑定图表添加事件*/
-$('.add-chart-btn').click(function(event) {
-	/* Act on the event */
-	event.preventDefault();
-	var $lowCategory = $(this).closest('.low-category');
-	var _chartCategory = $lowCategory.find('.chart-catagory').val();
-	if (!_chartCategory) {
-		showAlert(true, "请选择一种图表！", 'danger', false, 2000);
-		return false;
-	}
-	showAlert(true, "添加图表中...", 'info', true);
-	$.get('addChart.do', {
-		chartCategory: _chartCategory,
-		lowCategory: $lowCategory[0].id,
-		topCategory: topCategory
+	/*获取图表结构*/
+	$.get('queryChart.do', {
+		topCategory: topCategory,
+		fingerprint: new Date().getTime()
 	}, function(data) {
-		if (data === "error") {
-			showAlert(true, "添加失败，请重试或联系管理员。", 'danger', false, 5000);
-			return;
+		/*optional stuff to do after success */
+		showAlert(false);
+		for (var i = 0; i < data.length; ++i) {
+			addChart(data[i]);
 		}
-		showAlert(true, "添加成功。", 'success', false, 2000);
-		addChart(data);
 	});
 
-});
+
+	/*绑定图表添加事件*/
+	$('.add-chart-btn').click(function(event) {
+		/* Act on the event */
+		event.preventDefault();
+		var $lowCategory = $(this).closest('.low-category');
+		var _chartCategory = $lowCategory.find('.chart-catagory').val();
+		if (!_chartCategory) {
+			showAlert(true, "请选择一种图表！", 'danger', false, 2000);
+			return false;
+		}
+		showAlert(true, "添加图表中...", 'info', true);
+		$.get('addChart.do', {
+			chartCategory: _chartCategory,
+			lowCategory: $lowCategory[0].id,
+			topCategory: topCategory
+		}, function(data) {
+			if (data === "error") {
+				showAlert(true, "添加失败，请重试或联系管理员。", 'danger', false, 5000);
+				return;
+			}
+			showAlert(true, "添加成功。", 'success', false, 2000);
+			addChart(data);
+		});
+
+	});
 
 
-function dismissConfig(event) {
-	$(this).closest('.box').find('.config-link').trigger('click');
-}
+	function dismissConfig(event) {
+		$(this).closest('.box').find('.config-link').trigger('click');
+	}
 
 	/**
 	 * 根据配置信息新建或者修改图表
 	 * @param {Object} chartCfg  图表配置信息
 	 * @param {String | jQuery Object} [targetBox] 更新图表信息时的容器
 	 */
-	 function addChart(chartCfg, targetBox) {
-	 	var _chartCfg = chartCfg;
-	 	var $newBox = targetBox ? $(targetBox) : $template.clone(true, true).appendTo('#' + _chartCfg.lowCategory + ' .charts-body');
-	 	$('.chart-title', $newBox).text(_chartCfg.chineseName);
+	function addChart(chartCfg, targetBox) {
+		var _chartCfg = chartCfg;
+		var $newBox = targetBox ? $(targetBox) : $template.clone(true, true).appendTo('#' + _chartCfg.lowCategory + ' .charts-body');
+		$('.chart-title', $newBox).text(_chartCfg.chineseName);
 
-	 	/*设置定时刷新*/
-	 	var queryInterval = setInterval(queryChart(_chartCfg, $newBox), _chartCfg.refreshTime)
+		/*设置定时刷新*/
+		var queryInterval = setInterval(queryChart(_chartCfg, $newBox), _chartCfg.refreshTime)
 
-	 	/*填充配置form信息*/
-	 	var $form = $('.config-panel form', $newBox);
-	 	var $refresh = $('select[name="refresh"]', $form),
-	 	$type = $('select[name="type"]', $form),
-	 	$itemCount = $('select[name="itemCount"]', $form),
-	 	$timeVal = $('select[name="timeVal"]', $form);
-	 	/*重置可选类型下拉框的条目*/
-	 	var $options = $('option', $type);
-	 	for (var j = 0; j < $options.length; ++j) {
-	 		var _option = $($options[j]);
-	 		if (_chartCfg.allStyle.indexOf(_option.val()) < 0) {
-	 			_option.remove();
-	 		}
-	 	}
-	 	$type.val(_chartCfg['style']);
-	 	$refresh.val(_chartCfg.refreshTime);
-	 	$itemCount.val(_chartCfg.itemCount);
-	 	$timeVal.val(_chartCfg.timeVal);
+		/*填充配置form信息*/
+		var $form = $('.config-panel form', $newBox);
+		var $refresh = $('select[name="refresh"]', $form),
+			$type = $('select[name="type"]', $form),
+			$itemCount = $('select[name="itemCount"]', $form),
+			$timeVal = $('select[name="timeVal"]', $form);
+		/*重置可选类型下拉框的条目*/
+		var $options = $('option', $type);
+		for (var j = 0; j < $options.length; ++j) {
+			var _option = $($options[j]);
+			if (_chartCfg.allStyle.indexOf(_option.val()) < 0) {
+				_option.remove();
+			}
+		}
+		$type.val(_chartCfg['style']);
+		$refresh.val(_chartCfg.refreshTime);
+		$itemCount.val(_chartCfg.itemCount);
+		$timeVal.val(_chartCfg.timeVal);
 
-	 	/*绑定newBox中元素的事件*/
-	 	/*删除图表事件*/
-	 	$newBox.bind('removed', function() {
-	 		showAlert(true, "删除中...", 'info', true);
+		/*绑定newBox中元素的事件*/
+		/*删除图表事件*/
+		$newBox.bind('removed', function() {
+			showAlert(true, "删除中...", 'info', true);
 
 			//console.log($newBox);
 			$.get('deleteChartBase.do', {
@@ -860,10 +860,10 @@ function dismissConfig(event) {
 			});
 		})
 
-	 	/*更改配置事件*/
-	 	$form.unbind('submit').bind('submit', function(event) {
-	 		/* Act on the event */
-	 		event.preventDefault();
+		/*更改配置事件*/
+		$form.unbind('submit').bind('submit', function(event) {
+			/* Act on the event */
+			event.preventDefault();
 			var $submitBtn = $(':submit', this).attr('disabled', 'disabled'); //禁用提交按钮
 			showAlert(true, "更改图表配置中...", 'info', true);
 
@@ -888,11 +888,11 @@ function dismissConfig(event) {
 				addChart(data, $newBox);
 			});
 		});
-	 	$('.dismiss-config').unbind('click.config').bind('click.config', dismissConfig);
-	 }
-
-
+		$('.dismiss-config').unbind('click.config').bind('click.config', dismissConfig);
 	}
+
+
+}
 
 /**
  * 获取图表数据
@@ -900,13 +900,13 @@ function dismissConfig(event) {
  * @param  {[type]} placeholder [description]
  * @return {[type]}             [description]
  */
- function queryChart(chartCfg, placeholder) {
- 	$.get('receiveData.do', chartCfg, function(data) {
- 		/*optional stuff to do after success */
- 		drawCharts(data, $('.charts', placeholder));
- 		$('.loading', placeholder).hide();
- 	});
- }
+function queryChart(chartCfg, placeholder) {
+	$.get('receiveData.do', chartCfg, function(data) {
+		/*optional stuff to do after success */
+		drawCharts(data, $('.charts', placeholder));
+		$('.loading', placeholder).hide();
+	});
+}
 
 /**
 	 * highcharts绘制函数
@@ -927,7 +927,7 @@ function dismissConfig(event) {
 	 * @param  {String | JQuery Object} placeholder 图表容器
 	 * @return {Object}        highcharts对象
 	 */
-	 function drawCharts(option, placeholder) {
+function drawCharts(option, placeholder) {
 	//console.log(option);
 	var _option = {
 		title: {
@@ -962,10 +962,10 @@ function dismissConfig(event) {
             backgroundColor: '#FFFFFF',                                    
             shadow: true                                                   
         }, */
-        series: __chartFuncs.formatNumber(option.series, option.type === 'line')
-    };
-    if (_option.series && _option.series[0] && _option.series[0].data.length > 5) {
-    	_option.xAxis.labels = {
+		series: __chartFuncs.formatNumber(option.series, option.type === 'line')
+	};
+	if (_option.series && _option.series[0] && _option.series[0].data.length > 5) {
+		_option.xAxis.labels = {
 			rotation: -40 //调节倾斜角度偏移
 		};
 	}
@@ -973,61 +973,62 @@ function dismissConfig(event) {
 		switch (option.type) {
 			case 'line':
 			case 'area':
-			lineWorks(_option);
-			break;
+				lineWorks(_option);
+				break;
 			case 'bar':
 			case 'column':
-			__chartFuncs.rebuildColData(_option);
-			break;
+				__chartFuncs.rebuildColData(_option);
+				break;
 			default:
-			break;
+				break;
 		}
 		_option.chart = {
 			type: option.type
 		};
 	} else { //type(default) = 'line'
-	_option.chart = {
-		type: 'line'
-	};
-	lineWorks(_option);
-}
+		_option.chart = {
+			type: 'line'
+		};
+		lineWorks(_option);
+	}
 
-return $(placeholder).highcharts(_option);
+	return $(placeholder).highcharts(_option);
+
 
 	/**
 	 * 线形图所需操作
 	 * @param  {Object} option
 	 * @return {[type]}        [description]
 	 */
-	 function lineWorks(option) {
-	 	_option.xAxis.type = 'datetime';
-	 	_option.plotOptions.line = {
-	 		marker: {
-	 			enabled: false
-	 		}
-	 	}
-	 }
+	function lineWorks(option) {
+		_option.xAxis.type = 'datetime';
+		_option.plotOptions.line = {
+			marker: {
+				enabled: false
+			}
+		}
 	}
+}
 
-	var __chartFuncs = {
+var __chartFuncs = {
 	/**
 	 * 重新装配柱状图(column, bar)的data数据
 	 * @param  {[type]} option [description]
 	 * @return {[type]}        [description]
 	 */
 
-	 rebuildColData: function(option) {
-	 	var _categories = [],
-	 	_series = [],
-	 	_datas = option.series || null;
-	 	if (!_datas) {
-	 		return;
-	 	}
-	 	for (var i = 0; i < option.series.length; i++) {
-	 		var op_serie = option.series[i],
-	 		_vals = []
-	 		for (var j = 0; j < op_serie.data.length;) {
-	 			var _data = op_serie.data[j++];
+	rebuildColData: function(option) {
+		var _categories = [],
+			_series = [],
+			_datas = option.series || null;
+		if (!_datas) {
+			return;
+		}
+		for (var i = 0; i < option.series.length; i++) {
+			var op_serie = option.series[i],
+				_vals = []
+			for (var j = 0; j < op_serie.data.length;) {
+				var _data = op_serie.data[j++];
 				if (i == 0) { //柱状图的catagories只需要加载一次
 					_categories.push(_data[0]);
 				}
@@ -1047,20 +1048,20 @@ return $(placeholder).highcharts(_option);
 	 * @param  {[type]} series [description]
 	 * @return {[type]}        [description]
 	 */
-	 formatNumber: function(series, isLine) {
-	 	if (!series) {
-	 		return null;
-	 	}
-	 	for (var i = 0; i < series.length; i++) {
-	 		var datas = series[i].data;
-	 		for (var j = 0; j < datas.length; j++) {
-	 			isLine && (datas[j][0] -= 0);
-	 			datas[j][1] -= 0;
-	 		}
-	 	}
-	 	return series;
-	 }
+	formatNumber: function(series, isLine) {
+		if (!series) {
+			return null;
+		}
+		for (var i = 0; i < series.length; i++) {
+			var datas = series[i].data;
+			for (var j = 0; j < datas.length; j++) {
+				isLine && (datas[j][0] -= 0);
+				datas[j][1] -= 0;
+			}
+		}
+		return series;
 	}
+}
 
 
 //
@@ -1091,12 +1092,12 @@ function SparkLineDrawLineGraph(placeholder, arr, color) {
 }*/
 
 function SparkLineDrawPieGraph(placeholder, arr, sliceColors, height, color) { //['#af5e9c', '#f86b4f', '#00529c']
-$(placeholder).sparkline(arr, {
-	sliceColors: sliceColors || ['#CF110E', '#D59221', '#408C2D'],
-	type: 'pie',
-	offset: -90,
-	height: height || 25
-});
+	$(placeholder).sparkline(arr, {
+		sliceColors: sliceColors || ['#CF110E', '#D59221', '#408C2D'],
+		type: 'pie',
+		offset: -90,
+		height: height || 25
+	});
 }
 
 function showTooltip(tooltipId, x, y, color, contents) {
@@ -1114,8 +1115,8 @@ function showTooltip(tooltipId, x, y, color, contents) {
 	plot: plot对象
 	interval: 刷新时间间隔(毫秒)
 	*/
-	function intervalChart(plot, interval) {
-		plot.setData([dataFunc()]);
+function intervalChart(plot, interval) {
+	plot.setData([dataFunc()]);
 	plot.setupGrid(); //刷新坐标值
 	plot.draw();
 	setTimeout(function() {
@@ -1123,31 +1124,6 @@ function showTooltip(tooltipId, x, y, color, contents) {
 	}, interval);
 }
 
-
-
-/*$('#xchart-4').next(".name-tags").remove();
-
-	var myChart = new xChart('line', data, '#xchart-4', {
-		dataFormatX: function(x) {
-			return new Date(x);
-		},
-		tickFormatX: function(x) {
-			return d3.time.format('%H:%M')(x);
-		},
-		"mouseover": function(d, i) {
-			var pos = $(this).offset();
-			$(tt).html(d3.time.format('%Y-%m-%e %H:%M')(d.x) + ' - ' + '<strong>' + d.y + '</strong>')
-			.css({
-				top: topOffset + pos.top,
-				left: pos.left + leftOffset
-			})
-			.show();
-		},
-		"mouseout": function(x) {
-			$(tt).hide();
-		},
-		timing: 200
-	});*/
 
 
 //
@@ -1188,20 +1164,20 @@ function dataTable(placeholder, option) {
  * @param  {String | JQuery Object} placeholder     表格选择器
  * @param  {Array} data        数据
  */
- function loadTableData(placeholder, data) {
- 	var $tbody = $('tbody', placeholder);
- 	var $template = $('tr.template', $tbody);
- 	if ($template.length <= 0) {
- 		return;
- 	};
- 	$('tr', $tbody).not('.template').remove();
- 	for (var i = 0, _data = data[0]; i < data.length; _data = data[++i]) {
- 		var $newTr = $template.clone(true, true).removeClass('template').insertBefore($template);
- 		$('td', $newTr).each(function() {
- 			$(this).html(_data[$(this).attr('data-name')]);
- 		});
- 	};
- }
+function loadTableData(placeholder, data) {
+	var $tbody = $('tbody', placeholder);
+	var $template = $('tr.template', $tbody);
+	if ($template.length <= 0) {
+		return;
+	};
+	$('tr', $tbody).not('.template').remove();
+	for (var i = 0, _data = data[0]; i < data.length; _data = data[++i]) {
+		var $newTr = $template.clone(true, true).removeClass('template').insertBefore($template);
+		$('td', $newTr).each(function() {
+			$(this).html(_data[$(this).attr('data-name')]);
+		});
+	};
+}
 
 /**
  * 自动填充表单数据
@@ -1210,8 +1186,8 @@ function dataTable(placeholder, option) {
  * @param  {String} objName        对象名
  *
  */
- function loadFormData(placeholder, data, objName) {
- 	var _prefix = objName ? objName + '.' : '';
+function loadFormData(placeholder, data, objName) {
+	var _prefix = objName ? objName + '.' : '';
 	// 开始遍历    
 	for (var p in data) {
 		// 方法    
@@ -1235,33 +1211,33 @@ function dataTable(placeholder, option) {
  * @param  {number} hideDelay 自动隐藏时间
  * @param  {function} delayCallback 隐藏后执行的函数
  */
- function showAlert(show, text, type, loading, hideDelay, delayCallback) {
- 	var $alert = $('#pageAlert');
- 	if (!show) {
- 		$alert.removeClass('in');
- 		return;
- 	}
- 	text && ($('.content', $alert).html(text));
- 	var _class = $alert[0].className;
- 	$alert[0].className = _class.replace(/alert-\w*/, 'alert-' + type || 'info');
- 	$alert.addClass();
- 	if (loading) {
- 		$('.loading', $alert).show();
- 	} else {
- 		$('.loading', $alert).hide();
- 	}
- 	$alert.addClass('in');
+function showAlert(show, text, type, loading, hideDelay, delayCallback) {
+	var $alert = $('#pageAlert');
+	if (!show) {
+		$alert.removeClass('in');
+		return;
+	}
+	text && ($('.content', $alert).html(text));
+	var _class = $alert[0].className;
+	$alert[0].className = _class.replace(/alert-\w*/, 'alert-' + type || 'info');
+	$alert.addClass();
+	if (loading) {
+		$('.loading', $alert).show();
+	} else {
+		$('.loading', $alert).hide();
+	}
+	$alert.addClass('in');
 
- 	if (hideDelay > 0) {
- 		setTimeout(function() {
- 			$alert.removeClass('in');
+	if (hideDelay > 0) {
+		setTimeout(function() {
+			$alert.removeClass('in');
 			//$('#pageAlert').removeClass('in');
 			if (delayCallback || typeof delayCallback === 'function') {
 				delayCallback();
 			}
 		}, hideDelay);
- 	};
- }
+	};
+}
 
 
 
@@ -1270,32 +1246,32 @@ function dataTable(placeholder, option) {
  * @param  {String} name 元素的name
  * @return {String}      元素的value值
  */
- function getValByName(name) {
- 	var $item = $('[name = ' + name + ']');
- 	if ($item.is(':checkbox')) {
- 		var _result = [];
- 		$item.filter(':checked').each(function(index, el) {
- 			_result.push($(this).val());
- 		});
- 		return _result;
- 	}
- 	if ($item.is(':radio')) {
- 		return $item.filter(':checked').val();
- 	}
- 	return $('[name = ' + name + ']').val();
- }
+function getValByName(name) {
+	var $item = $('[name = ' + name + ']');
+	if ($item.is(':checkbox')) {
+		var _result = [];
+		$item.filter(':checked').each(function(index, el) {
+			_result.push($(this).val());
+		});
+		return _result;
+	}
+	if ($item.is(':radio')) {
+		return $item.filter(':checked').val();
+	}
+	return $('[name = ' + name + ']').val();
+}
 
 /*-------------------------------------------
 	Function for rule page (rule.html)
 	---------------------------------------------*/
 
-	function reportWorks() {
+function reportWorks() {
 
-		/*绝对时间，相对时间*/
-		$('.period').change(periodType).filter('[value = "0"]').click().change();
+	/*绝对时间，相对时间*/
+	$('.period').change(periodType).filter('[value = "0"]').click().change();
 
-		/*获取报表条目*/
-		var reportItemList;
+	/*获取报表条目*/
+	var reportItemList;
 	if (window.localStorage && (reportItemList = localStorage.getItem('reportItemList'))) { //本地缓存
 		//console.log(reportItemList);
 		buildReportItems(JSON.parse(reportItemList));
@@ -1315,8 +1291,8 @@ function dataTable(placeholder, option) {
 		var _groupList = {};
 		for (var i = 0; i < reportItemList.length; i++) {
 			var _groupItem = reportItemList[i],
-			_groupName = _groupItem.typeChineseName,
-			$groupContainer = _groupList[_groupName] || (_groupList[_groupName] = $('<li><label class="group"><input type="checkbox">' + _groupName + '</label><ul></ul></li>').appendTo($groupUl));
+				_groupName = _groupItem.typeChineseName,
+				$groupContainer = _groupList[_groupName] || (_groupList[_groupName] = $('<li><label class="group"><input type="checkbox">' + _groupName + '</label><ul></ul></li>').appendTo($groupUl));
 			var $newLabel = $('<li><label></label></li>').appendTo($('ul', $groupContainer)).children('label').attr('title', _groupItem.name).text(_groupItem.name);
 			//console.log($newLabel);
 			$('<input type="checkbox">').attr({
@@ -1408,21 +1384,21 @@ function dataTable(placeholder, option) {
 			e.preventDefault();
 			showAlert(true, "提交中...", 'info', true);
 			var _timeType = getValByName('timeType'), //1绝对 0相对
-			_unitVal = {
-				'min': 60000,
-				'hour': 3600000,
-				'day': 86400000
-			},
-			_result = {
-				id: getValByName('id'),
-				timeType: _timeType,
-				name: getValByName('name'),
-				format: getValByName('format'),
-				fingerprint: new Date().getTime()
-			},
-			_formType = $(this).data('type'),
-			$downBtn = $('#downloadBtn').hide(),
-			_rtList = [];
+				_unitVal = {
+					'min': 60000,
+					'hour': 3600000,
+					'day': 86400000
+				},
+				_result = {
+					id: getValByName('id'),
+					timeType: _timeType,
+					name: getValByName('name'),
+					format: getValByName('format'),
+					fingerprint: new Date().getTime()
+				},
+				_formType = $(this).data('type'),
+				$downBtn = $('#downloadBtn').hide(),
+				_rtList = [];
 
 			/*获取报表条目*/
 			$('[name = "reportVos"]:checked').each(function(index, el) {
@@ -1486,9 +1462,9 @@ function dataTable(placeholder, option) {
 				}
 			});
 		});
-})
+	})
 
-function checkTime(value, validator, $field) {
+	function checkTime(value, validator, $field) {
 		// ... Do your logic checking
 		if (!value && ($field.is('.relative-time') && '0' === getValByName('timeType') || $field.is('.absolute-time') && '1' === getValByName('timeType'))) {
 			return {
@@ -1512,19 +1488,19 @@ function checkTime(value, validator, $field) {
 		//console.log('change');
 		if ($(this).val() === '0') {
 			$(this).closest('form')
-			.find('.period-relative').removeClass('hide').show()
-			.siblings('.period-absolute').hide();
+				.find('.period-relative').removeClass('hide').show()
+				.siblings('.period-absolute').hide();
 		} else {
 			$(this).closest('form')
-			.find('.period-absolute').removeClass('hide').show()
-			.siblings('.period-relative').hide();
+				.find('.period-absolute').removeClass('hide').show()
+				.siblings('.period-relative').hide();
 		}
 	}
 }
 
 function ruleCheck(callback) {
 	/*$('#ruleTable').on('draw.dt', function() {*/
-		$('#ruleTable').delegate('input.rule-state-check', 'change', function(event) {
+	$('#ruleTable').delegate('input.rule-state-check', 'change', function(event) {
 		//console.log(this);
 		if (!callback.call(this, $(this).closest('tr').attr('data-id'), $(this).closest('tr').children('.ruleName').text(), $(this).is(':checked'))) {
 			event.preventDefault();
@@ -1532,7 +1508,7 @@ function ruleCheck(callback) {
 		}
 
 	});
-		/*});*/
+	/*});*/
 }
 
 
@@ -1541,8 +1517,8 @@ function ruleCheck(callback) {
  * @param  {Function} callback 回调函数
  * @return {[type]}            [description]
  */
- function clauseFuncs(callback) {
- 	if ($('.event-attr').length > 0) {
+function clauseFuncs(callback) {
+	if ($('.event-attr').length > 0) {
 		//获取属性下拉列表
 		$('#eventAttrSel').remove();
 		$('<ul id="eventAttrSel">').appendTo('body').hide();
@@ -1560,7 +1536,7 @@ function ruleCheck(callback) {
 			/* Act on the event */
 			var _offset = $(this).offset();
 			var _offset = $(this).offset(),
-			_h = $(this).outerHeight();
+				_h = $(this).outerHeight();
 			$('#eventAttrSel').data('target', this).css({
 				top: _offset.top + _h + 'px',
 				left: _offset.left + 'px'
@@ -1586,8 +1562,8 @@ function ruleCheck(callback) {
 			event.preventDefault();
 			event.stopPropagation();
 			var _val = $(this).data('val'),
-			_type = $(this).data('type'),
-			_formatVal = formatValue(_val, _type);
+				_type = $(this).data('type'),
+				_formatVal = formatValue(_val, _type);
 			$($('#eventAttrSel').data('target')).val(_val).data({
 				'castVal': _formatVal.castVal,
 				'valType': _formatVal.valType
@@ -1606,102 +1582,102 @@ function ruleCheck(callback) {
 	 * @param  {[type]} tick 心跳间隔
 	 * @return {[type]}           切分后的数组
 	 */
-	 function setAppendTask(arr, pieceSize, target, tick) {
-	 	var _len = arr.length;
-	 	if (_len <= 0) {
-	 		return;
-	 	}
-	 	appendPieces(arr.splice(0, pieceSize), target);
-	 	setTimeout(function() {
-	 		setAppendTask(arr, pieceSize, target, tick);
-	 	}, tick);
-	 }
+	function setAppendTask(arr, pieceSize, target, tick) {
+		var _len = arr.length;
+		if (_len <= 0) {
+			return;
+		}
+		appendPieces(arr.splice(0, pieceSize), target);
+		setTimeout(function() {
+			setAppendTask(arr, pieceSize, target, tick);
+		}, tick);
+	}
 
 	/**
 	 * 添加元素
 	 * @param  {[type]} arr    来源数组
 	 * @param  {[type]} target 目标元素
 	 */
-	 function appendPieces(arr, target) {
-	 	for (var i = 0; i < arr.length; i++) {
-	 		var _item = arr[i];
-	 		$('<li>').data({
-	 			'val': _item.name,
-	 			'type': _item.valueType
-	 		}).text(_item.displayName).appendTo(target);
-	 	}
-	 }
+	function appendPieces(arr, target) {
+		for (var i = 0; i < arr.length; i++) {
+			var _item = arr[i];
+			$('<li>').data({
+				'val': _item.name,
+				'type': _item.valueType
+			}).text(_item.displayName).appendTo(target);
+		}
+	}
 
 
-	 function hideEventAttrSel() {
-	 	$('#eventAttrSel').slideUp('fast').children('li:hidden').show();
-	 }
+	function hideEventAttrSel() {
+		$('#eventAttrSel').slideUp('fast').children('li:hidden').show();
+	}
 
 	/**
 	 * EventAttr模糊查询
 	 * @param  {[type]} keyword [description]
 	 * @return {[type]}         [description]
 	 */
-	 function searchEventAttr(keyword) {
-	 	var _keyword = $.trim(keyword).toLowerCase(),
-	 	$options = $('#eventAttrSel li'),
-	 	_len = $options.length;
-	 	for (var i = 0, $option = $($options[0]); i < _len; $option = $($options[++i])) {
-	 		$option.text().toLowerCase().indexOf(_keyword) < 0 ? ($option.hide()) : ($option.show());
-	 	}
-	 }
-	 /*添加IP列表功能*/
-	 var __$target;
-	 $('.fetch').click(function(event) {
-	 	/* Act on the event */
-	 	__$target = $(this).siblings(':text');
-	 	var _valList = __$target.val().split(','),
-	 	$seledUl = $('#seledDevList').children('li').remove().end();
-	 	for (var i = 0; i < _valList.length; i++) {
-	 		$('<li><a href="#">' + _valList[i] + '</a></li>').appendTo($seledUl);
-	 	};
-	 	$('#rmDeviceAction, #addDeviceAction a').attr('disabled', 'disabled');
-	 	$('#deviceSelModal').modal('show');
-	 });
+	function searchEventAttr(keyword) {
+		var _keyword = $.trim(keyword).toLowerCase(),
+			$options = $('#eventAttrSel li'),
+			_len = $options.length;
+		for (var i = 0, $option = $($options[0]); i < _len; $option = $($options[++i])) {
+			$option.text().toLowerCase().indexOf(_keyword) < 0 ? ($option.hide()) : ($option.show());
+		}
+	}
+	/*添加IP列表功能*/
+	var __$target;
+	$('.fetch').click(function(event) {
+		/* Act on the event */
+		__$target = $(this).siblings(':text');
+		var _valList = __$target.val().split(','),
+			$seledUl = $('#seledDevList').children('li').remove().end();
+		for (var i = 0; i < _valList.length; i++) {
+			$('<li><a href="#">' + _valList[i] + '</a></li>').appendTo($seledUl);
+		};
+		$('#rmDeviceAction, #addDeviceAction a').attr('disabled', 'disabled');
+		$('#deviceSelModal').modal('show');
+	});
 
-	 $('#seledDevList').delegate('a', 'click', function(event) {
-	 	event.preventDefault();
-	 	$('#addDeviceAction a').attr('disabled', 'disabled');
-	 	$('#seledDevList a').removeClass('active');
-	 	$(this).addClass('active');
-	 	$('#rmDeviceAction').removeAttr('disabled').data('listItem', $(this));
-	 });
-	 window.addToList = function(ip) {
-	 	$('<li><a href="#">' + ip + '</a></li>').appendTo($('#seledDevList'));
-	 }
-	 $('#rmDeviceAction').click(function(event) {
-	 	/* Act on the event */
-	 	$(this).data('listItem').remove();
-	 	$(this).attr('disabled', 'disabled');
-	 });
-	 /*设备列表*/
-	/*setUpListTable('#deviceTable', 'queryDeviceToRole.do', {
+	$('#seledDevList').delegate('a', 'click', function(event) {
+		event.preventDefault();
+		$('#addDeviceAction a').attr('disabled', 'disabled');
+		$('#seledDevList a').removeClass('active');
+		$(this).addClass('active');
+		$('#rmDeviceAction').removeAttr('disabled').data('listItem', $(this));
+	});
+	window.addToList = function(ip) {
+		$('<li><a href="#">' + ip + '</a></li>').appendTo($('#seledDevList'));
+	}
+	$('#rmDeviceAction').click(function(event) {
+		/* Act on the event */
+		$(this).data('listItem').remove();
+		$(this).attr('disabled', 'disabled');
+	});
+	/*设备列表*/
+	setUpListTable('#deviceTable', 'queryDeviceToRole.do', {
 		dataId: 'deviceIP'
 	});
 	tableTrClick('#deviceTable', function() {
 		$('#rmDeviceAction').attr('disabled', 'disabled');
 		$('#addDeviceAction a').removeAttr('disabled');
-	});*/
-/*提交列表*/
-$('#commitIpListBtn').click(function(event) {
-	var _result = __$target.val();
-	$('#seledDevList li>a').each(function(index, el) {
-		_result += (_result ? ',' : '') + $(this).text();
 	});
-	__$target.val(_result);
-	$('#deviceSelModal').modal('hide');
-});
+	/*提交列表*/
+	$('#commitIpListBtn').click(function(event) {
+		var _result = __$target.val();
+		$('#seledDevList li>a').each(function(index, el) {
+			_result += (_result ? ',' : '') + $(this).text();
+		});
+		__$target.val(_result);
+		$('#deviceSelModal').modal('hide');
+	});
 
-var arBtns = '<a href="#" class="add"><span class="glyphicon glyphicon-plus"></span> </a><a href="#" class="remove"><span class="glyphicon glyphicon-minus"></span> </a>';
-var valBtns = '<a href="#" class="fetch btn btn-default btn-xs ml-half">... </a>';
-var evalBtns = '<a href="#" class="eval btn btn-default btn-xs ml-half">e</a>';
+	var arBtns = '<a href="#" class="add"><span class="glyphicon glyphicon-plus"></span> </a><a href="#" class="remove"><span class="glyphicon glyphicon-minus"></span> </a>';
+	var valBtns = '<a href="#" class="fetch btn btn-default btn-xs ml-half">... </a>';
+	var evalBtns = '<a href="#" class="eval btn btn-default btn-xs ml-half">e</a>';
 
-$('.clause [name="value"]').after(valBtns);
+	$('.clause [name="value"]').after(valBtns);
 
 	//括号操作事件
 	$('.clause .bracket').append(arBtns).append('<span class="br-content"></span>').find('a').on('click.br', function(event) {
@@ -1725,10 +1701,10 @@ $('.clause [name="value"]').after(valBtns);
 		 * @param {String | JQuery Object} tableHandle 容器
 		 * @param {String | JQuery Object} [trHandle] 目标位置
 		 */
-		 addTr: function(tableHandle, trHandle) {
+		addTr: function(tableHandle, trHandle) {
 			////console.log('add');
 			var $template = $('.template', tableHandle),
-			$newTr = $template.clone(true, true).removeClass('template');
+				$newTr = $template.clone(true, true).removeClass('template');
 
 			if (trHandle) {
 				$newTr.insertAfter(trHandle);
@@ -1744,7 +1720,7 @@ $('.clause [name="value"]').after(valBtns);
 		 * @param {String | JQuery Object} tableHandle 容器
 		 * @param {String | JQuery Object} trHandle 目标位置
 		 */
-		 removeTr: function(tableHandle, trHandle) {
+		removeTr: function(tableHandle, trHandle) {
 			////console.log('remove');
 			//if ($(tableHandle).find('tr.clause').length == 2) return;
 			$(trHandle).remove();
@@ -1766,8 +1742,8 @@ $('.clause [name="value"]').after(valBtns);
 						width: "200px",
 						no_results_text: "没有对应结果!"
 					})*/
-	;
-});
+		;
+	});
 
 	/**
 		 * 封装属性值
@@ -1787,42 +1763,42 @@ $('.clause [name="value"]').after(valBtns);
 			15	binhex		String
 		 * @return {[type]}      封装后的字符串
 		 */
-		 function formatValue(val, type) {
-		 	var _result = {};
-		 	switch (type - 0) {
-		 		case 3:
-		 		case 6:
-		 		case 7:
-		 		return {
-		 			'castVal': "cast(data('" + val + "'),int)",
-		 			'valType': 'number'
-		 		};
-		 		case 5:
-		 		return {
-		 			'castVal': "cast(data('" + val + "'),short)",
-		 			'valType': 'number'
-		 		};
-		 		case 9:
-		 		case 11:
-		 		return {
-		 			'castVal': "cast(data('" + val + "'),long)",
-		 			'valType': 'number'
-		 		};
-		 		case 14:
-		 		return {
-		 			'castVal': "cast(data('" + val + "'),double)",
-		 			'valType': 'number'
-		 		};
-		 		case 12:
-		 		case 1:
-		 		case 10:
-		 		case 15:
-		 		return {
-		 			'castVal': "data('" + val + "')",
-		 			'valType': 'string'
-		 		};
-		 	}
-		 }
+	function formatValue(val, type) {
+		var _result = {};
+		switch (type - 0) {
+			case 3:
+			case 6:
+			case 7:
+				return {
+					'castVal': "cast(data('" + val + "'),int)",
+					'valType': 'number'
+				};
+			case 5:
+				return {
+					'castVal': "cast(data('" + val + "'),short)",
+					'valType': 'number'
+				};
+			case 9:
+			case 11:
+				return {
+					'castVal': "cast(data('" + val + "'),long)",
+					'valType': 'number'
+				};
+			case 14:
+				return {
+					'castVal': "cast(data('" + val + "'),double)",
+					'valType': 'number'
+				};
+			case 12:
+			case 1:
+			case 10:
+			case 15:
+				return {
+					'castVal': "data('" + val + "')",
+					'valType': 'string'
+				};
+		}
+	}
 
 
 	//eval
@@ -1850,13 +1826,13 @@ $('.clause [name="value"]').after(valBtns);
 
 	//evalFunc
 	$('#evalFunc').change(addFuncToEval)
-	.next('.add-again').click(function(event) {
-		addFuncToEval(null, $(this).siblings('select').val());
-	});
+		.next('.add-again').click(function(event) {
+			addFuncToEval(null, $(this).siblings('select').val());
+		});
 	$('#evalEvent').on('change', addAttrToEval)
-	.next('.add-again').click(function(event) {
-		addAttrToEval(null, $(this).siblings('select').val());
-	});
+		.next('.add-again').click(function(event) {
+			addAttrToEval(null, $(this).siblings('select').val());
+		});
 
 	var _evalStr = document.getElementById('evalStr');
 	if (_evalStr) _evalStr.curPos = 0;
@@ -1866,14 +1842,14 @@ $('.clause [name="value"]').after(valBtns);
 	 * @param {jQuery Event Object} event [description]
 	 * @param {String} attr  参数
 	 */
-	 function addFuncToEval(event, attr) {
-	 	/* Act on the event */
-	 	var target = $('#evalModal #evalStr')[0];
-	 	var _val = addAttrToEval(null, (event ? $(this).val() : attr || ''));
-	 	var _start = _val.lastIndexOf('(') + 1;
+	function addFuncToEval(event, attr) {
+		/* Act on the event */
+		var target = $('#evalModal #evalStr')[0];
+		var _val = addAttrToEval(null, (event ? $(this).val() : attr || ''));
+		var _start = _val.lastIndexOf('(') + 1;
 		target.curPos = _start; //更新起点
 		var _reg = /[\,\)]/;
-_reg.lastIndex = _start;
+		_reg.lastIndex = _start;
 		var _end = _val.search(_reg); //定位第一个参数
 		setInputSelection(target, _start, _end);
 	}
@@ -1884,15 +1860,15 @@ _reg.lastIndex = _start;
 	 * @param {jQuery Event Object} event
 	 * @param {String} attr  参数
 	 */
-	 function addAttrToEval(event, attr) {
-	 	debugger
-	 	var _attr = event ? event.target.value : attr || null;
-	 	if (!_attr) return false;
-	 	var target = $('#evalModal #evalStr')[0];
-	 	var _val = target.value,
+	function addAttrToEval(event, attr) {
+		//		debugger
+		var _attr = event ? event.target.value : attr || null;
+		if (!_attr) return false;
+		var target = $('#evalModal #evalStr')[0];
+		var _val = target.value,
 			_reg = /([\,\(])eventAttr|CMDBAttr/, //定位最新函数的第一个待定参数
-				_castVal = $(target).data('castVal') || _val,
-				_pos = _val.search(_reg);
+			_castVal = $(target).data('castVal') || _val,
+			_pos = _val.search(_reg);
 		_reg.lastIndex = target.curPos; //正则起始位置
 		if (_pos >= 0) { //有函数
 			_reg.lastIndex = target.curPos; //正则起始位置
@@ -1932,28 +1908,62 @@ _reg.lastIndex = _start;
  * @param  {String/JQuery Object} handle 覆盖层选择器
  * @param  {boolean} isChild 如果为真，则不隐藏其他overlayFrm
  */
- function showOverlayFrm(handle, isChild) {
- 	var $handle = $(handle);
- 	$handle.removeClass('hide').show().resize();
- 	if (isChild) {
- 		$handle.siblings('.overlay-frm').hide();
- 	}
- 	$handle.find('.btn-cancel').unbind("click.overlay").on("click.overlay", function(event) {
- 		/* Act on the event */
- 		window.confirm("确定要取消编辑吗？") && (hideOverlayFrm(handle), $(this).trigger("canceld"));
- 	});
- }
+function showOverlayFrm(handle, isChild) {
+	var $handle = $(handle);
+	$handle.removeClass('hide').show().resize();
+	if (isChild) {
+		$handle.siblings('.overlay-frm').hide();
+	}
+	$handle.find('.btn-cancel').unbind("click.overlay").on("click.overlay", function(event) {
+		/* Act on the event */
+		window.confirm("确定要取消编辑吗？") && (hideOverlayFrm(handle), $(this).trigger("canceld"));
+	});
+}
 
- function hideOverlayFrm(handle) {
- 	$('form', handle).each(function(index, el) {
- 		$(this).data('bootstrapValidator') && $(this).data('bootstrapValidator').resetForm(true);
- 		this.reset();
- 		$('textarea', this).text('');
- 		$(':checked', this).click();
- 	});
- 	$(handle).hide().trigger('closed').closest('.row').css('height', 'auto');
- }
+function hideOverlayFrm(handle) {
+	$('form', handle).each(function(index, el) {
+		$(this).data('bootstrapValidator') && $(this).data('bootstrapValidator').resetForm(true);
+		this.reset();
+		$('textarea', this).text('');
+		$(':checked', this).click();
+	});
+	$(handle).hide().trigger('closed').closest('.row').css('height', 'auto');
+}
 
+
+/**
+ * 页码算法
+ * @param {[type]} draw        当前页
+ * @param {[type]} total       总页数
+ * @param {[type]} placeholder 容器
+ */
+function setPages(draw, total, placeholder) {
+	draw -= 0; //转换为number
+	var $pagination = $(placeholder).data('draw', draw);
+	//清空状态
+	$('li', $pagination).removeClass('disabled');
+	//清空页码
+	var $nextLi = $('li.next', $pagination);
+	$nextLi.prevUntil('li.prev').remove();
+	(draw === 1) && ($('li.prev').addClass('disabled'));
+	(draw === total) && ($('li.next').addClass('disabled'));
+	if (!total || total <= 0) {
+		return;
+	}
+	var _pageList = getPageCfg(draw, total),
+		_prePage = 0,
+		_index = 0,
+		_length = _pageList.length,
+		_page;
+	while (_page = _pageList[_index++]) {
+		if (_page - _prePage > 1) {
+			$('<li class="disabled"><a href="#">...</a></li>').insertBefore($nextLi);
+		}
+		var $newPage = $('<li data-page="' + _page + '"><a href="">' + _page + '</a></li>').insertBefore($nextLi);
+		(draw === _page) && ($newPage.addClass('active'));
+		_prePage = _page;
+	}
+}
 
 /**
  * 月、日、时选择器，根据模型类型显示不同组合
@@ -1961,38 +1971,38 @@ _reg.lastIndex = _start;
  * @param  {String} moduleType  'year', 'month', 'day'
  * @return {[type]}             [description]
  */
- function mdhSelector(placeholder, moduleType) {
- 	var $month = $('.month', placeholder).hide(),
- 	$day = $('.day', placeholder).hide(),
- 	$hour = $('.hour', placeholder);
+function mdhSelector(placeholder, moduleType) {
+	var $month = $('.month', placeholder).hide(),
+		$day = $('.day', placeholder).hide(),
+		$hour = $('.hour', placeholder);
 	//console.log('mdh');
 	switch (moduleType) {
 		case 'year':
-		var $msel = $month.show().is('select') ? $month : $month.find('select'),
-		_monthconfig = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-		if ($msel[0].options.length != 12) {
-			var _i = 0;
-			while (++_i <= 12) $('<option>').val(_i).text((_i < 10 && '0') + _i).appendTo($msel);
-		}
-		$msel.change(function(event) {
-			changeDay(_monthconfig[$(this).val() - 1]);
-		}).change();
+			var $msel = $month.show().is('select') ? $month : $month.find('select'),
+				_monthconfig = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+			if ($msel[0].options.length != 12) {
+				var _i = 0;
+				while (++_i <= 12) $('<option>').val(_i).text((_i < 10 && '0') + _i).appendTo($msel);
+			}
+			$msel.change(function(event) {
+				changeDay(_monthconfig[$(this).val() - 1]);
+			}).change();
 		case 'month':
-		$day.show();
-		changeDay(31);
+			$day.show();
+			changeDay(31);
 		case 'day':
-		var $hsel = $hour.show().is('select') ? $hour : $hour.find('select');
-		if ($hsel[0].options.length != 24) {
-			var _i = -1;
-			$('option', $hsel).remove();
-			while (++_i <= 23) $('<option>').val(_i).text((_i < 10 && '0') + _i + ':00').appendTo($hsel);
-		}
+			var $hsel = $hour.show().is('select') ? $hour : $hour.find('select');
+			if ($hsel[0].options.length != 24) {
+				var _i = -1;
+				$('option', $hsel).remove();
+				while (++_i <= 23) $('<option>').val(_i).text((_i < 10 && '0') + _i + ':00').appendTo($hsel);
+			}
 	};
 
 	function changeDay(target) {
 		var $dsel = $day.is('select') ? $day : $day.find('select'),
-		_origin = $dsel.val() || 1,
-		_max = $('option:last-of-type', $dsel).val() || 0;
+			_origin = $dsel.val() || 1,
+			_max = $('option:last-of-type', $dsel).val() || 0;
 		if (_max > target) {
 			$('option:gt(' + (target - 1) + ')', $dsel).remove();
 			_origin > target && $dsel.val(target);
@@ -2009,11 +2019,11 @@ _reg.lastIndex = _start;
  * @param  {Function} callback    回调函数
  * @return {[type]}               [description]
  */
- function tableTrClick(placeholder, callback) {
- 	var $placeholder = $(placeholder);
- 	var $btnRely = $('.rely-on-table', $placeholder.attr('action-handle'));
- 	/*$placeholder.on('draw.dt', function() {*/
- 		$placeholder.delegate('tbody tr', 'click', function(event) {
+function tableTrClick(placeholder, callback) {
+	var $placeholder = $(placeholder);
+	var $btnRely = $('.rely-on-table', $placeholder.attr('action-handle'));
+	/*$placeholder.on('draw.dt', function() {*/
+	$placeholder.delegate('tbody tr', 'click', function(event) {
 		//event.preventDefault();
 		/*//console.debug('click func');*/
 		$(this).addClass('active').siblings('tr').removeClass('active');
@@ -2039,7 +2049,31 @@ _reg.lastIndex = _start;
 		//$("body").scrollTop($infoDiv.offset().top);
 		//changeInfo();
 	});
- 		/*});*/
+	/*});*/
+}
+
+/**
+ * 填入表格数据
+ * @param {[type]} tableHandle 表格句柄
+ * @param {[type]} tableData   表格数据
+ * @param {[type]} columns     表格列名
+ * @param {[type]} colConfig   特殊列配置
+ */
+function setTableData(tableHandle, tableData, columns, colConfig) {
+	var $tbody = $('tbody', tableHandle).children('tr').remove().end();
+	if (!tableData) {
+		return;
+	}
+	for (var i = 0; i < tableData.length; i++) {
+		var _trData = tableData[i];
+		var $newTr = $('<tr>').attr('data-id', _trData['id']).appendTo($tbody);
+		for (var j = 0; j < columns.length; j++) {
+			var _tdCol = columns[j],
+				_tdCfg = colConfig && colConfig[_tdCol],
+				_tdData = _trData[_tdCol];
+			$('<td>').html(_tdCfg ? _tdCfg(_tdData) : _tdData).attr('title', _tdData).appendTo($newTr);
+		}
+	}
 }
 
 
@@ -2095,38 +2129,38 @@ function contextMenuEnv() {
  * @param  {String | JQuery Object} placeholder 目标位置
  * @param  {Object} attrCfg        特殊字段设置[String：数据赋值到相应的标签；Function：特殊操作]
  */
- function fillInfo(data, placeholder, attrCfg) {
- 	for (var dataName in data) {
- 		var $target = $('[data-name=' + dataName + ']', placeholder),
- 		_data = data[dataName];
- 		var cfg = (attrCfg ? attrCfg[dataName] : '');
- 		if (cfg) {
- 			if (typeof cfg === 'string') {
- 				$target.attr(cfg, _data);
- 			};
- 			if (typeof cfg === "function") {
- 				cfg($target, _data);
- 			};
- 			continue;
- 		};
- 		$target.is('input,select') ? setFormVal($target, _data) : $target.html(_data).attr('title', _data);
- 	}
+function fillInfo(data, placeholder, attrCfg) {
+	for (var dataName in data) {
+		var $target = $('[data-name=' + dataName + ']', placeholder),
+			_data = data[dataName];
+		var cfg = (attrCfg ? attrCfg[dataName] : '');
+		if (cfg) {
+			if (typeof cfg === 'string') {
+				$target.attr(cfg, _data);
+			};
+			if (typeof cfg === "function") {
+				cfg($target, _data);
+			};
+			continue;
+		};
+		$target.is('input,select') ? setFormVal($target, _data) : $target.html(_data).attr('title', _data);
+	}
 
- 	function setFormVal($target, data) {
- 		if ($target.is(':radio')) {
- 			$target.filter('[value="' + data + '"]').click();
- 			return;
- 		}
- 		if ($target.is(':checkbox')) {
- 			$target.removeAttr('checked');
- 			for (var i = 0; i < data.length; i++) {
- 				$('[value="' + data[i] + '"]').click();
- 			};
- 			return;
- 		}
- 		$target.val(data).change();
- 	}
- }
+	function setFormVal($target, data) {
+		if ($target.is(':radio')) {
+			$target.filter('[value="' + data + '"]').click();
+			return;
+		}
+		if ($target.is(':checkbox')) {
+			$target.removeAttr('checked');
+			for (var i = 0; i < data.length; i++) {
+				$('[value="' + data[i] + '"]').click();
+			};
+			return;
+		}
+		$target.val(data).change();
+	}
+}
 
 /**
  * 页面配置函数
@@ -2134,48 +2168,48 @@ function contextMenuEnv() {
  * @param  {number} pageCount 总页码
  * @return {Array}           页码列表
  */
- function getPageCfg(curPage, pageCount) {
- 	var pages = [];
- 	if (pageCount <= 10) {
- 		for (var i = 1; i <= pageCount; i++) {
- 			pages.push(i);
- 		}
- 		return pages;
- 	}
- 	if (curPage - 1 <= 5) {
- 		for (var i = 1; i <= 8; i++) {
- 			pages.push(i);
- 		}
- 		for (var i = pageCount - 1; i <= pageCount; i++) {
- 			pages.push(i);
- 		}
- 		return pages;
- 	}
- 	if (pageCount - curPage <= 3) {
- 		for (var i = 1; i <= 5; i++) {
- 			pages.push(i);
- 		}
- 		for (var i = pageCount - 4; i <= pageCount; i++) {
- 			pages.push(i);
- 		}
- 		return pages;
- 	}
- 	for (var i = 1; i <= 5; i++) {
- 		pages.push(i);
- 	}
- 	pages.push(curPage - 1);
- 	var _sub = pageCount - curPage;
- 	if (_sub >= 5) {
- 		pages.push(curPage);
- 	}
- 	if (_sub > 5) {
- 		pages.push(curPage + 1);
- 	}
- 	for (var i = pageCount - 4; i <= pageCount; i++) {
- 		pages.push(i);
- 	}
- 	return pages;
- }
+function getPageCfg(curPage, pageCount) {
+	var pages = [];
+	if (pageCount <= 10) {
+		for (var i = 1; i <= pageCount; i++) {
+			pages.push(i);
+		}
+		return pages;
+	}
+	if (curPage - 1 <= 5) {
+		for (var i = 1; i <= 8; i++) {
+			pages.push(i);
+		}
+		for (var i = pageCount - 1; i <= pageCount; i++) {
+			pages.push(i);
+		}
+		return pages;
+	}
+	if (pageCount - curPage <= 3) {
+		for (var i = 1; i <= 5; i++) {
+			pages.push(i);
+		}
+		for (var i = pageCount - 4; i <= pageCount; i++) {
+			pages.push(i);
+		}
+		return pages;
+	}
+	for (var i = 1; i <= 5; i++) {
+		pages.push(i);
+	}
+	pages.push(curPage - 1);
+	var _sub = pageCount - curPage;
+	if (_sub >= 5) {
+		pages.push(curPage);
+	}
+	if (_sub > 5) {
+		pages.push(curPage + 1);
+	}
+	for (var i = pageCount - 4; i <= pageCount; i++) {
+		pages.push(i);
+	}
+	return pages;
+}
 
 /**
  * 选中文本框中部分字符串
@@ -2183,18 +2217,18 @@ function contextMenuEnv() {
  * @param {Number} start       起始位置
  * @param {Number} end         终止位置
  */
- function setInputSelection(inputHandle, start, end) {
- 	var target = $(inputHandle)[0];
- 	if (target.createTextRange) {
- 		var _range = target.createTextRange();
- 		_range.moveStart("charactor", start);
- 		_range.moveEnd("charactor", end);
- 		$(_range).select();
- 	} else {
- 		target.setSelectionRange(start, end);
- 		$(target).focus();
- 	}
- }
+function setInputSelection(inputHandle, start, end) {
+	var target = $(inputHandle)[0];
+	if (target.createTextRange) {
+		var _range = target.createTextRange();
+		_range.moveStart("charactor", start);
+		_range.moveEnd("charactor", end);
+		$(_range).select();
+	} else {
+		target.setSelectionRange(start, end);
+		$(target).focus();
+	}
+}
 
 
 /**
@@ -2206,12 +2240,12 @@ function contextMenuEnv() {
  *                               dataId 主键对应的名称
  *                               formDatas 请求的附加数据
  */
- function setUpListTable(placeholder, actionUrl, option, callback) {
- 	var _dataId = option ? option.dataId || '' : '',
- 	_formDatas = option ? option.formDatas || null : null;
- 	$.get(actionUrl, _formDatas, function(data) {
- 		var _resultList = [];
- 		for (var prop in data) {
+function setUpListTable(placeholder, actionUrl, option, callback) {
+	var _dataId = option ? option.dataId || '' : '',
+		_formDatas = option ? option.formDatas || null : null;
+	$.get(actionUrl, _formDatas, function(data) {
+		var _resultList = [];
+		for (var prop in data) {
 			if (data.hasOwnProperty(prop)) { //取到第一条数据就是结果数组
 				_resultList = data[prop];
 			}
@@ -2241,7 +2275,7 @@ function contextMenuEnv() {
 			callback(_resultList);
 		}
 	});
- }
+}
 
 //
 // Function for ssh terminal tool
@@ -2302,7 +2336,7 @@ function showTerminal(name, id) {
  * 表格可以拖动调整列宽
  * @param  {DOM Object} table 表格对象
  */
- function tableColResize(table) {
+function tableColResize(table) {
 	var tTD; //用来存储当前更改宽度的Table Cell,避免快速移动鼠标的问题
 	var _cells = table.rows[0].cells;
 	for (var j = 0, _cell = _cells[0]; j < _cells.length - 1; _cell = _cells[++j]) {
@@ -2362,33 +2396,33 @@ function RedrawKnob(elem) {
  * 	method: 'get' | 'post'}]
  * @return {[type]}                 [description]
  */
- function submitWorks(successCallback, option) {
- 	showAlert(true, '提交中...', 'info', true);
- 	console.log($(this).attr('action'));
- 	$.ajax({
- 		url: $(this).attr('action'),
- 		type: (option && option.method) || "GET",
- 		datatype: "json",
- 		contentType: 'application/json;charset=UTF-8',
- 		data: (option && option.serialize) || $(this).serialize(),
- 		success: function(data) {
- 			/*optional stuff to do after success */
- 			console.log(data);
- 			if (data!='error') {
- 				showAlert(true, '提交成功！', 'success', false, 500, function() {
- 					if(successCallback && typeof successCallback === 'function') {
- 						successCallback(data);
- 					}
- 				});
- 			} else {
- 				showAlert(true, '提交失败，请联系管理员。', 'danger', false, 2000);
- 			}
- 		},
- 		error: function() {
- 			showAlert(true, '提交失败，请重试。', 'danger', false, 2000);
- 		}
- 	});
- }
+function submitWorks(successCallback, option) {
+	showAlert(true, '提交中...', 'info', true);
+	console.log($(this).attr('action'));
+	$.ajax({
+		url: $(this).attr('action'),
+		type: (option && option.method) || "GET",
+		datatype: "json",
+		contentType: 'application/json;charset=UTF-8',
+		data: (option && option.serialize) || $(this).serialize(),
+		success: function(data) {
+			/*optional stuff to do after success */
+			console.log(data);
+			if (data != 'error') {
+				showAlert(true, '提交成功！', 'success', false, 500, function() {
+					if (successCallback && typeof successCallback === 'function') {
+						successCallback(data);
+					}
+				});
+			} else {
+				showAlert(true, '提交失败，请联系管理员。', 'danger', false, 2000);
+			}
+		},
+		error: function() {
+			showAlert(true, '提交失败，请重试。', 'danger', false, 2000);
+		}
+	});
+}
 
 /*function getContextPath() {
 　 var pathName = document.location.pathname;
@@ -2407,11 +2441,14 @@ function docReady(selfUrl) {
 		for (var i = 0; i < $links.length; ++i) {
 			var $link = $($links[i]);
 			if ($link.attr('href') == selfUrl) {
-				var $_parentLi = $link.closest('li.dropdown');
-				if ($_parentLi.hasClass('active')) break;
+				//debugger
+				var $topLi = $link.closest('li.J-top-menu');
 				$links.removeClass('active');
 				$link.addClass('active');
-				$_parentLi.children('a.dropdown-toggle').click();
+				if (!$topLi.hasClass('active')) {
+					$topLi.siblings('.J-top-menu').removeClass('active');
+					$topLi.children('a.dropdown-toggle').click();
+				}
 				break;
 			}
 		};
@@ -2431,7 +2468,7 @@ function docReady(selfUrl) {
 		/* Act on the event */
 		//console.log('resize');
 		var $parent = $(this).closest('.row'),
-		_height = $(this).children().outerHeight();
+			_height = $(this).children().outerHeight();
 		//console.log(_height);
 		if ($parent.length <= 0) {
 			return;
@@ -2485,13 +2522,33 @@ function getPropertyTypes() {
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
 $(document).ready(function() {
+	debugger
+	var uiList = JSON.parse(window.localStorage.getItem('uiList')),
+		uiLength = uiList.length,
+		/*menu*/
+		$menu = $('.main-menu');
 	$('body').on('click', '.show-sidebar', function(e) {
 		e.preventDefault();
-		$('div#main').toggleClass('sidebar-show')/*.bind('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() {
-			$(document).resize();
-		})*/;
+		$('div#main').toggleClass('sidebar-show')
+			/*.bind('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() {
+						$(document).resize();
+					})*/
+		;
 		/*setTimeout(MessagesMenuWidth, 250);*/
 	});
+
+	for (var i = 0; i < uiLength; i++) {
+		uiList[i]
+	};
+
+	$('#J-log-out').click(function(e) {
+		debugger
+		e.preventDefault();
+		showAlert(true, '删除中...', 'info', true);
+		$.get('logout.do', function(data) {
+			window.location.href = '/';
+		});
+	})
 
 
 	//子页面跳转
@@ -2534,90 +2591,88 @@ $(document).ready(function() {
 	/*get IE version*/
 	var ie = (function() {
 		var undef,
-		v = 3,
-		div = document.createElement('div'),
-		all = div.getElementsByTagName('i');
+			v = 3,
+			div = document.createElement('div'),
+			all = div.getElementsByTagName('i');
 
 		while (
 			div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
 			all[0]
-			);
+		);
 
-			return v > 4 ? v : undef;
+		return v > 4 ? v : undef;
 
 	}());
-	/*menu*/
-	var $menu = $('.main-menu');
 
 	$menu.find("li").has("ul").find("a.dropdown-toggle").unbind('click.menu').bind("click.menu", function(e) {
-		//debugger
+		// debugger
 		$(this).parent("li").toggleClass("active")
-		.children("ul").stop(true, true).slideToggle('fast')
-		.end().siblings('li').removeClass('active').children('ul').slideUp('fast');
+			.children("ul").stop(true, true).slideToggle('fast')
+			.end().siblings('li').removeClass('active').children('ul').slideUp('fast');
 	});
 
 	/**
 	 * 绑定main.html中的ajax跳转
 	 */
-	 $('.ajax-link').on("click", ajaxJump);
+	$('.ajax-link').on("click", ajaxJump);
 	/**
 	 * 动态绑定子页面中的ajax跳转
 	 */
-	 $('#ajax-content').delegate('.ajax-link', 'click', ajaxJump);
+	$('#ajax-content').delegate('.ajax-link', 'click', ajaxJump);
 
 
-	 var height = window.innerHeight - 49;
-	 $('#main').css('min-height', height)
-	 .delegate('.expand-link', 'click', function(e) {
-	 	var body = $('body');
-	 	e.preventDefault();
-	 	var box = $(this).closest('div.box');
-	 	var button = $(this).find('i');
-	 	button.toggleClass('fa-expand').toggleClass('fa-compress');
-	 	box.toggleClass('expanded');
-	 	box.toggleClass('expanded-padding');
-	 	body.toggleClass('body-expanded');
+	var height = window.innerHeight - 49;
+	$('#main').css('min-height', height)
+		.delegate('.expand-link', 'click', function(e) {
+			var body = $('body');
+			e.preventDefault();
+			var box = $(this).closest('div.box');
+			var button = $(this).find('i');
+			button.toggleClass('fa-expand').toggleClass('fa-compress');
+			box.toggleClass('expanded');
+			box.toggleClass('expanded-padding');
+			body.toggleClass('body-expanded');
 			box.bind('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() { //
 				box.resize();
 				$(document).resize();
 			});
 		})
-	 .delegate('.collapse-link', 'click', function(e) {
-	 	e.preventDefault();
-	 	var box = $(this).closest('div.box');
-	 	var button = $(this).find('i');
-	 	var content = box.find('div.box-content');
-	 	content.slideToggle('fast');
-	 	button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
-	 	setTimeout(function() {
-	 		box.resize();
-	 		box.find('[id^=map-]').resize();
-	 	}, 50);
-	 })
-	 .delegate('.config-link', 'click', function(e) {
-	 	e.preventDefault();
-	 	var $box = $(this).closest('div.box');
-	 	var $config = $('.config-panel', $box);
-	 	if ($config.is(':hidden')) {
-	 		$box.addClass('half').bind('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() {
-	 			$config.show();
-	 			$box.addClass('hover').removeClass('half');
-	 		});
-	 	} else {
-	 		$box.addClass('half').bind('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() {
-	 			$config.hide();
-	 			$box.removeClass('hover').removeClass('half');
-	 		});
-	 	}
+		.delegate('.collapse-link', 'click', function(e) {
+			e.preventDefault();
+			var box = $(this).closest('div.box');
+			var button = $(this).find('i');
+			var content = box.find('div.box-content');
+			content.slideToggle('fast');
+			button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
+			setTimeout(function() {
+				box.resize();
+				box.find('[id^=map-]').resize();
+			}, 50);
+		})
+		.delegate('.config-link', 'click', function(e) {
+			e.preventDefault();
+			var $box = $(this).closest('div.box');
+			var $config = $('.config-panel', $box);
+			if ($config.is(':hidden')) {
+				$box.addClass('half').bind('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() {
+					$config.show();
+					$box.addClass('hover').removeClass('half');
+				});
+			} else {
+				$box.addClass('half').bind('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() {
+					$config.hide();
+					$box.removeClass('hover').removeClass('half');
+				});
+			}
 
-	 })
-	 .delegate('.close-link', 'click', function(e) {
-	 	e.preventDefault();
-	 	if (!confirm('你确定要删除吗？')) {
-	 		return false;
-	 	}
-	 	$(this).closest('div.box').trigger('removed').parent().hide();
-	 });
+		})
+		.delegate('.close-link', 'click', function(e) {
+			e.preventDefault();
+			if (!confirm('你确定要删除吗？')) {
+				return false;
+			}
+			$(this).closest('div.box').trigger('removed').parent().hide();
+		});
 	/*$('#locked-screen').on('click', function (e) {
 		e.preventDefault();
 		$('body').addClass('body-screensaver');
@@ -2625,41 +2680,44 @@ $(document).ready(function() {
 		ScreenSaver();
 	});*/
 
-$('#top-panel').on('click', 'a', function(e) {
-	if ($(this).hasClass('ajax-link')) {
+	$('#top-panel').on('click', 'a', function(e) {
+		if ($(this).hasClass('ajax-link')) {
+			e.preventDefault();
+			if ($(this).hasClass('add-full')) {
+				$('#content').addClass('full-content');
+			} else {
+				$('#content').removeClass('full-content');
+			}
+			var url = $(this).attr('href');
+			//window.location.hash = url;
+			LoadAjaxContent(url);
+		}
+	});
+
+	function ajaxJump(e) {
 		e.preventDefault();
+		e.stopPropagation();
+		if ($(this).attr('href') == '#') return;
+		// debugger
+		$(this).addClass('active').closest('.nav').find('.ajax-link.active').not(this).removeClass('active');
 		if ($(this).hasClass('add-full')) {
 			$('#content').addClass('full-content');
 		} else {
 			$('#content').removeClass('full-content');
 		}
 		var url = $(this).attr('href');
-			//window.location.hash = url;
-			LoadAjaxContent(url);
-		}
-	});
-
-function ajaxJump(e) {
-	e.preventDefault();
-	if ($(this).attr('href') == '#') return;
-	$(this).addClass('active').closest('.nav').find('.ajax-link.active').not(this).removeClass('active');
-	if ($(this).hasClass('add-full')) {
-		$('#content').addClass('full-content');
-	} else {
-		$('#content').removeClass('full-content');
+		LoadAjaxContent(url);
+		return false;
 	}
-	var url = $(this).attr('href');
-	LoadAjaxContent(url);
-}
 
-function setModalsAndBackdropsOrder() {
-	var modalZIndex = 2040;
-	$('.modal.in').each(function(index) {
-		var $modal = $(this);
-		modalZIndex++;
-		$modal.css('zIndex', modalZIndex);
-		$modal.next('.modal-backdrop.in').addClass('hidden').css('zIndex', modalZIndex - 1);
-	});
-	$('.modal.in:visible:last').focus().next('.modal-backdrop.in').removeClass('hidden');
-}
+	function setModalsAndBackdropsOrder() {
+		var modalZIndex = 2040;
+		$('.modal.in').each(function(index) {
+			var $modal = $(this);
+			modalZIndex++;
+			$modal.css('zIndex', modalZIndex);
+			$modal.next('.modal-backdrop.in').addClass('hidden').css('zIndex', modalZIndex - 1);
+		});
+		$('.modal.in:visible:last').focus().next('.modal-backdrop.in').removeClass('hidden');
+	}
 });

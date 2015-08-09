@@ -60,7 +60,7 @@
 					</div>
 					<!-- /.form-group -->
 					<div class="form-group">
-						<button type="submit" class="btn btn-primary">优化分析</button>
+						<button type="submit" class="btn btn-default">优化分析</button>
 					</div>
 				</form>
 				<div class="form-group">
@@ -115,13 +115,12 @@
  * @param  {[type]} placeholder [description]
  * @return {[type]}             [description]
  */
- function queryChart(chartCfg, placeholder) {
+/* function queryChart(chartCfg, placeholder) {
  	$.get('optimalAnalysis.do', chartCfg, function(data) {
- 		/*optional stuff to do after success */
  		drawCharts(data, $('.charts', placeholder));
  		$('.loading', placeholder).hide();
  	});
- }
+ }*/
 
  $(document).ready(function() {
  	LoadTimePickerScript(AllTimePickers);

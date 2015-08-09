@@ -43,8 +43,10 @@
 					<div class="col-sm-6 mb-half">
 						<input type="text" class="form-control" id="propertySearch" placeholder="输入查询条件">
 					</div>
-					<a href="#" class="btn btn-xs btn-default">备份配置</a>
-					<a href="#" class="btn btn-xs btn-primary">恢复配置</a>
+					<div class="col-sm-6 mb-half">
+						<a href="#" class="btn btn-default">备份配置</a>
+						<a href="#" class="btn btn-primary">恢复配置</a>
+					</div>
 				</div>
 				<table id="propertyTable" class="table table-condensed table-striped  table-block table-hover property-table byoneTable" action-handle="#propertyActions">
 					<thead>
@@ -92,7 +94,7 @@
 	</div>
 </div>
 
-<div class="row hidden-xs hidden-sm" id="propertyInfo">
+<div class="row" id="propertyInfo">
 
 	<!-- Nav tabs
 	<ul class="nav nav-tabs" role="tablist">
@@ -117,28 +119,28 @@
 				</div>
 				<div class="box-content clearfix" id="basic">
 					<div class="row">
-						<label class="control-label col-sm-3">名称</label>
-						<div class="col-sm-9" data-name="deviceName"></div>
+						<label class="control-label col-xs-4">名称</label>
+						<div class="col-xs-8" data-name="deviceName"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">IP</label>
-						<div class="col-sm-9" data-name="deviceIP"></div>
+						<label class="control-label col-xs-4">IP</label>
+						<div class="col-xs-8" data-name="deviceIP"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">类型</label>
-						<div class="col-sm-9" data-name="typeName"></div>
+						<label class="control-label col-xs-4">类型</label>
+						<div class="col-xs-8" data-name="typeName"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">版本</label>
-						<div class="col-sm-9" data-name="version"></div>
+						<label class="control-label col-xs-4">版本</label>
+						<div class="col-xs-8" data-name="version"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">硬件序列号</label>
-						<div class="col-sm-9" data-name="hardSerialNum"></div>
+						<label class="control-label col-xs-4">硬件序列号</label>
+						<div class="col-xs-8" data-name="hardSerialNum"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">资产联系人</label>
-						<div class="col-sm-9" data-name="contactName"></div>
+						<label class="control-label col-xs-4">资产联系人</label>
+						<div class="col-xs-8" data-name="contactName"></div>
 					</div>
 				</div>
 			</div>
@@ -151,28 +153,28 @@
 				</div>
 				<div class="box-content clearfix" id="position">
 					<div class="row">
-						<label class="control-label col-sm-3 col-md-2">国家</label>
-						<div class="col-sm-9" data-name="country"></div>
+						<label class="control-label col-xs-4">国家</label>
+						<div class="col-xs-8" data-name="country"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3 col-md-2">省</label>
-						<div class="col-sm-9" data-name="province"></div>
+						<label class="control-label col-xs-4">省</label>
+						<div class="col-xs-8" data-name="province"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3 col-md-2">市</label>
-						<div class="col-sm-9" data-name="city"></div>
+						<label class="control-label col-xs-4">市</label>
+						<div class="col-xs-8" data-name="city"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3 col-md-2">坐标</label>
-						<div class="col-sm-9" data-name="gps"></div>
+						<label class="control-label col-xs-4">坐标</label>
+						<div class="col-xs-8" data-name="gps"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3 col-md-2">区域</label>
-						<div class="col-sm-9" data-name="area"></div>
+						<label class="control-label col-xs-4">区域</label>
+						<div class="col-xs-8" data-name="area"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3 col-md-2">位置</label>
-						<div class="col-sm-9" data-name="location"></div>
+						<label class="control-label col-xs-4">位置</label>
+						<div class="col-xs-8" data-name="location"></div>
 					</div>
 				</div>
 			</div>
@@ -196,20 +198,20 @@
 				</div>
 				<div class="box-content clearfix" id="health">
 					<div class="row">
-						<label class="control-label col-sm-3">可用性</label>
-						<div class="col-sm-9"  data-name="hUsability"></div>
+						<label class="control-label col-xs-4">可用性</label>
+						<div class="col-xs-8"  data-name="hUsability"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">性能</label>
-						<div class="col-sm-9"  data-name="hPerformance"></div>
+						<label class="control-label col-xs-4">性能</label>
+						<div class="col-xs-8"  data-name="hPerformance"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">告警级别</label>
-						<div class="col-sm-9 alarm-level sparkpie" data-name="hIncidentLevel"></div>
+						<label class="control-label col-xs-4">告警级别</label>
+						<div class="col-xs-8 alarm-level sparkpie" data-name="hIncidentLevel"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">告警特性</label>
-						<div class="col-sm-9 alarm-feature sparkpie" data-name="hIncidentType"></div>
+						<label class="control-label col-xs-4">告警特性</label>
+						<div class="col-xs-8 alarm-feature sparkpie" data-name="hIncidentType"></div>
 					</div>
 				</div>
 			</div>
@@ -222,24 +224,24 @@
 				</div>
 				<div class="box-content clearfix" id="useablity">
 					<div class="row">
-						<label class="control-label col-sm-3">健康状态</label>
-						<div class="col-sm-9" data-name="uHealthStatus"></div>
+						<label class="control-label col-xs-4">健康状态</label>
+						<div class="col-xs-8" data-name="uHealthStatus"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">Ping丢失率</label>
-						<div class="col-sm-9 sparkline" id="pingLost" data-name="uPingLoss"></div>
+						<label class="control-label col-xs-4">Ping丢失率</label>
+						<div class="col-xs-8 sparkline" id="pingLost" data-name="uPingLoss"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">Ping响应时间</label>
-						<div class="col-sm-9 sparkline" id="pingResponse" data-name="uPingTime"></div>
+						<label class="control-label col-xs-4">Ping响应时间</label>
+						<div class="col-xs-8 sparkline" id="pingResponse" data-name="uPingTime"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">Tcp Port</label>
-						<div class="col-sm-9" id="tcp" data-name="uTCPPort"></div>
+						<label class="control-label col-xs-4">Tcp Port</label>
+						<div class="col-xs-8" id="tcp" data-name="uTCPPort"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">告警</label>
-						<div class="col-sm-9 sparkline" id="alarm" data-name="uIncidentInfo"></div>
+						<label class="control-label col-xs-4">告警</label>
+						<div class="col-xs-8 sparkline" id="alarm" data-name="uIncidentInfo"></div>
 					</div>
 				</div>
 			</div>
@@ -254,20 +256,20 @@
 				</div>
 				<div class="box-content clearfix" id="capability">
 					<div class="row">
-						<label class="control-label col-sm-3">健康状态</label>
-						<div class="col-sm-9" data-name="pHealthStatus"></div>
+						<label class="control-label col-xs-4">健康状态</label>
+						<div class="col-xs-8" data-name="pHealthStatus"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">性能</label>
-						<div class="col-sm-9" data-name="pPerformance"></div>
+						<label class="control-label col-xs-4">性能</label>
+						<div class="col-xs-8" data-name="pPerformance"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">告警级别</label>
-						<div class="col-sm-9 alarm-level sparkpie" data-name="pIncidentLevel"></div>
+						<label class="control-label col-xs-4">告警级别</label>
+						<div class="col-xs-8 alarm-level sparkpie" data-name="pIncidentLevel"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">告警特性</label>
-						<div class="col-sm-9 alarm-feature sparkpie" data-name="pIncidentType"></div>
+						<label class="control-label col-xs-4">告警特性</label>
+						<div class="col-xs-8 alarm-feature sparkpie" data-name="pIncidentType"></div>
 					</div>
 				</div>
 			</div>
@@ -279,20 +281,20 @@
 				</div>
 				<div class="box-content clearfix" id="security">
 					<div class="row">
-						<label class="control-label col-sm-3">安全等级</label>
-						<div class="col-sm-9" data-name="safeLevel"></div>
+						<label class="control-label col-xs-4">安全等级</label>
+						<div class="col-xs-8" data-name="safeLevel"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">漏洞数</label>
-						<div class="col-sm-9" data-name="bugNum"></div>
+						<label class="control-label col-xs-4">漏洞数</label>
+						<div class="col-xs-8" data-name="bugNum"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">风险级别</label>
-						<div class="col-sm-9 danger-level sparkpie" data-name="riskLevel"></div>
+						<label class="control-label col-xs-4">风险级别</label>
+						<div class="col-xs-8 danger-level sparkpie" data-name="riskLevel"></div>
 					</div>
 					<div class="row">
-						<label class="control-label col-sm-3">告警趋势</label>
-						<div class="col-sm-9 sparkline" id="alarmTrend" data-name="sIncidentTrend"></div>
+						<label class="control-label col-xs-4">告警趋势</label>
+						<div class="col-xs-8 sparkline" id="alarmTrend" data-name="sIncidentTrend"></div>
 					</div>
 				</div>
 			</div>
@@ -327,37 +329,37 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="propertyName" class="control-label col-sm-3">名称：</label>
-											<div class="col-sm-8">
+											<label for="propertyName" class="control-label col-xs-4">名称：</label>
+											<div class="col-xs-8">
 												<input type="text" class="form-control" id="propertyName" name="deviceName" placeholder="输入资产名称">
 											</div>
 										</div>
 										<!-- /.form-group -->
 										<div class="form-group">
-											<label for="propertyIP" class="control-label col-sm-3">IP：</label>
-											<div class="col-sm-8">
+											<label for="propertyIP" class="control-label col-xs-4">IP：</label>
+											<div class="col-xs-8">
 												<input type="text" class="form-control" id="propertyIP" name="deviceIP" placeholder="输入资产IP">
 											</div>
 										</div>
 										<!-- /.form-group -->
 										<div class="form-group">
-											<label for="propertyType" class="control-label col-sm-3">类型：</label>
-											<div class="col-sm-8">
+											<label for="propertyType" class="control-label col-xs-4">类型：</label>
+											<div class="col-xs-8">
 												<select class="form-control" id="propertyType" placeholder="选择资产类型" name="typeName">
 												</select>
 											</div>
 										</div>
 										<!-- /.form-group -->
 										<div class="form-group">
-											<label for="propertyVersion" class="control-label col-sm-3">版本：</label>
-											<div class="col-sm-8">
+											<label for="propertyVersion" class="control-label col-xs-4">版本：</label>
+											<div class="col-xs-8">
 												<input type="text" class="form-control" id="propertyVersion" name="version" placeholder="输入资产版本">
 											</div>
 										</div>
 										<!-- /.form-group -->
 										<div class="form-group">
-											<label for="propertyImportance" class="control-label col-sm-3">重要等级：</label>
-											<div class="col-sm-8">
+											<label for="propertyImportance" class="control-label col-xs-4">重要等级：</label>
+											<div class="col-xs-8">
 												<select class="form-control" id="propertyImportance" placeholder="选择重要等级" name="importanceLevel">
 													<option value="1">非常核心</option><!-- mCritical -->
 													<option value="2">核心</option><!-- critical -->
@@ -368,15 +370,15 @@
 										</div>
 										<!-- /.form-group -->
 										<div class="form-group">
-											<label for="propertyDepart" class="control-label col-sm-3">所属部门：</label>
-											<div class="col-sm-8">
+											<label for="propertyDepart" class="control-label col-xs-4">所属部门：</label>
+											<div class="col-xs-8">
 												<input type="text" class="form-control" id="propertyDepart" name="orgName" placeholder="输入资产名称">
 											</div>
 										</div>
 										<!-- /.form-group -->
 										<div class="form-group">
-											<label for="propertyContact" class="control-label col-sm-3">联系人：</label>
-											<div class="col-sm-8">
+											<label for="propertyContact" class="control-label col-xs-4">联系人：</label>
+											<div class="col-xs-8">
 												<input type="text" class="form-control" id="propertyContact" name="contactName" placeholder="输入联系人">
 											</div>
 										</div>
@@ -386,15 +388,15 @@
 									
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="propertyDesc" class="control-label col-sm-3">描述：</label>
-											<div class="col-sm-8">
+											<label for="propertyDesc" class="control-label col-xs-4">描述：</label>
+											<div class="col-xs-8">
 												<textarea type="text" class="form-control" id="propertyDesc" name="description"></textarea>
 											</div>
 										</div>
 										<!-- /.form-group -->
 										<div class="form-group">
-											<label for="propertyDesc" class="control-label col-sm-3">备注：</label>
-											<div class="col-sm-8">
+											<label for="propertyDesc" class="control-label col-xs-4">备注：</label>
+											<div class="col-xs-8">
 												<textarea type="text" class="form-control" id="propertyRec" name="remarks"></textarea>
 											</div>
 										</div>
@@ -410,8 +412,8 @@
 								<div class="row">
 									<div class="col-sm-6 col-md-4">
 										<div class="form-group">
-											<label for="propertyCountry" class="control-label col-sm-3">国家：</label>
-											<div class="col-sm-8">
+											<label for="propertyCountry" class="control-label col-xs-4">国家：</label>
+											<div class="col-xs-8">
 												<select class="form-control" id="propertyCountry" name="country">
 													<option value=""></option>	
 												</select>
@@ -422,8 +424,8 @@
 									<!-- /.col-md-4 -->
 									<div class="col-sm-6 col-md-4 china">
 										<div class="form-group">
-											<label for="propertyProvince" class="control-label col-sm-3">省：</label>
-											<div class="col-sm-8">
+											<label for="propertyProvince" class="control-label col-xs-4">省：</label>
+											<div class="col-xs-8">
 												<select class="form-control prov" id="propertyProvince" name="province">
 												</select>
 											</div>
@@ -433,8 +435,8 @@
 									<!-- /.col-md-4 -->
 									<div class="col-sm-6 col-md-4 china">
 										<div class="form-group">
-											<label for="propertyCity" class="control-label col-sm-3">市：</label>
-											<div class="col-sm-8">
+											<label for="propertyCity" class="control-label col-xs-4">市：</label>
+											<div class="col-xs-8">
 												<select class="form-control city" id="propertyCity" name="city">
 												</select>
 											</div>
@@ -444,8 +446,8 @@
 									<!-- /.col-md-4 -->
 									<div class="col-sm-6 col-md-4 china">
 										<div class="form-group">
-											<label for="propertyArea" class="control-label col-sm-3">区域：</label>
-											<div class="col-sm-8">
+											<label for="propertyArea" class="control-label col-xs-4">区域：</label>
+											<div class="col-xs-8">
 												<select type="text" class="form-control dist" id="propertyArea" name="area">
 												</select>
 											</div>
@@ -455,8 +457,8 @@
 									<!-- /.col-md-4 -->
 									<div class="col-sm-6 col-md-8">
 										<div class="form-group">
-											<label for="propertyFloor" class="control-label col-sm-3">地址：</label>
-											<div class="col-sm-8">
+											<label for="propertyFloor" class="control-label col-xs-4">地址：</label>
+											<div class="col-xs-8">
 												<input type="text" class="form-control" id="propertyFloor" name="location">
 											</div>
 										</div>
@@ -472,8 +474,8 @@
 								<div class="row">
 									<div class="col-sm-6">
 										<div class="form-group">
-											<label for="startTime" class="control-label col-sm-3">开始时间：</label>
-											<div class="col-sm-8">
+											<label for="startTime" class="control-label col-xs-4">开始时间：</label>
+											<div class="col-xs-8">
 												<input type="text" class="form-control" id="startTime" name="maintainStart">
 											</div>
 										</div>
@@ -483,8 +485,8 @@
 
 									<div class="col-sm-6">
 										<div class="form-group">
-											<label for="endTime" class="control-label col-sm-3">结束时间：</label>
-											<div class="col-sm-8">
+											<label for="endTime" class="control-label col-xs-4">结束时间：</label>
+											<div class="col-xs-8">
 												<input type="text" class="form-control" id="endTime" name="maintainEnd">
 											</div>
 										</div>

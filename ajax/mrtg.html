@@ -57,37 +57,39 @@
 				</div>
 
 				<div class="config-panel form-horizontal">
-					<form action="#" class="form-horizontal">
+					<form action="#" class="J-mrtg-form form-horizontal">
 						<div class="form-group col-xs-12 col-sm-6">
 							<label class="control-label col-xs-4">单位选择: </label>
 							<div class="col-xs-8">
-								<select class="form-control">
-									<option value="bits">Bits/Second</option>
-									<option value="packet">Packet/Second</option>
+								<select class="form-control" name="description" data-name="description">
+									<option value="Bits">Bits/Second</option>
+									<option value="Packet">Packet/Second</option>
 								</select>
 							</div>
 						</div>
-						<div class="form-group col-xs-12 col-sm-6">
+						<!-- <div class="form-group col-xs-12 col-sm-6">
 							<label class="control-label col-xs-4">显示: </label>
 							<div class="col-xs-8">
-								<select class="form-control">
+								<select class="form-control" name="description" data-name="description">
 									<option value="bits">Bits/Second</option>
 									<option value="packet">Packet/Second</option>
 								</select>
 							</div>
-						</div>
+						</div> -->
 						<!-- /.form-group -->
 						
 						<div class="form-group col-xs-12 col-sm-6">
 							<label class="control-label col-xs-4">时间选择: </label>
 							<div class="col-xs-8">
 								<select class="form-control period">
-									<option value="self">自选周期</option>
+									<option value="1">自选周期</option>
 									<option value="5">最近5分钟</option>
 									<option value="30">最近30分钟</option>
-									<option value="2">最近2小时</option>
-									<option value="1">最近1天</option>
+									<option value="120">最近2小时</option>
+									<option value="1440">最近1天</option>
 								</select>
+								<input type="hidden" class="timeType" name="timeType" data-name="timeType">
+								<input type="hidden" class="timeVal" name="timeVal" data-name="timeVal">
 							</div>
 						</div>
 						<!-- /.form-group -->
@@ -96,7 +98,7 @@
 							<div class="form-group col-xs-12 col-sm-6">
 								<label class="control-label col-xs-4">开始时间：</label>
 								<div class="col-xs-8">
-									<input type="text" class="form-control date-picker">
+									<input type="text" class="form-control date-picker" name="startTime" data-name="startTime">
 								</div>
 							</div>
 							<!-- /.form-group -->
@@ -104,16 +106,19 @@
 							<div class="form-group col-xs-12 col-sm-6">
 								<label class="control-label col-xs-4">结束时间：</label>
 								<div class="col-xs-8">
-									<input type="text" class="form-control date-picker">
+									<input type="text" class="form-control date-picker" name="endTime" data-name="endTime">
 								</div>
 							</div>
 							<!-- /.form-group -->
 						</div>
 						<!-- /#periodBySelf -->
 
-						<div class="form-group">
-							<input type="submit" class="btn btn-primary" value="提 交">
-							<button class="btn btn-default dismiss-config">取 消</button>
+						<div class="clearfix"></div>
+						<div class="clearfix">
+							<div class="float-right mr-50 text-right">
+								<input type="submit" class="btn btn-primary" value="提 交">
+								<button class="btn btn-default dismiss-config">取 消</button>
+							</div>
 						</div>
 					</form>
 					
@@ -126,14 +131,12 @@
 
 
 <script type="text/javascript">
+
 	function AllTimePickers() {
-		$('.date-picker').datetimepicker({
-			timeFormat: "HH:mm:ss",
-			dateFormat: "yy-mm-dd"
-		});
+		
 	}
 
-					/**
+/**
  * 接收一级目录下的图表
  * @param  {String} topCategory [asset | network | cloud]
  * @return {[type]}             [description]
@@ -152,6 +155,13 @@
  		for (var i = 0; i < data[0].length; ++i) {
  			addChart(data[0][i], data[1][i]);
  		}
+ 		var t = setInterval(function() {
+ 			$('.date-picker').datetimepicker({
+ 				timeFormat: "HH:mm:ss",
+ 				dateFormat: "yy-mm-dd"
+ 			});
+ 			clearInterval(t);
+ 		}, 500)
  	});
 
 
@@ -172,7 +182,6 @@
  			showAlert(true, "添加成功。", 'success', false, 2000);
  			addChart(data[0], data[1]);
  		});
-
  	});
 
 
@@ -191,34 +200,32 @@
 	 	var $newBox = targetBox ? $(targetBox) : $template.clone(true, true).removeClass('template').insertBefore($template);
 	 	$('.chart-title', $newBox).text(_mrtgInfo.deviceName);
 	 	fillInfo(_mrtgInfo, $newBox);
+	 	fillInfo(chartCfg, $newBox, {
+	 		'timeType': function(elem, data) {
+	 			//debugger
+	 			if (data === '1') {
+	 				$(elem).closest('.box').find('.period').val('1').change();
+	 			}
+	 		},
+	 		'timeVal': function(elem, data) {
+	 			//debugger
+	 			var _data = data && (data - 0);
+	 			if (_data && _data > 0) {
+	 				$(elem).closest('.box').find('.period').val(_data / 60000).change();
+	 			}
+	 		}
+	 	});
 
 	 	/*设置定时刷新*/
-	 	var queryInterval = setInterval(queryChart(_chartCfg, $newBox), 300000)
+	 	var queryInterval = setInterval(queryMrtgChart(_chartCfg, $newBox), 300000)
 
 	 	/*填充配置form信息*/
-	 	/*var $form = $('.config-panel form', $newBox);
-	 	var $refresh = $('select[name="refresh"]', $form),
-	 	$type = $('select[name="type"]', $form),
-	 	$itemCount = $('select[name="itemCount"]', $form),
-	 	$timeVal = $('select[name="timeVal"]', $form);*/
-	 	/*重置可选类型下拉框的条目*/
-	 	/*var $options = $('option', $type);
-	 	for (var j = 0; j < $options.length; ++j) {
-	 		var _option = $($options[j]);
-	 		if (_chartCfg.allStyle.indexOf(_option.val()) < 0) {
-	 			_option.remove();
-	 		}
-	 	}
-	 	$type.val(_chartCfg['style']);
-	 	$refresh.val(_chartCfg.refreshTime);
-	 	$itemCount.val(_chartCfg.itemCount);
-	 	$timeVal.val(_chartCfg.timeVal);*/
+	 	var $form = $('.config-panel form', $newBox);
 
 	 	/*绑定newBox中元素的事件*/
 	 	/*删除图表事件*/
 	 	$newBox.bind('removed', function() {
 	 		showAlert(true, "删除中...", 'info', true);
-
 	 		console.log($newBox);
 	 		$.get('deleteChartBase.do', {
 	 			indexId: _chartCfg.detailId
@@ -233,33 +240,38 @@
 	 	})
 
 	 	/*更改配置事件*/
-	 // 	$form.unbind('submit').bind('submit', function(event) {
-	 // 		/* Act on the event */
-	 // 		event.preventDefault();
-		// 	var $submitBtn = $(':submit', this).attr('disabled', 'disabled'); //禁用提交按钮
-		// 	showAlert(true, "更改图表配置中...", 'info', true);
-
-		// 	/*更新数据*/
-		// 	$.get('updateChartDetail.do', $.extend(true, _chartCfg, {
-		// 		refreshTime: $refresh.val(),
-		// 		style: $type.val(),
-		// 		itemCount: $itemCount.val(),
-		// 		timeVal: $timeVal.val()
-		// 	}), function(data) {
-		// 		/*optional stuff to do after success */
-		// 		console.log(data);
-		// 		$submitBtn.removeAttr('disabled'); //解除禁用提交按钮
-		// 		if (data === "error") {
-		// 			showAlert(true, "更改失败，请重试或联系管理员。", 'danger', false, 5000);
-		// 			return;
-		// 		}
-		// 		showAlert(true, "更改成功。", 'success', false, 2000);
-		// 		clearInterval(queryInterval); //清除原定时刷新
-		// 		$('.loading', $newBox).show(); //显示等待界面
-		// 		dismissConfig.call($form); //退出配置界面
-		// 		addChart(data, $newBox);
-		// 	});
-		// });
+	 	$form.unbind('submit').bind('submit', function(event) {
+	 		/* Act on the event */
+	 		event.preventDefault();
+			var $submitBtn = $(':submit', this).attr('disabled', 'disabled'), //禁用提交按钮
+				_formArray = $form.serializeArray(),
+				_formVal = {};
+			showAlert(true, "更改图表配置中...", 'info', true);
+			for (var i = 0; i < _formArray.length; i++) {
+				var _formArrayItem = _formArray[i], 
+				_name = _formArrayItem.name;
+				if (_name === 'endTime' || _name === 'startTime') {
+					_formVal[_name] = new Date(_formArrayItem.value).getTime();
+				} else {
+					_formVal[_name] = _formArrayItem.value;
+				}
+			};
+			/*更新数据*/
+			$.get('updateChartDetail.do', $.extend(true, _chartCfg, _formVal), function(data) {
+				/*optional stuff to do after success */
+				console.log(data);
+				$submitBtn.removeAttr('disabled'); //解除禁用提交按钮
+				if (data === "error") {
+					showAlert(true, "更改失败，请重试或联系管理员。", 'danger', false, 5000);
+					return;
+				}
+				showAlert(true, "更改成功。", 'success', false, 2000);
+				//clearInterval(queryInterval); //清除原定时刷新
+				$('.loading', $newBox).show(); //显示等待界面
+				dismissConfig.call($form); //退出配置界面
+				addChart(data, $newBox);
+			});
+		});
 $('.dismiss-config').unbind('click.config').bind('click.config', dismissConfig);
 }
 
@@ -272,7 +284,7 @@ $('.dismiss-config').unbind('click.config').bind('click.config', dismissConfig);
  * @param  {[type]} placeholder [description]
  * @return {[type]}             [description]
  */
- function queryChart(chartCfg, placeholder) {
+ function queryMrtgChart(chartCfg, placeholder) {
  	$.get('receiveData.do', chartCfg, function(data) {
  		/*optional stuff to do after success */
  		drawCharts(data, $('.charts', placeholder));
@@ -293,10 +305,15 @@ $('.dismiss-config').unbind('click.config').bind('click.config', dismissConfig);
  	});
  	$('.period').change(function(event) {
  		/* Act on the event */
- 		if ($(this).val() === 'self') {
- 			$(this).closest('.box').find('.periodBySelf').removeAttr('disabled').show();
+ 		var _val = $(this).val();
+ 		if (_val === '1') {
+ 			$(this).closest('.box').find('.periodBySelf').show();
+ 			$(this).closest('.box').find('.timeVal').val('');
+ 			$(this).closest('.box').find('.timeType').val('1');
  		} else {
- 			$(this).closest('.box').find('.periodBySelf').attr('disabled', 'disabled').hide();
+ 			$(this).closest('.box').find('.periodBySelf').val('').hide();
+ 			$(this).closest('.box').find('.timeVal').val(_val * 60000);
+ 			$(this).closest('.box').find('.timeType').val('0');
  		}
  	});
  });

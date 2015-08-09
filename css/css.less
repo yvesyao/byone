@@ -12,6 +12,7 @@
 
 @orange: #ef9b29;
 @darkOrange: darken(@orange, 5%);
+@itemHeight: 34px;
 @lightOrange: lighten(@orange, 5%);
 @primary: #626262;
 @darkPrimary: darken(@primary, 5%);
@@ -32,6 +33,21 @@
 
 header {
 	height: 50px;
+}
+
+.form-inline {
+	.form-group {
+		.form-control {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.form-control {
+	height: @itemHeight;
+}
+.control-label {
+	line-height: @itemHeight;
 }
 
 .dropdown-menu>li>a {
@@ -106,6 +122,9 @@ ul, li {
 .red {
 	color: red;
 }
+.orange {
+	color: @orange;
+}
 .no-empty {
 	&:after {
 		content: '*';
@@ -169,7 +188,7 @@ ul, li {
 		padding-top: 2em;
 	}
 	.box-content {
-		padding: 25px;
+		padding: 0 25px 25px;
 		background-color: #fff;
 	}
 	/*指定该元素的具有3d翻转效果*/
@@ -221,6 +240,11 @@ input.form-control[type="number"] {
 	width: 5em;
 }
 
+.radio-inline {
+	height: @itemHeight;
+	padding-top: 7px;
+}
+
 #breadcrumb {
 	margin-bottom: 5px;
 }
@@ -243,8 +267,8 @@ input.form-control[type="number"] {
 
 .input-group-btn {
 	.btn {
-		height: 26px;
-		padding: 2px 12px;
+		height: @itemHeight;
+		padding: 7px 14px;
 		.border-radius(3px);
 	}
 }
@@ -276,7 +300,7 @@ input.form-control[type="number"] {
 
 
 
-@fontSize: 13px;
+@fontSize: 14px;
 @fontSizeMd: 16px;
 
 .form-control, .dropdown-menu {
@@ -320,6 +344,9 @@ legend {
 }
 .mr {
 	margin-right: 1em;
+}
+.mr-50 {
+	margin-right: 50px;
 }
 .pl-0 {
 	padding-left: 0;
@@ -416,17 +443,28 @@ th {
 	}
 }
 
-
+.chart-catagory, #MRTGSel {
+	height: 23px;
+	padding-top: 0;
+	line-height: 23px;
+}
 
 /* login */
 #page-login {
-	background: url("../img/login-bg.jpg");
+	background: url("../img/login-bg.jpg") no-repeat;
 	background-size: 100% 100%;
+	position: relative;
+	height: 100%;
 	.login-box {
-		margin: 30px auto 50px;
+		box-shadow: none;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		margin: -256px 0 0 -200px;
 		max-width: 400px;
 		max-height: 512px;
-		border-color: #999;
+		// border-color: #999;
+		border: none;
 		.box-header {
 			background: #3e404d url(../img/login-logo.png) center center no-repeat;
 			height: 80px;
@@ -449,10 +487,6 @@ th {
 		.form-control-feedback {
 			top: 7px;
 		}
-	}
-	.box-content {
-		border-color: #fff;
-		padding: 25px;
 	}
 	.form-control {
 		height: 40px;
@@ -686,6 +720,7 @@ th {
 	border: none;
 			/* height: 40px;
 			line-height: 26px; */
+			line-height: 20px;
 		}
 		label {
 			&.btn {

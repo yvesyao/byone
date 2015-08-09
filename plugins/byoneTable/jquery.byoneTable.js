@@ -1,20 +1,20 @@
 /**
  * 动态表格插件
  */
- ! function($) {
+! function($) {
 
- 	var ByoneTable = function(element, options) {
- 		this.element = $(element);
+	var ByoneTable = function(element, options) {
+		this.element = $(element);
 
- 		this.loading = $('<div class="zoom loading">\
+		this.loading = $('<div class="zoom loading">\
  			<div class="spinner"></div>\
  			</div>');
 
 		/**
 		 * test,loading位置待定
 		 */
-		 this.element.find('tfoot').remove().end().append('<tfoot><tr></tr></tfoot>').children('tfoot').children('tr').append(this.loading);
-		 this.loading.hide();
+		this.element.find('tfoot').remove().end().append('<tfoot><tr></tr></tfoot>').children('tfoot').children('tr').append(this.loading);
+		this.loading.hide();
 		//pagination
 		if (options.pagination) {
 			if (!options.paginateHandle) {
@@ -75,7 +75,7 @@
 			this.sortCol = options.sort[0];
 			this.sortDirection = options.sort[1];
 			//for (var i = this.sort.length - 1; i >= 0; i--) {
-				this.getElemByData(this.sortCol).addClass('sorting-' + this.sortDirection);
+			this.getElemByData(this.sortCol).addClass('sorting-' + this.sortDirection);
 			//};
 		};
 		this.dataId = options.dataId;
@@ -92,7 +92,7 @@
 				$(this).hide();
 			}
 		});*/
-this.getDatas();
+		this.getDatas();
 		/*test
 		this.setPages(10, 10);*/
 
@@ -109,7 +109,7 @@ this.getDatas();
 			this.loading.show();
 
 			var _start = this.pagination ? (this.draw - 1) * this.pageItemCount : 0,
-			_count = this.pagination ? this.pageItemCount : -1;
+				_count = this.pagination ? this.pageItemCount : -1;
 			$.get(
 				this.ajax, $.extend(true, {
 					'search': (this.lastSearch = _search),
@@ -119,20 +119,21 @@ this.getDatas();
 					'sort': (this.lastSort = this.sortDirection),
 					'fingerPrint': Math.random()
 				}, this.filter),
-				$.proxy(this.fillTable, this)
-				);
+				$.proxy(this.fillTable, this),
+				'json'
+			);
 		},
 		/**
 		 * 排序
 		 * @param  {jQuery.Event / String} e   event或者data
 		 * @param  {String} sort  排序方式
 		 */
-		 sort: function(e, sort) {
+		sort: function(e, sort) {
 			if (e.offsetX >= e.target.offsetWidth - 5) { //调整列宽
 				return false;
 			}
 			var _data = '',
-			_sort;
+				_sort;
 			if (sort) {
 				_data = e;
 				_sort = sort;
@@ -157,18 +158,18 @@ this.getDatas();
 		 * @param  {String} data data之
 		 * @return {jQuery Object}      对应的jQuery对象
 		 */
-		 getElemByData: function(data) {
-		 	for (var i = this.ths.length, $th = $(this.ths[0]); i >= 0; $th = $(this.ths[--i])) {
-		 		console.log($th.data('tableData'));
-		 		if ($th.data('tableData') == data)
-		 			return $th;
-		 	};
-		 	alert('数据列"' + data + '"不存在！');
-		 	return $();
-		 },
-		 fillTable: function(data) {
-		 	this.loading.hide();
-			//console.log(data);
+		getElemByData: function(data) {
+			for (var i = this.ths.length, $th = $(this.ths[0]); i >= 0; $th = $(this.ths[--i])) {
+				console.log($th.data('tableData'));
+				if ($th.data('tableData') == data)
+					return $th;
+			};
+			alert('数据列"' + data + '"不存在！');
+			return $();
+		},
+		fillTable: function(data) {
+			// debugger
+			this.loading.hide();
 			this.draw = data.draw;
 			this.recordsTotal = data.recordsTotal;
 			this.recordsFiltered = data.recordsFiltered;
@@ -189,14 +190,14 @@ this.getDatas();
 				for (var j = 0, _column = this.columns[0]; j < this.columns.length; _column = this.columns[++j]) {
 					var _content = _column.data ? tableData[_column.data] : '';
 					var _title = _content,
-					_html = _content;
+						_html = _content;
 					if (_column.format && typeof _column.format === 'function') {
 						_html = _column.format(_html);
 					};
 					$('<td></td>').addClass(_column.class)
-					.attr('title', _title)
-					.html(_html)
-					.appendTo($newTr);
+						.attr('title', _title)
+						.html(_html)
+						.appendTo($newTr);
 				}
 				$tbody.append($newTr);
 			};
@@ -209,7 +210,7 @@ this.getDatas();
 			$('li', $pagination).removeClass('disabled');
 			//清空页码
 			var $nextLi = $('li.next', $pagination),
-			$prevLi = $('li.prev', $pagination);
+				$prevLi = $('li.prev', $pagination);
 			$nextLi.prevUntil($prevLi).remove();
 			draw === 1 ? $prevLi.addClass('disabled') : $prevLi.attr('data-page', draw - 1);
 			draw === total ? $nextLi.addClass('disabled') : $nextLi.attr('data-page', draw + 1);
@@ -217,10 +218,10 @@ this.getDatas();
 				return;
 			}
 			var _pageList = getPageCfg(draw, total),
-			_prePage = 0,
-			_index = 0,
-			_length = _pageList.length,
-			_page;
+				_prePage = 0,
+				_index = 0,
+				_length = _pageList.length,
+				_page;
 			while (_page = _pageList[_index++]) {
 				if (_page - _prePage > 1) {
 					$('<li class="disabled"><a href="#">...</a></li>').insertBefore($nextLi);
@@ -243,11 +244,11 @@ this.getDatas();
 
 		return this.each(function() {
 			var $this = $(this),
-			data = $this.data('byoneTable'),
-			options = typeof option == 'object' && option;
+				data = $this.data('byoneTable'),
+				options = typeof option == 'object' && option;
 			$this.addClass('byoneTable');
 			// if (!data) {
-				$this.data('byoneTable', (data = new ByoneTable(this, $.extend({}, $.fn.byoneTable.defaults, options))));
+			$this.data('byoneTable', (data = new ByoneTable(this, $.extend({}, $.fn.byoneTable.defaults, options))));
 			// }
 			if (typeof option == 'string') data[option]();
 		});

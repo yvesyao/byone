@@ -48,9 +48,6 @@
 						<tbody>
 						</tbody>
 					</table>
-					<div class="zoom loading">
-						<div class="spinner"></div>
-					</div>
 					<nav class="pull-right">
 						<ul class="pagination" id="alarmPag">
 							<li class="prev"><a href="#">&laquo;</a></li>
@@ -99,15 +96,12 @@
 								<th>物理内存</th>
 								<th>虚拟内存</th>
 								<th>共享存储ID</th>
-								<th>sharedStorePis</th>
+								<th>共享存储位置</th>
 							</tr>
 						</thead>
 						<tbody>
 						</tbody>
 					</table>
-					<div class="zoom loading">
-						<div class="spinner"></div>
-					</div>
 					<nav class="pull-right">
 						<ul class="pagination" id="alarmPag">
 							<li class="prev"><a href="#">&laquo;</a></li>
@@ -128,50 +122,86 @@
 
 <script type="text/javascript">
 	
-	/*function byTableReady() {
-		tableTrClick('#alarmTable', function(alarmId) {
-			$('#triggerModal').modal('show');
-			$('#triggerTable').data('byoneTable', null).find('tbody *').remove().end().byoneTable({
-				ajax: "queryEventByIncident.do",
-				"sort":["hostIpAddr", 'asc'],
-				"filter": {
-					"id": alarmId,
-					"timeType": $('.period:checked').val(),
-					"timeVal": $('#timeVal').val(),
-					"startTime": $('#startTime').val(),
-					"endTime": $('#endTime').val()
+	function byTableReady() {
+		$('#cloudTable').byoneTable({
+			ajax: "./test/data/platList.json",
+			"sort": ["name", 'asc'],
+			dataId: "id",
+			"columns": [{
+				"class": "name",
+				"data": "name"
+			}, {
+				"class": "ip",
+				"data": "ip"
+			}, {
+				"data": "healthStatus",
+				"sortable": false
+			}, {
+				"data": "moduleRole",
+				"sortable": false
+			}, {
+				"data": "updateTime",
+				"sortable": false
+			}, {
+				"data": "cpuUtil",
+				"sortable": false
+			}, {
+				"data": "version",
+				"sortable": false
+			}, {
+				"data": "createTime",
+				"sortable": false
+			}, {
+				"data": "physicalMem",
+				"sortable": false
+			}, {
+				"data": "virtualMem",
+				"sortable": false
+			}]
+		});
+		tableTrClick('#cloudTable', function(cloudId) {
+			$('#processTable').byoneTable({
+				ajax: "./test/data/processList.json",
+				"sort": ["name", 'asc'],
+				dataId: "id",
+				filter: {
+					'clusterId': cloudId
 				},
-				"pagination": true,
-				"columns":[{
-					"sortable": false,
-					"data": "hostIpAddr"
-				},{
-					"sortable": false,
-					"data": "srcIpAddr"
-				},{
-					"sortable": false,
-					"data": "reptDevIpAddr"
-				},{
-					"sortable": false,
-					"data": "eventType"
-				},{
-					"sortable": false,
-					"data": "eventName"
-				},{
-					"sortable": false,
-					"data": "phRecvTime"
-				},{
-					"sortable": false,
-					"data": "eventSeverityCat"
-				},{
-					"sortable": false,
-					"data": "rawEventMsg"
+				"columns": [{
+					"class": "name",
+					"data": "name"
+				}, {
+					"class": "status",
+					"data": "status"
+				}, {
+					"data": "updateTime",
+					"sortable": false
+				}, {
+					"data": "cpuUtil",
+					"sortable": false
+				}, {
+					"data": "eventUtil",
+					"sortable": false
+				}, {
+					"data": "physicalMem",
+					"sortable": false
+				}, {
+					"data": "virtualMem",
+					"sortable": false
+				}, {
+					"data": "sharedStoreId",
+					"sortable": false
+				}, {
+					"data": "sharedStorePos",
+					"sortable": false
 				}]
 			});
-		})
-	}*/
+		});
+	}
 
 	$(document).ready(function() {
-		//LoadByoneTableScripts(byTableReady)
+		LoadByoneTableScripts(byTableReady);
+		// test
+		//$('.loading').hide();
 	});
 </script>
